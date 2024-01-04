@@ -1,6 +1,7 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 
 import Layout from "@/Layout";
+import { KakaoCallback } from "@/pages/Authorization/KakaoCallback";
 import LoginPage from "@/pages/Authorization/LoginPage";
 import RegisterEmailPage from "@/pages/Authorization/RegisterEmailPage";
 import RegisterPage from "@/pages/Authorization/RegisterPage";
@@ -26,6 +27,10 @@ const router = () => {
           <Route
             path="/"
             element={<MainPage />}
+          />
+          <Route
+            path="/auth/kakao/callback"
+            element={<KakaoCallback />}
           />
         </Route>
       </Routes>

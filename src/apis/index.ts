@@ -10,6 +10,8 @@ export const WRITON = axios.create({
 });
 
 interface APIResponse<T> {
+  access_token: string;
+  // 나중에 데이터 타입 여기서 다 맞춰야한다.
   code: number;
   message: string;
   data: T;

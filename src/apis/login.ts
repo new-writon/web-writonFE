@@ -31,3 +31,27 @@ export const postEmailCode = async ({ email, emailCode }: any) => {
   });
   return response;
 };
+
+export const postKakaoAuth = async (CODE: string) => {
+  const response = await postData(
+    `https://kauth.kakao.com/oauth/token?grant_type=authorization_code&client_id=${
+      import.meta.env.VITE_APP_REST_API_KEY
+    }&redirect_uri=${import.meta.env.VITE_APP_REDIRECT_URI}&code=${CODE}`,
+    {}
+  );
+  return response;
+};
+
+export const postKakaoLogin = async (token: string) => {
+  const response = await postData(
+    "/user/kakao-login",
+    {
+      headers: {
+        "Content-type": "application/x-www-form-urlencoded;charset=utf-8",
+        access: token,
+      },
+    },
+    {}
+  );
+  return response;
+};
