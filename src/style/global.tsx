@@ -27,6 +27,8 @@ export const GlobalStyle = createGlobalStyle`
 	padding: 0;
 	margin: 0;
 	font-family: 'Pretendard Variable';
+	color: var(--Dark);
+	
 }
 
 
@@ -57,6 +59,7 @@ footer, header, hgroup, menu, nav, section {
 }
 body {
 	line-height: 1;
+	background-color: #fff;
 }
 ol, ul {
 	list-style: none;
