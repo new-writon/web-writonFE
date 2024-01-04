@@ -1,54 +1,54 @@
 // 여기를 수정해야 eslint가 적용 및 해지된다.
 
 {
-	"root": true,
-	"env": { "browser": true, "es2020": true },
-	"extends": [
-		"prettier",
-		"prettier/prettier",
-		"eslint:recommended",
-		"eslint:recommended",
-		"plugin:@typescript-eslint/recommended",
-		"plugin:react-hooks/recommended",
-		"plugin:prettier/recommended"
-	],
-	"parser": "@typescript-eslint/parser",
-	"parserOptions": {
-		"ecmaVersion": "latest",
-		"sourceType": "module",
-		"project": "./tsconfig.eslint.json"
-	},
-	"plugins": ["react", "@typescript-eslint", "import", "prettier"],
-	"rules": {
-		"prettier/prettier": ["error", { "endOfLine": "auto" }],
-		"arrow-body-style": "off",
-		"prefer-arrow-callback": "off",
-		"indent": "off",
+  "root": true,
+  "env": { "browser": true, "es2020": true },
+  "extends": [
+    "prettier",
+    "prettier/prettier",
+    "eslint:recommended",
+    "eslint:recommended",
+    "plugin:@typescript-eslint/recommended",
+    "plugin:react-hooks/recommended",
+    "plugin:prettier/recommended"
+  ],
+  "parser": "@typescript-eslint/parser",
+  "parserOptions": {
+    "ecmaVersion": "latest",
+    "sourceType": "module",
+    "project": "./tsconfig.eslint.json"
+  },
+  "plugins": ["react", "@typescript-eslint", "import", "prettier"],
+  "rules": {
+    "prettier/prettier": ["error", { "endOfLine": "auto" }],
+    "arrow-body-style": "off",
+    "prefer-arrow-callback": "off",
+    "indent": "off",
 
-		//"quotes": ["error", "single"]
-		//"semi": ["error", "never"],
-		"@typescript-eslint/no-empty-function": ["error", { "allow": ["arrowFunctions"] }],
-		"@typescript-eslint/no-unused-vars": "warn",
-		"import/order": [
-			"warn",
-			{
-				"groups": ["builtin", "external", "internal", "parent", "sibling", "index"],
-				"pathGroups": [
-					{
-						"pattern": "react",
-						"group": "external",
-						"position": "before"
-					},
-					{
-						"pattern": "@/**",
-						"group": "internal",
-						"position": "after"
-					}
-				],
-				"pathGroupsExcludedImportTypes": ["react", "react-dom"],
-				"newlines-between": "always",
-				"alphabetize": { "order": "asc" }
-			}
-		]
-	}
+    //"quotes": ["error", "single"]
+    //"semi": ["error", "never"],
+    "@typescript-eslint/no-empty-function": ["error", { "allow": ["arrowFunctions"] }],
+    "@typescript-eslint/no-unused-vars": "warn",
+    "import/order": [
+      "warn",
+      {
+        "groups": ["builtin", "external", "internal", "parent", "sibling", "index"],
+        "pathGroups": [
+          {
+            "pattern": "react",
+            "group": "external",
+            "position": "before"
+          },
+          {
+            "pattern": "@/**",
+            "group": "internal",
+            "position": "after"
+          }
+        ],
+        "pathGroupsExcludedImportTypes": ["react", "react-dom"],
+        "newlines-between": "always",
+        "alphabetize": { "order": "asc" }
+      }
+    ]
+  }
 }
