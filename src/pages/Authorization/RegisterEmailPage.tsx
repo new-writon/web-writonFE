@@ -11,11 +11,7 @@ const RegisterEmailPage = () => {
   const agreeTextNum = useRecoilValue(agreeTextState);
   return (
     <Container>
-      {loading && (
-        <Background>
-          <Loading />
-        </Background>
-      )}
+      {loading && <Loading />}
       {agreeTextNum !== -1 && (
         <Background>
           <DetailAgree />

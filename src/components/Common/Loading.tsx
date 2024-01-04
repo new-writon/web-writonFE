@@ -3,17 +3,29 @@ import styled from "styled-components";
 
 const Loading = () => {
   return (
-    <LoadingBox>
-      <ClipLoader
-        color="#fffff"
-        size={100}
-      />
-      <p>잠시만 기다려주세요.</p>
-    </LoadingBox>
+    <LoadingWrapper>
+      <LoadingBox>
+        <ClipLoader
+          color="#fffff"
+          size={100}
+        />
+        <p>잠시만 기다려주세요.</p>
+      </LoadingBox>
+    </LoadingWrapper>
   );
 };
 
 export default Loading;
+
+const LoadingWrapper = styled.div`
+  width: 100vw;
+  height: 100vh;
+  background: rgba(21, 21, 21, 0.7);
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 9;
+`;
 const LoadingBox = styled.div`
   display: flex;
   justify-content: center;
