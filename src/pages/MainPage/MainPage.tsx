@@ -12,12 +12,12 @@ const MainPage = () => {
   }, []);
   return (
     <Container>
-      <AnimatedLineProgressBar
+      {/* <AnimatedLineProgressBar
         percent={value}
         rounded={36}
         height={36}
         transition={{ easing: "easeInOut" }}
-      />
+      /> */}
     </Container>
   );
 };
