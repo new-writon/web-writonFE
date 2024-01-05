@@ -1,23 +1,12 @@
-import { useEffect, useState } from "react";
-
-import { AnimatedLineProgressBar } from "@frogress/line";
 import styled from "styled-components";
 
+import { ProgressBox } from "@/components/MainPage/ProgressBox";
+
 const MainPage = () => {
-  const [value, setValue] = useState(0);
-  useEffect(() => {
-    setTimeout(() => {
-      setValue(70);
-    }, 700);
-  }, []);
   return (
     <Container>
-      {/* <AnimatedLineProgressBar
-        percent={value}
-        rounded={36}
-        height={36}
-        transition={{ easing: "easeInOut" }}
-      /> */}
+      <ProgressBox />
+      <div>나의 회고 몰아보기</div>
     </Container>
   );
 };
@@ -25,5 +14,6 @@ const MainPage = () => {
 export default MainPage;
 
 const Container = styled.div`
-  font-family: "Happiness-Sans-Bold";
+  background: var(--Gray2_100, #f5f5f5);
+  padding-top: 23px;
 `;
