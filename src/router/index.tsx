@@ -29,6 +29,10 @@ const router = () => {
             element={<MainPage />}
           />
           <Route
+            path="/community"
+            element={<MainPage />}
+          />
+          <Route
             path="/auth/kakao/callback"
             element={<KakaoCallback />}
           />
