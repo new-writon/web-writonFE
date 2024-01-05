@@ -1,4 +1,6 @@
-import { createGlobalStyle } from "styled-components";
+import styled, { createGlobalStyle } from "styled-components";
+import "@/style/font.css";
+import "@/style/color.css";
 export const GlobalStyle = createGlobalStyle`
 
 @font-face {
@@ -60,6 +62,11 @@ footer, header, hgroup, menu, nav, section {
 body {
 	line-height: 1;
 	background-color: #fff;
+//드래그 방지
+	-webkit-user-select:none;
+  -moz-user-select:none;
+  -ms-user-select:none;
+  user-select:none
 }
 ol, ul {
 	list-style: none;
@@ -81,4 +88,11 @@ a{
   color: inherit;
 }
 
+`;
+
+export const Inner = styled.div`
+  max-width: 1140px; //원래 1080인데 padding 양쪽 60씩 추가
+  width: 100%;
+  margin: 0 auto;
+  padding: 0 30px;
 `;

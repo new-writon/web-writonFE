@@ -5,8 +5,9 @@
   --Dark: #272727;
   --Gray_bold: #7c8089;
   --Gray_light: #f3f5f9;
-  --White: #f3f5f9;
 
+  --Main_Purple: #6a63f5;
+  --Main_Purple_10: #f0efff;
   --Main_Blue: #135ff3;
   --Main_NeonGreen: #0bf275;
   --Sub_Purple: #75f;
@@ -23,5 +24,5 @@
   --Gray9_800: #424242;
   --Gray10_900: #212121;
   --Error_50: #dc362e;
-  --White1: #fff;
+  --White: #fff;
 }
