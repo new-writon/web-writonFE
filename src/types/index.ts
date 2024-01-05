@@ -16,6 +16,6 @@ export interface ButtonProps {
   // 다른 버튼 관련 프로퍼티 추가
 }
 
-export interface AuthTitleProps {
+export interface ChildrenProps {
   children: React.ReactNode;
 }
