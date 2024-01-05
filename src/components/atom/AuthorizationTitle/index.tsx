@@ -1,11 +1,11 @@
 import { useNavigate } from "react-router-dom";
 
 import writonLogo from "@/assets/logo/writon_long.svg";
-import { AuthTitleProps } from "@/types";
+import { ChildrenProps } from "@/types";
 
 import { AuthTitle } from "./style";
 
-export const AuthorizationTitle = ({ children }: AuthTitleProps) => {
+export const AuthorizationTitle = ({ children }: ChildrenProps) => {
   const navigate = useNavigate();
   return (
     <AuthTitle>
