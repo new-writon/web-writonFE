@@ -2,13 +2,13 @@ import styled from "styled-components";
 
 export const Container = styled.div`
   width: fit-content;
-  padding: 11px 16px 9px;
+  padding: 12px 16px 10px;
   border-radius: 10px;
-  border: 1px solid var(--Gray-30, #eee);
-  background: var(--Gray-10, #fafafa);
+  border: 1px solid var(--Purple-20, #cfcdff);
+  background-color: var(--Purple-0, #f8f8ff);
   display: flex;
   gap: 12px;
-  line-height: 1rem;
+  line-height: 1.35rem;
   .labelTitle {
     color: var(--Gray-100, #212121);
     font-size: 0.875rem;
@@ -27,6 +27,7 @@ export const Container = styled.div`
     display: flex;
     color: var(--Purple-60, #524dd4);
     font-weight: 600;
+    font-size: 1.125rem;
   }
   .labelContent p {
     margin-left: 5px;
