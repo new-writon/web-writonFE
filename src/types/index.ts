@@ -19,3 +19,10 @@ export interface ButtonProps {
 export interface ChildrenProps {
   children: React.ReactNode;
 }
+
+export interface TooltipButtonProps {
+  children: React.ReactNode;
+  onClick: () => void;
+  tooltipOn: boolean;
+  // 다른 버튼 관련 프로퍼티 추가
+}
