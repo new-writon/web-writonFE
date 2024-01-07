@@ -1,16 +1,17 @@
 import { useEffect, useState } from "react";
 
-import question from "@/assets/mainPage/question.svg";
 import { CountingLabelCard } from "@/components/atom/CountingLabelCard";
 import { MainSemiTitle } from "@/components/atom/MainSemiTitle";
 import { ProgressBar } from "@/components/atom/ProgressBar";
 import { TitleSideBox } from "@/components/atom/TitleSideBox";
+import { TooltipButton } from "@/components/atom/TooltipButton";
 import { Inner } from "@/style/global";
 
 import { Container, CountingLabelContainer } from "./style";
 const price = 25000;
 export const ProgressBox = () => {
   const [value, setValue] = useState<number>(0);
+  const [tooltipOn, setTooltopOn] = useState<boolean>(false);
   useEffect(() => {
     setTimeout(() => {
       setValue(70);
@@ -41,17 +42,16 @@ export const ProgressBox = () => {
             currentContent={`${price.toLocaleString()}원`}
             defaultContent={"25,000원"}
           />
-          <div className="priceMessage">
+          {/* <div className="priceMessage">
             회고 {20 - 15}일 더 작성하면, 보증급 전액 환급 가능해요.
-          </div>
+          </div> */}
           <div className="priceCondition">
-            <img
-              src={question}
-              alt="?"
-              width={14}
-              height={14}
-            />
-            <p>환급 조건</p>
+            <TooltipButton
+              tooltipOn={tooltipOn}
+              onClick={() => setTooltopOn(!tooltipOn)}
+            >
+              환급 조건
+            </TooltipButton>
           </div>
         </CountingLabelContainer>
       </Container>

@@ -8,6 +8,10 @@ export const Container = styled.div`
   padding: 26px 25px 23px;
   position: relative;
 
+  &:hover {
+    filter: drop-shadow(0px 14px 20px rgba(33, 33, 33, 0.05));
+  }
+
   .title {
     display: flex;
     gap: 6px;
@@ -45,17 +49,8 @@ export const CountingLabelContainer = styled.div`
     background-color: var(--Gray-20, #f5f5f5);
   }
   .priceCondition {
-    display: flex;
-    gap: 6px;
-    align-items: flex-end;
     position: absolute;
     right: 0;
     bottom: 5px;
-  }
-  .priceCondition p {
-    color: var(--Gray-60, #959595);
-    font-size: 0.875rem;
-    font-weight: 500;
-    line-height: 12px;
   }
 `;
