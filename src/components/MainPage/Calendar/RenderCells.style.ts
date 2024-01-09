@@ -7,7 +7,6 @@ export const Container = styled.div`
   }
   .cell {
     width: 100%;
-    height: 130px;
     border-top: 1px solid var(--Gray-30);
   }
   .cell.valid.weekend,
@@ -39,11 +38,14 @@ export const Container = styled.div`
     align-items: center;
   }
   .innerday img {
-    margin-top: 4px;
+    margin: 4px 0 7px;
     width: 75%;
     height: 440%;
     max-width: 96px;
     max-height: 96px;
+  }
+  .innerday .virtualImg {
+    visibility: hidden; // 가상의 이미지임
   }
   .cell.selected .innerday img {
     margin-top: 7px;

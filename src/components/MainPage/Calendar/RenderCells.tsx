@@ -5,7 +5,7 @@ import { isSameMonth, isSameDay, addDays, format } from "date-fns";
 import { useNavigate } from "react-router-dom";
 
 import goldBadge from "@/assets/mainPage/goldBadge.svg";
-// import silverBadge from "@/assets/mainPage/silverBadge.svg";
+import silverBadge from "@/assets/mainPage/silverBadge.svg";
 import writeActive from "@/assets/mainPage/writeActive.svg";
 import writeClick from "@/assets/mainPage/writeActiveClick.svg";
 import writeActiveHover from "@/assets/mainPage/writeActiveHover.svg";
@@ -72,13 +72,17 @@ export const RenderCell = ({ fold }: { fold: boolean }) => {
             i === 6 ||
             Number(format(day, "d")) > Number(format(today, "d")) ||
             !isSameMonth(day, monthStart) ? ( // 이미지 안나와여하는것 : 주말, 오늘 이후 날짜들, 다른 달 짜투리들
-              ""
+              <img
+                className="virtualImg"
+                src={silverBadge} //상관없음. 어차피 opacity 0
+                alt="virtual"
+              />
             ) : (
               <img
                 onMouseOver={() => mouseEvent(isSameDay(clickDay, today), "mouseOver")}
                 onMouseOut={() => mouseEvent(isSameDay(clickDay, today), "mouseOut")}
                 onMouseDown={() => mouseEvent(isSameDay(clickDay, today), "mouseDown")}
-                onClick={() => console.log(format(day, "d"), format(today, "d"))}
+                onClick={() => mouseEvent(isSameDay(clickDay, today), "mouseClick")}
                 className={isSameDay(day, today) ? "writeActive" : "goldBadge"}
                 src={
                   isSameDay(day, today)
@@ -87,7 +91,7 @@ export const RenderCell = ({ fold }: { fold: boolean }) => {
                       : isHover
                         ? writeActiveHover
                         : writeActive
-                    : goldBadge // 여기서 부터 로직 작성, 오늘이 아닌데, 어떤 값이 false면 그 write사진 writePre로 변경
+                    : goldBadge // 여기서 부터 로직 작성, 오늘이 아닌데, 어떤 값이 false면 그 write사진 writePre로 변경  Status, todayStatus값으로 구분 f,f면 아에 안쓴거(오늘날짜, 아닌날짜 구분까지 플러스하기), t,f면 실버색깔, t,t 금색깔
                 }
                 alt="성공"
               />
