@@ -26,3 +26,12 @@ export interface TooltipButtonProps {
   tooltipOn: boolean;
   // 다른 버튼 관련 프로퍼티 추가
 }
+
+export interface RetrospectItemProps {
+  date: string;
+  special: boolean;
+  preview: {
+    question: string;
+    content: string;
+  }[];
+}
