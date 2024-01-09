@@ -1,6 +1,7 @@
 import styled from "styled-components";
 
 import { Calendar } from "@/components/MainPage/Calendar";
+import { MyRetrospect } from "@/components/MainPage/MyRetrospect";
 import { ProgressBox } from "@/components/MainPage/ProgressBox";
 
 const MainPage = () => {
@@ -8,7 +9,7 @@ const MainPage = () => {
     <Container>
       <ProgressBox />
       <Calendar />
-      efwfefw
+      <MyRetrospect />
     </Container>
   );
 };
