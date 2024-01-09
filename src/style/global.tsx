@@ -53,6 +53,12 @@ time, mark, audio, video {
 	font-size: 100%;
 	vertical-align: baseline;
   	position: relative;
+		@media (max-width: 530px) {
+    font-size: 14px;
+  }
+	@media (max-width: 355px) {
+    font-size: 12px;
+  }
 }
 /* HTML5 display-role reset for older browsers */
 article, aside, details, figcaption, figure, 
@@ -66,7 +72,8 @@ body {
 	-webkit-user-select:none;
   -moz-user-select:none;
   -ms-user-select:none;
-  user-select:none
+  user-select:none;
+	
 }
 ol, ul {
 	list-style: none;
@@ -95,4 +102,14 @@ export const Inner = styled.div`
   width: 100%;
   margin: 0 auto;
   padding: 0 30px;
+  @media (max-width: 530px) {
+    max-width: 375px; //모바일
+    width: 100%;
+    margin: 0 auto;
+    padding: 0 15px;
+    /* min-width: 327px; */
+    &:has(.RetrospectTitle) {
+      max-width: 100vw;
+    }
+  }
 `;
