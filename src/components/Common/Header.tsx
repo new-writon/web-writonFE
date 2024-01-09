@@ -61,6 +61,7 @@ const Header = () => {
             onMouseOut={() => setIsHover(false)}
           >
             <p>회고 작성하기</p>
+            <p className="responsive">작성</p>
             <img
               src={isHover ? pencil_white : pencil_color}
               alt="pen"
@@ -111,20 +112,20 @@ const HeaderMiddle = styled.div`
     align-items: center;
     box-sizing: border-box;
     padding-top: 3px;
-    color: var(--Gray7_600);
+    color: var(--Gray-70, #757575);
     font-size: 1.125rem;
     font-weight: 600;
     cursor: pointer;
   }
   .tab.select {
-    border-bottom: 3px solid var(--Main_Purple);
-    color: var(--Gray10_900);
+    border-bottom: 3px solid var(--purple-50, #6a63f5);
+    color: var(--Gray10_900, #212121);
   }
   .tab.false {
     padding-top: 0;
   }
   .tab:hover {
-    color: var(--Gray10_900);
+    color: var(--Gray10_900, #212121);
   }
 `;
 const HeaderRight = styled.div`
@@ -133,27 +134,29 @@ const HeaderRight = styled.div`
   gap: 16px;
   .writingBtn {
     display: flex;
-    width: 139px;
-    height: 36px;
+    padding: 7px 15px 7px 16px;
     border-radius: 10px;
-    background-color: var(--Main_Purple_10);
+    background-color: var(--Main_Purple_10, #f0efff);
     justify-content: center;
     align-items: center;
     gap: 7.5px;
     cursor: pointer;
   }
   .writingBtn:hover {
-    background-color: var(--Main_Purple);
+    background-color: var(--purple-50, #6a63f5);
   }
   .writingBtn:hover p {
     color: var(--White);
   }
   p {
-    color: var(--Main_Purple);
+    color: var(--purple-50, #6a63f5);
     font-weight: 500;
-    line-height: 38px;
     text-align: center;
     margin: auto 0;
+    padding-top: 3px;
+  }
+  p.responsive {
+    display: none;
   }
   .writingBtn img {
     width: fit-content;
@@ -161,5 +164,14 @@ const HeaderRight = styled.div`
   }
   img[alt="profile"] {
     cursor: pointer;
+  }
+
+  @media (max-width: 700px) {
+    p {
+      display: none;
+    }
+    p.responsive {
+      display: block;
+    }
   }
 `;
