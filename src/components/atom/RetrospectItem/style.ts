@@ -11,6 +11,12 @@ export const Container = styled.div`
     box-shadow: 0px 14px 20px 0px rgba(33, 33, 33, 0.05);
     margin-top: -5px;
   }
+  @media (max-width: 530px) {
+    padding: 15px;
+    overflow-y: hidden;
+    height: 174px;
+    width: 100%;
+  }
 `;
 
 export const Title = styled.div`
@@ -25,6 +31,10 @@ export const Title = styled.div`
   padding-bottom: 11px;
   .mainTitle {
     padding-top: 4px;
+  }
+  @media (max-width: 530px) {
+    border-bottom: none;
+    padding-bottom: 0;
   }
 `;
 
@@ -49,5 +59,10 @@ export const PreviewBody = styled.div`
   .content {
     color: var(--Gray-70, #757575);
     font-weight: 400;
+  }
+  @media (max-width: 530px) {
+    .content {
+      line-height: 25px;
+    }
   }
 `;
