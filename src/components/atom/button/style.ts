@@ -33,3 +33,36 @@ export const BlueBtn = styled.button<ButtonProps>`
   font-size: var(--text_b1);
   font-weight: 600;
 `;
+
+export const FloatingWriteBtn = styled.button<ButtonProps>`
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  box-sizing: border-box;
+  border: none;
+  padding: 20px 26px 16px 28px;
+  gap: 5px;
+  border-radius: 80px;
+  background: var(--purple-50, #6a63f5);
+  box-shadow: 0px 5px 20px 0px rgba(106, 99, 245, 0.3);
+  color: #fff;
+  font-size: 16px;
+  font-weight: 600;
+  img {
+    padding-bottom: 3px;
+  }
+  @media (min-width: 530px) {
+    display: none;
+  }
+  @media (max-width: 530px) {
+    display: flex;
+    position: fixed;
+    bottom: 50px;
+    left: 0;
+    right: 0;
+    margin: 0 auto;
+    max-width: 170px;
+    z-index: 9999;
+  }
+`;
