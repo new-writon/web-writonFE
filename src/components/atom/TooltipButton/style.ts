@@ -18,4 +18,10 @@ export const Container = styled.div<{ $tooltipOn: boolean }>`
     font-weight: 500;
     line-height: 12px;
   }
+  @media (max-width: 530px) {
+    padding: 0 0 3px 0;
+    p {
+      display: none;
+    }
+  }
 `;
