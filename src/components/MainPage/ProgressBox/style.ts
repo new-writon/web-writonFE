@@ -7,13 +7,22 @@ export const Container = styled.div`
   padding: 26px 25px;
   position: relative;
 
-  &:hover {
-    filter: drop-shadow(0px 14px 20px rgba(33, 33, 33, 0.05));
-  }
-
   .title {
     display: flex;
     gap: 6px;
+  }
+  @media (min-width: 530px) {
+    &:hover {
+      filter: drop-shadow(0px 14px 20px rgba(33, 33, 33, 0.05));
+    }
+  }
+  @media (max-width: 530px) {
+    background-color: transparent;
+    padding: 5px 0;
+    .title {
+      margin: 0 auto;
+      width: fit-content;
+    }
   }
 `;
 export const CountingLabelContainer = styled.div`
@@ -54,5 +63,18 @@ export const CountingLabelContainer = styled.div`
     position: absolute;
     right: 0;
     bottom: 5px;
+  }
+  @media (max-width: 530px) {
+    flex-direction: row;
+    width: 100%;
+    .cardWrapper:nth-child(1) {
+      width: 40%;
+    }
+    .cardWrapper:nth-child(2) {
+      width: 60%;
+    }
+    .priceCondition {
+      display: none;
+    }
   }
 `;

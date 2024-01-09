@@ -24,7 +24,7 @@ export const ProgressBox = () => {
     <Inner>
       <Container>
         <div className="title">
-          <MainSemiTitle>지호님의 렛츠인턴 1월 TIL 챌린지</MainSemiTitle>
+          <MainSemiTitle font={1.25}>지호님의 렛츠인턴 1월 TIL 챌린지</MainSemiTitle>
           <TitleSideBox>D-{15}</TitleSideBox>
         </div>
         <ProgressBar
