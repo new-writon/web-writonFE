@@ -14,6 +14,15 @@ export const Container = styled.div`
     font-weight: 700;
     line-height: 22px;
   }
+
+  @media (max-width: 530px) {
+    margin-top: 18px;
+    .RetrospectTitle {
+      max-width: 375px; //모바일
+      width: 100%;
+      margin: 0 auto;
+    }
+  }
 `;
 
 export const RetroSpectBox = styled.div`
@@ -47,5 +56,8 @@ export const ArrowButton = styled.div`
   }
   &:hover {
     background-color: var(--Gray-10);
+  }
+  @media (max-width: 530px) {
+    display: none;
   }
 `;

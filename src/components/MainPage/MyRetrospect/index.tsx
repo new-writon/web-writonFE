@@ -25,6 +25,20 @@ export const MyRetrospect = () => {
     arrows: false,
     responsive: [
       {
+        breakpoint: 405,
+        settings: {
+          slidesToShow: 1.75,
+          slidesToScroll: 1,
+        },
+      },
+      {
+        breakpoint: 530,
+        settings: {
+          slidesToShow: 1.95,
+          slidesToScroll: 1,
+        },
+      },
+      {
         breakpoint: 630,
         settings: {
           slidesToShow: 1,
@@ -48,7 +62,7 @@ export const MyRetrospect = () => {
     <Inner>
       <Container>
         <div className="RetrospectTitle">
-          <MainSemiTitle>나의 회고 모아보기</MainSemiTitle>
+          <MainSemiTitle font={1.25}>나의 회고 모아보기</MainSemiTitle>
           <div className="quantity">4개</div>
         </div>
         <RetroSpectBox>
@@ -106,5 +120,14 @@ const StyledSlider = styled(Slider)`
   .slick-dots li.slick-active button:before {
     color: var(--purple-50, #6a63f5) !important;
     opacity: 1 !important;
+  }
+
+  @media (max-width: 530px) {
+    .slick-track {
+      gap: 11px;
+    }
+    .slick-dots {
+      display: none !important;
+    }
   }
 `;
