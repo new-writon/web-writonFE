@@ -9,6 +9,7 @@ export const Container = styled.div<{ $direction: string }>`
   display: flex;
   gap: 10px;
   max-width: 100%;
+  filter: drop-shadow(0px 4px 20px rgba(33, 33, 33, 0.1));
   @media (max-width: 890px) {
     width: 70%;
   }
