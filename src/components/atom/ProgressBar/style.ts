@@ -7,22 +7,31 @@ export const Container = styled.div<{ $value: number }>`
   margin: 64px 0 40px;
   .round {
     display: block;
-    width: 19px;
-    height: 19px;
+    width: 18px;
+    height: 18px;
     border: 4px solid var(--Purple-30, #aeabff);
     border-radius: 100%;
     opacity: 0.5;
     z-index: 1;
     position: absolute;
-    left: ${(props) => `calc(${props.$value}% - 15px)`};
+    left: ${(props) => `calc(${props.$value}% - 14px)`};
     top: 0;
     bottom: 0;
     margin: auto 0;
+    @media (max-width: 1080px) {
+      display: none;
+    }
   }
+
   .message {
     z-index: 2;
     position: absolute;
-    left: ${(props) => `calc(${props.$value}% - 97px)`};
+    left: ${(props) =>
+      props.$value > 0 && props.$value < 16
+        ? `calc(${props.$value}% - 25px)`
+        : props.$value > 84
+          ? `calc(${props.$value}% - 165px)`
+          : `calc(${props.$value}% - 97px)`};
     top: -42px;
     width: fit-content;
     padding: 8.5px 14px;
@@ -48,9 +57,11 @@ export const Container = styled.div<{ $value: number }>`
     transform: rotate(45deg);
     position: absolute;
     bottom: -5px;
-    right: 0;
-    left: 0;
-    margin: 0 auto;
+    right: ${(props) => (props.$value > 84 ? "16px" : 0)};
+    left: ${(props) =>
+      props.$value > 0 && props.$value < 16 ? "13px" : props.$value > 84 ? "" : 0};
+    margin: ${(props) =>
+      (props.$value > 0 && props.$value < 16) || props.$value > 84 ? "0" : "0 auto"};
     border-radius: 3px;
     overflow: hidden;
     background-color: var(--Gray-20, #f5f5f5);

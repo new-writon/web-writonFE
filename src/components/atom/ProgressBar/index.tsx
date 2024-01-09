@@ -30,11 +30,15 @@ export const ProgressBar = ({ value, date }: ProgressBarProps) => {
 
   return (
     <Container $value={value}>
-      {value === 71 && (
+      {value > 0 && (
         <>
           <div className="round"></div>
           <div className="message">
-            <p>{date}일 회고 성공! 대단해요 🔥</p>
+            {value === 1 ? (
+              <p>첫 회고를 작성해 주세요! 🔥</p>
+            ) : (
+              <p>{date}일 회고 성공! 대단해요 🔥</p>
+            )}
             <div className="arrow"></div>
           </div>
           <div className="date">
