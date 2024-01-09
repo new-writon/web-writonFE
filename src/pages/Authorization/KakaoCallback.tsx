@@ -2,7 +2,7 @@ import { useEffect } from "react";
 
 import { useNavigate } from "react-router-dom";
 
-import { postKakaoAuth, postKakaoLogin } from "@/apis/login";
+import { postKakaoAuth } from "@/apis/login";
 import Loading from "@/components/Common/Loading";
 
 export const KakaoCallback = () => {
@@ -14,6 +14,7 @@ export const KakaoCallback = () => {
       throw new Error("No CODE");
     } else {
       const response = await postKakaoAuth(CODE);
+      console.log(response);
       //const res = await postKakaoLogin(response.access_token);
       //console.log(res); // 여기서 토큰 받고 로컬스토리지에 저장
       navigate("/");

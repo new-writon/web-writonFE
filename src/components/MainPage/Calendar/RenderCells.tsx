@@ -6,7 +6,7 @@ import { useNavigate } from "react-router-dom";
 
 import goldBadgeRound from "@/assets/mainPage/goldBadge-round.svg";
 import goldBadge from "@/assets/mainPage/goldBadge.svg";
-import silverBadgeRound from "@/assets/mainPage/silverBadge-round.svg";
+//import silverBadgeRound from "@/assets/mainPage/silverBadge-round.svg";
 import silverBadge from "@/assets/mainPage/silverBadge.svg";
 import todayBtn from "@/assets/mainPage/todayBtn-round.svg";
 import writeActive from "@/assets/mainPage/writeActive.svg";
