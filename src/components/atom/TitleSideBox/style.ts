@@ -8,4 +8,7 @@ export const Container = styled.div`
   font-size: 0.875rem;
   font-weight: 500;
   padding: 5px 6px 3px;
+  @media (max-width: 530px) {
+    padding: 2px 3px 0;
+  }
 `;
