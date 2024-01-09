@@ -33,4 +33,33 @@ export const Container = styled.div`
     margin-left: 5px;
     color: var(--Gray-50, #bdbdbd);
   }
+  .question {
+    display: none;
+  }
+  @media (max-width: 530px) {
+    display: block;
+    border: 1px solid var(--Gray-30, #eee);
+    background: var(--White, #fff);
+
+    .labelTitle {
+      width: fit-content;
+      margin: 0 auto 5px;
+      color: var(--Gray-70, #757575);
+      font-weight: 500;
+      gap: 3px;
+    }
+    .labelTitle::after {
+      display: none;
+    }
+    .labelContent {
+      width: fit-content;
+      margin: 0 auto 5px;
+    }
+    .question {
+      display: block;
+      width: 13px;
+      height: fit-content;
+      margin-top: 1.45px;
+    }
+  }
 `;
