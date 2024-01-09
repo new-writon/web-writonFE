@@ -2,10 +2,9 @@ import styled from "styled-components";
 
 export const Container = styled.div`
   width: 100%;
-  height: 234px;
   border-radius: 16px;
   background-color: var(--White);
-  padding: 26px 25px 23px;
+  padding: 26px 25px;
   position: relative;
 
   &:hover {
@@ -21,6 +20,9 @@ export const CountingLabelContainer = styled.div`
   display: flex;
   gap: 10px;
 
+  @media (max-width: 710px) {
+    flex-direction: column;
+  }
   .priceMessage {
     @media (max-width: 1080px) {
       display: none;

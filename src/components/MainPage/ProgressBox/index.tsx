@@ -14,9 +14,9 @@ export const ProgressBox = () => {
   const [tooltipOn, setTooltopOn] = useState<boolean>(false);
   useEffect(() => {
     setTimeout(() => {
-      setValue(70);
+      setValue(0); // 가중치 넣기 , 1이 아무것도 안했을 때 value 나중에 날짜에 가중치 *5씩하기
       setTimeout(() => {
-        setValue(71);
+        setValue(1);
       }, 300);
     }, 700);
   }, []);
