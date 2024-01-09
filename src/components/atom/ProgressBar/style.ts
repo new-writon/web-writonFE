@@ -19,12 +19,12 @@ export const Container = styled.div<{ $value: number }>`
     bottom: 0;
     margin: auto 0;
     @media (max-width: 1080px) {
-      display: none;
+      display: ${(props) => props.$value === 1 && "none"};
     }
   }
 
   .message {
-    z-index: 2;
+    z-index: 1;
     position: absolute;
     left: ${(props) =>
       props.$value > 0 && props.$value < 16
@@ -43,7 +43,6 @@ export const Container = styled.div<{ $value: number }>`
     align-items: center;
   }
   .message p {
-    z-index: 2;
     color: #616161;
     text-align: center;
     font-size: 0.875rem;
@@ -86,5 +85,17 @@ export const Container = styled.div<{ $value: number }>`
     position: absolute;
     right: -8px;
     top: -47px;
+  }
+  @media (max-width: 530px) {
+    .message,
+    .message .arrow {
+      background-color: var(--White);
+    }
+    .date {
+      display: none;
+    }
+    .endDate {
+      font-size: 12px;
+    }
   }
 `;

@@ -13,14 +13,24 @@ interface ProgressBarProps {
 
 export const ProgressBar = ({ value, date }: ProgressBarProps) => {
   const [width, setWidth] = useState<number>(
-    window.innerWidth >= 1140 ? 1080 : window.innerWidth - 60
+    window.innerWidth >= 1140
+      ? 1080
+      : window.innerWidth >= 530
+        ? window.innerWidth - 60
+        : window.innerWidth >= 375
+          ? 395
+          : window.innerWidth + 20
   );
   const handleResize = () => {
     //뷰크기 강제로 강져오기
     if (window.innerWidth >= 1140) {
       setWidth(1080);
-    } else {
+    } else if (window.innerWidth >= 530) {
       setWidth(window.innerWidth - 60); //inner padding값
+    } else if (window.innerWidth >= 375) {
+      setWidth(395);
+    } else {
+      setWidth(window.innerWidth + 20);
     }
   };
   useEffect(() => {
