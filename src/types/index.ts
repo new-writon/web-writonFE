@@ -20,6 +20,11 @@ export interface ChildrenProps {
   children: React.ReactNode;
 }
 
+export interface MainSemiTitleProps {
+  children: React.ReactNode;
+  font: number;
+}
+
 export interface TooltipButtonProps {
   children: React.ReactNode;
   onClick: () => void;
