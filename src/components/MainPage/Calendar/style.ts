@@ -1,6 +1,7 @@
 import styled from "styled-components";
 
 export const Container = styled.div`
+  z-index: 1;
   width: 100%;
   border-radius: 16px;
   background-color: var(--White);
@@ -20,13 +21,18 @@ export const Container = styled.div`
     gap: 12px;
     position: relative;
   }
-  .topBar .topBarLeft .tooltipBox {
+  .topBar .topBarLeft .question {
+    display: none;
+  }
+  .tooltipBox {
     position: absolute;
-    right: -540px;
     z-index: 99;
+    top: -11px;
+    left: 282px;
   }
 
   .topBar .topBarRight {
+    display: flex;
     color: var(--Gray-70, #757575);
     font-size: 0.875rem;
     font-weight: 500;
@@ -39,6 +45,69 @@ export const Container = styled.div`
     }
     img.topArrow {
       margin-bottom: 2px;
+    }
+  }
+  .topBar .topBarRight .calendarOpenBtnResponsive {
+    display: none;
+  }
+  @media (min-width: 530px) {
+    &:hover {
+      filter: drop-shadow(0px 14px 20px rgba(33, 33, 33, 0.05));
+    }
+  }
+  @media (max-width: 890px) {
+    .tooltipBox {
+      top: -45px;
+    }
+  }
+  @media (max-width: 700px) {
+    .tooltipBox {
+      top: -175px;
+      left: 40px;
+    }
+  }
+  @media (max-width: 530px) {
+    & {
+      filter: drop-shadow(0px 14px 20px rgba(33, 33, 33, 0.05));
+    }
+    padding: 15px 15px 10px;
+    margin-top: 11px;
+
+    .topBar .topBarLeft {
+      gap: 5px;
+    }
+    .topBar .topBarLeft div {
+      font-size: 16px;
+    }
+    .tooltipBox {
+      top: -185px;
+      left: 0;
+      right: 0;
+      margin: 0 auto;
+      width: min-content;
+    }
+
+    // 달력 버튼
+    .topBar .topBarRight {
+      border: none;
+      padding: 0;
+      padding-right: 10px;
+    }
+    .topBar .topBarRight .calendarOpenBtn {
+      display: none;
+    }
+    .topBar .topBarRight .calendarOpenBtnResponsive {
+      display: block;
+    }
+  }
+
+  @media (max-width: 355px) {
+    .tooltipBox {
+      top: -135px;
+      left: 0;
+      right: 0;
+      margin: 0 auto;
+      width: min-content;
     }
   }
 `;

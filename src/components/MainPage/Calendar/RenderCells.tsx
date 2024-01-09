@@ -1,11 +1,14 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 import { startOfMonth, endOfMonth, startOfWeek, endOfWeek, getISOWeek } from "date-fns";
 import { isSameMonth, isSameDay, addDays, format } from "date-fns";
 import { useNavigate } from "react-router-dom";
 
+import goldBadgeRound from "@/assets/mainPage/goldBadge-round.svg";
 import goldBadge from "@/assets/mainPage/goldBadge.svg";
+import silverBadgeRound from "@/assets/mainPage/silverBadge-round.svg";
 import silverBadge from "@/assets/mainPage/silverBadge.svg";
+import todayBtn from "@/assets/mainPage/todayBtn-round.svg";
 import writeActive from "@/assets/mainPage/writeActive.svg";
 import writeClick from "@/assets/mainPage/writeActiveClick.svg";
 import writeActiveHover from "@/assets/mainPage/writeActiveHover.svg";
@@ -16,6 +19,7 @@ export const RenderCell = ({ fold }: { fold: boolean }) => {
   const navigate = useNavigate();
   const [isHover, setIsHover] = useState<boolean>(false);
   const [mouseClick, setMouseClick] = useState<boolean>(false);
+  const [width, setWidth] = useState<number>(window.innerWidth);
   const today = new Date();
   const monthStart = startOfMonth(today); // 1월 1일 (그 달의 시작이 나오게 됨.)
   const monthEnd = endOfMonth(today); // 1월 31일이 나옴.(그 달의 끝)
@@ -42,6 +46,21 @@ export const RenderCell = ({ fold }: { fold: boolean }) => {
       }
     }
   };
+  const responsiveClickEvent = (isTODAY: boolean) => {
+    if (isTODAY) {
+      if (width <= 530) {
+        navigate("/writepage");
+      }
+    }
+  };
+  const handleResize = () => {
+    //뷰크기 강제로 강져오기
+    setWidth(window.innerWidth);
+  };
+  useEffect(() => {
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize); //clean
+  }, [width]);
 
   const rows = [];
   let days = [];
@@ -62,10 +81,24 @@ export const RenderCell = ({ fold }: { fold: boolean }) => {
                   : ""
           } ${i === 5 || i === 6 ? "weekend" : ""}`}
         >
-          <div className="innerday">
+          <div
+            className={`innerday ${isSameDay(day, today) ? "Active" : "notActive"}`} // 반응형을 위한 코드
+            onClick={() => responsiveClickEvent(isSameDay(clickDay, today))} // 반응형을 위한 코드
+          >
             <div
               className={format(today, "M") !== format(day, "M") ? "text not-valid" : "text valid"}
             >
+              {i === 5 ||
+              i === 6 ||
+              Number(format(day, "d")) > Number(format(today, "d")) ||
+              !isSameMonth(day, monthStart) ? (
+                ""
+              ) : (
+                <img
+                  src={isSameDay(day, today) ? todayBtn : goldBadgeRound}
+                  alt="반응형 뱃지"
+                />
+              )}
               {formattedDate}
             </div>
             {i === 5 ||
@@ -83,7 +116,7 @@ export const RenderCell = ({ fold }: { fold: boolean }) => {
                 onMouseOut={() => mouseEvent(isSameDay(clickDay, today), "mouseOut")}
                 onMouseDown={() => mouseEvent(isSameDay(clickDay, today), "mouseDown")}
                 onClick={() => mouseEvent(isSameDay(clickDay, today), "mouseClick")}
-                className={isSameDay(day, today) ? "writeActive" : "goldBadge"}
+                className={isSameDay(day, today) ? "writeActive" : "Badge"}
                 src={
                   isSameDay(day, today)
                     ? mouseClick

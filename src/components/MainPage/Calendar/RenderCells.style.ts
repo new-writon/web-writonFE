@@ -44,10 +44,13 @@ export const Container = styled.div`
     max-width: 96px;
     max-height: 96px;
   }
+  .innerday img[alt="반응형 뱃지"] {
+    display: none;
+  }
   .innerday .virtualImg {
     visibility: hidden; // 가상의 이미지임
   }
-  .cell.selected .innerday img {
+  .cell.selected .innerday img.image {
     margin-top: 7px;
   }
 
@@ -72,5 +75,37 @@ export const Container = styled.div`
   .writeActive {
     filter: drop-shadow(0px 5px 20px rgba(106, 99, 245, 0.3));
     cursor: pointer;
+  }
+
+  @media (max-width: 530px) {
+    .innerday img {
+      display: none;
+    }
+    .innerday .text {
+      margin-bottom: 20px;
+      margin-top: 20px;
+    }
+    .innerday.Active {
+      cursor: pointer;
+    }
+    .innerday {
+      position: relative;
+    }
+    .innerday img[alt="반응형 뱃지"] {
+      display: block;
+      position: absolute;
+      top: -20px;
+      z-index: 11;
+    }
+    .innerday img[alt="반응형 뱃지"] {
+      margin: 0;
+      width: auto;
+      height: auto;
+      max-width: 47px;
+      max-height: 47px;
+    }
+    .selected::before {
+      background-color: transparent;
+    }
   }
 `;
