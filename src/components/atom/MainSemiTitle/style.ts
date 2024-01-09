@@ -1,9 +1,12 @@
 import styled from "styled-components";
 
-export const Container = styled.div`
+export const Container = styled.div<{ $font: number }>`
   color: var(--Gray-100, #212121);
-  font-size: 1.25rem;
+  font-size: ${(props) => `${props.$font}rem`};
   font-weight: 700;
   margin: auto 0;
   line-height: 22px;
+  /* @media (max-width: 530px) {
+    font-size: 1.125rem;
+  } */
 `;
