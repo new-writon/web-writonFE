@@ -73,6 +73,18 @@ const Header = () => {
           />
         </HeaderRight>
       </Container>
+      <HeaderMiddleResponsive>
+        {Tabs.map((tab, idx) => (
+          <React.Fragment key={idx}>
+            <div
+              className={`tab ${selectTab === tab && "select"}`}
+              onClick={() => SpaceTab(tab)}
+            >
+              {tab}
+            </div>
+          </React.Fragment>
+        ))}
+      </HeaderMiddleResponsive>
     </Inner>
   );
 };
@@ -83,6 +95,9 @@ const Container = styled.div`
   height: 71px;
   display: flex;
   justify-content: space-between;
+  @media (max-width: 530px) {
+    height: 56px;
+  }
 `;
 
 const HeaderLeft = styled.div`
@@ -97,6 +112,17 @@ const HeaderLeft = styled.div`
     width: 90px;
     height: fit-content;
     cursor: pointer;
+  }
+  @media (max-width: 530px) {
+    gap: 10px;
+    img:nth-child(1) {
+      width: 32px;
+      height: fit-content;
+    }
+    img:nth-child(2) {
+      width: 66px;
+      height: fit-content;
+    }
   }
 `;
 const HeaderMiddle = styled.div`
@@ -126,6 +152,40 @@ const HeaderMiddle = styled.div`
   }
   .tab:hover {
     color: var(--Gray10_900, #212121);
+  }
+  @media (max-width: 530px) {
+    display: none;
+  }
+`;
+const HeaderMiddleResponsive = styled.div`
+  display: flex;
+  width: 100%;
+  justify-content: space-around;
+  .tab {
+    width: 25%;
+    height: 50px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    box-sizing: border-box;
+    padding-top: 3px;
+    color: var(--Gray-70, #757575);
+    font-weight: 600;
+    font-size: 1.125rem;
+    cursor: pointer;
+  }
+  .tab.select {
+    border-bottom: 3px solid var(--purple-50, #6a63f5);
+    color: var(--Gray10_900, #212121);
+  }
+  .tab.false {
+    padding-top: 0;
+  }
+  .tab:hover {
+    color: var(--Gray10_900, #212121);
+  }
+  @media (min-width: 530px) {
+    display: none;
   }
 `;
 const HeaderRight = styled.div`
@@ -172,6 +232,16 @@ const HeaderRight = styled.div`
     }
     p.responsive {
       display: block;
+    }
+  }
+
+  @media (max-width: 530px) {
+    img[alt="profile"] {
+      width: 32px;
+      height: 32px;
+    }
+    .writingBtn {
+      display: none;
     }
   }
 `;
