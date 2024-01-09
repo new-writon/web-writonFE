@@ -184,7 +184,7 @@ const HeaderMiddleResponsive = styled.div`
   .tab:hover {
     color: var(--Gray10_900, #212121);
   }
-  @media (min-width: 530px) {
+  @media (min-width: 531px) {
     display: none;
   }
 `;

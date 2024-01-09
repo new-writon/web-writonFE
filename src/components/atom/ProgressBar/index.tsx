@@ -25,7 +25,7 @@ export const ProgressBar = ({ value, date }: ProgressBarProps) => {
     //뷰크기 강제로 강져오기
     if (window.innerWidth >= 1140) {
       setWidth(1080);
-    } else if (window.innerWidth >= 530) {
+    } else if (window.innerWidth >= 531) {
       setWidth(window.innerWidth - 60); //inner padding값
     } else if (window.innerWidth >= 375) {
       setWidth(395);

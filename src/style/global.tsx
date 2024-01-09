@@ -56,7 +56,7 @@ time, mark, audio, video {
 		@media (max-width: 530px) {
     font-size: 14px;
   }
-	@media (max-width: 355px) {
+	@media (max-width: 365px) {
     font-size: 12px;
   }
 }
@@ -107,6 +107,7 @@ export const Inner = styled.div`
     width: 100%;
     margin: 0 auto;
     padding: 0 15px;
+    min-width: 333px;
     /* min-width: 327px; */
     &:has(.RetrospectTitle) {
       max-width: 100vw;
