@@ -117,7 +117,7 @@ const HeaderLeft = styled.div`
     gap: 10px;
     img:nth-child(1) {
       width: 32px;
-      height: fit-content;
+      height: 32px;
     }
     img:nth-child(2) {
       width: 66px;
