@@ -17,6 +17,7 @@ export const Container = styled.div`
 
   @media (max-width: 530px) {
     margin-top: 18px;
+
     .RetrospectTitle {
       max-width: 375px; //모바일
       width: 100%;
@@ -30,6 +31,25 @@ export const RetroSpectBox = styled.div`
   width: 100%;
   display: flex;
   position: relative;
+  @media (max-width: 530px) {
+    display: none;
+  }
+`;
+export const RetroSpectBoxResponsive = styled.div`
+  //background-color: var(--White);
+  width: 100%;
+  display: flex;
+  position: relative;
+  overflow-x: scroll;
+  white-space: nowrap;
+  gap: 11px;
+  margin-top: 12px;
+  &::-webkit-scrollbar {
+    display: none;
+  }
+  @media (min-width: 531px) {
+    display: none;
+  }
 `;
 
 export const ArrowButton = styled.div`

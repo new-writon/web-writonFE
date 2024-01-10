@@ -14,6 +14,7 @@ const MainPage = () => {
       <Calendar />
       <MyRetrospect />
       <FloatingWriteButton onClick={() => navigate("/writepage")}>
+        {/*모바일 일 때만 보인다/ */}
         회고 작성하기
       </FloatingWriteButton>
     </Container>

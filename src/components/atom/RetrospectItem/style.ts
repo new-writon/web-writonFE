@@ -13,9 +13,8 @@ export const Container = styled.div`
   }
   @media (max-width: 530px) {
     padding: 15px;
-    overflow-y: hidden;
     height: 174px;
-    width: 100%;
+    width: 50%;
   }
 `;
 
@@ -46,7 +45,7 @@ export const PreviewBody = styled.div`
   flex-direction: column;
   gap: 18px;
   .previewItem {
-    overflow-y: hidden;
+    overflow: hidden;
     text-overflow: ellipsis;
     display: -webkit-box; // 얘네를 추가히준다
     -webkit-line-clamp: 4;

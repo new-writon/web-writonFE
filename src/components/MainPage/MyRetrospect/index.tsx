@@ -12,7 +12,7 @@ import { RetrospectItem } from "@/components/atom/RetrospectItem";
 import { previewRetrospec } from "@/dummy/previewRetrospect";
 import { Inner } from "@/style/global";
 
-import { ArrowButton, Container, RetroSpectBox } from "./style";
+import { ArrowButton, Container, RetroSpectBox, RetroSpectBoxResponsive } from "./style";
 
 export const MyRetrospect = () => {
   const slickRef = useRef<Slider | null>(null);
@@ -91,6 +91,13 @@ export const MyRetrospect = () => {
             />
           </ArrowButton>
         </RetroSpectBox>
+        <RetroSpectBoxResponsive>
+          {previewRetrospec.map((data, idx) => (
+            <React.Fragment key={idx}>
+              <RetrospectItem data={data} />
+            </React.Fragment>
+          ))}
+        </RetroSpectBoxResponsive>
       </Container>
     </Inner>
   );
