@@ -1,5 +1,6 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 
+import { format } from "date-fns";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 
@@ -18,6 +19,8 @@ const Header = () => {
   const [selectTab, setSelectTab] = useState<string>("내 챌린지");
   const [isHover, setIsHover] = useState<boolean>(false);
 
+  const today = format(new Date(), "yyyy-MM-dd");
+
   const SpaceTab = (tab: string) => {
     setSelectTab(tab);
     switch (tab) {
@@ -27,8 +30,23 @@ const Header = () => {
       case "커뮤니티":
         navigate("/community");
         break;
+      case "작성하기":
+        // eslint-disable-next-line no-case-declarations
+        const date = encodeURI(encodeURIComponent(today));
+        navigate(`/writing/${date}`);
+        break;
     }
   };
+  useEffect(() => {
+    if (location.pathname === "/community") {
+      setSelectTab("커뮤니티");
+    } else if (location.pathname === "/") {
+      setSelectTab("내 챌린지");
+    } else {
+      setSelectTab("");
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [location.pathname]);
   return (
     <Inner>
       <Container>
@@ -59,6 +77,7 @@ const Header = () => {
             className="writingBtn"
             onMouseOver={() => setIsHover(true)}
             onMouseOut={() => setIsHover(false)}
+            onClick={() => SpaceTab("작성하기")}
           >
             <p>회고 작성하기</p>
             <p className="responsive">작성</p>
