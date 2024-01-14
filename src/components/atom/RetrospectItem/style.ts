@@ -7,9 +7,11 @@ export const Container = styled.div`
   background: var(--White);
   padding: 26px;
   cursor: pointer;
-  &:hover {
-    box-shadow: 0px 14px 20px 0px rgba(33, 33, 33, 0.05);
-    margin-top: -5px;
+  @media (min-width: 531px) {
+    &:hover {
+      box-shadow: 0px 14px 20px 0px rgba(33, 33, 33, 0.05);
+      margin-top: -5px;
+    }
   }
   @media (max-width: 530px) {
     padding: 15px;
