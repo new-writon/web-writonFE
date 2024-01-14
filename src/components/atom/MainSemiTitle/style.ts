@@ -6,7 +6,12 @@ export const Container = styled.div<{ $font: number }>`
   font-weight: 700;
   margin: auto 0;
   line-height: 22px;
+  display: flex;
   /* @media (max-width: 530px) {
     font-size: 1.125rem;
   } */
+  .number {
+    color: var(--purple-50);
+    margin-left: 5px;
+  }
 `;
