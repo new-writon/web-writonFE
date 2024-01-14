@@ -40,3 +40,12 @@ export interface RetrospectItemProps {
     content: string;
   }[];
 }
+
+export interface StoryItemProps {
+  name: string;
+  message: string;
+  profile: string;
+  job: string;
+  company: string;
+  oneline: string;
+}
