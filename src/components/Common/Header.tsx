@@ -56,6 +56,7 @@ const Header = () => {
               <img
                 src={logo}
                 alt={`${logo}`}
+                onClick={() => navigate("/")}
               />
             </React.Fragment>
           ))}
@@ -111,9 +112,12 @@ const Header = () => {
 export default Header;
 
 const Container = styled.div`
+  max-width: 1080px;
+  margin: 0 auto;
   height: 71px;
   display: flex;
   justify-content: space-between;
+
   @media (max-width: 530px) {
     height: 56px;
   }
@@ -126,6 +130,7 @@ const HeaderLeft = styled.div`
   img:nth-child(1) {
     width: 42px;
     height: fit-content;
+    cursor: pointer;
   }
   img:nth-child(2) {
     width: 90px;
@@ -180,6 +185,10 @@ const HeaderMiddleResponsive = styled.div`
   display: flex;
   width: 100%;
   justify-content: space-around;
+  position: -webkit-sticky; /* 사파리 브라우저 지원 */
+  position: sticky;
+  top: 0;
+  z-index: 9999;
   .tab {
     width: 25%;
     height: 50px;
