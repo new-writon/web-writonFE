@@ -5,6 +5,7 @@ import { KakaoCallback } from "@/pages/Authorization/KakaoCallback";
 import LoginPage from "@/pages/Authorization/LoginPage";
 import RegisterEmailPage from "@/pages/Authorization/RegisterEmailPage";
 import RegisterPage from "@/pages/Authorization/RegisterPage";
+import { CommunityPage } from "@/pages/CommunityPage/CommunityPage";
 import MainPage from "@/pages/MainPage/MainPage";
 
 const router = () => {
@@ -29,8 +30,12 @@ const router = () => {
             element={<MainPage />}
           />
           <Route
+            path="/writing/:date"
+            element={<LoginPage />}
+          />
+          <Route
             path="/community"
-            element={<MainPage />}
+            element={<CommunityPage />}
           />
           <Route
             path="/auth/kakao/callback"
