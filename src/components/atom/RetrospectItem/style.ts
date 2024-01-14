@@ -7,7 +7,9 @@ export const Container = styled.div`
   background: var(--White);
   padding: 26px;
   cursor: pointer;
+
   @media (min-width: 531px) {
+    overflow-y: hidden;
     &:hover {
       box-shadow: 0px 14px 20px 0px rgba(33, 33, 33, 0.05);
       margin-top: -5px;
@@ -16,7 +18,7 @@ export const Container = styled.div`
   @media (max-width: 530px) {
     padding: 15px;
     height: 174px;
-    width: 50%;
+    width: 55%;
   }
 `;
 

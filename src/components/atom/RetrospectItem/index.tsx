@@ -9,7 +9,7 @@ export const RetrospectItem = ({ data }: { data: RetrospectItemProps }) => {
     <Container>
       <Title>
         <div className="mainTitle">{data?.date}</div>
-        {data?.special && <TitleSideBox>스페셜 질문</TitleSideBox>}
+        {data?.special && <TitleSideBox type="special">스페셜 질문</TitleSideBox>}
       </Title>
       <PreviewBody>
         {data?.preview.map((item, idx) => {
