@@ -6,12 +6,11 @@ import styled from "styled-components";
 import arrow from "@/assets/communityPage/storyArrow.svg";
 import { MainSemiTitle } from "@/components/atom/MainSemiTitle";
 import { StoryItem } from "@/components/atom/StoryItem";
-import { ArrowButton, StoryItemBox } from "@/components/atom/StoryItem/style";
 import { TitleSideBox } from "@/components/atom/TitleSideBox";
 import { stroyDummy } from "@/dummy/story";
 import { Inner } from "@/style/global";
 
-import { Container } from "./style";
+import { Container, ArrowButton, StoryItemBox, StoryItemBoxResponsive } from "./style";
 
 const my = {
   name: "호연초이",
@@ -28,8 +27,45 @@ export const StoryBox = () => {
     infinite: false,
     slidesToShow: 10,
     slidesToScroll: 1,
-    speed: 1200,
+    speed: 700,
     arrows: false,
+    responsive: [
+      {
+        breakpoint: 640,
+        settings: {
+          slidesToShow: 4,
+          slidesToScroll: 1,
+        },
+      },
+      {
+        breakpoint: 750,
+        settings: {
+          slidesToShow: 5,
+          slidesToScroll: 1,
+        },
+      },
+      {
+        breakpoint: 850,
+        settings: {
+          slidesToShow: 6,
+          slidesToScroll: 1,
+        },
+      },
+      {
+        breakpoint: 1015,
+        settings: {
+          slidesToShow: 7,
+          slidesToScroll: 1,
+        },
+      },
+      {
+        breakpoint: 1110,
+        settings: {
+          slidesToShow: 9,
+          slidesToScroll: 1,
+        },
+      },
+    ],
   };
   const previous = useCallback(() => slickRef.current?.slickPrev(), []);
   const next = useCallback(() => slickRef.current?.slickNext(), []);
@@ -37,11 +73,14 @@ export const StoryBox = () => {
   return (
     <Inner>
       <Container>
-        <div className="title">
+        <div className="title first">
           <MainSemiTitle font={1.25}>
-            지금 <div className="number">{99}</div>명이 함께 {"렛츠인턴 2월 TIL 챌린지"} 도전중!
+            <p>
+              지금 <div className="number">{99}</div>명이 함께
+            </p>
+            {"렛츠인턴 2월 TIL 챌린지"} 도전중!
           </MainSemiTitle>
-          <TitleSideBox>D-{15}</TitleSideBox>
+          <TitleSideBox type="default">D-{15}</TitleSideBox>
         </div>
         <StoryItemBox>
           <StyledSlider
@@ -76,6 +115,21 @@ export const StoryBox = () => {
             />
           </ArrowButton>
         </StoryItemBox>
+
+        <StoryItemBoxResponsive>
+          <StoryItem
+            data={my}
+            someone={"me"}
+          />
+          {stroyDummy.map((data, idx) => (
+            <React.Fragment key={idx}>
+              <StoryItem
+                data={data}
+                someone={"other"}
+              />
+            </React.Fragment>
+          ))}
+        </StoryItemBoxResponsive>
       </Container>
     </Inner>
   );
