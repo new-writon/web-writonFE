@@ -102,6 +102,15 @@ export const Inner = styled.div`
   width: 100%;
   margin: 0 auto;
   padding: 0 30px;
+  &:has(.tab) {
+    max-width: 100vw;
+    position: -webkit-sticky; /* 사파리 브라우저 지원 */
+    position: sticky;
+    top: 0;
+    z-index: 9999;
+    background-color: var(--White);
+    border-bottom: 1px solid var(--Gray-30);
+  }
   @media (max-width: 530px) {
     max-width: 375px; //모바일
     width: 100%;
@@ -112,5 +121,19 @@ export const Inner = styled.div`
     &:has(.RetrospectTitle) {
       max-width: 100vw;
     }
+    &:has(.first) {
+      border-radius: 0px 0px 20px 20px;
+      background: var(--Gray-10, #fafafa);
+      box-shadow: 0px 4px 30px 0px rgba(33, 33, 33, 0.05);
+      //모바일 커뮤니티 위
+    }
+    &:has(.changeDate) {
+      // 모바일 커뮤니티 아래
+      background-color: var(--Gray-20, #f5f5f5);
+    }
   }
+`;
+
+export const Flex = styled.div`
+  display: flex;
 `;
