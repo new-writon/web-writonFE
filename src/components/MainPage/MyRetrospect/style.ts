@@ -41,6 +41,7 @@ export const RetroSpectBoxResponsive = styled.div`
   display: flex;
   position: relative;
   overflow-x: scroll;
+  overflow-y: hidden;
   white-space: nowrap;
   gap: 11px;
   margin-top: 12px;
