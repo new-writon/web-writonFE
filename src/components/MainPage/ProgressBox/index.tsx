@@ -16,7 +16,7 @@ export const ProgressBox = () => {
     setTimeout(() => {
       setValue(0); // 가중치 넣기 , 1이 아무것도 안했을 때 value 나중에 날짜에 가중치 *5씩하기
       setTimeout(() => {
-        setValue(1);
+        setValue(75);
       }, 300);
     }, 700);
   }, []);
@@ -25,7 +25,7 @@ export const ProgressBox = () => {
       <Container>
         <div className="title">
           <MainSemiTitle font={1.25}>지호님의 렛츠인턴 1월 TIL 챌린지</MainSemiTitle>
-          <TitleSideBox>D-{15}</TitleSideBox>
+          <TitleSideBox type="default">D-{15}</TitleSideBox>
         </div>
         <ProgressBar
           value={value} // 퍼센티지 받기 && 날짜만 받아서 가중치 곱해도 될듯
