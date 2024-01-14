@@ -14,4 +14,17 @@ export const Container = styled.div<{ $font: number }>`
     color: var(--purple-50);
     margin-left: 5px;
   }
+  p {
+    display: flex;
+    font-size: ${(props) => `${props.$font}rem`};
+  }
+  @media (max-width: 560px) {
+    display: block;
+    &:has(.number) {
+      font-size: 1.125rem;
+    }
+    &:has(.second) {
+      display: flex;
+    }
+  }
 `;
