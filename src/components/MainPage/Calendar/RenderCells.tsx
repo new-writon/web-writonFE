@@ -27,7 +27,7 @@ export const RenderCell = ({ fold }: { fold: boolean }) => {
   const endDate = endOfWeek(monthEnd); // 해당 날짜의 해당 주의 끝 날짜
   const weekNumber = getISOWeek(today) - 1; // 몇주차인지
 
-  const mouseEvent = (isTODAY: boolean, type: string) => {
+  const mouseEvent = (isTODAY: boolean, type: string, clickDay: string) => {
     // 오늘만 이동 가능 추가로 안쓴 날도 이동가능, 안쓴날은 따로 체크해야할듯
     if (isTODAY) {
       switch (type) {
@@ -41,15 +41,18 @@ export const RenderCell = ({ fold }: { fold: boolean }) => {
           setMouseClick(true);
           break;
         case "mouseClick":
-          navigate("/writepage");
+          // eslint-disable-next-line no-case-declarations
+          const date = encodeURI(encodeURIComponent(clickDay));
+          navigate(`/writing/${date}`);
           break;
       }
     }
   };
-  const responsiveClickEvent = (isTODAY: boolean) => {
+  const responsiveClickEvent = (isTODAY: boolean, clickDay: string) => {
     if (isTODAY) {
       if (width <= 530) {
-        navigate("/writepage");
+        const date = encodeURI(encodeURIComponent(clickDay));
+        navigate(`/writing/${date}`);
       }
     }
   };
@@ -83,7 +86,9 @@ export const RenderCell = ({ fold }: { fold: boolean }) => {
         >
           <div
             className={`innerday ${isSameDay(day, today) ? "Active" : "notActive"}`} // 반응형을 위한 코드
-            onClick={() => responsiveClickEvent(isSameDay(clickDay, today))} // 반응형을 위한 코드
+            onClick={() =>
+              responsiveClickEvent(isSameDay(clickDay, today), format(clickDay, "yyyy-MM-dd"))
+            } // 반응형을 위한 코드
           >
             <div
               className={format(today, "M") !== format(day, "M") ? "text not-valid" : "text valid"}
@@ -112,10 +117,16 @@ export const RenderCell = ({ fold }: { fold: boolean }) => {
               />
             ) : (
               <img
-                onMouseOver={() => mouseEvent(isSameDay(clickDay, today), "mouseOver")}
-                onMouseOut={() => mouseEvent(isSameDay(clickDay, today), "mouseOut")}
-                onMouseDown={() => mouseEvent(isSameDay(clickDay, today), "mouseDown")}
-                onClick={() => mouseEvent(isSameDay(clickDay, today), "mouseClick")}
+                onMouseOver={() => mouseEvent(isSameDay(clickDay, today), "mouseOver", "")}
+                onMouseOut={() => mouseEvent(isSameDay(clickDay, today), "mouseOut", "")}
+                onMouseDown={() => mouseEvent(isSameDay(clickDay, today), "mouseDown", "")}
+                onClick={() =>
+                  mouseEvent(
+                    isSameDay(clickDay, today),
+                    "mouseClick",
+                    format(clickDay, "yyyy-MM-dd")
+                  )
+                }
                 className={isSameDay(day, today) ? "writeActive" : "Badge"}
                 src={
                   isSameDay(day, today)
