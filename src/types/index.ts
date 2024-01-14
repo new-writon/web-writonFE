@@ -24,6 +24,10 @@ export interface MainSemiTitleProps {
   children: React.ReactNode;
   font: number;
 }
+export interface TitleSideBoxProps {
+  children: React.ReactNode;
+  type: string;
+}
 
 export interface TooltipButtonProps {
   children: React.ReactNode;
@@ -48,4 +52,20 @@ export interface StoryItemProps {
   job: string;
   company: string;
   oneline: string;
+}
+
+export interface CommunityItemProps {
+  user: {
+    name: string;
+    job: string;
+    company: string;
+    profile?: string;
+    date?: string;
+  };
+  comment: number;
+  likeCount: number;
+  preview: {
+    question: string;
+    content: string;
+  }[];
 }
