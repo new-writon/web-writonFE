@@ -13,6 +13,11 @@ export const previewRetrospec = [
         content:
           "전직대통령의 신분과 예우에 관하여는 법률로 정한다. 선거에 관한 경비는 법률이 정하는 경우를 제외하 efwefewfweewfw",
       },
+      {
+        question: "2. 오늘의 잘한 점은 무엇인가요?",
+        content:
+          "전직대통령의 신분과 예우에 관하여는 법률로 정한다. 선거에 관한 경비는 법률이 정하는 경우를 제외하 efwefewfweewfw",
+      },
     ],
   },
   {
