@@ -107,5 +107,9 @@ export const Container = styled.div`
     .selected::before {
       background-color: transparent;
     }
+    .cell.selected .innerday .text {
+      color: var(--purple-50);
+      z-index: 1;
+    }
   }
 `;
