@@ -18,7 +18,7 @@ export const Container = styled.div<{ $someone: string }>`
     display: inline-flex;
     justify-content: center;
     align-items: center;
-    margin-bottom: 10px;
+    margin-bottom: 12px;
     z-index: 1;
   }
   .storyMessage::before {
@@ -35,6 +35,18 @@ export const Container = styled.div<{ $someone: string }>`
     background-color: var(--Gray-20);
     border-bottom-left-radius: 3px;
     z-index: -1;
+  }
+  @media (max-width: 530px) {
+    .storyMessage::before {
+      background-color: #fff;
+    }
+    .storyMessage {
+      background-color: #fff;
+      height: fit-content;
+      white-space: initial;
+      font-size: 0.625rem;
+      color: var(--Gray-90, #424242);
+    }
   }
 
   .profileImageCover {
@@ -85,29 +97,5 @@ export const Container = styled.div<{ $someone: string }>`
     background: var(--White, #fff);
     border-bottom-left-radius: 3px;
     z-index: -1;
-  }
-`;
-
-export const StoryItemBox = styled.div`
-  width: 100%;
-  display: flex;
-  position: relative;
-  margin-top: 20px;
-  padding: 0 18px;
-`;
-
-export const ArrowButton = styled.div`
-  position: absolute;
-  height: fit-content;
-  top: 0;
-  bottom: 0;
-  margin: auto 0;
-  cursor: pointer;
-  &:has(.previous) {
-    left: 0;
-  }
-  &:has(.next) {
-    right: 0;
-    transform: rotate(180deg);
   }
 `;
