@@ -7,14 +7,14 @@ import tsconfigPaths from "vite-tsconfig-paths";
 
 // https://vitejs.dev/config/
 export default defineConfig({
-	plugins: [react(), tsconfigPaths(), eslint()],
-	define: {},
-	esbuild: {
-		drop: ["debugger"],
-	},
-	resolve: {
-		alias: {
-			"@": path.resolve(__dirname, "./src"),
-		},
-	},
+  plugins: [react(), tsconfigPaths(), eslint()],
+  define: {},
+  esbuild: {
+    drop: ["debugger"],
+  },
+  resolve: {
+    alias: {
+      "@": path.resolve(__dirname, "./src"),
+    },
+  },
 });
