@@ -3,11 +3,22 @@ import { StoryItemProps } from "@/types";
 
 import { Container } from "./style";
 
-export const StoryItem = ({ data, someone }: { data: StoryItemProps; someone: string }) => {
+export const StoryItem = ({
+  data,
+  someone,
+  onClick,
+}: {
+  data: StoryItemProps;
+  someone: string;
+  onClick: (e: React.MouseEvent<HTMLDivElement>) => void;
+}) => {
   return (
     <Container $someone={someone}>
       <div className="storyMessage">{data?.message}</div>
-      <div className="profileImageCover">
+      <div
+        className="profileImageCover"
+        onClick={onClick}
+      >
         <img
           src={profile} //{data?.profile}
           alt="profile"

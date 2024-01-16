@@ -74,28 +74,4 @@ export const Container = styled.div<{ $someone: string }>`
   .company {
     color: var(--Gray-70, #757575);
   }
-
-  .introducePopup {
-    padding: 16px;
-    border-radius: 10px;
-    background-color: var(--White, #fff);
-    z-index: 10;
-    position: absolute;
-    bottom: -52px;
-  }
-  .introducePopup::before {
-    content: "";
-    display: block;
-    width: 16px;
-    height: 16px;
-    transform: rotate(45deg);
-    position: absolute;
-    top: -3px;
-    margin: auto;
-    left: 0;
-    right: 0;
-    background: var(--White, #fff);
-    border-bottom-left-radius: 3px;
-    z-index: -1;
-  }
 `;
