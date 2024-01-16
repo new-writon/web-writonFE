@@ -1,30 +1,37 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import axios, { AxiosRequestConfig } from "axios";
+import axios, { AxiosRequestConfig, InternalAxiosRequestConfig } from "axios";
 
 export const WRITON = axios.create({
-  baseURL: "https://www.writon.store:443/api",
+  baseURL: "https://api.writon.co.kr/api",
   headers: {
     "Content-Type": "application/json;charset=UTF-8",
   },
   responseType: "json",
 });
 
-interface APIResponse<T> {
-  access_token: string;
-  // 나중에 데이터 타입 여기서 다 맞춰야한다.
-  code: number;
-  message: string;
+WRITON.interceptors.request.use(async (req: InternalAxiosRequestConfig) => {
+  const accessToken = localStorage.getItem("accessToken");
+
+  if (req.headers && accessToken) req.headers.Authentication = `${accessToken}`;
+  return req;
+});
+interface ApiResponse<T = any> {
   data: T;
+  status: number;
+  statusText: string;
+  headers: any;
+  config: AxiosRequestConfig;
+  request?: any;
 }
 
 //TODO: GET 메서드
 export const getData = async <T>(
   url: string,
   config?: AxiosRequestConfig
-): Promise<APIResponse<T>> => {
+): Promise<ApiResponse<T>> => {
   try {
-    const response = await WRITON.get<APIResponse<T>>(url, config);
-    return response.data;
+    const response = await WRITON.get(url, config);
+    return response;
   } catch (error) {
     console.log(error);
     throw new Error();
@@ -36,10 +43,10 @@ export const postData = async <T>(
   url: string,
   data?: any,
   config?: AxiosRequestConfig
-): Promise<APIResponse<T>> => {
+): Promise<ApiResponse<T>> => {
   try {
-    const response = await WRITON.post<APIResponse<T>>(url, data, config);
-    return response.data;
+    const response = await WRITON.post(url, data, config);
+    return response;
   } catch (error) {
     throw new Error();
   }
@@ -50,10 +57,10 @@ export const putData = async <T>(
   url: string,
   data?: any,
   config?: AxiosRequestConfig
-): Promise<APIResponse<T>> => {
+): Promise<ApiResponse<T>> => {
   try {
-    const response = await WRITON.put<APIResponse<T>>(url, data, config);
-    return response.data;
+    const response = await WRITON.put(url, data, config);
+    return response;
   } catch (error) {
     throw new Error();
   }
@@ -63,10 +70,10 @@ export const putData = async <T>(
 export const deleteData = async <T>(
   url: string,
   config?: AxiosRequestConfig
-): Promise<APIResponse<T>> => {
+): Promise<ApiResponse<T>> => {
   try {
-    const response = await WRITON.delete<APIResponse<T>>(url, config);
-    return response.data;
+    const response = await WRITON.delete(url, config);
+    return response;
   } catch (error) {
     throw new Error();
   }
