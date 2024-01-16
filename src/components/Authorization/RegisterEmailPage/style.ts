@@ -147,7 +147,7 @@ export const EmailCodeBox = styled.div`
 `;
 
 export const AgreeBox = styled.div`
-  margin: 0 auto 30px;
+  margin: 30px auto 30px;
 
   .checkItem {
     display: flex;

@@ -3,7 +3,13 @@ import { ChangeEvent, FocusEvent, MouseEvent, useEffect, useState } from "react"
 import { useNavigate } from "react-router-dom";
 import { useSetRecoilState } from "recoil";
 
-import { getDuplicateId, postEmail, postEmailCode } from "@/apis/login";
+import {
+  getDuplicateEmail,
+  getDuplicateId,
+  postEmail,
+  postEmailCode,
+  postRegister,
+} from "@/apis/login";
 import checkable from "@/assets/register/signup_checkall.svg";
 import checkdisable from "@/assets/register/signup_checkall_disabled.svg";
 import { AuthorizationTitle } from "@/components/atom/AuthorizationTitle";
@@ -21,7 +27,7 @@ import {
   // NicknameBox,
   PasswordBox,
   PasswordCheckBox,
-  PhoneNumberBox,
+  // PhoneNumberBox,
   RegisterBox,
   RegisterBtn,
   RequestBtn,
@@ -45,7 +51,7 @@ const RegisterEmail = () => {
   const [password1Num, setPassword1Num] = useState<number>(0);
   const [password2Num, setPassword2Num] = useState<number>(0);
   // const [nickname, setNickname] = useState<string>("");
-  const [phoneNumber, setPhoneNumber] = useState<string>("");
+  // const [phoneNumber, setPhoneNumber] = useState<string>("");
   const [email, setEmail] = useState<string>("");
   const [emailCode, setEmailCode] = useState<string>("");
   const [checkNum, setCheckNum] = useState<Array<string>>([]);
@@ -84,10 +90,8 @@ const RegisterEmail = () => {
     try {
       const response = await getDuplicateId(userId);
       console.log(response);
-      if (response.code === 200) {
-        setDuplicate(true);
-        setDuplicateShow(true); // 일단 버튼을 누르면 hide 클래스 제거
-      }
+      setDuplicate(true);
+      setDuplicateShow(true); // 일단 버튼을 누르면 hide 클래스 제거
     } catch (err) {
       setDuplicate(false);
       setDuplicateShow(true); // 일단 버튼을 누르면 hide 클래스 제거
@@ -138,18 +142,18 @@ const RegisterEmail = () => {
   //     setNickname(value);
   //   }
   // };
-  const handlePhoneNumberChange = (e: ChangeEvent<HTMLInputElement>) => {
-    const value = e.target.value;
+  // const handlePhoneNumberChange = (e: ChangeEvent<HTMLInputElement>) => {
+  //   const value = e.target.value;
 
-    if (value.length < 14) {
-      setPhoneNumber(
-        value
-          .replace(/[^0-9]/g, "")
-          .replace(/^(\d{0,3})(\d{0,4})(\d{0,4})$/g, "$1-$2-$3")
-          .replace(/(-{1,2})$/g, "")
-      );
-    }
-  };
+  //   if (value.length < 14) {
+  //     setPhoneNumber(
+  //       value
+  //         .replace(/[^0-9]/g, "")
+  //         .replace(/^(\d{0,3})(\d{0,4})(\d{0,4})$/g, "$1-$2-$3")
+  //         .replace(/(-{1,2})$/g, "")
+  //     );
+  //   }
+  // };
 
   // 이메일 유효성 검사
   const handleEmailChange = (e: ChangeEvent<HTMLInputElement>) => {
@@ -170,16 +174,25 @@ const RegisterEmail = () => {
   const RequestEmail = async () => {
     setLoading(true);
     try {
-      const response = await postEmail(email);
-      console.log(response);
-      if (response.code === 200) {
-        setEmailCodeShow(true);
-        setEmailError(false);
-        setLoading(false);
+      const res = await getDuplicateEmail(email);
+      if (res.status === 200) {
+        try {
+          const response = await postEmail(email);
+          console.log(response);
+          if (response.status === 200) {
+            setEmailCodeShow(true);
+            setEmailError(false);
+            setLoading(false);
+          }
+        } catch (err) {
+          console.log(err);
+          throw new Error("shit");
+        }
       }
-    } catch (err) {
-      console.log(err);
-      throw new Error("shit");
+    } catch {
+      alert("중복된 이메일입니다.");
+      setLoading(false);
+      setEmail("");
     }
   };
 
@@ -195,22 +208,19 @@ const RegisterEmail = () => {
     }
   };
 
-  const EmailCodeCheck = () => {
-    postEmailCode({ email, emailCode })
-      .then((res) => {
-        console.log(res);
-        if (1 < userId.length) {
-          // 성공
-          setEmailcodeCheck(true);
-          setEmailcodeCheckShow(true); // 일단 버튼을 누르면 hide 클래스 제거 -> 시간 멈추기 기능넣어여함.
-          setEmailcodeError(false);
-        } else {
-          setEmailcodeCheck(false);
-          setEmailcodeCheckShow(true); // 일단 버튼을 누르면 hide 클래스 제거
-          setEmailcodeError(true);
-        }
-      })
-      .catch((err) => console.log(err));
+  const EmailCodeCheck = async () => {
+    try {
+      const response = await postEmailCode(email, emailCode);
+      console.log(response);
+      // 성공
+      setEmailcodeCheck(true);
+      setEmailcodeCheckShow(true); // 일단 버튼을 누르면 hide 클래스 제거 -> 시간 멈추기 기능넣어여함.
+      setEmailcodeError(false);
+    } catch {
+      setEmailcodeCheck(false);
+      setEmailcodeCheckShow(true); // 일단 버튼을 누르면 hide 클래스 제거
+      setEmailcodeError(true);
+    }
   };
 
   const ResendEmailCode = () => {
@@ -245,7 +255,16 @@ const RegisterEmail = () => {
   };
 
   //회원가입 완료
-  const RegisterOk = () => {};
+  const RegisterOk = async () => {
+    try {
+      const response = await postRegister(userId, password2, email);
+      console.log(response);
+      alert("회원가입 완료!");
+      navigate("/login");
+    } catch {
+      throw new Error("shit");
+    }
+  };
 
   //이메일 타이머 작동
   useEffect(() => {
@@ -277,7 +296,7 @@ const RegisterEmail = () => {
       //nickname && //&& //닉네임 중복체크 넣으면 된다.
       // !emailError //&&
       //emailcodeCheck
-      phoneNumber.length === 13 &&
+      //phoneNumber.length === 13 &&
       checkNum.length === 2
     ) {
       setRegisterFlag(false);
@@ -294,7 +313,7 @@ const RegisterEmail = () => {
     password2,
     emailError,
     emailcodeCheck,
-    phoneNumber,
+    //phoneNumber,
     checkNum,
   ]);
 
@@ -458,7 +477,7 @@ const RegisterEmail = () => {
             </div>
           </EmailCodeBox>
         </div>
-        <PhoneNumberBox>
+        {/* <PhoneNumberBox>
           <p className="title">전화번호</p>
           <div className="inputphoneNumber">
             <Input
@@ -468,7 +487,7 @@ const RegisterEmail = () => {
               placeholder="전화번호를 입력해주세요."
             />
           </div>
-        </PhoneNumberBox>
+        </PhoneNumberBox> */}
         <AgreeBox>
           <p className="title">이용약관 동의</p>
           {agreeText.map((item, idx) => {
