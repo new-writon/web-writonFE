@@ -6,41 +6,50 @@ import { ProgressBar } from "@/components/atom/ProgressBar";
 import { TitleSideBox } from "@/components/atom/TitleSideBox";
 import { TooltipButton } from "@/components/atom/TooltipButton";
 import { Inner } from "@/style/global";
+import { ChallengeCurrentType } from "@/types";
 
 import { Container, CountingLabelContainer } from "./style";
-const price = 25000;
-export const ProgressBox = () => {
+
+export const ProgressBox = ({
+  ChallengeCurrent,
+}: {
+  ChallengeCurrent: ChallengeCurrentType | undefined;
+}) => {
   const [value, setValue] = useState<number>(0);
   const [tooltipOn, setTooltopOn] = useState<boolean>(false);
   useEffect(() => {
+    const count = ChallengeCurrent?.challengeSuccessCount || 0;
     setTimeout(() => {
       setValue(0); // 가중치 넣기 , 1이 아무것도 안했을 때 value 나중에 날짜에 가중치 *5씩하기
       setTimeout(() => {
-        setValue(75);
-      }, 300);
-    }, 700);
-  }, []);
+        setValue(count === 0 ? 1 : count * 5);
+      }, 100);
+    }, 500);
+  }, [ChallengeCurrent?.challengeSuccessCount]);
   return (
     <Inner>
       <Container>
         <div className="title">
-          <MainSemiTitle font={1.25}>지호님의 렛츠인턴 1월 TIL 챌린지</MainSemiTitle>
-          <TitleSideBox type="default">D-{15}</TitleSideBox>
+          <MainSemiTitle font={1.25}>
+            {ChallengeCurrent?.nickname}님의 렛츠인턴 1월 TIL 챌린지
+          </MainSemiTitle>
+          <TitleSideBox type="default">D-{ChallengeCurrent?.overlapPeriod}</TitleSideBox>
         </div>
         <ProgressBar
           value={value} // 퍼센티지 받기 && 날짜만 받아서 가중치 곱해도 될듯
-          date={15} //날짜 받기
+          startDate={ChallengeCurrent?.challengeSuccessCount} //날짜 받기
+          endDate={ChallengeCurrent?.challengeOverlapCount}
         />
         <CountingLabelContainer>
           <CountingLabelCard
             title={"작성된 회고"}
-            currentContent={`${15}일`}
-            defaultContent={"20일"}
+            currentContent={`${ChallengeCurrent?.challengeSuccessCount}일`}
+            defaultContent={`${ChallengeCurrent?.challengeOverlapCount}일`}
           />
           <CountingLabelCard
             title={"환급 가능 보증금"}
-            currentContent={`${price.toLocaleString()}원`}
-            defaultContent={"25,000원"}
+            currentContent={`${ChallengeCurrent?.overlapDeposit.toLocaleString()}원`}
+            defaultContent={`${ChallengeCurrent?.overlapDeposit.toLocaleString()}원`}
           />
           {/* <div className="priceMessage">
             회고 {20 - 15}일 더 작성하면, 보증급 전액 환급 가능해요.
