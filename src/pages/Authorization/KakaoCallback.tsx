@@ -2,7 +2,7 @@ import { useEffect } from "react";
 
 import { useNavigate } from "react-router-dom";
 
-import { postKakaoAuth } from "@/apis/login";
+import { postKakaoAuth, postKakaoLogin } from "@/apis/login";
 import Loading from "@/components/Common/Loading";
 
 export const KakaoCallback = () => {
@@ -15,9 +15,23 @@ export const KakaoCallback = () => {
     } else {
       const response = await postKakaoAuth(CODE);
       console.log(response);
-      //const res = await postKakaoLogin(response.access_token);
-      //console.log(res); // 여기서 토큰 받고 로컬스토리지에 저장
-      navigate("/");
+
+      try {
+        const res = await postKakaoLogin(
+          response.access_token,
+          localStorage.getItem("organization") || ""
+        );
+        localStorage.setItem("accessToken", res.accessToken);
+        localStorage.setItem("refreshToken", res.refreshToken);
+        if (res.affiliatedConfirmation) {
+          navigate("/");
+        } else {
+          navigate("/"); //나중에 온보딩 페이지로
+        }
+      } catch (err) {
+        alert("다시 로그인해주세요"); // 모달창으로 변경하기
+        console.log(err);
+      }
     }
   };
 
