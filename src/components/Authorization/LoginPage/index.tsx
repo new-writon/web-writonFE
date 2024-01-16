@@ -1,4 +1,4 @@
-import { ChangeEvent, KeyboardEvent, useState } from "react";
+import { ChangeEvent, KeyboardEvent, useEffect, useState } from "react";
 
 import { useNavigate } from "react-router-dom";
 
@@ -13,6 +13,7 @@ const Login = () => {
   const navigate = useNavigate();
   const [id, setId] = useState<string>("");
   const [pw, setPw] = useState<string>("");
+  const [organization, setOrganization] = useState<string>("letsintern"); // 나중에는 뺴야함.
 
   const handleOnKeyPress = (e: KeyboardEvent<HTMLInputElement>) => {
     if (e.key === "Enter") {
@@ -22,11 +23,15 @@ const Login = () => {
 
   const LocalLogin = async () => {
     try {
-      const response = await postLogin({ id, pw });
+      const response = await postLogin({ id, pw, organization });
       console.log(response);
-      localStorage.setItem("accessToken", response.data.data.accessToken);
-      localStorage.setItem("refreshToken", response.data.data.refreshToken);
-      navigate("/");
+      localStorage.setItem("accessToken", response.accessToken);
+      localStorage.setItem("refreshToken", response.refreshToken);
+      if (response.affiliatedConfirmation) {
+        navigate("/");
+      } else {
+        navigate("/onboarding"); //나중에 온보딩 페이지로
+      }
     } catch (err) {
       alert("아이디 및 비밀번호를 다시 입력해주세요"); // 모달창으로 변경하기
       console.log(err);
@@ -39,6 +44,18 @@ const Login = () => {
     }&redirect_uri=${import.meta.env.VITE_APP_REDIRECT_URI}&response_type=code&lang=ko`;
     window.location.href = url;
   };
+
+  //쿼리스트링 뽑이서 로컬스토리지에 저장
+  useEffect(() => {
+    const queryString = location.search;
+    if (queryString) {
+      const urlParams = new URLSearchParams(queryString);
+      const organization: string = urlParams.get("organization") || "";
+      localStorage.setItem("organization", organization);
+      setOrganization(localStorage.getItem("organization") || "");
+      console.log(organization);
+    }
+  }, []);
 
   return (
     <Container>
