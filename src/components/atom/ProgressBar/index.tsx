@@ -8,10 +8,11 @@ import { Container } from "./style";
 
 interface ProgressBarProps {
   value: number;
-  date: number;
+  startDate: number | undefined;
+  endDate: number | undefined;
 }
 
-export const ProgressBar = ({ value, date }: ProgressBarProps) => {
+export const ProgressBar = ({ value, startDate, endDate }: ProgressBarProps) => {
   const [width, setWidth] = useState<number>(
     window.innerWidth >= 1140
       ? 1080
@@ -47,16 +48,16 @@ export const ProgressBar = ({ value, date }: ProgressBarProps) => {
             {value === 1 ? (
               <p>첫 회고를 작성해 주세요! 🔥</p>
             ) : (
-              <p>{date}일 회고 성공! 대단해요 🔥</p>
+              <p>{startDate}일 회고 성공! 대단해요 🔥</p>
             )}
             <div className="arrow"></div>
           </div>
           <div className="date">
-            {date}일<p>/20일</p>
+            {startDate}일<p>/{endDate}일</p>
           </div>
         </>
       )}
-      <div className="endDate">20일</div>
+      <div className="endDate">{endDate}일</div>
       <img
         src={flag}
         alt="깃발"
