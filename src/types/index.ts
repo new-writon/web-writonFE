@@ -69,3 +69,11 @@ export interface CommunityItemProps {
     content: string;
   }[];
 }
+
+export interface ChallengeCurrentType {
+  nickname: string;
+  overlapPeriod: number;
+  challengeOverlapCount: number;
+  challengeSuccessCount: number;
+  overlapDeposit: number;
+}
