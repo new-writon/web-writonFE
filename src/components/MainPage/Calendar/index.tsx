@@ -9,11 +9,12 @@ import { MainSemiTitle } from "@/components/atom/MainSemiTitle";
 import { TooltipButton } from "@/components/atom/TooltipButton";
 import { TooltipMessage } from "@/components/atom/TooltipMessage";
 import { Inner } from "@/style/global";
+import { CalendarRecordCurrentType } from "@/types";
 
 import { RenderCell } from "./RenderCells";
 import { RenderDays } from "./RenderDays";
 import { Container } from "./style";
-export const Calendar = () => {
+export const Calendar = ({ CalendarData }: { CalendarData: CalendarRecordCurrentType[] }) => {
   const today = new Date();
   const [fold, setFold] = useState<boolean>(false);
   const [tooltipOn, setTooltopOn] = useState<boolean>(false);
@@ -60,7 +61,11 @@ export const Calendar = () => {
           </div>
         )}
         <RenderDays />
-        <RenderCell fold={fold} />
+        <RenderCell
+          pageDay=""
+          fold={fold}
+          CalendarData={CalendarData}
+        />
       </Container>
     </Inner>
   );

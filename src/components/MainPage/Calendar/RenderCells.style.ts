@@ -76,6 +76,12 @@ export const Container = styled.div`
     filter: drop-shadow(0px 5px 20px rgba(106, 99, 245, 0.3));
     cursor: pointer;
   }
+  .writePre {
+    cursor: pointer;
+  }
+  .writeNotSpecified {
+    visibility: hidden;
+  }
 
   @media (max-width: 530px) {
     .innerday img {
