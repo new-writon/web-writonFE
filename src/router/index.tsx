@@ -7,6 +7,7 @@ import RegisterEmailPage from "@/pages/Authorization/RegisterEmailPage";
 import RegisterPage from "@/pages/Authorization/RegisterPage";
 import { CommunityPage } from "@/pages/CommunityPage/CommunityPage";
 import MainPage from "@/pages/MainPage/MainPage";
+import { WritingPage } from "@/pages/WritingPage/WritingPage";
 
 const router = () => {
   return (
@@ -31,7 +32,7 @@ const router = () => {
           />
           <Route
             path="/writing/:date"
-            element={<LoginPage />}
+            element={<WritingPage />}
           />
           <Route
             path="/community"
