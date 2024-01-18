@@ -1,6 +1,7 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 
 import Layout from "@/Layout";
+import { ScrollToTop } from "@/components/Common/ScrollToTop";
 import { KakaoCallback } from "@/pages/Authorization/KakaoCallback";
 import LoginPage from "@/pages/Authorization/LoginPage";
 import RegisterEmailPage from "@/pages/Authorization/RegisterEmailPage";
@@ -12,6 +13,7 @@ import { WritingPage } from "@/pages/WritingPage/WritingPage";
 const router = () => {
   return (
     <BrowserRouter>
+      <ScrollToTop />
       <Routes>
         <Route
           path="/login"
