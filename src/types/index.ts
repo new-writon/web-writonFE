@@ -16,6 +16,11 @@ export interface ButtonProps {
   onClick: () => void;
   // 다른 버튼 관련 프로퍼티 추가
 }
+export interface SubmitButtonProps {
+  children: React.ReactNode;
+  onClick: () => void;
+  disabled: boolean;
+}
 export interface writingPagePopUpProps {
   onClick: () => void;
   setpopUpOn: (popUpOn: boolean) => void;
@@ -115,4 +120,10 @@ export interface SpecialQuestionType {
 export interface addSpecialQuestionArrayType {
   question_id: number;
   question: string;
+}
+
+export interface postWritingDataType {
+  question_id: number;
+  content: string;
+  visibility: boolean;
 }
