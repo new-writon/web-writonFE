@@ -9,12 +9,12 @@ import styled from "styled-components";
 import arrow from "@/assets/mainPage/icon-arrow.svg";
 import { MainSemiTitle } from "@/components/atom/MainSemiTitle";
 import { RetrospectItem } from "@/components/atom/RetrospectItem";
-import { previewRetrospec } from "@/dummy/previewRetrospect";
 import { Inner } from "@/style/global";
+import { RetrospectCurrentType } from "@/types";
 
 import { ArrowButton, Container, RetroSpectBox, RetroSpectBoxResponsive } from "./style";
 
-export const MyRetrospect = () => {
+export const MyRetrospect = ({ RetrospectData }: { RetrospectData: RetrospectCurrentType[][] }) => {
   const slickRef = useRef<Slider | null>(null);
   const REACT_SLIDER_SETTINGS = {
     infinite: true,
@@ -70,7 +70,7 @@ export const MyRetrospect = () => {
             {...REACT_SLIDER_SETTINGS}
             ref={slickRef}
           >
-            {previewRetrospec.map((data, idx) => (
+            {RetrospectData.map((data, idx) => (
               <React.Fragment key={idx}>
                 <RetrospectItem data={data} />
               </React.Fragment>
@@ -92,7 +92,7 @@ export const MyRetrospect = () => {
           </ArrowButton>
         </RetroSpectBox>
         <RetroSpectBoxResponsive>
-          {previewRetrospec.map((data, idx) => (
+          {RetrospectData.map((data, idx) => (
             <React.Fragment key={idx}>
               <RetrospectItem data={data} />
             </React.Fragment>
