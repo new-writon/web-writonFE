@@ -4,16 +4,23 @@ import { format } from "date-fns";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 
-import { getChallengeCurrent } from "@/apis/mainPage";
+import {
+  getCalendarRecordCurrent,
+  getChallengeCurrent,
+  getRetrospectCurrent,
+} from "@/apis/mainPage";
 import { Calendar } from "@/components/MainPage/Calendar";
 import { MyRetrospect } from "@/components/MainPage/MyRetrospect";
 import { ProgressBox } from "@/components/MainPage/ProgressBox";
 import { FloatingWriteButton } from "@/components/atom/button";
-import { ChallengeCurrentType } from "@/types";
+import { CalendarRecordCurrentType, ChallengeCurrentType, RetrospectCurrentType } from "@/types";
 const MainPage = () => {
   const navigate = useNavigate();
   const today = format(new Date(), "yyyy-MM-dd");
   const [ChallengeCurrent, setChallengeCurrent] = useState<ChallengeCurrentType>();
+  const [CalendarData, setCalendarData] = useState<CalendarRecordCurrentType[]>([]);
+  const [RetrospectData, setRetrospectData] = useState<RetrospectCurrentType[][]>([]);
+
   const spaceToWritingPage = () => {
     const date = encodeURI(encodeURIComponent(today));
     navigate(`/writing/${date}`);
@@ -21,12 +28,26 @@ const MainPage = () => {
 
   const mainPageRendering = async () => {
     try {
-      const response = await getChallengeCurrent(
-        localStorage.getItem("organization") || "",
-        localStorage.getItem("challengeId") || "1"
-      );
-      console.log(response);
-      setChallengeCurrent(response);
+      const result = await Promise.all([
+        getChallengeCurrent(
+          localStorage.getItem("organization") || "",
+          localStorage.getItem("challengeId") || "1"
+        ),
+        getCalendarRecordCurrent(
+          localStorage.getItem("organization") || "",
+          localStorage.getItem("challengeId") || "1",
+          "2024-01"
+        ),
+        getRetrospectCurrent(
+          localStorage.getItem("organization") || "",
+          localStorage.getItem("challengeId") || "1",
+          "2024-01"
+        ),
+      ]);
+      console.log(result);
+      setChallengeCurrent(result[0]);
+      setCalendarData(result[1]);
+      setRetrospectData(result[2]);
     } catch {
       throw new Error("shit");
     }
@@ -38,8 +59,8 @@ const MainPage = () => {
   return (
     <Container>
       <ProgressBox ChallengeCurrent={ChallengeCurrent} />
-      <Calendar />
-      <MyRetrospect />
+      <Calendar CalendarData={CalendarData} />
+      <MyRetrospect RetrospectData={RetrospectData} />
       <FloatingWriteButton onClick={spaceToWritingPage}>
         {/*모바일 일 때만 보인다/ */}
         회고 작성하기
