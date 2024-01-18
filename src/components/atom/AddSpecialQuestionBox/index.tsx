@@ -5,7 +5,11 @@ import { useRecoilState } from "recoil";
 import downArrow from "@/assets/mainPage/downArrow.svg";
 import topArrow from "@/assets/mainPage/topArrow.svg";
 import addBtn from "@/assets/writingPage/icon-add.svg";
-import { addSpecialQuestionArrayState, addSpecialQuestionState } from "@/recoil/atoms";
+import {
+  addSpecialQuestionArrayState,
+  addSpecialQuestionState,
+  postWritingDataState,
+} from "@/recoil/atoms";
 import { SpecialQuestionType } from "@/types";
 
 import { TitleSideBox } from "../TitleSideBox";
@@ -19,6 +23,8 @@ export const AddSpecialQuestionBox = ({ data }: { data: SpecialQuestionType }) =
   const [addSpecialQuestionData, setAddSpecialQuestionData] = useRecoilState(
     addSpecialQuestionArrayState
   );
+  const [postWritingData, setpostWritingData] = useRecoilState(postWritingDataState);
+
   // 스페셜 질문 추가 버튼 함수
   const AddSpecialQuestionFunc = (question_id: number, question: string) => {
     // 스페셜 질문 추가 버튼
@@ -28,6 +34,10 @@ export const AddSpecialQuestionBox = ({ data }: { data: SpecialQuestionType }) =
       setAddSpecialQuestionData([
         { question_id: question_id, question: question },
         ...addSpecialQuestionData,
+      ]);
+      setpostWritingData([
+        ...postWritingData,
+        { question_id: question_id, content: "", visibility: true },
       ]);
     }
   };
