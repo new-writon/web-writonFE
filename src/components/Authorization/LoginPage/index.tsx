@@ -24,7 +24,6 @@ const Login = () => {
   const LocalLogin = async () => {
     try {
       const response = await postLogin({ id, pw, organization });
-      console.log(response);
       localStorage.setItem("accessToken", response.accessToken);
       localStorage.setItem("refreshToken", response.refreshToken);
       if (response.affiliatedConfirmation) {
@@ -53,7 +52,6 @@ const Login = () => {
       const organization: string = urlParams.get("organization") || "";
       localStorage.setItem("organization", organization);
       setOrganization(localStorage.getItem("organization") || "");
-      console.log(organization);
     }
   }, []);
 
