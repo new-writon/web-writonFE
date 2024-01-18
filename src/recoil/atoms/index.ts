@@ -1,6 +1,11 @@
 import { atom } from "recoil";
 
-import { BasicQuestionType, SpecialQuestionType, addSpecialQuestionArrayType } from "@/types";
+import {
+  BasicQuestionType,
+  SpecialQuestionType,
+  addSpecialQuestionArrayType,
+  postWritingDataType,
+} from "@/types";
 
 //common
 export const loadingState = atom({
@@ -35,5 +40,11 @@ export const addSpecialQuestionState = atom<number[]>({
 // 스페셜 질문 추가 배열
 export const addSpecialQuestionArrayState = atom<addSpecialQuestionArrayType[]>({
   key: "addSpecialQuestionArrayState",
+  default: [],
+});
+
+// post writing 배열
+export const postWritingDataState = atom<postWritingDataType[]>({
+  key: "postWringDataState",
   default: [],
 });
