@@ -66,3 +66,35 @@ export const FloatingWriteBtn = styled.button<ButtonProps>`
     z-index: 9999;
   }
 `;
+
+export const WritingSubmitBtn = styled.div`
+  display: flex;
+  padding: 16px 0px 17px 0px;
+  justify-content: center;
+  align-items: center;
+  border-radius: 12px;
+  background: var(--Gray-40, #d9d9d9);
+  color: var(--Gray-70, #757575);
+  font-size: 1.125rem;
+  font-weight: 600;
+  line-height: 15px;
+  cursor: pointer;
+  img {
+    margin-left: 4px;
+  }
+`;
+
+export const KeywordBtn = styled.div<{ $select: boolean }>`
+  display: flex;
+  padding: 11px 10px 9px;
+  justify-content: center;
+  align-items: center;
+  border-radius: 15px;
+  cursor: pointer;
+  border: ${(props) =>
+    props.$select ? "1px solid var(--purple-50, #6a63f5)" : "1px solid var(--Gray-50, #BDBDBD)"};
+  line-height: 11px;
+  color: ${(props) => (props.$select ? " var(--purple-50, #6a63f5)" : "")};
+  text-align: center;
+  font-size: 0.875rem;
+`;
