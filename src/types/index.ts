@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { ChangeEvent, FocusEvent, KeyboardEvent } from "react";
 
 export interface InputProps {
@@ -14,6 +15,10 @@ export interface ButtonProps {
   children: React.ReactNode;
   onClick: () => void;
   // 다른 버튼 관련 프로퍼티 추가
+}
+export interface writingPagePopUpProps {
+  onClick: () => void;
+  setpopUpOn: (popUpOn: boolean) => void;
 }
 
 export interface ChildrenProps {
@@ -76,4 +81,38 @@ export interface ChallengeCurrentType {
   challengeOverlapCount: number;
   challengeSuccessCount: number;
   overlapDeposit: number;
+  challengeDeposit: number;
+  userProfile: string;
+}
+
+export interface CalendarRecordCurrentType {
+  date: string;
+  badge: string;
+  length: number;
+}
+
+export interface RetrospectCurrentType {
+  question_id: number;
+  user_templete_id: number;
+  question_content_id: number;
+  content: string;
+  finished_at: string;
+  category: string;
+  question: string;
+}
+
+export interface BasicQuestionType {
+  question_id: number;
+  question: string;
+}
+
+export interface SpecialQuestionType {
+  question_id: number;
+  question: string;
+  category: string;
+}
+
+export interface addSpecialQuestionArrayType {
+  question_id: number;
+  question: string;
 }
