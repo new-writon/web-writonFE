@@ -25,10 +25,15 @@ export const Container = styled.div`
     align-items: center;
     margin-top: 12px;
     padding: 0 20px;
+    @media (max-width: 846px) {
+      display: block;
+      .keywordList div {
+        padding: 5px;
+      }
+    }
   }
   .keywordBox .keywordTitle {
     color: var(--Gray-80, #616161);
-    text-align: center;
     font-size: 0.875rem;
     font-weight: 600;
     line-height: 120%;
