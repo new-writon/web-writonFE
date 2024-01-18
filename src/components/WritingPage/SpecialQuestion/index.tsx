@@ -7,7 +7,11 @@ import { MainSemiTitle } from "@/components/atom/MainSemiTitle";
 import { ToggleBtnBox } from "@/components/atom/QuestionBox/style";
 import { TitleSideBox } from "@/components/atom/TitleSideBox";
 import { DeletePopup } from "@/components/atom/WritingPopup/DeletePopup";
-import { addSpecialQuestionArrayState, addSpecialQuestionState } from "@/recoil/atoms";
+import {
+  addSpecialQuestionArrayState,
+  addSpecialQuestionState,
+  postWritingDataState,
+} from "@/recoil/atoms";
 import { addSpecialQuestionArrayType } from "@/types";
 
 import { Container } from "./style";
@@ -23,18 +27,36 @@ export const SpecialQuestion = ({
   const [addSpecialQuestionData, setAddSpecialQuestionData] = useRecoilState(
     addSpecialQuestionArrayState
   );
+  const [postWritingData, setpostWritingData] = useRecoilState(postWritingDataState);
+
   const [toggleSwitchOn, setToggleSwitchOn] = useState<boolean>(false);
   const textareaRef = useRef<HTMLTextAreaElement | null>(null);
   const [text, setText] = useState<string>("");
   const [popUpOn, setpopUpOn] = useState<boolean>(false);
-  const onChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
+
+  const onVisibility = (question_id: number) => {
+    setToggleSwitchOn(!toggleSwitchOn);
+    setpostWritingData(
+      //questionid 가 같은 곳에 visbility 집아넣는다.
+      postWritingData?.map((item) =>
+        item.question_id === question_id ? { ...item, visibility: toggleSwitchOn } : item
+      )
+    );
+  };
+  const onChange = (e: React.ChangeEvent<HTMLTextAreaElement>, question_id: number) => {
     setText(e.currentTarget.value);
+    setpostWritingData(
+      postWritingData.map((item) =>
+        item.question_id === question_id ? { ...item, content: e.currentTarget.value } : item
+      )
+    );
   };
   const deleteQuestion = (question_id: number) => {
     setAddSpecialQuestionData(
       addSpecialQuestionData.filter((question) => question.question_id !== question_id) // 해당되는 id 값 배열에서 삭제
     );
     setIsClickArray(isClickArray.filter((id) => id !== question_id));
+    setpostWritingData(postWritingData.filter((item) => item.question_id !== question_id));
     setpopUpOn(false);
   };
   return (
@@ -53,7 +75,7 @@ export const SpecialQuestion = ({
           />
         )}
       </div>
-      <div className="qeustionBox">
+      <div className="questionBox">
         <div className="title">
           <MainSemiTitle font={1.125}>
             {idx + 1}. {data?.question}
@@ -62,7 +84,7 @@ export const SpecialQuestion = ({
             {toggleSwitchOn ? "비공개" : "공개"}
             <label
               className={`toggleSwitch ${toggleSwitchOn && "active"}`}
-              onClick={() => setToggleSwitchOn(!toggleSwitchOn)}
+              onClick={() => onVisibility(data?.question_id)}
             >
               <span className="toggleButton"></span>
             </label>
@@ -71,7 +93,7 @@ export const SpecialQuestion = ({
         <textarea
           ref={textareaRef}
           value={text}
-          onChange={onChange}
+          onChange={(e) => onChange(e, data?.question_id)}
           placeholder="글을 입력해주세요."
         />
       </div>

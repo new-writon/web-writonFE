@@ -14,7 +14,7 @@ export const Container = styled.div`
       cursor: pointer;
     }
   }
-  .qeustionBox {
+  .questionBox {
     div:nth-child(1) {
       font-weight: 600 !important;
     }
