@@ -1,20 +1,35 @@
-import React from "react";
+import React, { useEffect } from "react";
 
-import { useRecoilState } from "recoil";
+import { useNavigate, useParams } from "react-router-dom";
+import { useRecoilValue } from "recoil";
 import styled from "styled-components";
 
+import { postwritingSubmit } from "@/apis/WritingPage";
 import { AddSpecialQuestion } from "@/components/WritingPage/AddSpecialQuestion";
 import { BasicQuestion } from "@/components/WritingPage/BasicQuestion";
 import { SpecialQuestion } from "@/components/WritingPage/SpecialQuestion";
 import { WritingSubmitButton } from "@/components/atom/button";
-import { addSpecialQuestionArrayState } from "@/recoil/atoms";
+import { addSpecialQuestionArrayState, postWritingDataState } from "@/recoil/atoms";
 import { Inner } from "@/style/global";
 
 export const WritingBox = () => {
-  const [addSpecialQuestionData, setAddSpecialQuestionData] = useRecoilState(
-    addSpecialQuestionArrayState
-  );
-  const submitWrite = () => {};
+  const { date } = useParams();
+  const navigate = useNavigate();
+  const addSpecialQuestionData = useRecoilValue(addSpecialQuestionArrayState);
+  const postWritingData = useRecoilValue(postWritingDataState);
+  useEffect(() => {
+    console.log(postWritingData);
+  }, [postWritingData]);
+  const submitWrite = async () => {
+    const response = await postwritingSubmit(
+      localStorage.getItem("organization") || "",
+      localStorage.getItem("challengeId") || "1",
+      date || "",
+      postWritingData
+    );
+    console.log(response);
+    navigate("/");
+  };
   return (
     <Inner>
       <Container>
@@ -27,11 +42,15 @@ export const WritingBox = () => {
               />
             </React.Fragment>
           ))}
-
           <BasicQuestion />
         </div>
         <div className="right">
-          <WritingSubmitButton onClick={submitWrite}>작성 완료</WritingSubmitButton>
+          <WritingSubmitButton
+            onClick={submitWrite}
+            disabled={postWritingData?.every((item) => item.content.trim() !== "")}
+          >
+            작성 완료
+          </WritingSubmitButton>
           <AddSpecialQuestion />
         </div>
       </Container>

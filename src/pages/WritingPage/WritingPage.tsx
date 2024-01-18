@@ -1,21 +1,29 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { useEffect, useState } from "react";
 
+import { format } from "date-fns";
+import { useParams } from "react-router-dom";
 import { useSetRecoilState } from "recoil";
 import styled from "styled-components";
 
 import { getBasicQuestion, getSpecialQuestion } from "@/apis/WritingPage";
 import { getCalendarRecordCurrent } from "@/apis/mainPage";
 import { WeekCalendar } from "@/components/WritingPage/WeekCalendar";
-import { getBasicQuestionState, getSpecialQuestionState } from "@/recoil/atoms";
+import {
+  getBasicQuestionState,
+  getSpecialQuestionState,
+  postWritingDataState,
+} from "@/recoil/atoms";
 import { CalendarRecordCurrentType } from "@/types";
 
 import { WritingBox } from "./WritingBox";
 
 export const WritingPage = () => {
+  const { date } = useParams();
   const [CalendarData, setCalendarData] = useState<CalendarRecordCurrentType[]>([]);
   const setGetBasicQuestionData = useSetRecoilState(getBasicQuestionState);
   const setGetSpecialQuestionData = useSetRecoilState(getSpecialQuestionState);
+  const setpostWritingData = useSetRecoilState(postWritingDataState);
 
   const writingPageRendering = async () => {
     try {
@@ -23,7 +31,7 @@ export const WritingPage = () => {
         getCalendarRecordCurrent(
           localStorage.getItem("organization") || "",
           localStorage.getItem("challengeId") || "1",
-          "2024-01"
+          format(date || new Date(), "yyyy-MM")
         ),
         getBasicQuestion(localStorage.getItem("challengeId") || "1"),
         getSpecialQuestion(localStorage.getItem("challengeId") || "1"),
@@ -32,6 +40,13 @@ export const WritingPage = () => {
       setCalendarData(result[0]);
       setGetBasicQuestionData(result[1]);
       setGetSpecialQuestionData(result[2]);
+      setpostWritingData(
+        result[1].map((item) => ({
+          question_id: item.question_id,
+          content: "",
+          visibility: true,
+        }))
+      );
     } catch {
       throw new Error("shit");
     }
