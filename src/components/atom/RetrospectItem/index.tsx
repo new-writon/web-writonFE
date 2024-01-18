@@ -15,7 +15,7 @@ export const RetrospectItem = ({ data }: { data: RetrospectCurrentType[] }) => {
         <div className="mainTitle">
           {format(data[0].finished_at, "M월 d일 EEE요일", { locale: ko })}
         </div>
-        {arr.length && <TitleSideBox type="special">스페셜 질문</TitleSideBox>}
+        {arr.length > 0 && <TitleSideBox type="special">스페셜 질문</TitleSideBox>}
       </Title>
       <PreviewBody>
         {data?.map((item, idx) => {
