@@ -4,9 +4,10 @@ import { format } from "date-fns";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 
+import { getChallengeCurrent } from "@/apis/mainPage";
+import profile from "@/assets/communityPage/profile.png";
 import pencil_color from "@/assets/header/pencil_color.svg";
 import pencil_white from "@/assets/header/pencil_white.svg";
-import profile from "@/assets/header/profile.svg";
 import letsintern from "@/assets/logo/letsintern.png";
 import writon from "@/assets/logo/writon_long.svg";
 import { Inner } from "@/style/global";
@@ -18,6 +19,7 @@ const Header = () => {
   const navigate = useNavigate();
   const [selectTab, setSelectTab] = useState<string>("내 챌린지");
   const [isHover, setIsHover] = useState<boolean>(false);
+  const [profileImage, setProfileImage] = useState<string>(profile);
 
   const today = format(new Date(), "yyyy-MM-dd");
 
@@ -37,6 +39,20 @@ const Header = () => {
         break;
     }
   };
+  const headerRendering = async () => {
+    try {
+      const response = await getChallengeCurrent(
+        localStorage.getItem("organization") || "",
+        localStorage.getItem("challengeId") || "1"
+      );
+      console.log(response);
+      if (response.userProfile !== null) {
+        setProfileImage(response.userProfile);
+      }
+    } catch {
+      throw new Error("shit");
+    }
+  };
   useEffect(() => {
     if (location.pathname === "/community") {
       setSelectTab("커뮤니티");
@@ -45,6 +61,8 @@ const Header = () => {
     } else {
       setSelectTab("");
     }
+    headerRendering();
+
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [location.pathname]);
   return (
@@ -87,10 +105,12 @@ const Header = () => {
               alt="pen"
             />
           </div>
-          <img
-            src={profile}
-            alt="profile"
-          />
+          <div className="profileImageCover">
+            <img
+              src={profileImage} //{data?.profile}
+              alt="profile"
+            />
+          </div>
         </HeaderRight>
       </Container>
       <HeaderMiddleResponsive>
@@ -250,8 +270,20 @@ const HeaderRight = styled.div`
     width: fit-content;
     height: fit-content;
   }
-  img[alt="profile"] {
+  .profileImageCover {
+    width: 36px;
+    height: 36px;
+    overflow: hidden;
+    border-radius: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: 1px solid var(--Gray-30, #eee);
+    background-origin: border-box;
     cursor: pointer;
+  }
+  .profileImageCover img {
+    width: inherit;
   }
 
   @media (max-width: 700px) {
@@ -264,7 +296,7 @@ const HeaderRight = styled.div`
   }
 
   @media (max-width: 530px) {
-    img[alt="profile"] {
+    .profileImageCover {
       width: 32px;
       height: 32px;
     }
