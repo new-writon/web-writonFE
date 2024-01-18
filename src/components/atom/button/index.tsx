@@ -2,8 +2,9 @@ import React from "react";
 
 import pencil_white from "@/assets/header/pencil_white.svg";
 import kakao from "@/assets/logo/kakao.svg";
+import check_white from "@/assets/writingPage/icon-check-white.svg";
 import check from "@/assets/writingPage/icon-check.svg";
-import { ButtonProps } from "@/types";
+import { ButtonProps, SubmitButtonProps } from "@/types";
 
 import { BlueBtn, FloatingWriteBtn, KakaoBtn, KeywordBtn, WritingSubmitBtn } from "./style";
 
@@ -37,12 +38,15 @@ export const FloatingWriteButton = ({ children, onClick }: ButtonProps) => {
   );
 };
 
-export const WritingSubmitButton = ({ children, onClick }: ButtonProps) => {
+export const WritingSubmitButton = ({ children, onClick, disabled }: SubmitButtonProps) => {
   return (
-    <WritingSubmitBtn onClick={onClick}>
+    <WritingSubmitBtn
+      onClick={onClick}
+      $disabled={disabled}
+    >
       {children}
       <img
-        src={check}
+        src={disabled ? check_white : check}
         alt="V"
       />
     </WritingSubmitBtn>

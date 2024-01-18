@@ -67,18 +67,22 @@ export const FloatingWriteBtn = styled.button<ButtonProps>`
   }
 `;
 
-export const WritingSubmitBtn = styled.div`
+export const WritingSubmitBtn = styled.div<{ $disabled: boolean }>`
   display: flex;
   padding: 16px 0px 17px 0px;
   justify-content: center;
   align-items: center;
   border-radius: 12px;
-  background: var(--Gray-40, #d9d9d9);
-  color: var(--Gray-70, #757575);
+  background: ${(props) =>
+    props.$disabled ? "var(--purple-50, #6A63F5)" : "var(--Gray-40, #d9d9d9)"};
+  color: ${(props) => (props.$disabled ? " var(--White, #FFF);" : "var(--Gray-70, #757575)")};
   font-size: 1.125rem;
   font-weight: 600;
   line-height: 15px;
   cursor: pointer;
+  &:hover {
+    background: ${(props) => props.$disabled && "var(--purple-60, #524DD4)"};
+  }
   img {
     margin-left: 4px;
   }
