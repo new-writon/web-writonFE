@@ -48,3 +48,24 @@ export const postWritingDataState = atom<postWritingDataType[]>({
   key: "postWringDataState",
   default: [],
 });
+
+// 모달 백그라운드
+export const modalBackgroundState = atom<{
+  contentModal: boolean;
+  deleteModal: boolean;
+  completeModal: boolean;
+}>({
+  key: "modalBackgroundState",
+  default: { contentModal: false, deleteModal: false, completeModal: false },
+});
+
+// 모달 전달 데이터
+export const modalContentState = atom<{ question_id: number; question: string; category: string }>({
+  key: "modalContentState",
+  default: { question_id: 0, question: "", category: "" },
+});
+
+export const deleteQuestionIdState = atom<number>({
+  key: "deleteQuestionIdState",
+  default: 0,
+});
