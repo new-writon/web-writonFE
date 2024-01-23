@@ -127,3 +127,44 @@ export interface postWritingDataType {
   content: string;
   visibility: boolean;
 }
+
+export interface communityFirstComponentType {
+  challengeOverlapPeriod: number;
+  challengeParticipantCount: number;
+  participantData: communityStoryProps[];
+}
+
+export interface communityStoryProps {
+  profile: string;
+  job: string;
+  job_introduce: string;
+  nickname: string;
+  company_public: number;
+  company: string | null;
+  cheering_phrase: string | null;
+  cheering_phrase_date: string;
+}
+
+export interface communitySecondCoponentType {
+  challengeCompleteCount: number;
+  templateData: communityContentProps[][];
+}
+
+export interface communityContentProps {
+  question_id: number;
+  user_templete_id: number;
+  question_content_id: number;
+  content: string;
+  category: string;
+  question: string;
+  created_at: string;
+  job: string;
+  company: string | null;
+  company_public: number;
+  nickname: string;
+  profile: string;
+  affiliation_id: string | null;
+  likeCount: string;
+  commentCount: string;
+  myLikeSign: string;
+}
