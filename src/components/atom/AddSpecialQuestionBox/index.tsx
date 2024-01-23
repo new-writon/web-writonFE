@@ -1,6 +1,6 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
-import { useRecoilState } from "recoil";
+import { useRecoilState, useSetRecoilState } from "recoil";
 
 import downArrow from "@/assets/mainPage/downArrow.svg";
 import topArrow from "@/assets/mainPage/topArrow.svg";
@@ -8,6 +8,8 @@ import addBtn from "@/assets/writingPage/icon-add.svg";
 import {
   addSpecialQuestionArrayState,
   addSpecialQuestionState,
+  modalBackgroundState,
+  modalContentState,
   postWritingDataState,
 } from "@/recoil/atoms";
 import { SpecialQuestionType } from "@/types";
@@ -24,28 +26,47 @@ export const AddSpecialQuestionBox = ({ data }: { data: SpecialQuestionType }) =
     addSpecialQuestionArrayState
   );
   const [postWritingData, setpostWritingData] = useRecoilState(postWritingDataState);
+  const [width, setWidth] = useState<number>(window.innerWidth);
 
+  const [modal, setModal] = useRecoilState(modalBackgroundState);
+  const setModalContent = useSetRecoilState(modalContentState);
   // 스페셜 질문 추가 버튼 함수
-  const AddSpecialQuestionFunc = (question_id: number, question: string) => {
-    // 스페셜 질문 추가 버튼
-    if (!isClickArray.includes(question_id)) {
-      // isClickArray에 없을 경우만 추가함.
-      setIsClickArray([...isClickArray, question_id]);
-      setAddSpecialQuestionData([
-        { question_id: question_id, question: question },
-        ...addSpecialQuestionData,
-      ]);
-      setpostWritingData([
-        ...postWritingData,
-        { question_id: question_id, content: "", visibility: true },
-      ]);
+  const AddSpecialQuestionFunc = (question_id: number, question: string, category: string) => {
+    if (width <= 530 && !isClickArray.includes(question_id)) {
+      setModal({ ...modal, contentModal: true });
+      setModalContent({ question_id: question_id, question: question, category: category });
+      //recoil로 전달
+      document.body.style.overflowY = "hidden";
+    } else {
+      // 스페셜 질문 추가 버튼
+      if (!isClickArray.includes(question_id)) {
+        // isClickArray에 없을 경우만 추가함.
+        setIsClickArray([...isClickArray, question_id]);
+        setAddSpecialQuestionData([
+          { question_id: question_id, question: question },
+          ...addSpecialQuestionData,
+        ]);
+        setpostWritingData([
+          ...postWritingData,
+          { question_id: question_id, content: "", visibility: true },
+        ]);
+      }
     }
   };
+
+  const handleResize = () => {
+    //뷰크기 강제로 강져오기
+    setWidth(window.innerWidth);
+  };
+  useEffect(() => {
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize); //clean
+  }, [width]);
 
   return (
     <Container
       $isHover={isHover}
-      $isClick={isClickArray.includes(data?.question_id)}
+      $isClick={isClickArray.includes(data?.question_id)} //모달창 뛰우기
     >
       <div
         className="topBox"
@@ -62,9 +83,11 @@ export const AddSpecialQuestionBox = ({ data }: { data: SpecialQuestionType }) =
         $fold={fold}
         onMouseOver={() => setIsHover(true)}
         onMouseOut={() => setIsHover(false)}
-        onClick={() => AddSpecialQuestionFunc(data?.question_id, data?.question)}
+        onClick={() => AddSpecialQuestionFunc(data?.question_id, data?.question, data?.category)}
       >
-        <div className="question">{data?.question}</div>
+        <div className="question">
+          {data?.question}wefewfwefwefeqwfqewfqewfweqfweqfweqfwefwqefqwfqwefwqefweqfweqfweaaaaaaa
+        </div>
         <div className="etcBox">
           <TitleSideBox type="special">{data?.category}</TitleSideBox>
           <div className="addBtn">

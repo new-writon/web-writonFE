@@ -26,6 +26,14 @@ export const Container = styled.div<{ $isHover: boolean; $isClick: boolean }>`
     font-weight: 600;
     line-height: 24px;
   }
+  @media (max-width: 530px) {
+    width: 290px;
+    min-width: 290px;
+    background: ${(props) => (props.$isClick ? " var(--Gray-10, #Fafafa)" : "var(--White, #fff)")};
+    img {
+      display: none;
+    }
+  }
 `;
 
 export const BottomBox = styled.div<{ $fold: boolean; $isClick: boolean }>`
@@ -68,6 +76,16 @@ export const BottomBox = styled.div<{ $fold: boolean; $isClick: boolean }>`
   &:hover {
     .etcBox .addBtn {
       display: flex;
+    }
+  }
+  @media (max-width: 530px) {
+    .etcBox .addBtn {
+      display: none;
+    }
+    &:hover {
+      .etcBox .addBtn {
+        display: none;
+      }
     }
   }
 `;
