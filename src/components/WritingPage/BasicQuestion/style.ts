@@ -14,4 +14,8 @@ export const Container = styled.div`
     flex-direction: column;
     gap: 36px;
   }
+  @media (max-width: 530px) {
+    border-bottom-left-radius: 0;
+    border-bottom-right-radius: 0;
+  }
 `;
