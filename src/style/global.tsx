@@ -131,6 +131,13 @@ export const Inner = styled.div`
       // 모바일 커뮤니티 아래
       background-color: var(--Gray-20, #f5f5f5);
     }
+    &:has(.weekCalendar) {
+      max-width: none;
+    }
+    &:has(.writingBox) {
+      padding: 0;
+      max-width: 100vw;
+    }
   }
 `;
 
