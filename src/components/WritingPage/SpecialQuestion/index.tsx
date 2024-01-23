@@ -1,6 +1,6 @@
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
-import { useRecoilState } from "recoil";
+import { useRecoilState, useSetRecoilState } from "recoil";
 
 import close from "@/assets/mainPage/close.svg";
 import { MainSemiTitle } from "@/components/atom/MainSemiTitle";
@@ -10,6 +10,8 @@ import { DeletePopup } from "@/components/atom/WritingPopup/DeletePopup";
 import {
   addSpecialQuestionArrayState,
   addSpecialQuestionState,
+  deleteQuestionIdState,
+  modalBackgroundState,
   postWritingDataState,
 } from "@/recoil/atoms";
 import { addSpecialQuestionArrayType } from "@/types";
@@ -33,6 +35,9 @@ export const SpecialQuestion = ({
   const textareaRef = useRef<HTMLTextAreaElement | null>(null);
   const [text, setText] = useState<string>("");
   const [popUpOn, setpopUpOn] = useState<boolean>(false);
+  const [width, setWidth] = useState<number>(window.innerWidth);
+  const [modal, setModal] = useRecoilState(modalBackgroundState);
+  const setDeleteQuestionId = useSetRecoilState(deleteQuestionIdState);
 
   const onVisibility = (question_id: number) => {
     setToggleSwitchOn(!toggleSwitchOn);
@@ -59,6 +64,26 @@ export const SpecialQuestion = ({
     setpostWritingData(postWritingData.filter((item) => item.question_id !== question_id));
     setpopUpOn(false);
   };
+
+  const popUpFunc = (question_id: number) => {
+    if (width <= 530) {
+      setDeleteQuestionId(question_id);
+      setModal({ ...modal, deleteModal: true });
+      document.body.style.overflowY = "hidden";
+    } else {
+      setpopUpOn(!popUpOn);
+    }
+  };
+
+  const handleResize = () => {
+    //뷰크기 강제로 강져오기
+    setWidth(window.innerWidth);
+  };
+  useEffect(() => {
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize); //clean
+  }, [width]);
+
   return (
     <Container>
       <div className="category">
@@ -66,7 +91,7 @@ export const SpecialQuestion = ({
         <img
           src={close}
           alt="X"
-          onClick={() => setpopUpOn(!popUpOn)}
+          onClick={() => popUpFunc(data?.question_id)}
         />
         {popUpOn && (
           <DeletePopup
