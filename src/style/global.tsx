@@ -107,7 +107,7 @@ export const Inner = styled.div`
     position: -webkit-sticky; /* 사파리 브라우저 지원 */
     position: sticky;
     top: 0;
-    z-index: 9999;
+    z-index: 999999;
     background-color: var(--White);
     border-bottom: 1px solid var(--Gray-30);
   }
