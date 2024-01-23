@@ -222,7 +222,7 @@ const HeaderMiddleResponsive = styled.div`
   position: -webkit-sticky; /* 사파리 브라우저 지원 */
   position: sticky;
   top: 0;
-  z-index: 9999;
+  z-index: 999999;
   .tab {
     width: 25%;
     height: 50px;
