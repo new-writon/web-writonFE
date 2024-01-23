@@ -7,6 +7,7 @@ import { useNavigate } from "react-router-dom";
 
 import goldBadgeRound from "@/assets/mainPage/goldBadge-round.svg";
 import goldBadge from "@/assets/mainPage/goldBadge.svg";
+import preBtn_round from "@/assets/mainPage/preBtn-round.svg";
 import silverBadgeRound from "@/assets/mainPage/silverBadge-round.svg";
 import silverBadge from "@/assets/mainPage/silverBadge.svg";
 import todayBtn from "@/assets/mainPage/todayBtn-round.svg";
@@ -15,7 +16,9 @@ import writeClick from "@/assets/mainPage/writeActiveClick.svg";
 import writeNotSpecified from "@/assets/mainPage/writeActiveClick.svg";
 import writeActiveHover from "@/assets/mainPage/writeActiveHover.svg";
 import writePre from "@/assets/mainPage/writePre.svg";
+import writeING_round from "@/assets/writingPage/writingING-round.svg";
 import writeING from "@/assets/writingPage/writingING.svg";
+import writeINGtoday_round from "@/assets/writingPage/writingINGToday-round.svg";
 import writeINGtoday from "@/assets/writingPage/writingINGtoday.svg";
 import { CalendarRecordCurrentType } from "@/types";
 
@@ -155,32 +158,42 @@ export const RenderCell = ({
             <div
               className={format(today, "M") !== format(day, "M") ? "text not-valid" : "text valid"}
             >
-              {i === 5 ||
-              i === 6 ||
-              Number(format(day, "d")) > Number(format(today, "d")) ||
+              {Number(format(day, "d")) > Number(format(today, "d")) ||
               !isSameMonth(day, monthStart) ? (
                 ""
               ) : (
                 <img
-                  src={
+                  className={
                     SelectBadge(day) === writeActive
-                      ? todayBtn
-                      : SelectBadge(day) === goldBadge
-                        ? goldBadgeRound
-                        : SelectBadge(day) === silverBadge
-                          ? silverBadgeRound
-                          : SelectBadge(day) === writePre
-                            ? todayBtn // 나중에 바꿔여한다
-                            : ""
+                      ? "writeActive"
+                      : SelectBadge(day) === writePre
+                        ? "writePre"
+                        : SelectBadge(day) === writeNotSpecified
+                          ? "writeNotSpecified"
+                          : ""
+                  }
+                  src={
+                    //모바일
+                    isSameDay(pageDay || "", day) && isSameDay(pageDay || "", today)
+                      ? writeINGtoday_round
+                      : isSameDay(pageDay || "", day)
+                        ? writeING_round
+                        : SelectBadge(day) === writeActive
+                          ? todayBtn
+                          : SelectBadge(day) === goldBadge
+                            ? goldBadgeRound
+                            : SelectBadge(day) === silverBadge
+                              ? silverBadgeRound
+                              : SelectBadge(day) === writePre
+                                ? preBtn_round
+                                : ""
                   }
                   alt="반응형 뱃지"
                 />
               )}
               {formattedDate}
             </div>
-            {i === 5 ||
-            i === 6 ||
-            Number(format(day, "d")) > Number(format(today, "d")) ||
+            {Number(format(day, "d")) > Number(format(today, "d")) ||
             !isSameMonth(day, monthStart) ? ( // 이미지 안나와여하는것 : 주말, 오늘 이후 날짜들, 다른 달 짜투리들
               <img
                 className="virtualImg"
