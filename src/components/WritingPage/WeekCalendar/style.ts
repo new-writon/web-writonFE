@@ -52,6 +52,7 @@ export const Container = styled.div<{ $weekFold: boolean }>`
   }
 
   @media (max-width: 530px) {
+    padding: 15px;
     .topBar .topBarLeft {
       gap: 5px;
     }

@@ -24,7 +24,7 @@ export const WeekCalendar = ({ CalendarData }: { CalendarData: CalendarRecordCur
   return (
     <Inner>
       <Container $weekFold={weekFold}>
-        <div className="topBar">
+        <div className="weekCalendar topBar">
           <div className="topBarLeft">
             <MainSemiTitle font={1.25}>
               {format(date || new Date(), "M월 d일")} 회고 작성
