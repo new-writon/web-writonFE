@@ -1,20 +1,33 @@
 import React, { useCallback, useRef } from "react";
 
+import { format } from "date-fns";
+import { useNavigate } from "react-router-dom";
 // eslint-disable-next-line import/order
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import styled from "styled-components";
 
+import pencil_white from "@/assets/header/pencil_white.svg";
+import NoRetrospectItem from "@/assets/mainPage/NoRetrospect.svg";
 import arrow from "@/assets/mainPage/icon-arrow.svg";
 import { MainSemiTitle } from "@/components/atom/MainSemiTitle";
 import { RetrospectItem } from "@/components/atom/RetrospectItem";
 import { Inner } from "@/style/global";
 import { RetrospectCurrentType } from "@/types";
 
-import { ArrowButton, Container, RetroSpectBox, RetroSpectBoxResponsive } from "./style";
+import {
+  ArrowButton,
+  Container,
+  NoRetrospectItemBox,
+  RetroSpectBox,
+  RetroSpectBoxResponsive,
+} from "./style";
 
 export const MyRetrospect = ({ RetrospectData }: { RetrospectData: RetrospectCurrentType[][] }) => {
+  const navigate = useNavigate();
+  const today = format(new Date(), "yyyy-MM-dd");
+
   const slickRef = useRef<Slider | null>(null);
   const REACT_SLIDER_SETTINGS = {
     infinite: true,
@@ -63,41 +76,69 @@ export const MyRetrospect = ({ RetrospectData }: { RetrospectData: RetrospectCur
       <Container>
         <div className="RetrospectTitle">
           <MainSemiTitle font={1.25}>나의 회고 모아보기</MainSemiTitle>
-          <div className="quantity">4개</div>
+          <div className="quantity">{RetrospectData?.length}개</div>
         </div>
-        <RetroSpectBox>
-          <StyledSlider
-            {...REACT_SLIDER_SETTINGS}
-            ref={slickRef}
-          >
-            {RetrospectData.map((data, idx) => (
-              <React.Fragment key={idx}>
-                <RetrospectItem data={data} />
-              </React.Fragment>
-            ))}
-          </StyledSlider>
-          <ArrowButton onClick={previous}>
-            <img
-              className="previous"
-              src={arrow}
-              alt="<"
-            />
-          </ArrowButton>
-          <ArrowButton onClick={next}>
-            <img
-              className="next"
-              src={arrow}
-              alt=">"
-            />
-          </ArrowButton>
-        </RetroSpectBox>
-        <RetroSpectBoxResponsive>
-          {RetrospectData.map((data, idx) => (
-            <React.Fragment key={idx}>
-              <RetrospectItem data={data} />
-            </React.Fragment>
-          ))}
-        </RetroSpectBoxResponsive>
+        {RetrospectData?.length > 0 ? (
+          <>
+            <RetroSpectBox>
+              <StyledSlider
+                {...REACT_SLIDER_SETTINGS}
+                ref={slickRef}
+              >
+                {RetrospectData.map((data, idx) => (
+                  <React.Fragment key={idx}>
+                    <RetrospectItem data={data} />
+                  </React.Fragment>
+                ))}
+              </StyledSlider>
+              <ArrowButton onClick={previous}>
+                <img
+                  className="previous"
+                  src={arrow}
+                  alt="<"
+                />
+              </ArrowButton>
+              <ArrowButton onClick={next}>
+                <img
+                  className="next"
+                  src={arrow}
+                  alt=">"
+                />
+              </ArrowButton>
+            </RetroSpectBox>
+            <RetroSpectBoxResponsive>
+              {RetrospectData.map((data, idx) => (
+                <React.Fragment key={idx}>
+                  <RetrospectItem data={data} />
+                </React.Fragment>
+              ))}
+            </RetroSpectBoxResponsive>
+          </>
+        ) : (
+          <NoRetrospectItemBox>
+            <div className="noRetrospectItemBox">
+              <img
+                src={NoRetrospectItem}
+                alt="NO"
+              />
+              <div className="title">아직 작성한 회고가 없어요.</div>
+              <div className="semiTitle">
+                작성한 회고는 여기서 모아볼 수 있어요.
+                <br />첫 회고를 작성하러 가볼까요?
+              </div>
+              <div
+                className="writingBtn"
+                onClick={() => navigate(`/writing/${today}`)}
+              >
+                <p>회고 작성하기</p>
+                <img
+                  src={pencil_white}
+                  alt="pen"
+                />
+              </div>
+            </div>
+          </NoRetrospectItemBox>
+        )}
       </Container>
     </Inner>
   );
