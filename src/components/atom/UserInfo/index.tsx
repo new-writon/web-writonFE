@@ -5,7 +5,8 @@ import { Container } from "./style";
 interface userProps {
   name: string;
   job: string;
-  company: string;
+  company: string | null;
+  profile: string;
 }
 
 export const UserInfo = ({ data }: { data: userProps }) => {
@@ -13,7 +14,7 @@ export const UserInfo = ({ data }: { data: userProps }) => {
     <Container>
       <div className="profileImageCover">
         <img
-          src={profile} //{data?.profile}
+          src={data?.profile || profile} //{data?.profile}
           alt="profile"
         />
       </div>
