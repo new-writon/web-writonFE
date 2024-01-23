@@ -1,5 +1,5 @@
 import profile from "@/assets/communityPage/profile.png";
-import { StoryItemProps } from "@/types";
+import { communityStoryProps } from "@/types";
 
 import { Container } from "./style";
 
@@ -8,24 +8,37 @@ export const StoryItem = ({
   someone,
   onClick,
 }: {
-  data: StoryItemProps;
+  data: communityStoryProps | undefined;
   someone: string;
-  onClick: (e: React.MouseEvent<HTMLDivElement>) => void;
+  onClick: (e: React.MouseEvent<HTMLDivElement>) => void | undefined;
 }) => {
   return (
-    <Container $someone={someone}>
-      <div className="storyMessage">{data?.message}</div>
-      <div
-        className="profileImageCover"
-        onClick={onClick}
-      >
-        <img
-          src={profile} //{data?.profile}
-          alt="profile"
-        />
+    <Container
+      $someone={someone}
+      $message={data?.cheering_phrase}
+    >
+      {someone === "me" ? (
+        data?.cheering_phrase === null ? (
+          <div className="storyMessage">오늘의 한마디 +</div>
+        ) : (
+          <div className="storyMessage">{data?.cheering_phrase}</div>
+        )
+      ) : (
+        <div className="storyMessage">{data?.cheering_phrase}</div>
+      )}
+      <div className="profileBox">
+        <div
+          className="profileImageCover"
+          onClick={onClick}
+        >
+          <img
+            src={data?.profile || profile} //{data?.profile}
+            alt="profile"
+          />
+        </div>
+        <div className="job">{data?.job}</div>
+        <div className="company">{data?.company}</div>
       </div>
-      <div className="job">{data?.job}</div>
-      <div className="company">{data?.company}</div>
       {/* <div className="introducePopup">
         <div className="userInfo"></div>
         <div className="oneline">{data?.oneline}</div>

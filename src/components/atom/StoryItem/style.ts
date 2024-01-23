@@ -1,6 +1,6 @@
 import styled from "styled-components";
 
-export const Container = styled.div<{ $someone: string }>`
+export const Container = styled.div<{ $someone: string; $message: string | null | undefined }>`
   display: flex;
   flex-direction: column;
   width: 88px;
@@ -9,17 +9,27 @@ export const Container = styled.div<{ $someone: string }>`
   line-height: 130%;
   color: var(--Gray-100, #212121);
   position: relative;
+  justify-content: space-between;
+  .profileBox {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
 
   .storyMessage {
     width: 100%;
     padding: 10px 6px;
     border-radius: 10px;
-    background: var(--Gray-20, #f5f5f5);
     display: inline-flex;
     justify-content: center;
     align-items: center;
     margin-bottom: 12px;
     z-index: 1;
+    height: 35px;
+    color: ${(props) => (props.$someone === "me" ? " var(--White)" : " var(--Gray-100, #212121)")};
+    background-color: ${(props) =>
+      props.$someone === "me" ? "var(--Gray-70, #757575)" : "var(--Gray-20, #f5f5f5)"};
+    opacity: ${(props) => (props.$someone === "me" ? (props.$message === null ? 1 : 1) : 0)};
   }
   .storyMessage::before {
     content: "";
@@ -32,7 +42,8 @@ export const Container = styled.div<{ $someone: string }>`
     margin: auto;
     left: 0;
     right: 0;
-    background-color: var(--Gray-20);
+    background-color: ${(props) =>
+      props.$someone === "me" ? "var(--Gray-70, #757575)" : "var(--Gray-20, #f5f5f5)"};
     border-bottom-left-radius: 3px;
     z-index: -1;
   }
