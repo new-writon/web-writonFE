@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 
 import { format } from "date-fns";
 import { useNavigate } from "react-router-dom";
+import { useRecoilCallback } from "recoil";
 import styled from "styled-components";
 
 import { getChallengeCurrent } from "@/apis/mainPage";
@@ -10,6 +11,11 @@ import pencil_color from "@/assets/header/pencil_color.svg";
 import pencil_white from "@/assets/header/pencil_white.svg";
 import letsintern from "@/assets/logo/letsintern.png";
 import writon from "@/assets/logo/writon_long.svg";
+import {
+  addSpecialQuestionArrayState,
+  addSpecialQuestionState,
+  postWritingDataState,
+} from "@/recoil/atoms";
 import { Inner } from "@/style/global";
 
 const ICON = [letsintern, writon];
@@ -22,9 +28,14 @@ const Header = () => {
   const [profileImage, setProfileImage] = useState<string>(profile);
 
   const today = format(new Date(), "yyyy-MM-dd");
-
+  const resetState = useRecoilCallback(({ reset }) => () => {
+    reset(addSpecialQuestionState);
+    reset(addSpecialQuestionArrayState);
+    reset(postWritingDataState);
+  });
   const SpaceTab = (tab: string) => {
     setSelectTab(tab);
+    resetState();
     switch (tab) {
       case "내 챌린지":
         navigate("/");
@@ -74,7 +85,10 @@ const Header = () => {
               <img
                 src={logo}
                 alt={`${logo}`}
-                onClick={() => navigate("/")}
+                onClick={() => {
+                  navigate("/");
+                  resetState();
+                }}
               />
             </React.Fragment>
           ))}
@@ -147,23 +161,23 @@ const HeaderLeft = styled.div`
   display: flex;
   align-items: center;
   gap: 17px;
-  img:nth-child(1) {
+  img:nth-of-type(1) {
     width: 42px;
-    height: fit-content;
+    height: 42px;
     cursor: pointer;
   }
-  img:nth-child(2) {
+  img:nth-of-type(2) {
     width: 90px;
     height: fit-content;
     cursor: pointer;
   }
   @media (max-width: 530px) {
     gap: 10px;
-    img:nth-child(1) {
+    img:nth-of-type(1) {
       width: 32px;
       height: 32px;
     }
-    img:nth-child(2) {
+    img:nth-of-type(2) {
       width: 66px;
       height: fit-content;
     }
@@ -175,7 +189,7 @@ const HeaderMiddle = styled.div`
   min-width: 173px;
   justify-content: space-between;
   .tab {
-    width: 71px;
+    width: fit-content;
     height: 100%;
     display: flex;
     justify-content: center;
