@@ -9,6 +9,7 @@ export const Container = styled.div`
   .title {
     display: flex;
     gap: 6px;
+    align-items: flex-end;
   }
 
   @media (max-width: 530px) {
@@ -16,6 +17,11 @@ export const Container = styled.div`
     background-color: transparent;
     .title {
       align-items: end;
+    }
+  }
+  @media (min-width: 531px) {
+    .responsive {
+      display: none;
     }
   }
 `;
@@ -28,7 +34,17 @@ export const IntroducePopup = styled.div<{ $xValue: number }>`
   background-color: var(--White);
   position: absolute;
   bottom: -140px;
-  left: ${(props) => `${props.$xValue}px`};
+  left: ${(props) => `calc(${props.$xValue}px - 170px)`};
+  @media (max-width: 1140px) {
+    left: ${(props) => `calc(${props.$xValue}px - 190px)`};
+  }
+  @media (max-width: 530px) {
+    width: 279px;
+    bottom: -145px;
+    left: -19px;
+    right: 0;
+    margin: 0 auto;
+  }
   z-index: 99999;
   border: 1px solid var(--Gray-40);
   filter: drop-shadow(0px 4px 20px rgba(33, 33, 33, 0.2));

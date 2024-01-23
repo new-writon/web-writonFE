@@ -1,13 +1,41 @@
+import { useEffect, useState } from "react";
+
 import styled from "styled-components";
 
+import { getCommunityFirstComponent, getMyCommunityStory } from "@/apis/CommunityPage";
 import { CommunityBox } from "@/components/CommunityPage/CommunityBox";
 import { StoryBox } from "@/components/CommunityPage/StoryBox";
+import { communityFirstComponentType, communityStoryProps } from "@/types";
 
 export const CommunityPage = () => {
+  const [CommunityFirstData, setCommunityFirstData] = useState<communityFirstComponentType>();
+  const [myCommunityStoryData, setMyCommunityStoryData] = useState<communityStoryProps>();
+
+  const CommunityPageRendering = async () => {
+    try {
+      const result = await Promise.all([
+        getCommunityFirstComponent(localStorage.getItem("challengeId") || "1"),
+        getMyCommunityStory(localStorage.getItem("challengeId") || "1"),
+      ]);
+      console.log(result);
+      setCommunityFirstData(result[0]);
+      setMyCommunityStoryData(result[1]);
+    } catch {
+      throw new Error("shit");
+    }
+  };
+
+  useEffect(() => {
+    CommunityPageRendering();
+  }, []);
+
   return (
     <Container>
-      <StoryBox></StoryBox>
-      <CommunityBox></CommunityBox>
+      <StoryBox
+        CommunityFirstData={CommunityFirstData}
+        myCommunityStoryData={myCommunityStoryData}
+      />
+      <CommunityBox />
     </Container>
   );
 };

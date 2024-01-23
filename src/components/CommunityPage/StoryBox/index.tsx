@@ -1,4 +1,4 @@
-import React, { MouseEvent, useCallback, useRef, useState } from "react";
+import React, { MouseEvent, useCallback, useEffect, useRef, useState } from "react";
 
 import Slider from "react-slick";
 import styled from "styled-components";
@@ -8,8 +8,8 @@ import close from "@/assets/mainPage/close.svg";
 import { MainSemiTitle } from "@/components/atom/MainSemiTitle";
 import { StoryItem } from "@/components/atom/StoryItem";
 import { TitleSideBox } from "@/components/atom/TitleSideBox";
-import { stroyDummy } from "@/dummy/story";
 import { Inner } from "@/style/global";
+import { communityFirstComponentType, communityStoryProps } from "@/types";
 
 import {
   Container,
@@ -19,19 +19,19 @@ import {
   IntroducePopup,
 } from "./style";
 
-const my = {
-  name: "호연초이",
-  message: "ㄷㄹㅈㄷㄹㄷㅈㄹㄷㅈㄹㄷㅈㄹ",
-  profile: "ㅋㅋ",
-  job: "서비스 기획",
-  company: "카카오",
-  oneline: "카카오 메일의 서비스 기획 파트에서 어쩌구저쩌구 이러저러한 왁자지껄 일을 합니다 :)",
-};
-
-export const StoryBox = () => {
+export const StoryBox = ({
+  CommunityFirstData,
+  myCommunityStoryData,
+}: {
+  CommunityFirstData: communityFirstComponentType | undefined;
+  myCommunityStoryData: communityStoryProps | undefined;
+}) => {
   const [xValue, setXValue] = useState<number>(0);
   const [popOn, setPopOn] = useState<boolean>(false);
   const slickRef = useRef<Slider | null>(null);
+  const [width, setWidth] = useState<number>(window.innerWidth);
+  const [popUpdata, setPopUpdata] = useState<communityStoryProps>();
+
   const REACT_SLIDER_SETTINGS = {
     infinite: false,
     slidesToShow: 10,
@@ -79,22 +79,37 @@ export const StoryBox = () => {
   const previous = useCallback(() => slickRef.current?.slickPrev(), []);
   const next = useCallback(() => slickRef.current?.slickNext(), []);
 
-  const PopupOn = (e: MouseEvent<HTMLDivElement>) => {
-    console.log(e.clientX - 340);
-    setXValue(e.clientX - 240);
+  const PopupOn = (e: MouseEvent<HTMLDivElement>, data: communityStoryProps) => {
+    if (width >= 1140) {
+      setXValue(e.clientX - (width - 1080) / 2);
+    } else {
+      console.log(e.clientX);
+      setXValue(e.clientX);
+    }
+    setPopUpdata(data);
     setPopOn(true);
   };
+
+  const handleResize = () => {
+    //뷰크기 강제로 강져오기
+    setWidth(window.innerWidth);
+  };
+  useEffect(() => {
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize); //clean
+  }, [width]);
   return (
     <Inner>
       <Container>
         <div className="title first">
           <MainSemiTitle font={1.25}>
             <p>
-              지금 <div className="number">{99}</div>명이 함께
+              지금 <div className="number">{CommunityFirstData?.challengeParticipantCount}</div>명이
+              함께
             </p>
             {"렛츠인턴 2월 TIL 챌린지"} 도전중!
           </MainSemiTitle>
-          <TitleSideBox type="default">D-{15}</TitleSideBox>
+          <TitleSideBox type="default">D-{CommunityFirstData?.challengeOverlapPeriod}</TitleSideBox>
         </div>
         <StoryItemBox>
           <StyledSlider
@@ -102,16 +117,16 @@ export const StoryBox = () => {
             ref={slickRef}
           >
             <StoryItem
-              data={my}
+              data={myCommunityStoryData}
               someone={"me"}
-              onClick={PopupOn}
+              onClick={() => {}}
             />
-            {stroyDummy.map((data, idx) => (
+            {CommunityFirstData?.participantData.map((data, idx) => (
               <React.Fragment key={idx}>
                 <StoryItem
                   data={data}
                   someone={"other"}
-                  onClick={(e) => PopupOn(e)}
+                  onClick={(e) => PopupOn(e, data)}
                 />
               </React.Fragment>
             ))}
@@ -120,7 +135,7 @@ export const StoryBox = () => {
             <IntroducePopup $xValue={xValue}>
               <div className="userInfo">
                 <div className="name">
-                  지지호짱
+                  {popUpdata?.nickname}
                   <img
                     src={close}
                     alt="X"
@@ -128,11 +143,11 @@ export const StoryBox = () => {
                   />
                 </div>
                 <div className="userAddInfo">
-                  <div className="job">서비스 기획</div>
-                  <div className="company">카카오</div>
+                  <div className="job">{popUpdata?.job}</div>
+                  <div className="company">{popUpdata?.company}</div>
                 </div>
               </div>
-              <div className="oneline">fefewfwefewfewfewfwefewfwefewfwefwefwefwefwefwee</div>
+              <div className="oneline">{popUpdata?.job_introduce}</div>
             </IntroducePopup>
           )}
 
@@ -152,22 +167,43 @@ export const StoryBox = () => {
           </ArrowButton>
         </StoryItemBox>
 
-        <StoryItemBoxResponsive>
-          <StoryItem
-            data={my}
-            someone={"me"}
-            onClick={PopupOn}
-          />
-          {stroyDummy.map((data, idx) => (
-            <React.Fragment key={idx}>
-              <StoryItem
-                data={data}
-                someone={"other"}
-                onClick={PopupOn}
-              />
-            </React.Fragment>
-          ))}
-        </StoryItemBoxResponsive>
+        <div className="responsive">
+          <StoryItemBoxResponsive>
+            <StoryItem
+              data={myCommunityStoryData}
+              someone={"me"}
+              onClick={() => {}}
+            />
+            {CommunityFirstData?.participantData.map((data, idx) => (
+              <React.Fragment key={idx}>
+                <StoryItem
+                  data={data}
+                  someone={"other"}
+                  onClick={(e) => PopupOn(e, data)}
+                />
+              </React.Fragment>
+            ))}
+          </StoryItemBoxResponsive>
+          {popOn && (
+            <IntroducePopup $xValue={xValue}>
+              <div className="userInfo">
+                <div className="name">
+                  {popUpdata?.nickname}
+                  <img
+                    src={close}
+                    alt="X"
+                    onClick={() => setPopOn(false)}
+                  />
+                </div>
+                <div className="userAddInfo">
+                  <div className="job">{popUpdata?.job}</div>
+                  <div className="company">{popUpdata?.company}</div>
+                </div>
+              </div>
+              <div className="oneline">{popUpdata?.job_introduce}</div>
+            </IntroducePopup>
+          )}
+        </div>
       </Container>
     </Inner>
   );
@@ -180,5 +216,6 @@ const StyledSlider = styled(Slider)`
   .slick-track {
     display: flex;
     gap: 8px;
+    margin: 0;
   }
 `;
