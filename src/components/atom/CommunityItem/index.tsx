@@ -1,17 +1,17 @@
 import React from "react";
 
-import { CommunityItemProps } from "@/types";
+import { communityContentProps } from "@/types";
 
 import { CommentAndLike } from "../CommentAndLike";
 import { UserInfo } from "../UserInfo";
 
 import { Container, PreviewBody, PreviewInfo } from "./style";
 
-export const CommunityItem = ({ data }: { data: CommunityItemProps }) => {
+export const CommunityItem = ({ data }: { data: communityContentProps[] }) => {
   return (
     <Container>
       <PreviewBody>
-        {data?.preview.map((item, idx) => (
+        {data?.map((item, idx) => (
           <React.Fragment key={idx}>
             <div className="previewItem">
               <div className="question">{item?.question}</div>
@@ -21,10 +21,17 @@ export const CommunityItem = ({ data }: { data: CommunityItemProps }) => {
         ))}
       </PreviewBody>
       <PreviewInfo>
-        <UserInfo data={data?.user}></UserInfo>
+        <UserInfo
+          data={{
+            name: data[0]?.nickname,
+            job: data[0]?.job,
+            company: data[0]?.company,
+            profile: data[0]?.profile,
+          }}
+        ></UserInfo>
         <CommentAndLike
-          commentCount={data?.comment}
-          likeCount={data?.likeCount}
+          commentCount={data[0]?.commentCount}
+          likeCount={data[0]?.likeCount}
         ></CommentAndLike>
       </PreviewInfo>
     </Container>

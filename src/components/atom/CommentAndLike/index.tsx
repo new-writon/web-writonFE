@@ -6,8 +6,8 @@ export const CommentAndLike = ({
   commentCount,
   likeCount,
 }: {
-  commentCount: number;
-  likeCount: number;
+  commentCount: string;
+  likeCount: string;
 }) => {
   return (
     <Container>
