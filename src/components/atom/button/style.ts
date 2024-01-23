@@ -62,7 +62,7 @@ export const FloatingWriteBtn = styled.button<ButtonProps>`
     left: 0;
     right: 0;
     margin: 0 auto;
-    max-width: 170px;
+    max-width: 185px;
     z-index: 9999;
   }
 `;
@@ -101,4 +101,25 @@ export const KeywordBtn = styled.div<{ $select: boolean }>`
   color: ${(props) => (props.$select ? " var(--purple-50, #6a63f5)" : "")};
   text-align: center;
   font-size: 0.875rem;
+  @media (max-width: 530px) {
+    background-color: ${(props) => props.$select && "#FFFFFF"};
+  }
+`;
+
+export const AddQuestionBtn = styled.div`
+  display: inline-flex;
+  justify-content: flex-end;
+  padding: 5px 6px 3px 16px;
+  align-items: center;
+  border-radius: 50px;
+  background: #fff;
+  color: var(--purple-50, #6a63f5);
+  font-size: 0.875rem;
+  font-weight: 600;
+  line-height: 160%; /* 22.4px */
+  cursor: pointer;
+  width: fit-content;
+  img {
+    padding-bottom: 2px;
+  }
 `;

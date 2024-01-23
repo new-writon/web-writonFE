@@ -4,9 +4,18 @@ import pencil_white from "@/assets/header/pencil_white.svg";
 import kakao from "@/assets/logo/kakao.svg";
 import check_white from "@/assets/writingPage/icon-check-white.svg";
 import check from "@/assets/writingPage/icon-check.svg";
+import question_minus from "@/assets/writingPage/question-minus.svg";
+import question_plus from "@/assets/writingPage/question-plus.svg";
 import { ButtonProps, SubmitButtonProps } from "@/types";
 
-import { BlueBtn, FloatingWriteBtn, KakaoBtn, KeywordBtn, WritingSubmitBtn } from "./style";
+import {
+  AddQuestionBtn,
+  BlueBtn,
+  FloatingWriteBtn,
+  KakaoBtn,
+  KeywordBtn,
+  WritingSubmitBtn,
+} from "./style";
 
 export const KakaoButton = ({ children, onClick }: ButtonProps) => {
   return (
@@ -66,5 +75,22 @@ export const KeywordButton = ({ children, onClick, select }: KeywordButtonProps)
     >
       {children}
     </KeywordBtn>
+  );
+};
+
+interface AddQuestionButtonProps {
+  children: React.ReactNode;
+  onClick: () => void;
+  ButtonOn: boolean;
+}
+export const AddQuestionButton = ({ children, onClick, ButtonOn }: AddQuestionButtonProps) => {
+  return (
+    <AddQuestionBtn onClick={onClick}>
+      {children}
+      <img
+        src={ButtonOn ? question_minus : question_plus}
+        alt="+"
+      />
+    </AddQuestionBtn>
   );
 };
