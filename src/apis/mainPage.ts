@@ -1,4 +1,4 @@
-import { CalendarRecordCurrentType, ChallengeCurrentType, RetrospectCurrentType } from "@/types";
+import { CalendarRecordCurrentType, ChallengeCurrentType, communityContentProps } from "@/types";
 
 import { getData } from ".";
 
@@ -28,7 +28,7 @@ export const getRetrospectCurrent = async (
   challengeId: string,
   month: string
 ) => {
-  const response = await getData<RetrospectCurrentType[][]>(
+  const response = await getData<communityContentProps[][]>(
     `/challenge/record/reminiscence/${organization}/${challengeId}/${month}`
   );
   return response.data;
