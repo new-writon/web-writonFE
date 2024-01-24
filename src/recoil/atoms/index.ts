@@ -4,6 +4,8 @@ import {
   BasicQuestionType,
   SpecialQuestionType,
   addSpecialQuestionArrayType,
+  communityContentProps,
+  //communityContentProps,
   postWritingDataType,
 } from "@/types";
 
@@ -68,4 +70,16 @@ export const modalContentState = atom<{ question_id: number; question: string; c
 export const deleteQuestionIdState = atom<number>({
   key: "deleteQuestionIdState",
   default: 0,
+});
+
+//디테일 페이지에 전달할 것
+export const DetailDataState = atom<communityContentProps[]>({
+  key: "DetailDataState",
+  default: [],
+});
+
+//디테일 페이지 열기
+export const DetailModalState = atom<boolean>({
+  key: "DetailModalState",
+  default: false,
 });
