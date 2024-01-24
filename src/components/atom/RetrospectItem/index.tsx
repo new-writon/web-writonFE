@@ -1,19 +1,28 @@
 import { format } from "date-fns";
 import { ko } from "date-fns/locale";
+import { useSetRecoilState } from "recoil";
 
-import { RetrospectCurrentType } from "@/types";
+import { DetailDataState, DetailModalState } from "@/recoil/atoms";
+import { communityContentProps } from "@/types";
 
 import { TitleSideBox } from "../TitleSideBox";
 
 import { Container, PreviewBody, Title } from "./style";
 
-export const RetrospectItem = ({ data }: { data: RetrospectCurrentType[] }) => {
+export const RetrospectItem = ({ data }: { data: communityContentProps[] }) => {
   const arr = data?.filter((item) => item.category === "스페셜 질문");
+  const setDetailData = useSetRecoilState(DetailDataState);
+  const setDetailModal = useSetRecoilState(DetailModalState);
+  const spaceToDetail = () => {
+    setDetailData(data);
+    setDetailModal(true);
+  };
+
   return (
-    <Container>
+    <Container onClick={spaceToDetail}>
       <Title>
         <div className="mainTitle">
-          {format(data[0].finished_at, "M월 d일 EEE요일", { locale: ko })}
+          {format(data[0]?.created_at, "M월 d일 EEE요일", { locale: ko })}
         </div>
         {arr.length > 0 && <TitleSideBox type="special">스페셜 질문</TitleSideBox>}
       </Title>
@@ -24,8 +33,8 @@ export const RetrospectItem = ({ data }: { data: RetrospectCurrentType[] }) => {
               className="previewItem"
               key={idx}
             >
-              <div className="question">{item.question}</div>
-              <div className="content">{item.content}</div>
+              <div className="question">{item?.question}</div>
+              <div className="content">{item?.content}</div>
             </div>
           );
         })}
