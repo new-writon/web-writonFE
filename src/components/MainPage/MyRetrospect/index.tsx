@@ -14,7 +14,7 @@ import arrow from "@/assets/mainPage/icon-arrow.svg";
 import { MainSemiTitle } from "@/components/atom/MainSemiTitle";
 import { RetrospectItem } from "@/components/atom/RetrospectItem";
 import { Inner } from "@/style/global";
-import { RetrospectCurrentType } from "@/types";
+import { communityContentProps } from "@/types";
 
 import {
   ArrowButton,
@@ -24,7 +24,7 @@ import {
   RetroSpectBoxResponsive,
 } from "./style";
 
-export const MyRetrospect = ({ RetrospectData }: { RetrospectData: RetrospectCurrentType[][] }) => {
+export const MyRetrospect = ({ RetrospectData }: { RetrospectData: communityContentProps[][] }) => {
   const navigate = useNavigate();
   const today = format(new Date(), "yyyy-MM-dd");
 
