@@ -13,13 +13,14 @@ import { Calendar } from "@/components/MainPage/Calendar";
 import { MyRetrospect } from "@/components/MainPage/MyRetrospect";
 import { ProgressBox } from "@/components/MainPage/ProgressBox";
 import { FloatingWriteButton } from "@/components/atom/button";
-import { CalendarRecordCurrentType, ChallengeCurrentType, RetrospectCurrentType } from "@/types";
+import { CalendarRecordCurrentType, ChallengeCurrentType, communityContentProps } from "@/types";
+
 const MainPage = () => {
   const navigate = useNavigate();
   const today = format(new Date(), "yyyy-MM-dd");
   const [ChallengeCurrent, setChallengeCurrent] = useState<ChallengeCurrentType>();
   const [CalendarData, setCalendarData] = useState<CalendarRecordCurrentType[]>([]);
-  const [RetrospectData, setRetrospectData] = useState<RetrospectCurrentType[][]>([]);
+  const [RetrospectData, setRetrospectData] = useState<communityContentProps[][]>([]);
 
   const spaceToWritingPage = () => {
     const date = encodeURI(encodeURIComponent(today));
@@ -56,6 +57,7 @@ const MainPage = () => {
   useEffect(() => {
     mainPageRendering();
   }, []);
+
   return (
     <Container>
       <ProgressBox ChallengeCurrent={ChallengeCurrent} />
