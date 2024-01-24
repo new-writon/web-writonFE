@@ -59,7 +59,7 @@ export const ContainerResponsive = styled.div`
   height: 100%;
   width: 100%;
   background: rgba(0, 0, 0, 0.4);
-  z-index: 99999;
+  z-index: 9999999;
   display: flex;
   justify-content: center;
   align-items: center;
