@@ -1,12 +1,13 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import { useEffect, useState } from "react";
 
-import { useSetRecoilState } from "recoil";
+import { useRecoilState, useSetRecoilState } from "recoil";
 
 import { postLike, postLikeDelete } from "@/apis/DetailPage";
 import comment from "@/assets/DetailPage/comment.svg";
 import fireOff from "@/assets/DetailPage/fireOff.svg";
 import fireOn from "@/assets/DetailPage/fireOn.svg";
-import { LikeState } from "@/recoil/atoms";
+import { LikeClickState, LikeState } from "@/recoil/atoms";
 
 import { Container } from "./style";
 
@@ -22,7 +23,7 @@ export const CommnetAndLikeFloating = ({
   likeCount: string;
 }) => {
   const [IsHover, setIsHover] = useState<boolean>(false);
-  const [IsClick, setIsCick] = useState<boolean>(false);
+  const [IsClick, setIsCick] = useRecoilState(LikeClickState);
   const setLikeCount = useSetRecoilState(LikeState);
 
   const LikeFunc = async () => {
@@ -48,12 +49,12 @@ export const CommnetAndLikeFloating = ({
   };
 
   useEffect(() => {
-    if (myLikeSign === "1") {
+    if (myLikeSign === "1" || IsClick === true) {
       setIsCick(true);
-    } else if (myLikeSign === "0") {
+    } else if (myLikeSign === "0" || IsClick === false) {
       setIsCick(false);
     }
-  }, [myLikeSign]);
+  }, [myLikeSign, setIsCick]);
   return (
     <Container>
       <div className="Box">
