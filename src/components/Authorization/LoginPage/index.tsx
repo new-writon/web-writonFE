@@ -1,8 +1,8 @@
-import { ChangeEvent, KeyboardEvent, useEffect, useState } from "react";
+import { ChangeEvent, KeyboardEvent, useState } from "react";
 
 import { useNavigate } from "react-router-dom";
 
-import { postLogin } from "@/apis/login";
+import { getChallengingList, postLogin } from "@/apis/login";
 import { AuthorizationTitle } from "@/components/atom/AuthorizationTitle";
 import { BlueButton, KakaoButton } from "@/components/atom/button";
 import Input from "@/components/atom/input";
@@ -13,7 +13,6 @@ const Login = () => {
   const navigate = useNavigate();
   const [id, setId] = useState<string>("");
   const [pw, setPw] = useState<string>("");
-  const [organization, setOrganization] = useState<string>("letsintern"); // 나중에는 뺴야함.
 
   const handleOnKeyPress = (e: KeyboardEvent<HTMLInputElement>) => {
     if (e.key === "Enter") {
@@ -23,13 +22,28 @@ const Login = () => {
 
   const LocalLogin = async () => {
     try {
-      const response = await postLogin({ id, pw, organization });
+      const response = await postLogin(id, pw, localStorage.getItem("organization") || "null");
       localStorage.setItem("accessToken", response.accessToken);
       localStorage.setItem("refreshToken", response.refreshToken);
-      if (response.affiliatedConfirmation) {
+
+      if (response.affiliatedConfirmation === true) {
         navigate("/");
-      } else {
+      } else if (response.affiliatedConfirmation === false) {
         navigate("/onboarding"); //나중에 온보딩 페이지로
+      } else {
+        // null이 들어오면 listapi 요청 얘가 초대장으로 접속한 후, 재접속인지, 초대장 없이 그냥 라이톤 사이트 접속인지
+        try {
+          const data = await getChallengingList(); // 니중에 여기서 워크스페이스 만들어야함.
+          if (data.length > 0) {
+            localStorage.setItem("organization", data[0]?.name);
+            localStorage.setItem("challengeId", data[0]?.challenge_id.toString());
+            navigate("/");
+          } else {
+            alert("초대장을 받고 들어와주세요!"); // 모달창으로 변경하기
+          }
+        } catch {
+          new Error("shit");
+        }
       }
     } catch (err) {
       alert("아이디 및 비밀번호를 다시 입력해주세요"); // 모달창으로 변경하기
@@ -43,17 +57,6 @@ const Login = () => {
     }&redirect_uri=${import.meta.env.VITE_APP_REDIRECT_URI}&response_type=code&lang=ko`;
     window.location.href = url;
   };
-
-  //쿼리스트링 뽑이서 로컬스토리지에 저장
-  useEffect(() => {
-    const queryString = location.search;
-    if (queryString) {
-      const urlParams = new URLSearchParams(queryString);
-      const organization: string = urlParams.get("organization") || "";
-      localStorage.setItem("organization", organization);
-      setOrganization(localStorage.getItem("organization") || "");
-    }
-  }, []);
 
   return (
     <Container>

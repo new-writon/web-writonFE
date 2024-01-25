@@ -1,8 +1,19 @@
+import { useEffect } from "react";
+
 import styled from "styled-components";
 
 import Login from "@/components/Authorization/LoginPage";
 
 const LoginPage = () => {
+  useEffect(() => {
+    // 페이지 로드 시 실행되는 코드
+    const organization = new URL(window.location.href).searchParams.get("organization");
+    const challengeId = new URL(window.location.href).searchParams.get("challengeId");
+    if (organization && challengeId) {
+      localStorage.setItem("organization", organization);
+      localStorage.setItem("challengeId", challengeId);
+    }
+  }, []);
   return (
     <Container>
       <Login />
