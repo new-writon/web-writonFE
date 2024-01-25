@@ -4,15 +4,7 @@ import { UserInfo, kakaoType } from "@/types/user";
 import { getData, postData } from ".";
 
 // 로그인
-export const postLogin = async ({
-  id,
-  pw,
-  organization,
-}: {
-  id: string;
-  pw: string;
-  organization: string;
-}) => {
+export const postLogin = async (id: string, pw: string, organization: string) => {
   const response = await postData<UserInfo>("/auth/login/local", {
     identifier: id,
     password: pw,
@@ -73,5 +65,15 @@ export const postRegister = async (id: string, pw: string, email: string) => {
     password: pw,
     email: email,
   });
+  return response.data;
+};
+
+interface challengeListProps {
+  name: string;
+  challenge_id: number;
+}
+
+export const getChallengingList = async () => {
+  const response = await getData<challengeListProps[]>("/challenge/start");
   return response.data;
 };
