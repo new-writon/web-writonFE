@@ -123,3 +123,19 @@ export const AddQuestionBtn = styled.div`
     padding-bottom: 2px;
   }
 `;
+
+export const OnboardingBtn = styled.div<{ $ButtonOn: boolean }>`
+  width: 100%;
+  height: 57px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 12px;
+  background: ${(props) =>
+    props.$ButtonOn ? "var(--purple-50, #6A63F5)" : "var(--Gray-40, #d9d9d9)"};
+  color: ${(props) => (props.$ButtonOn ? "var(--White, #FFF)" : "var(--Gray-70, #757575)")};
+  font-size: 1.125rem;
+  font-weight: 600;
+  line-height: 130%; /* 23.4px */
+  cursor: pointer;
+`;

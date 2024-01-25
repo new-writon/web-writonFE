@@ -14,6 +14,7 @@ import {
   FloatingWriteBtn,
   KakaoBtn,
   KeywordBtn,
+  OnboardingBtn,
   WritingSubmitBtn,
 } from "./style";
 
@@ -92,5 +93,22 @@ export const AddQuestionButton = ({ children, onClick, ButtonOn }: AddQuestionBu
         alt="+"
       />
     </AddQuestionBtn>
+  );
+};
+
+interface OnboardingButtonProps {
+  children: React.ReactNode;
+  onClick: () => void;
+  ButtonOn: boolean;
+}
+
+export const OnboardingButton = ({ children, onClick, ButtonOn }: OnboardingButtonProps) => {
+  return (
+    <OnboardingBtn
+      onClick={onClick}
+      $ButtonOn={ButtonOn}
+    >
+      {children}
+    </OnboardingBtn>
   );
 };
