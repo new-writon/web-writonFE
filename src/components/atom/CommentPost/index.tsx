@@ -1,15 +1,34 @@
-import { useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
+import { Dispatch, SetStateAction } from "react";
 
+import { format } from "date-fns";
+import { useRecoilState } from "recoil";
+
+import { getMyCommunityStory } from "@/apis/CommunityPage";
+import { postCommentWrite } from "@/apis/DetailPage";
 import { getChallengeCurrent } from "@/apis/mainPage";
 import profile from "@/assets/communityPage/profile.png";
+import { CommentState } from "@/recoil/atoms";
+import { commentProps } from "@/types";
 
 import { Container } from "./style";
 
-export const CommentPost = () => {
+export const CommentPost = ({
+  userTemplateId,
+  commentGroup,
+  replyArray,
+  setReplyArray,
+}: {
+  userTemplateId: number;
+  commentGroup: number;
+  replyArray?: commentProps[];
+  setReplyArray?: Dispatch<SetStateAction<commentProps[]>>;
+}) => {
   const textareaRef = useRef<HTMLTextAreaElement | null>(null);
   const [text, setText] = useState<string>("");
   const [registerBtn, setRegisterBtn] = useState<boolean>(true);
   const [profileImage, setProfileImage] = useState<string>(profile);
+  const [commentList, setCommentList] = useRecoilState(CommentState);
 
   const onChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     setText(e.currentTarget.value);
@@ -41,6 +60,67 @@ export const CommentPost = () => {
     }
   };
 
+  const commentRegister = async () => {
+    try {
+      const response = await postCommentWrite(
+        userTemplateId,
+        localStorage.getItem("organization") || "letsintern",
+        text,
+        commentGroup
+      );
+      console.log(response);
+      try {
+        const myData = await getMyCommunityStory(localStorage.getItem("challengeId") || "1");
+        if (commentGroup === -1) {
+          console.log(commentList);
+          setCommentList([
+            {
+              job: myData.job,
+              company: myData.company,
+              company_public: myData.company_public,
+              profile: myData.profile,
+              comment_id: response?.comment_id.toString(),
+              nickname: myData.nickname,
+              user_templete_id: userTemplateId,
+              content: text,
+              created_at: format(new Date(), "yyyy-MM-dd"),
+              myCommentSign: 1,
+              comment_group: commentGroup.toString(),
+              reply: [],
+            },
+            ...commentList,
+          ]);
+        } else {
+          if (replyArray && setReplyArray) {
+            console.log(replyArray);
+            setReplyArray([
+              {
+                job: myData.job,
+                company: myData.company,
+                company_public: myData.company_public,
+                profile: myData.profile,
+                comment_id: response?.comment_id.toString(),
+                nickname: myData.nickname,
+                user_templete_id: userTemplateId,
+                content: text,
+                created_at: format(new Date(), "yyyy-MM-dd"),
+                myCommentSign: 1,
+                comment_group: commentGroup.toString(),
+                reply: [],
+              },
+              ...replyArray,
+            ]);
+          }
+        }
+      } catch {
+        new Error("shit");
+      }
+    } catch {
+      new Error("shit");
+    }
+    setText("");
+  };
+
   useEffect(() => {
     myProfileRendering();
   }, []);
@@ -60,7 +140,7 @@ export const CommentPost = () => {
         //onKeyDown={handleOnKeyPress}
       />
       <button
-        // onClick={commentRegister}
+        onClick={commentRegister}
         disabled={registerBtn}
         className={registerBtn ? "" : "abled"}
       >
