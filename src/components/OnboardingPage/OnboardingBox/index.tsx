@@ -31,7 +31,7 @@ interface onBoardingDataProps {
   jobIntroduce: string;
   hireDate: string;
   company: string;
-  companyPublic: string;
+  companyPublic: boolean;
   organization: string;
 }
 
@@ -43,7 +43,7 @@ export const OnboardingBox = () => {
     jobIntroduce: "",
     hireDate: "",
     company: "",
-    companyPublic: "1",
+    companyPublic: true,
     organization: localStorage.getItem("organization") || "letsintern",
   });
   const [ButtonOn, setButtonOn] = useState<boolean>(false);
@@ -95,7 +95,7 @@ export const OnboardingBox = () => {
   const onVisibility = () => {
     setOnBoardingData({
       ...onBoardingData,
-      companyPublic: onBoardingData.companyPublic === "0" ? "1" : "0",
+      companyPublic: !onBoardingData.companyPublic,
     });
   };
 
@@ -257,10 +257,10 @@ export const OnboardingBox = () => {
         <CompanyBox>
           <div className="topTitle">
             <p className="title">회사명</p>
-            <ToggleBtnBox $toggleSwitchOn={onBoardingData.companyPublic === "0" ? true : false}>
-              {onBoardingData.companyPublic === "0" ? "비공개" : "공개"}
+            <ToggleBtnBox $toggleSwitchOn={!onBoardingData.companyPublic}>
+              {!onBoardingData.companyPublic ? "공개" : "비공개"}
               <label
-                className={`toggleSwitch ${onBoardingData.companyPublic === "0" && "active"}`}
+                className={`toggleSwitch ${!onBoardingData.companyPublic && "active"}`}
                 onClick={onVisibility}
               >
                 <span className="toggleButton"></span>

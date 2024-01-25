@@ -12,7 +12,7 @@ interface onBoardingDataProps {
   jobIntroduce: string;
   hireDate: string;
   company: string;
-  companyPublic: string;
+  companyPublic: boolean;
   organization: string;
 }
 export const postOnboardingComplete = async (onBoardingData: onBoardingDataProps) => {
