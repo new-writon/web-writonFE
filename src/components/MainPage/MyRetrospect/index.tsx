@@ -31,7 +31,7 @@ export const MyRetrospect = ({ RetrospectData }: { RetrospectData: communityCont
   const slickRef = useRef<Slider | null>(null);
   const REACT_SLIDER_SETTINGS = {
     infinite: true,
-    slidesToShow: 3,
+    slidesToShow: RetrospectData?.length > 2 ? 3 : RetrospectData?.length > 1 ? 2 : 1,
     slidesToScroll: 1,
     speed: 1200,
     dots: true,
@@ -91,20 +91,24 @@ export const MyRetrospect = ({ RetrospectData }: { RetrospectData: communityCont
                   </React.Fragment>
                 ))}
               </StyledSlider>
-              <ArrowButton onClick={previous}>
-                <img
-                  className="previous"
-                  src={arrow}
-                  alt="<"
-                />
-              </ArrowButton>
-              <ArrowButton onClick={next}>
-                <img
-                  className="next"
-                  src={arrow}
-                  alt=">"
-                />
-              </ArrowButton>
+              {RetrospectData?.length > 2 && (
+                <>
+                  <ArrowButton onClick={previous}>
+                    <img
+                      className="previous"
+                      src={arrow}
+                      alt="<"
+                    />
+                  </ArrowButton>
+                  <ArrowButton onClick={next}>
+                    <img
+                      className="next"
+                      src={arrow}
+                      alt=">"
+                    />
+                  </ArrowButton>
+                </>
+              )}
             </RetroSpectBox>
             <RetroSpectBoxResponsive>
               {RetrospectData.map((data, idx) => (
