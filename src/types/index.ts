@@ -168,3 +168,18 @@ export interface communityContentProps {
   commentCount: string;
   myLikeSign: string;
 }
+
+export interface commentProps {
+  job: string;
+  company: string | null;
+  company_public: number;
+  profile: string;
+  comment_id: number | string;
+  nickname: string;
+  user_templete_id: number;
+  content: string;
+  created_at: string;
+  myCommentSign: number;
+  comment_group: string | number;
+  reply: commentProps[];
+}
