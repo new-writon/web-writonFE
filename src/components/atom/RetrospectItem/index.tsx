@@ -2,7 +2,7 @@ import { format } from "date-fns";
 import { ko } from "date-fns/locale";
 import { useSetRecoilState } from "recoil";
 
-import { DetailDataState, DetailModalState } from "@/recoil/atoms";
+import { DetailDataState, DetailModalState, LikeState } from "@/recoil/atoms";
 import { communityContentProps } from "@/types";
 
 import { TitleSideBox } from "../TitleSideBox";
@@ -13,8 +13,10 @@ export const RetrospectItem = ({ data }: { data: communityContentProps[] }) => {
   const arr = data?.filter((item) => item.category === "스페셜 질문");
   const setDetailData = useSetRecoilState(DetailDataState);
   const setDetailModal = useSetRecoilState(DetailModalState);
+  const setLikeCount = useSetRecoilState(LikeState);
   const spaceToDetail = () => {
     setDetailData(data);
+    setLikeCount(data[0]?.likeCount);
     setDetailModal(true);
   };
 
