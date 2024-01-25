@@ -1,39 +1,38 @@
-import { useState } from "react";
+import React, { useState } from "react";
+
+import { commentProps } from "@/types";
 
 import { CommentPost } from "../CommentPost";
 import { UserInfoDetail } from "../UserInfoDetail";
 
 import { Container } from "./style";
 
-const data = {
-  affiliation_id: null,
-  category: "베이직 질문",
-  commentCount: "0",
-  company: "라이톤",
-  company_public: 1,
-  content: "네??",
-  created_at: "2024-01-04T00:00:00.000Z",
-  job: "프론트엔드",
-  likeCount: "0",
-  myLikeSign: "0",
-  nickname: "호연호연",
-  profile: "http://k.kakaocdn.net/dn/1G9kp/btsAot8liOn/8CWudi3uy07rvFNUkk3ER0/img_640x640.jpg",
-  question: "얌마?",
-  question_content_id: 1,
-  question_id: 1,
-  user_templete_id: 1,
-};
-
-export const CommentItem = () => {
+export const CommentItem = ({
+  userTemplateId,
+  data,
+}: {
+  userTemplateId: number;
+  data: commentProps;
+}) => {
   const [replyWriteOn, setReplyWriteOn] = useState<boolean>(false);
   const [replyReadOn, setReplyReadOn] = useState<boolean>(false);
+  const [replyArray, setReplyArray] = useState<commentProps[]>(data?.reply); // 초기값으로 들어온 Reply data 넣기
+  //reply 배열 들어오면 useState로 관리하고 있다.
+  // CommentPost 딴에서 commentGroup이 null값이 아닌 string이 들어오면 setState 배열 보내서 없데이트하기
+  // 그리고 여기 딴에서 state로 배열 뿌려주기 하니까 자동 없데이트
 
   return (
     <Container>
-      <UserInfoDetail data={data} />
-      <div className="comment-text">
-        efiwejhfieqwhgfeqrhgerhg8rehg8erhg8erhg8erhgerhgregjreghreghriughreiughrgiurhgreiughreuighgiurehgreigh
-      </div>
+      <UserInfoDetail
+        data={{
+          profile: data?.profile,
+          nickname: data?.nickname,
+          job: data?.job,
+          company: data?.company,
+          created_at: data?.created_at,
+        }}
+      />
+      <div className="comment-text">{data?.content}</div>
       <div className="replyBox">
         <div className="reply">
           <div
@@ -46,25 +45,42 @@ export const CommentItem = () => {
             className="replyRead"
             onClick={() => setReplyReadOn(!replyReadOn)}
           >
-            {replyReadOn ? "답글 숨기기" : `답글 ${0}개`}
+            {replyArray.length > 0
+              ? replyReadOn
+                ? "답글 숨기기"
+                : `답글 ${replyArray.length} 개`
+              : ""}
           </div>
         </div>
-        {replyWriteOn && <CommentPost />}
-        {replyReadOn && (
+        {replyWriteOn && (
+          <CommentPost
+            userTemplateId={userTemplateId}
+            commentGroup={Number(data?.comment_id)} //commnet_id
+            replyArray={replyArray}
+            setReplyArray={setReplyArray}
+          />
+        )}
+        {replyReadOn && replyArray.length > 0 ? (
           <div className="replylist">
-            <div>
-              <UserInfoDetail data={data} />
-              <div className="comment-text">
-                efiwejhfieqwhgfeqrhgerhg8rehg8erhg8erhg8erhgerhgregjreghreghriughreiughrgiurhgreiughreuighgiurehgreigh
-              </div>
-            </div>
-            <div>
-              <UserInfoDetail data={data} />
-              <div className="comment-text">
-                efiwejhfieqwhgfeqrhgerhg8rehg8erhg8erhg8erhgerhgregjreghreghriughreiughrgiurhgreiughreuighgiurehgreigh
-              </div>
-            </div>
+            {replyArray?.map((item, idx) => (
+              <React.Fragment key={idx}>
+                <div>
+                  <UserInfoDetail
+                    data={{
+                      profile: item.profile,
+                      nickname: item.nickname,
+                      job: item.job,
+                      company: item.company,
+                      created_at: item.created_at,
+                    }}
+                  />
+                  <div className="comment-text">{item?.content}</div>
+                </div>
+              </React.Fragment>
+            ))}
           </div>
+        ) : (
+          ""
         )}
       </div>
     </Container>
