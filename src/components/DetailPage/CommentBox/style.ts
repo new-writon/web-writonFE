@@ -17,4 +17,9 @@ export const Container = styled.div`
   .commentNum img {
     padding-bottom: 3px;
   }
+  .commentList {
+    display: flex;
+    flex-direction: column;
+    gap: 40px;
+  }
 `;
