@@ -96,3 +96,9 @@ export const LikeState = atom<string>({
   key: "LikeState",
   default: "",
 });
+
+//좋아요 클릭
+export const LikeClickState = atom<boolean>({
+  key: "LikeClickState",
+  default: false,
+});
