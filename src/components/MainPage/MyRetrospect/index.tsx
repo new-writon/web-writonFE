@@ -1,33 +1,22 @@
 import React, { useCallback, useRef } from "react";
 
-import { format } from "date-fns";
-import { useNavigate } from "react-router-dom";
 // eslint-disable-next-line import/order
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import styled from "styled-components";
 
-import pencil_white from "@/assets/header/pencil_white.svg";
-import NoRetrospectItem from "@/assets/mainPage/NoRetrospect.svg";
 import arrow from "@/assets/mainPage/icon-arrow.svg";
 import { MainSemiTitle } from "@/components/atom/MainSemiTitle";
 import { RetrospectItem } from "@/components/atom/RetrospectItem";
 import { Inner } from "@/style/global";
 import { communityContentProps } from "@/types";
 
-import {
-  ArrowButton,
-  Container,
-  NoRetrospectItemBox,
-  RetroSpectBox,
-  RetroSpectBoxResponsive,
-} from "./style";
+import { NoRetrospect } from "../NoRetrospect";
+
+import { ArrowButton, Container, RetroSpectBox, RetroSpectBoxResponsive } from "./style";
 
 export const MyRetrospect = ({ RetrospectData }: { RetrospectData: communityContentProps[][] }) => {
-  const navigate = useNavigate();
-  const today = format(new Date(), "yyyy-MM-dd");
-
   const slickRef = useRef<Slider | null>(null);
   const REACT_SLIDER_SETTINGS = {
     infinite: true,
@@ -119,29 +108,7 @@ export const MyRetrospect = ({ RetrospectData }: { RetrospectData: communityCont
             </RetroSpectBoxResponsive>
           </>
         ) : (
-          <NoRetrospectItemBox>
-            <div className="noRetrospectItemBox">
-              <img
-                src={NoRetrospectItem}
-                alt="NO"
-              />
-              <div className="title">아직 작성한 회고가 없어요.</div>
-              <div className="semiTitle">
-                작성한 회고는 여기서 모아볼 수 있어요.
-                <br />첫 회고를 작성하러 가볼까요?
-              </div>
-              <div
-                className="writingBtn"
-                onClick={() => navigate(`/writing/${today}`)}
-              >
-                <p>회고 작성하기</p>
-                <img
-                  src={pencil_white}
-                  alt="pen"
-                />
-              </div>
-            </div>
-          </NoRetrospectItemBox>
+          <NoRetrospect type="my" />
         )}
       </Container>
     </Inner>

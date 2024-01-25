@@ -5,6 +5,7 @@ import { format } from "date-fns";
 
 import { getCommunityContentData, getCommunityDate } from "@/apis/CommunityPage";
 import arrow from "@/assets/communityPage/storyArrow.svg";
+import { NoRetrospect } from "@/components/MainPage/NoRetrospect";
 import { CommunityItem } from "@/components/atom/CommunityItem";
 import { MainSemiTitle } from "@/components/atom/MainSemiTitle";
 import { TitleSideBox } from "@/components/atom/TitleSideBox";
@@ -142,14 +143,17 @@ export const CommunityBox = () => {
             />
           </div>
         </CommunityHeader>
-        <CommunityItemBox>
-          {/* 여기 빈배열이면 어떤 화면 이어야할지 */}
-          {CommunitySecondData?.templateData.map((item, idx) => (
-            <React.Fragment key={idx}>
-              <CommunityItem data={item} />
-            </React.Fragment>
-          ))}
-        </CommunityItemBox>
+        {CommunitySecondData?.templateData?.length !== 0 ? (
+          <CommunityItemBox>
+            {CommunitySecondData?.templateData.map((item, idx) => (
+              <React.Fragment key={idx}>
+                <CommunityItem data={item} />
+              </React.Fragment>
+            ))}
+          </CommunityItemBox>
+        ) : (
+          <NoRetrospect type="community" />
+        )}
       </Container>
     </Inner>
   );
