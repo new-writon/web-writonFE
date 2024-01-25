@@ -15,7 +15,7 @@ import { communitySecondCoponentType } from "@/types";
 import { CommunityHeader, CommunityItemBox, Container } from "./style";
 
 export const CommunityBox = () => {
-  const today = new Date();
+  // const today = new Date();
   const [width, setWidth] = useState<number>(window.innerWidth);
   const [dateActive, setDateActive] = useState<string[]>([]);
   const [dateLength, setDateLength] = useState<number>(-1);
@@ -116,8 +116,9 @@ export const CommunityBox = () => {
             ) : (
               <>
                 <MainSemiTitle font={1.125}>
-                  {format(today, "d")}일,<div className="number second">{23}</div>명이 챌린지를
-                  완료했어요.
+                  {format(dateActive[dateLength], "M")}월 {format(dateActive[dateLength], "d")}일,
+                  <div className="number">{CommunitySecondData?.challengeCompleteCount}</div>
+                  명이 챌린지를 완료했어요.
                 </MainSemiTitle>
               </>
             )}
