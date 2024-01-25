@@ -2,7 +2,7 @@
 import axios, { AxiosRequestConfig, InternalAxiosRequestConfig } from "axios";
 
 export const WRITON = axios.create({
-  baseURL: "https://api.writon.co.kr/api",
+  baseURL: import.meta.env.VITE_APP_SERVER_DOMAIN,
   headers: {
     "Content-Type": "application/json;charset=UTF-8",
   },
