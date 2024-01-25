@@ -4,6 +4,7 @@ import {
   BasicQuestionType,
   SpecialQuestionType,
   addSpecialQuestionArrayType,
+  commentProps,
   communityContentProps,
   //communityContentProps,
   postWritingDataType,
@@ -82,4 +83,16 @@ export const DetailDataState = atom<communityContentProps[]>({
 export const DetailModalState = atom<boolean>({
   key: "DetailModalState",
   default: false,
+});
+
+//댓글 받아오기
+export const CommentState = atom<commentProps[]>({
+  key: "CommentState",
+  default: [],
+});
+
+//좋아요 수
+export const LikeState = atom<string>({
+  key: "LikeState",
+  default: "",
 });
