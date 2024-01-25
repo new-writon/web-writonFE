@@ -1,5 +1,8 @@
 import React from "react";
 
+import { useSetRecoilState } from "recoil";
+
+import { DetailDataState, DetailModalState, LikeState } from "@/recoil/atoms";
 import { communityContentProps } from "@/types";
 
 import { CommentAndLike } from "../CommentAndLike";
@@ -8,8 +11,17 @@ import { UserInfo } from "../UserInfo";
 import { Container, PreviewBody, PreviewInfo } from "./style";
 
 export const CommunityItem = ({ data }: { data: communityContentProps[] }) => {
+  const setDetailData = useSetRecoilState(DetailDataState);
+  const setDetailModal = useSetRecoilState(DetailModalState);
+  const setLikeCount = useSetRecoilState(LikeState);
+  const spaceToDetail = () => {
+    setDetailData(data);
+    setLikeCount(data[0]?.likeCount);
+    setDetailModal(true);
+  };
+
   return (
-    <Container>
+    <Container onClick={spaceToDetail}>
       <PreviewBody>
         {data?.map((item, idx) => (
           <React.Fragment key={idx}>

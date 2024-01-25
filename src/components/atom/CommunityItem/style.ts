@@ -4,6 +4,7 @@ export const Container = styled.div`
   border-radius: 16px;
   background-color: var(--White);
   padding: 26px;
+  cursor: pointer;
 `;
 
 export const PreviewBody = styled.div`
