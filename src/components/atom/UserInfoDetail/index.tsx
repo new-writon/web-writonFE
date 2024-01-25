@@ -1,11 +1,18 @@
 import { format } from "date-fns";
 
 import profile from "@/assets/communityPage/profile.png";
-import { communityContentProps } from "@/types";
 
 import { Container } from "./style";
 
-export const UserInfoDetail = ({ data }: { data: communityContentProps }) => {
+interface userInfoDetailProps {
+  profile: string;
+  nickname: string;
+  job: string;
+  company: string | null;
+  created_at: string;
+}
+
+export const UserInfoDetail = ({ data }: { data: userInfoDetailProps }) => {
   return (
     <Container>
       <div className="profileImageCover">
