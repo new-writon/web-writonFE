@@ -1,12 +1,28 @@
-import React, { ChangeEvent, useState } from "react";
+import React, { ChangeEvent, useEffect, useRef, useState } from "react";
 
-import { getDuplicateNickname } from "@/apis/OnboardingPage";
+import { useNavigate } from "react-router-dom";
+
+import {
+  getDuplicateNickname,
+  postChallengeStart,
+  postOnboardingComplete,
+} from "@/apis/OnboardingPage";
 import letsintern from "@/assets/logo/letsintern.png";
 import { DuplicateBtn } from "@/components/Authorization/RegisterEmailPage/style";
-import { KeywordButton } from "@/components/atom/button";
+import { ToggleBtnBox } from "@/components/atom/QuestionBox/style";
+import { KeywordButton, OnboardingButton } from "@/components/atom/button";
 import Input from "@/components/atom/input";
 
-import { Container, JobBox, JobIntroBox, NicknameBox, OnboardBox, Title } from "./style";
+import {
+  CompanyBox,
+  Container,
+  JobBox,
+  JobIntroBox,
+  JoinDateBox,
+  NicknameBox,
+  OnboardBox,
+  Title,
+} from "./style";
 
 const JobCategory = ["기획", "운영", "경영", "개발", "마케팅", "디자인"];
 interface onBoardingDataProps {
@@ -15,26 +31,31 @@ interface onBoardingDataProps {
   jobIntroduce: string;
   hireDate: string;
   company: string;
-  companyPublic: boolean;
+  companyPublic: string;
+  organization: string;
 }
 
 export const OnboardingBox = () => {
+  const navigate = useNavigate();
   const [onBoardingData, setOnBoardingData] = useState<onBoardingDataProps>({
     nickname: "",
     job: "",
     jobIntroduce: "",
     hireDate: "",
     company: "",
-    companyPublic: true,
+    companyPublic: "1",
+    organization: localStorage.getItem("organization") || "letsintern",
   });
+  const [ButtonOn, setButtonOn] = useState<boolean>(false);
+  const textareaRef = useRef<HTMLTextAreaElement | null>(null);
 
   const [nicknameNum, setNicknameNum] = useState<number>(0);
   const [jobIntroduceNum, setJobIntroduceNum] = useState<number>(0);
+  const [companyNum, setCompanyNum] = useState<number>(0);
 
   const [duplicateShow, setDuplicateShow] = useState<boolean>(false);
   const [duplicate, setDuplicate] = useState<boolean>(false);
   const [errorIdLine, setErrorIdLine] = useState<boolean>(false);
-  const [categoryIdx, setCategoryIdx] = useState<string>("");
 
   const handleNicknameChange = (e: ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
@@ -49,7 +70,7 @@ export const OnboardingBox = () => {
     }
   };
 
-  const handleJobIntroduceChange = (e: ChangeEvent<HTMLInputElement>) => {
+  const handleJobIntroduceChange = (e: ChangeEvent<HTMLTextAreaElement>) => {
     const value = e.target.value;
 
     const validCharacters =
@@ -58,6 +79,43 @@ export const OnboardingBox = () => {
     if (value.length < 51) {
       setOnBoardingData({ ...onBoardingData, jobIntroduce: validCharacters.join("") }); // 추출된 문자를 다시 합침
       setJobIntroduceNum(validCharacters.length);
+    }
+  };
+
+  const handleCompanyChange = (e: ChangeEvent<HTMLInputElement>) => {
+    const value = e.target.value;
+    // 정규식을 사용하여 한글, 영어, 숫자만 추출
+    const validCharacters = value.match(/[ㄱ-ㅎ|ㅏ-ㅣ|가-힣a-zA-Z0-9]/g) || [];
+
+    if (value.length < 21) {
+      setOnBoardingData({ ...onBoardingData, company: validCharacters.join("") }); // 추출된 문자를 다시 합침
+      setCompanyNum(validCharacters.length);
+    }
+  };
+  const onVisibility = () => {
+    setOnBoardingData({
+      ...onBoardingData,
+      companyPublic: onBoardingData.companyPublic === "0" ? "1" : "0",
+    });
+  };
+
+  const handleHireDateChange = (e: ChangeEvent<HTMLInputElement>) => {
+    const digitsOnly = e.target.value.replace(/\D/g, "");
+
+    // 정해진 날짜 형식에 따라 "-" 추가
+    let formattedDate = digitsOnly.replace(/(\d{4})(\d{2})(\d{2})/, "$1-$2-$3");
+
+    // 추가로 하이픈을 포함시키는 로직 (2024 이후에 하이픈 추가)
+    if (digitsOnly.length >= 8) {
+      formattedDate = formattedDate.replace(/(\d{4}-\d{2})/, "$1");
+    }
+
+    // 일 입력 시 이후 입력을 막는 로직
+    if (digitsOnly.length >= 10) {
+      formattedDate = formattedDate.substring(0, 10);
+    }
+    if (formattedDate.length < 11) {
+      setOnBoardingData({ ...onBoardingData, hireDate: formattedDate });
     }
   };
 
@@ -77,6 +135,47 @@ export const OnboardingBox = () => {
       throw new Error("shit");
     }
   };
+
+  const OnboardingComplete = async () => {
+    if (ButtonOn) {
+      try {
+        const data = await postOnboardingComplete(onBoardingData);
+        console.log(data);
+        try {
+          const response = await postChallengeStart(
+            localStorage.getItem("organization") || "letsintern",
+            localStorage.getItem("challengeId") || "1"
+          );
+          console.log(response);
+          navigate("/");
+        } catch {
+          new Error("shit");
+        }
+      } catch {
+        new Error("shit");
+      }
+    }
+  };
+
+  useEffect(() => {
+    if (
+      onBoardingData.nickname &&
+      duplicate &&
+      onBoardingData.company &&
+      onBoardingData.hireDate &&
+      onBoardingData.job &&
+      onBoardingData.jobIntroduce
+    ) {
+      setButtonOn(true);
+    }
+  }, [
+    duplicate,
+    onBoardingData.company,
+    onBoardingData.hireDate,
+    onBoardingData.job,
+    onBoardingData.jobIntroduce,
+    onBoardingData.nickname,
+  ]);
 
   return (
     <Container>
@@ -105,7 +204,7 @@ export const OnboardingBox = () => {
               errorLine={errorIdLine}
             />
             <DuplicateBtn
-              className={duplicateShow ? "title" : ""}
+              className={duplicateShow ? "dupliBtn" : ""}
               onClick={DuplicateCheck}
             >
               중복확인
@@ -144,10 +243,10 @@ export const OnboardingBox = () => {
         </JobBox>
         <JobIntroBox>
           <p className="title">직무에 대한 한 줄 소개</p>
-          <Input
-            type="text"
+          <textarea
+            ref={textareaRef}
             value={onBoardingData.jobIntroduce}
-            onChange={handleJobIntroduceChange}
+            onChange={(e) => handleJobIntroduceChange(e)}
             placeholder="어떤 일을 하나요? 간단하게 소개해주세요. ex) 부트캠프 division의 UX/UI 디자인 시스템 구축 업무 어시스트"
           />
           <div className="parityCheck">
@@ -155,6 +254,46 @@ export const OnboardingBox = () => {
             <div>({jobIntroduceNum}/50)</div>
           </div>
         </JobIntroBox>
+        <CompanyBox>
+          <div className="topTitle">
+            <p className="title">회사명</p>
+            <ToggleBtnBox $toggleSwitchOn={onBoardingData.companyPublic === "0" ? true : false}>
+              {onBoardingData.companyPublic === "0" ? "비공개" : "공개"}
+              <label
+                className={`toggleSwitch ${onBoardingData.companyPublic === "0" && "active"}`}
+                onClick={onVisibility}
+              >
+                <span className="toggleButton"></span>
+              </label>
+            </ToggleBtnBox>
+          </div>
+          <Input
+            type="text"
+            value={onBoardingData.company}
+            onChange={handleCompanyChange}
+            placeholder="근무중인 회사 이름을 입력해주세요."
+          />
+          <div className="parityCheck">
+            <div></div>
+            <div>({companyNum}/20)</div>
+          </div>
+        </CompanyBox>
+        <JoinDateBox>
+          <p className="title">입사 날짜</p>
+          <p className="semiTitle">YYYYMMDD의 형식을 맞춰서 작성해주세요.</p>
+          <Input
+            type="text"
+            value={onBoardingData.hireDate}
+            onChange={handleHireDateChange}
+            placeholder="20240101"
+          />
+        </JoinDateBox>
+        <OnboardingButton
+          onClick={OnboardingComplete}
+          ButtonOn={ButtonOn}
+        >
+          완료하고 챌린지 시작하기
+        </OnboardingButton>
       </OnboardBox>
     </Container>
   );

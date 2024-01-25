@@ -3,7 +3,6 @@ import styled from "styled-components";
 export const Container = styled.div`
   width: 100%;
   max-width: 711px;
-  height: 1000px;
   background-color: var(--White);
   margin: 37px auto 0;
   border-radius: 16px;
@@ -52,6 +51,9 @@ export const OnboardBox = styled.div`
   .success {
     color: var(--Main_Blue, #135ff3);
   }
+  .dupliBtn {
+    color: var(--Gray-60, #959595);
+  }
   .title {
     color: var(--Gray10_900, #212121);
     font-size: 0.875rem;
@@ -74,6 +76,11 @@ export const OnboardBox = styled.div`
       font-size: 0.75rem;
     }
   }
+  input {
+    border-radius: 8px;
+    border: 1px solid var(--Gray-40, #d9d9d9);
+    background: var(--Gray-10, #fafafa);
+  }
 `;
 
 export const NicknameBox = styled.div`
@@ -92,7 +99,49 @@ export const JobBox = styled.div`
 `;
 
 export const JobIntroBox = styled.div`
-  input {
+  margin-top: 20px;
+  textarea {
+    margin-top: 6px;
+    width: 100%;
     height: 104px;
+    border-radius: 8px;
+    border: 1px solid var(--Gray-40, #d9d9d9);
+    background: var(--Gray-10, #fafafa);
+    outline: none;
+    padding: 16px;
+    box-sizing: border-box;
+    resize: none;
+    font-size: 1rem;
+    caret-color: #6a63f5;
+    color: var(--Gray-100, #212121);
+    line-height: 24px;
+    &::placeholder {
+      color: var(--Gray-60, #959595);
+      font-size: 1rem;
+      line-height: 150%; /* 24px */
+      white-space: pre-wrap;
+    }
+    &:focus {
+      &::placeholder {
+        opacity: 0;
+      }
+    }
+  }
+`;
+
+export const CompanyBox = styled.div`
+  .topTitle {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 8px;
+  }
+`;
+
+export const JoinDateBox = styled.div`
+  .semiTitle {
+    margin-bottom: 16px;
+  }
+  input {
+    margin-bottom: 30px;
   }
 `;
