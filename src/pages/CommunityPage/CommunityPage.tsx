@@ -42,8 +42,10 @@ export const CommunityPage = () => {
 const Container = styled.div`
   background: var(--Gray2_100, #f5f5f5);
   padding-top: 23px;
+  padding-bottom: 230px;
   position: relative;
   @media (max-width: 530px) {
     padding-top: 0;
+    padding-bottom: 50px;
   }
 `;
