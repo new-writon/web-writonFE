@@ -1,21 +1,41 @@
-import { MouseEvent } from "react";
+/* eslint-disable react-hooks/exhaustive-deps */
+import { MouseEvent, useEffect } from "react";
 
-import { useRecoilValue, useSetRecoilState } from "recoil";
+import { useRecoilState, useRecoilValue, useSetRecoilState } from "recoil";
 import styled from "styled-components";
 
+import { getComment } from "@/apis/DetailPage";
 import { CommentBox } from "@/components/DetailPage/CommentBox";
 import { WriteView } from "@/components/DetailPage/WriteView";
 import { CommentAndLike } from "@/components/atom/CommentAndLike";
 import { CommnetAndLikeFloating } from "@/components/atom/CommentAndLikeFloating";
 import { UserInfoDetail } from "@/components/atom/UserInfoDetail";
-import { DetailDataState, DetailModalState } from "@/recoil/atoms";
+import { CommentState, DetailDataState, DetailModalState, LikeState } from "@/recoil/atoms";
 
 export const DetailPage = () => {
   const detailData = useRecoilValue(DetailDataState);
   const setDetailModal = useSetRecoilState(DetailModalState);
+  const likeCount = useRecoilValue(LikeState);
+  const [commentList, setCommentList] = useRecoilState(CommentState);
   const defaultClick = (e: MouseEvent<HTMLDivElement>) => {
     e.stopPropagation(); // 이벤트 캡쳐링 방지
   };
+
+  const DetailPageRendering = async () => {
+    try {
+      const data = await getComment(detailData[0]?.user_templete_id);
+      setCommentList(data);
+      console.log(data);
+    } catch {
+      new Error("shit");
+    }
+  };
+
+  useEffect(() => {
+    DetailPageRendering();
+    console.log(detailData);
+  }, []);
+
   return (
     <Container onClick={() => setDetailModal(false)}>
       <div
@@ -24,14 +44,30 @@ export const DetailPage = () => {
       >
         <WriteView detailData={detailData} />
         <div className="WriterUser">
-          <UserInfoDetail data={detailData[0]} />
+          <UserInfoDetail
+            data={{
+              profile: detailData[0]?.profile,
+              nickname: detailData[0]?.nickname,
+              job: detailData[0]?.job,
+              company: detailData[0]?.company,
+              created_at: detailData[0]?.created_at,
+            }}
+          />
           <CommentAndLike
-            commentCount={detailData[0]?.commentCount}
-            likeCount={detailData[0]?.likeCount}
+            commentCount={commentList?.length.toString()}
+            likeCount={likeCount}
           />
         </div>
-        <CommentBox />
-        <CommnetAndLikeFloating />
+        <CommentBox
+          commentList={commentList}
+          userTemplateId={detailData[0]?.user_templete_id} //
+        />
+        <CommnetAndLikeFloating
+          userTemplateId={detailData[0]?.user_templete_id}
+          myLikeSign={detailData[0]?.myLikeSign}
+          commentCount={commentList?.length.toString()}
+          likeCount={likeCount}
+        />
       </div>
     </Container>
   );
