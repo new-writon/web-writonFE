@@ -9,6 +9,10 @@ export const Container = styled.div`
   background: #fff;
   box-shadow: 0px 14px 20px 0px rgba(33, 33, 33, 0.05);
   padding: 50px 170px 100px;
+  @media (max-width: 710px) {
+    padding: 50px 20px 100px;
+    min-width: 340px;
+  }
 `;
 
 export const Title = styled.div`
