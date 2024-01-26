@@ -37,7 +37,7 @@ export const StoryItem = ({
           />
         </div>
         <div className="job">{data?.job}</div>
-        <div className="company">{data?.company}</div>
+        <div className="company">{data?.company || "비공개"}</div>
       </div>
       {/* <div className="introducePopup">
         <div className="userInfo"></div>
