@@ -54,7 +54,6 @@ export const Container = styled.div<{ $someone: string; $message: string | null 
     .storyMessage {
       background-color: #fff;
       height: fit-content;
-      white-space: initial;
       font-size: 0.625rem;
       color: var(--Gray-90, #424242);
     }
