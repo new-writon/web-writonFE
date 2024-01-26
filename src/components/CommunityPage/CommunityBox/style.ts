@@ -25,6 +25,12 @@ export const CommunityHeader = styled.div`
     display: flex;
     gap: 6px;
   }
+  .flex {
+    display: flex;
+  }
+  .flex .number {
+    margin: 0;
+  }
   .changeDate {
     display: flex;
     align-items: center;
