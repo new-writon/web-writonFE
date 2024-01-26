@@ -102,3 +102,9 @@ export const LikeClickState = atom<boolean>({
   key: "LikeClickState",
   default: false,
 });
+
+// responsive date
+export const DateResponsiveState = atom<string | undefined>({
+  key: "DateResponsiveState",
+  default: "",
+});
