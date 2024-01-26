@@ -1,8 +1,10 @@
 /* eslint-disable react-hooks/rules-of-hooks */
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
+import { useRecoilValue } from "recoil";
 
 import Layout from "@/Layout";
 import { ScrollToTop } from "@/components/Common/ScrollToTop";
+import { CompletePopupResponsive } from "@/components/atom/WritingPopup/CompletePopup";
 import { KakaoCallback } from "@/pages/Authorization/KakaoCallback";
 import LoginPage from "@/pages/Authorization/LoginPage";
 import RegisterEmailPage from "@/pages/Authorization/RegisterEmailPage";
@@ -11,14 +13,18 @@ import { CommunityPage } from "@/pages/CommunityPage/CommunityPage";
 import MainPage from "@/pages/MainPage/MainPage";
 import { OnboardingPage } from "@/pages/OnboardingPage/OnboardingPage";
 import { WritingPage } from "@/pages/WritingPage/WritingPage";
+import { modalBackgroundState } from "@/recoil/atoms";
 
 const router = () => {
+  const modal = useRecoilValue(modalBackgroundState);
+
   const PrivateRoute = () => {
     return localStorage.getItem("accessToken") ? <MainPage /> : <Navigate to="/login" />;
   };
   return (
     <BrowserRouter>
       <ScrollToTop />
+      {modal.completeModal && <CompletePopupResponsive />}
       <Routes>
         <Route
           path="/login"
