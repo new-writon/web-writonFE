@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 
 import { useNavigate, useParams } from "react-router-dom";
-import { useRecoilState, useRecoilValue } from "recoil";
+import { useRecoilState, useRecoilValue, useSetRecoilState } from "recoil";
 import styled from "styled-components";
 
 import { postwritingSubmit } from "@/apis/WritingPage";
@@ -12,6 +12,7 @@ import { SpecialQuestion } from "@/components/WritingPage/SpecialQuestion";
 import { CompletePopup } from "@/components/atom/WritingPopup/CompletePopup";
 import { WritingSubmitButton } from "@/components/atom/button";
 import {
+  DateResponsiveState,
   addSpecialQuestionArrayState,
   modalBackgroundState,
   postWritingDataState,
@@ -23,12 +24,13 @@ export const WritingBox = () => {
   const navigate = useNavigate();
   const [popUpOn, setpopUpOn] = useState<boolean>(false);
   const [modal, setModal] = useRecoilState(modalBackgroundState);
-
+  const setDateResponsive = useSetRecoilState(DateResponsiveState);
   const addSpecialQuestionData = useRecoilValue(addSpecialQuestionArrayState);
   const postWritingData = useRecoilValue(postWritingDataState);
   useEffect(() => {
     console.log(postWritingData);
-  }, [postWritingData]);
+    setDateResponsive(date);
+  }, [date, postWritingData, setDateResponsive]);
   const submitWrite = async () => {
     const response = await postwritingSubmit(
       localStorage.getItem("organization") || "",

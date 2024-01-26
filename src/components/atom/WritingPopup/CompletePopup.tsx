@@ -2,7 +2,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import { useRecoilState, useRecoilValue } from "recoil";
 
 import { postwritingSubmit } from "@/apis/WritingPage";
-import { modalBackgroundState, postWritingDataState } from "@/recoil/atoms";
+import { DateResponsiveState, modalBackgroundState, postWritingDataState } from "@/recoil/atoms";
 import { writingPagePopUpProps } from "@/types";
 
 import { Container, ContainerResponsive } from "./style";
@@ -35,12 +35,14 @@ export const CompletePopupResponsive = () => {
   const navigate = useNavigate();
   const [modal, setModal] = useRecoilState(modalBackgroundState);
   const postWritingData = useRecoilValue(postWritingDataState);
+  const DateResponsive = useRecoilValue(DateResponsiveState);
 
   const submitWrite = async () => {
+    console.log(date);
     const response = await postwritingSubmit(
       localStorage.getItem("organization") || "",
       localStorage.getItem("challengeId") || "1",
-      date || "",
+      DateResponsive || "",
       postWritingData
     );
     console.log(response);
