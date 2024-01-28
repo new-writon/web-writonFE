@@ -57,9 +57,15 @@ export const modalBackgroundState = atom<{
   contentModal: boolean;
   deleteModal: boolean;
   completeModal: boolean;
+  todayWriteModal: boolean;
 }>({
   key: "modalBackgroundState",
-  default: { contentModal: false, deleteModal: false, completeModal: false },
+  default: {
+    contentModal: false,
+    deleteModal: false,
+    completeModal: false,
+    todayWriteModal: false,
+  },
 });
 
 // 모달 전달 데이터
@@ -106,5 +112,11 @@ export const LikeClickState = atom<boolean>({
 // responsive date
 export const DateResponsiveState = atom<string | undefined>({
   key: "DateResponsiveState",
+  default: "",
+});
+
+//임시 오늘의 한마디
+export const PreTodayWriteState = atom<string>({
+  key: "PreTodayWriteState",
   default: "",
 });

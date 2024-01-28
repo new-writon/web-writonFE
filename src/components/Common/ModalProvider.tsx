@@ -5,6 +5,7 @@ import { DetailModalState, modalBackgroundState } from "@/recoil/atoms";
 
 import ContentPopupResponsive from "../atom/WritingPopup/ContentPopupResponsive";
 import { DeletePopupResponsive } from "../atom/WritingPopup/DeletePopup";
+import { TodayWritePopup } from "../atom/WritingPopup/TodayWritePopup";
 
 export const ModalProvider = () => {
   const modal = useRecoilValue(modalBackgroundState);
@@ -12,6 +13,7 @@ export const ModalProvider = () => {
 
   return (
     <>
+      {modal.todayWriteModal && <TodayWritePopup />}
       {modal.contentModal && <ContentPopupResponsive />}
       {modal.deleteModal && <DeletePopupResponsive />}
       {detailModal && <DetailPage />}
