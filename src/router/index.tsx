@@ -10,6 +10,7 @@ import LoginPage from "@/pages/Authorization/LoginPage";
 import RegisterEmailPage from "@/pages/Authorization/RegisterEmailPage";
 import RegisterPage from "@/pages/Authorization/RegisterPage";
 import { CommunityPage } from "@/pages/CommunityPage/CommunityPage";
+import { DetailPage } from "@/pages/DetailPage/DetailPage";
 import MainPage from "@/pages/MainPage/MainPage";
 import { OnboardingPage } from "@/pages/OnboardingPage/OnboardingPage";
 import { WritingPage } from "@/pages/WritingPage/WritingPage";
@@ -58,6 +59,10 @@ const router = () => {
           <Route
             path="/community"
             element={<CommunityPage />}
+          />
+          <Route
+            path="/detail/:templeteId"
+            element={<DetailPage />}
           />
         </Route>
       </Routes>
