@@ -17,13 +17,14 @@ export const KakaoCallback = () => {
       try {
         const res = await postKakaoLogin(
           response.access_token,
-          localStorage.getItem("organization") || "null"
+          localStorage.getItem("organization") || "null",
+          Number(localStorage.getItem("challengeId")) || 1
         );
         localStorage.setItem("accessToken", res.accessToken);
         localStorage.setItem("refreshToken", res.refreshToken);
-        if (res.affiliatedConfirmation === true) {
+        if (res.challengedConfirmation === true) {
           navigate("/");
-        } else if (res.affiliatedConfirmation === false) {
+        } else if (res.challengedConfirmation === false) {
           navigate("/onboarding"); //나중에 온보딩 페이지로
         } else {
           // null이 들어오면 listapi 요청 얘가 초대장으로 접속한 후, 재접속인지, 초대장 없이 그냥 라이톤 사이트 접속인지

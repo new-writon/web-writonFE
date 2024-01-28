@@ -17,6 +17,7 @@ export const CommunityPage = () => {
         getCommunityFirstComponent(localStorage.getItem("challengeId") || "1"),
         getMyCommunityStory(localStorage.getItem("challengeId") || "1"),
       ]);
+      console.log(result);
       setCommunityFirstData(result[0]);
       setMyCommunityStoryData(result[1]);
     } catch {

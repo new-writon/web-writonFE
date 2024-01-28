@@ -22,13 +22,18 @@ const Login = () => {
 
   const LocalLogin = async () => {
     try {
-      const response = await postLogin(id, pw, localStorage.getItem("organization") || "null");
+      const response = await postLogin(
+        id,
+        pw,
+        localStorage.getItem("organization") || "null",
+        Number(localStorage.getItem("challengeId")) || 1
+      );
       localStorage.setItem("accessToken", response.accessToken);
       localStorage.setItem("refreshToken", response.refreshToken);
 
-      if (response.affiliatedConfirmation === true) {
+      if (response.challengedConfirmation === true) {
         navigate("/");
-      } else if (response.affiliatedConfirmation === false) {
+      } else if (response.challengedConfirmation === false) {
         navigate("/onboarding"); //나중에 온보딩 페이지로
       } else {
         // null이 들어오면 listapi 요청 얘가 초대장으로 접속한 후, 재접속인지, 초대장 없이 그냥 라이톤 사이트 접속인지

@@ -4,11 +4,17 @@ import { UserInfo, kakaoType } from "@/types/user";
 import { getData, postData } from ".";
 
 // 로그인
-export const postLogin = async (id: string, pw: string, organization: string) => {
+export const postLogin = async (
+  id: string,
+  pw: string,
+  organization: string,
+  challengeId: number
+) => {
   const response = await postData<UserInfo>("/auth/login/local", {
     identifier: id,
     password: pw,
     organization: organization,
+    challengeId: challengeId,
   });
   return response.data;
 };
@@ -23,10 +29,10 @@ export const postKakaoAuth = async (CODE: string) => {
   return response.data;
 };
 
-export const postKakaoLogin = async (token: string, organization: string) => {
+export const postKakaoLogin = async (token: string, organization: string, challengeId: number) => {
   const response = await postData<UserInfo>(
     "/auth/login/kakao",
-    { organization: organization },
+    { organization: organization, challengeId: challengeId },
     {
       headers: {
         Authentication: token,
