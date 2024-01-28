@@ -1,10 +1,11 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import { MouseEvent, useEffect } from "react";
+import { MouseEvent, useEffect, useState } from "react";
 
-import { useRecoilState, useRecoilValue, useSetRecoilState } from "recoil";
+import { useParams } from "react-router-dom";
+import { useRecoilState, useSetRecoilState } from "recoil";
 import styled from "styled-components";
 
-import { getComment } from "@/apis/DetailPage";
+import { getComment, getTemplete } from "@/apis/DetailPage";
 import { CommentBox } from "@/components/DetailPage/CommentBox";
 import { WriteView } from "@/components/DetailPage/WriteView";
 import { CommentAndLike } from "@/components/atom/CommentAndLike";
@@ -13,28 +14,57 @@ import { UserInfoDetail } from "@/components/atom/UserInfoDetail";
 import { CommentState, DetailDataState, DetailModalState, LikeState } from "@/recoil/atoms";
 
 export const DetailPage = () => {
-  const detailData = useRecoilValue(DetailDataState);
+  const { templeteId } = useParams();
+  const [width, setWidth] = useState<number>(window.innerWidth);
+  const [detailData, setDetailData] = useRecoilState(DetailDataState);
   const setDetailModal = useSetRecoilState(DetailModalState);
-  const likeCount = useRecoilValue(LikeState);
+  const [likeCount, setLikeCount] = useRecoilState(LikeState);
   const [commentList, setCommentList] = useRecoilState(CommentState);
   const defaultClick = (e: MouseEvent<HTMLDivElement>) => {
     e.stopPropagation(); // 이벤트 캡쳐링 방지
   };
 
   const DetailPageRendering = async () => {
-    try {
-      const data = await getComment(detailData[0]?.user_templete_id);
-      setCommentList(data);
-      console.log(data);
-    } catch {
-      new Error("shit");
+    if (width <= 530) {
+      try {
+        const data = await Promise.all([
+          getTemplete(localStorage.getItem("organization") || "", Number(templeteId), true),
+          getComment(Number(templeteId)),
+        ]);
+        setDetailData(data[0]);
+        setCommentList(data[1]);
+        setLikeCount(data[0][0]?.likeCount);
+      } catch {
+        new Error("shit");
+      }
+    } else {
+      try {
+        const data = await getComment(detailData[0]?.user_templete_id);
+        setCommentList(data);
+        console.log(data);
+      } catch {
+        new Error("shit");
+      }
     }
   };
+
+  const handleResize = () => {
+    //뷰크기 강제로 강져오기
+    setWidth(window.innerWidth);
+  };
+  useEffect(() => {
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize); //clean
+  }, [width]);
 
   useEffect(() => {
     DetailPageRendering();
     console.log(detailData);
   }, []);
+
+  if (detailData.length === 0) {
+    return <></>;
+  }
 
   return (
     <Container onClick={() => setDetailModal(false)}>
@@ -85,6 +115,7 @@ const Container = styled.div`
   justify-content: center;
   overflow-y: scroll;
   padding: 140px 30px 254px;
+
   .DetailBox {
     padding: 60px 90px 90px;
     background-color: var(--White);
@@ -105,5 +136,17 @@ const Container = styled.div`
     justify-content: space-between;
     padding-bottom: 40px;
     border-bottom: 1px solid #d9d9d9;
+  }
+
+  @media (max-width: 530px) {
+    position: relative;
+    background: none;
+    padding: 0;
+    overflow-x: hidden;
+    z-index: 0;
+    .DetailBox {
+      padding: 20px 10px 90px;
+      min-width: 343px;
+    }
   }
 `;

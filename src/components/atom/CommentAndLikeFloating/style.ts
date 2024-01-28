@@ -53,4 +53,28 @@ export const Container = styled.div`
   .click .num {
     color: var(--White);
   }
+
+  @media (max-width: 530px) {
+    /* display: none; */
+    position: fixed;
+    bottom: 90px;
+    right: 10px;
+    top: auto;
+    gap: 12px;
+    .round {
+      width: 50px;
+      height: 50px;
+      gap: 0;
+      padding: 0;
+      display: flex;
+      flex-direction: column;
+      padding-top: 4px;
+    }
+    .ment {
+      display: none;
+    }
+    .round .num {
+      padding-top: 0;
+    }
+  }
 `;
