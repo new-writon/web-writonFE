@@ -110,4 +110,79 @@ export const ContainerResponsive = styled.div`
     color: var(--purple-50, #6a63f5);
     cursor: pointer;
   }
+
+  .contentBox:has(textarea) {
+    padding: 20px;
+    gap: 0;
+  }
+  textarea {
+    min-width: 200px;
+    width: 100%;
+    height: 30px;
+    resize: none;
+    font-size: 1rem;
+    padding: 4px 0;
+    line-height: 160%;
+    outline: none;
+    border: none;
+    &::placeholder {
+      line-height: 160%;
+      font-size: 1rem;
+      color: var(--Gray-70, #757575);
+    }
+    &:focus {
+      border: none;
+      &::placeholder {
+        opacity: 0;
+      }
+    }
+  }
+  .line {
+    width: 100%;
+    height: 1px;
+    background-color: var(--Gray-30, #eee);
+    margin: 16px 0;
+  }
+  .numCheck {
+    font-size: 0.75rem;
+    color: var(--Gray-60, #959595);
+    margin: 0 auto;
+  }
+
+  .tooltipMessage {
+    position: absolute;
+    top: -60px;
+    left: 0;
+    right: 0;
+    margin: 0 auto;
+    background-color: var(--Gray-20, #f5f5f5);
+    border: 1px solid var(--Gray-40, #d9d9d9);
+    border-radius: 10px;
+    padding: 10px 12px;
+    color: var(--Gray-80, #616161);
+    font-size: 0.7rem;
+    font-weight: 500;
+    line-height: 160%; /* 15.6px */
+    display: flex;
+    justify-content: center;
+    @media (max-width: 530px) {
+      font-size: 0.75rem;
+    }
+  }
+  .tooltipMessage::before {
+    content: "";
+    display: block;
+    width: 16px;
+    height: 16px;
+    transform: rotate(-45deg);
+    position: absolute;
+    bottom: -9px;
+    margin: auto;
+    left: 0;
+    right: 0;
+    background-color: var(--Gray-20, #f5f5f5);
+    border-bottom-left-radius: 3px;
+    border-left: 1px solid var(--Gray-40, #d9d9d9);
+    border-bottom: 1px solid var(--Gray-40, #d9d9d9);
+  }
 `;
