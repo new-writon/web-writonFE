@@ -20,7 +20,11 @@ const router = () => {
   const modal = useRecoilValue(modalBackgroundState);
 
   const PrivateRoute = () => {
-    return localStorage.getItem("accessToken") ? <MainPage /> : <Navigate to="/login" />;
+    return localStorage.getItem("accessToken") && localStorage.getItem("organization") ? (
+      <MainPage />
+    ) : (
+      <Navigate to="/login" />
+    );
   };
   return (
     <BrowserRouter>
