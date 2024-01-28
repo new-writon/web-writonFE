@@ -1,4 +1,4 @@
-import { commentProps } from "@/types";
+import { commentProps, communityContentProps } from "@/types";
 
 import { getData, postData } from ".";
 
@@ -45,5 +45,17 @@ export const postCommentWrite = async (
     content,
     commentGroup,
   });
+  return response.data;
+};
+
+//템플릿 하나 조회
+export const getTemplete = async (
+  organization: string,
+  userTemplateId: number,
+  visibility: boolean
+) => {
+  const response = await getData<communityContentProps[]>(
+    `community/${organization}/${userTemplateId}/${visibility}`
+  );
   return response.data;
 };
