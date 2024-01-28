@@ -4,6 +4,7 @@ import { format } from "date-fns";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 
+import { dateCheck } from "@/apis/header";
 import {
   getCalendarRecordCurrent,
   getChallengeCurrent,
@@ -23,8 +24,7 @@ const MainPage = () => {
   const [RetrospectData, setRetrospectData] = useState<communityContentProps[][]>([]);
 
   const spaceToWritingPage = () => {
-    const date = encodeURI(encodeURIComponent(today));
-    navigate(`/writing/${date}`);
+    dateCheck(navigate, today);
   };
 
   const mainPageRendering = async () => {
@@ -58,17 +58,21 @@ const MainPage = () => {
     mainPageRendering();
   }, []);
 
-  return (
-    <Container>
-      <ProgressBox ChallengeCurrent={ChallengeCurrent} />
-      <Calendar CalendarData={CalendarData} />
-      <MyRetrospect RetrospectData={RetrospectData} />
-      <FloatingWriteButton onClick={spaceToWritingPage}>
-        {/*모바일 일 때만 보인다/ */}
-        회고 작성하기
-      </FloatingWriteButton>
-    </Container>
-  );
+  if (CalendarData.length === 0 || RetrospectData.length === 0) {
+    return <></>;
+  } else {
+    return (
+      <Container>
+        <ProgressBox ChallengeCurrent={ChallengeCurrent} />
+        <Calendar CalendarData={CalendarData} />
+        <MyRetrospect RetrospectData={RetrospectData} />
+        <FloatingWriteButton onClick={spaceToWritingPage}>
+          {/*모바일 일 때만 보인다/ */}
+          회고 작성하기
+        </FloatingWriteButton>
+      </Container>
+    );
+  }
 };
 
 export default MainPage;

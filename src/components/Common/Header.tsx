@@ -5,6 +5,7 @@ import { useNavigate } from "react-router-dom";
 import { useRecoilCallback } from "recoil";
 import styled from "styled-components";
 
+import { dateCheck } from "@/apis/header";
 import { getChallengeCurrent } from "@/apis/mainPage";
 import profile from "@/assets/communityPage/profile.png";
 import pencil_color from "@/assets/header/pencil_color.svg";
@@ -44,12 +45,12 @@ const Header = () => {
         navigate("/community");
         break;
       case "작성하기":
-        // eslint-disable-next-line no-case-declarations
-        const date = encodeURI(encodeURIComponent(today));
-        navigate(`/writing/${date}`);
+        dateCheck(navigate, today);
+        //navigate(`/writing/${today}`);
         break;
     }
   };
+
   const headerRendering = async () => {
     try {
       const response = await getChallengeCurrent(
