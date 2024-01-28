@@ -57,6 +57,7 @@ export const CommunityItem = ({ data }: { data: communityContentProps[] }) => {
             job: data[0]?.job,
             company: data[0]?.company,
             profile: data[0]?.profile,
+            date: data[0]?.created_at,
           }}
         ></UserInfo>
         <CommentAndLike
