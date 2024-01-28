@@ -118,7 +118,7 @@ export const ContainerResponsive = styled.div`
   textarea {
     min-width: 200px;
     width: 100%;
-    height: 30px;
+    height: 34px;
     resize: none;
     font-size: 1rem;
     padding: 4px 0;
@@ -135,6 +135,9 @@ export const ContainerResponsive = styled.div`
       &::placeholder {
         opacity: 0;
       }
+    }
+    @media (max-width: 530px) {
+      height: 30px;
     }
   }
   .line {

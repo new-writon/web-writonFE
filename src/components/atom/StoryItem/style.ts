@@ -29,7 +29,7 @@ export const Container = styled.div<{ $someone: string; $message: string | null 
     color: ${(props) => (props.$someone === "me" ? " var(--White)" : " var(--Gray-100, #212121)")};
     background-color: ${(props) =>
       props.$someone === "me" ? "var(--Gray-70, #757575)" : "var(--Gray-20, #f5f5f5)"};
-    opacity: ${(props) => (props.$someone === "me" ? (props.$message === null ? 1 : 1) : 0)};
+    opacity: ${(props) => (props.$someone === "me" ? 1 : props.$message !== null ? 1 : 0)};
     cursor: pointer;
   }
   .storyMessage::before {
