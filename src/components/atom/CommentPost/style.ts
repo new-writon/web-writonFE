@@ -1,6 +1,6 @@
 import styled from "styled-components";
 
-export const Container = styled.div`
+export const Container = styled.div<{ $type: string | undefined }>`
   display: flex;
   gap: 12px;
   width: 100%;
@@ -23,7 +23,7 @@ export const Container = styled.div`
 
   textarea {
     @media (max-width: 830px) {
-      width: 70%;
+      width: ${(props) => (props.$type === "reply" ? "65%" : "70%")};
       min-width: 153px;
     }
     width: 100%;

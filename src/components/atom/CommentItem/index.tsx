@@ -58,6 +58,7 @@ export const CommentItem = ({
             commentGroup={Number(data?.comment_id)} //commnet_id
             replyArray={replyArray}
             setReplyArray={setReplyArray}
+            type="reply"
           />
         )}
         {replyReadOn && replyArray.length > 0 ? (

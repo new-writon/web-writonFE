@@ -141,9 +141,10 @@ const Container = styled.div`
     background: none;
     padding: 0;
     overflow-x: hidden;
+    height: auto;
     z-index: 0;
     .DetailBox {
-      padding: 20px 10px 90px;
+      padding: 20px 10px 110px;
       min-width: 343px;
     }
   }

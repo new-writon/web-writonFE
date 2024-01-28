@@ -18,11 +18,13 @@ export const CommentPost = ({
   commentGroup,
   replyArray,
   setReplyArray,
+  type,
 }: {
   userTemplateId: number;
   commentGroup: number;
   replyArray?: commentProps[];
   setReplyArray?: Dispatch<SetStateAction<commentProps[]>>;
+  type?: string;
 }) => {
   const textareaRef = useRef<HTMLTextAreaElement | null>(null);
   const [text, setText] = useState<string>("");
@@ -132,7 +134,7 @@ export const CommentPost = ({
     myProfileRendering();
   }, []);
   return (
-    <Container>
+    <Container $type={type}>
       <div className="profileImageCover">
         <img
           src={profileImage || profile} //{data?.profile}
