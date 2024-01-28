@@ -83,7 +83,6 @@ export const StoryBox = ({
     if (width >= 1140) {
       setXValue(e.clientX - (width - 1080) / 2);
     } else {
-      console.log(e.clientX);
       setXValue(e.clientX);
     }
     setPopUpdata(data);

@@ -36,7 +36,6 @@ export const WritingPage = () => {
         getBasicQuestion(localStorage.getItem("challengeId") || "1"),
         getSpecialQuestion(localStorage.getItem("challengeId") || "1"),
       ]);
-      console.log(result);
       setCalendarData(result[0]);
       setGetBasicQuestionData(result[1]);
       setGetSpecialQuestionData(result[2]);

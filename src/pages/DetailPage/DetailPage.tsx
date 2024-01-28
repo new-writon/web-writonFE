@@ -41,7 +41,6 @@ export const DetailPage = () => {
       try {
         const data = await getComment(detailData[0]?.user_templete_id);
         setCommentList(data);
-        console.log(data);
       } catch {
         new Error("shit");
       }
@@ -59,7 +58,6 @@ export const DetailPage = () => {
 
   useEffect(() => {
     DetailPageRendering();
-    console.log(detailData);
   }, []);
 
   if (detailData.length === 0) {

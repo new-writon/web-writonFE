@@ -14,8 +14,6 @@ export const KakaoCallback = () => {
       throw new Error("No CODE");
     } else {
       const response = await postKakaoAuth(CODE);
-      console.log(response);
-
       try {
         const res = await postKakaoLogin(
           response.access_token,
@@ -32,7 +30,6 @@ export const KakaoCallback = () => {
           try {
             const data = await getChallengingList(); // 니중에 여기서 워크스페이스 만들어야함.
             if (data.length > 0) {
-              console.log(data);
               localStorage.setItem("organization", data[0]?.name);
               localStorage.setItem("challengeId", data[0]?.challenge_id.toString());
               navigate("/");

@@ -28,7 +28,6 @@ export const WritingBox = () => {
   const addSpecialQuestionData = useRecoilValue(addSpecialQuestionArrayState);
   const postWritingData = useRecoilValue(postWritingDataState);
   useEffect(() => {
-    console.log(postWritingData);
     setDateResponsive(date);
   }, [date, postWritingData, setDateResponsive]);
   const submitWrite = async () => {

@@ -41,8 +41,6 @@ export const CommunityBox = () => {
         setDateActive(dateArray);
         setDateLength(dateArray.length - 1);
         setDateLastLength(dateArray.length - 1);
-        console.log(dateArray);
-
         try {
           const result = await getCommunityContentData(
             localStorage.getItem("organization") || "",

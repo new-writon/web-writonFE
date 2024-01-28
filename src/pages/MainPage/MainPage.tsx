@@ -45,7 +45,6 @@ const MainPage = () => {
           "2024-01"
         ),
       ]);
-      console.log(result);
       setChallengeCurrent(result[0]);
       setCalendarData(result[1]);
       setRetrospectData(result[2]);

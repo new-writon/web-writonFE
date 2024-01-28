@@ -178,7 +178,6 @@ const RegisterEmail = () => {
       if (res.status === 200) {
         try {
           const response = await postEmail(email);
-          console.log(response);
           if (response.status === 200) {
             setEmailCodeShow(true);
             setEmailError(false);
@@ -276,7 +275,7 @@ const RegisterEmail = () => {
 
       if (timeLeft <= 0) {
         clearInterval(timer);
-        console.log("타이머가 종료되었습니다.");
+        alert("타이머가 종료되었습니다.");
       }
 
       return () => {
@@ -303,7 +302,6 @@ const RegisterEmail = () => {
     } else {
       setRegisterFlag(true);
     }
-    console.log(duplicate, userId, password1Error, password1, password2Error, password2);
   }, [
     duplicate,
     userId,

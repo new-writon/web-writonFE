@@ -81,7 +81,6 @@ export const CommentPost = ({
       try {
         const myData = await getMyCommunityStory(localStorage.getItem("challengeId") || "1");
         if (commentGroup === -1) {
-          console.log(commentList);
           setCommentList([
             {
               job: myData.job,
@@ -101,7 +100,6 @@ export const CommentPost = ({
           ]);
         } else {
           if (replyArray && setReplyArray) {
-            console.log(replyArray);
             setReplyArray([
               {
                 job: myData.job,
