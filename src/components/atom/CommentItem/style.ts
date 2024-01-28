@@ -35,7 +35,7 @@ export const Container = styled.div`
     gap: 8px;
     cursor: pointer;
   }
-  .reply .replyWrite::after {
+  .reply .replyRead::before {
     content: "";
     display: block;
     width: 1px;

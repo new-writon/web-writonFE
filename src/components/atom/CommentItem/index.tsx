@@ -42,7 +42,7 @@ export const CommentItem = ({
             답글 달기
           </div>
           <div
-            className="replyRead"
+            className={replyArray.length > 0 ? "replyRead" : ""}
             onClick={() => setReplyReadOn(!replyReadOn)}
           >
             {replyArray.length > 0
