@@ -54,7 +54,7 @@ time, mark, audio, video {
 	vertical-align: baseline;
   	position: relative;
 		@media (max-width: 530px) {
-    font-size: 14px;
+    font-size: 15px;
   }
 	@media (max-width: 365px) {
     font-size: 12px;
