@@ -28,9 +28,9 @@ export const GlobalStyle = createGlobalStyle`
 	box-sizing: border-box;
 	padding: 0;
 	margin: 0;
-	font-family: 'Pretendard Variable';
+	font-family: 'Pretendard Variable', sans-serif;;
 	color: var(--Dark);
-	
+
 }
 
 
