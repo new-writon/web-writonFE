@@ -50,7 +50,7 @@ export const ProgressBox = ({
           <CountingLabelCard
             title={"환급 가능 보증금"}
             currentContent={`${ChallengeCurrent?.overlapDeposit.toLocaleString()}원`}
-            defaultContent={`${ChallengeCurrent?.overlapDeposit.toLocaleString()}원`}
+            defaultContent={`${ChallengeCurrent?.challengeDeposit.toLocaleString()}원`}
           />
           {/* <div className="priceMessage">
             회고 {20 - 15}일 더 작성하면, 보증급 전액 환급 가능해요.
