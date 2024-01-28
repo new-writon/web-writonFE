@@ -25,10 +25,10 @@ export const getMyCommunityStory = async (challengeId: string) => {
 // 나의 스토리 한줄 소개 쓰기
 export const postMyCommunityStoryComment = async (
   organization: string,
-  challengeId: string,
+  challengeId: number,
   content: string
 ) => {
-  const response = await postData(`community/${challengeId}/cheering-phrase`, {
+  const response = await postData(`community/cheering-phrase`, {
     organization,
     challengeId,
     content,
