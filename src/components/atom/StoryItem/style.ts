@@ -25,12 +25,14 @@ export const Container = styled.div<{ $someone: string; $message: string | null 
     align-items: center;
     margin-bottom: 12px;
     z-index: 1;
-    height: 35px;
+    height: 42px;
     color: ${(props) => (props.$someone === "me" ? " var(--White)" : " var(--Gray-100, #212121)")};
     background-color: ${(props) =>
       props.$someone === "me" ? "var(--Gray-70, #757575)" : "var(--Gray-20, #f5f5f5)"};
     opacity: ${(props) => (props.$someone === "me" ? 1 : props.$message !== null ? 1 : 0)};
     cursor: pointer;
+    text-align: center;
+    line-height: 110%;
   }
   .storyMessage::before {
     content: "";
@@ -71,6 +73,7 @@ export const Container = styled.div<{ $someone: string; $message: string | null 
     justify-content: center;
     align-items: center;
     margin-bottom: 10px;
+    background-color: #fff;
     border: ${(props) =>
       props.$someone === "me" ? "3px solid transparent" : "1px solid var(--Gray-30, #eee)"};
     background: ${(props) =>
@@ -85,6 +88,8 @@ export const Container = styled.div<{ $someone: string; $message: string | null 
 
   .profileImageCover img {
     width: inherit;
+    height: inherit;
+    object-fit: cover;
   }
   .company {
     color: var(--Gray-70, #757575);
