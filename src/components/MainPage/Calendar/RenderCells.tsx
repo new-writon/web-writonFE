@@ -61,7 +61,7 @@ export const RenderCell = ({
         case "mouseClick":
           const date = encodeURI(encodeURIComponent(clickDay));
           if (pageDay) {
-            alert("잠만");
+            alert("날짜 변경!");
             navigate(`/writing/${date}`);
             //return 해서 여기에 모달창 컴포넌트 바로 붙여넣기
             // recoil 값 변경해서 모달창 뜨게끔 만든다. 그리고 버튼 누르면 이동하게끔 진짜 이동할거냐
@@ -77,7 +77,7 @@ export const RenderCell = ({
       if (width <= 530) {
         const date = encodeURI(encodeURIComponent(clickDay));
         if (pageDay) {
-          alert("잠만");
+          alert("날짜 변경!");
           navigate(`/writing/${date}`);
           //return 해서 여기에 모달창 컴포넌트 바로 붙여넣기
           // recoil 값 변경해서 모달창 뜨게끔 만든다. 그리고 버튼 누르면 이동하게끔 진짜 이동할거냐
