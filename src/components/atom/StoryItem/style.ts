@@ -30,6 +30,7 @@ export const Container = styled.div<{ $someone: string; $message: string | null 
     background-color: ${(props) =>
       props.$someone === "me" ? "var(--Gray-70, #757575)" : "var(--Gray-20, #f5f5f5)"};
     opacity: ${(props) => (props.$someone === "me" ? (props.$message === null ? 1 : 1) : 0)};
+    cursor: pointer;
   }
   .storyMessage::before {
     content: "";
@@ -56,6 +57,8 @@ export const Container = styled.div<{ $someone: string; $message: string | null 
       height: fit-content;
       font-size: 0.625rem;
       color: var(--Gray-90, #424242);
+      overflow-x: hidden;
+      justify-content: flex-start;
     }
   }
 
