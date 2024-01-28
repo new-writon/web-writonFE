@@ -11,11 +11,19 @@ export const Container = styled.div`
   box-shadow: 0px 16px 50px 0px rgba(33, 33, 33, 0.25);
   z-index: 1;
   position: absolute;
-  top: -60px;
-  right: 78px;
   font-size: 1rem;
   font-weight: 600;
   line-height: 150%; /* 24px */
+
+  &:has(.completePopup) {
+    top: -45px;
+    left: -373px;
+  }
+
+  &:has(.deletePopup) {
+    top: -60px;
+    right: 78px;
+  }
 
   @media (max-width: 530px) {
     position: relative;
