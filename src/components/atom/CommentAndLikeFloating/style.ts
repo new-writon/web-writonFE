@@ -58,9 +58,10 @@ export const Container = styled.div`
   @media (max-width: 530px) {
     /* display: none; */
     position: fixed;
-    bottom: 50px;
-    right: 15px;
-    top: auto;
+    right: 16px;
+    top: 426px;
+    /* bottom: 50px;
+    top: auto; */
     gap: 12px;
     .round {
       width: 50px;
