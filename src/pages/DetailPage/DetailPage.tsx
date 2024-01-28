@@ -122,7 +122,8 @@ const Container = styled.div`
     width: 60.15%;
     min-width: 830px;
     max-width: 830px;
-    @media (max-width: 830px) {
+    @media (max-width: 990px) {
+      // 기존 830px
       width: 80.15%;
       min-width: 530px;
     }
