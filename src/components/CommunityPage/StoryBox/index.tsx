@@ -1,5 +1,6 @@
 import React, { MouseEvent, useCallback, useEffect, useRef, useState } from "react";
 
+import { format } from "date-fns";
 import Slider from "react-slick";
 import styled from "styled-components";
 
@@ -79,7 +80,7 @@ export const StoryBox = ({
   const previous = useCallback(() => slickRef.current?.slickPrev(), []);
   const next = useCallback(() => slickRef.current?.slickNext(), []);
 
-  const PopupOn = (e: MouseEvent<HTMLDivElement>, data: communityStoryProps) => {
+  const PopupOn = (e: MouseEvent<HTMLDivElement>, data: communityStoryProps | undefined) => {
     if (width >= 1140) {
       setXValue(e.clientX - (width - 1080) / 2);
     } else {
@@ -104,9 +105,9 @@ export const StoryBox = ({
           <MainSemiTitle font={1.25}>
             <p>
               지금 <div className="number">{CommunityFirstData?.challengeParticipantCount}</div>명이
-              함께
+              함께&nbsp;
             </p>
-            {"렛츠인턴 2월 TIL 챌린지"} 도전중!
+            {`렛츠인턴 ${format(new Date(), "M월")} TIL 챌린지`} 도전중!
           </MainSemiTitle>
           <TitleSideBox type="default">D-{CommunityFirstData?.challengeOverlapPeriod}</TitleSideBox>
         </div>
@@ -118,7 +119,7 @@ export const StoryBox = ({
             <StoryItem
               data={myCommunityStoryData}
               someone={"me"}
-              onClick={() => {}}
+              onClick={(e) => PopupOn(e, myCommunityStoryData)}
             />
             {CommunityFirstData?.participantData.map((data, idx) => (
               <React.Fragment key={idx}>
