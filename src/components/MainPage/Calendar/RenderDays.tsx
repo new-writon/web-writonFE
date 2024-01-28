@@ -5,8 +5,8 @@ export const RenderDays = () => {
 
   return (
     <Container>
-      {days.map((item) => (
-        <div>{item}</div>
+      {days.map((item, idx) => (
+        <div key={idx}>{item}</div>
       ))}
     </Container>
   );
