@@ -57,7 +57,7 @@ const MainPage = () => {
     mainPageRendering();
   }, []);
 
-  if (CalendarData.length === 0 || RetrospectData.length === 0) {
+  if (CalendarData.length === 0) {
     return <></>;
   } else {
     return (
