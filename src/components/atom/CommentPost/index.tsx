@@ -48,7 +48,7 @@ export const CommentPost = ({
   };
 
   const handleOnKeyPress = (e: KeyboardEvent) => {
-    if (e.key === "Enter") {
+    if (e.key === "Enter" && !e.nativeEvent.isComposing) {
       if (!e.shiftKey) {
         e.preventDefault();
         commentRegister();
