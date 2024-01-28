@@ -11,8 +11,8 @@ export const Container = styled.div`
   box-shadow: 0px 16px 50px 0px rgba(33, 33, 33, 0.25);
   z-index: 1;
   position: absolute;
-  top: -45px;
-  left: -354px;
+  top: -60px;
+  right: 78px;
   font-size: 1rem;
   font-weight: 600;
   line-height: 150%; /* 24px */
