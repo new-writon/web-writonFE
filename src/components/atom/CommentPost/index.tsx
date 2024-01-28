@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { KeyboardEvent, useEffect, useRef, useState } from "react";
 import { Dispatch, SetStateAction } from "react";
 
 import { format } from "date-fns";
@@ -42,6 +42,15 @@ export const CommentPost = ({
       textareaRef.current.style.height = "0px";
       const scrollHeight = textareaRef.current.scrollHeight;
       textareaRef.current.style.height = scrollHeight + "px";
+    }
+  };
+
+  const handleOnKeyPress = (e: KeyboardEvent) => {
+    if (e.key === "Enter") {
+      if (!e.shiftKey) {
+        e.preventDefault();
+        commentRegister();
+      }
     }
   };
 
@@ -137,7 +146,7 @@ export const CommentPost = ({
         value={text}
         onChange={onChange}
         placeholder="댓글을 입력해주세요."
-        //onKeyDown={handleOnKeyPress}
+        onKeyDown={handleOnKeyPress}
       />
       <button
         onClick={commentRegister}
