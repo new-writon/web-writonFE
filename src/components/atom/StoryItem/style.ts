@@ -71,7 +71,9 @@ export const Container = styled.div<{ $someone: string; $message: string | null 
     border: ${(props) =>
       props.$someone === "me" ? "3px solid transparent" : "1px solid var(--Gray-30, #eee)"};
     background-image: ${(props) =>
-      props.$someone === "me" && "linear-gradient(0deg,#D5ABFF 0%, #6A63F5 100%);"};
+      props.$someone === "me" && "linear-gradient(0deg,#D5ABFF 0%, #6A63F5 100%)"};
+    background-image: ${(props) =>
+      props.$someone === "me" && "-webkit-linear-gradient(0deg,#D5ABFF 0%, #6A63F5 100%)"};
     background-origin: border-box;
     box-shadow: ${(props) =>
       props.$someone === "me" && "0px 8px 15px 0px rgba(124, 128, 137, 0.10)"};
