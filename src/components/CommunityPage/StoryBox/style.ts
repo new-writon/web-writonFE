@@ -47,6 +47,7 @@ export const IntroducePopup = styled.div<{ $xValue: number }>`
   }
   z-index: 99999;
   border: 1px solid var(--Gray-40);
+  will-change: filter;
   filter: drop-shadow(0px 4px 20px rgba(33, 33, 33, 0.2));
   &::before {
     content: "";

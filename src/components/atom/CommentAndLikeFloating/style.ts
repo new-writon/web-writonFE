@@ -21,6 +21,7 @@ export const Container = styled.div`
     align-items: center;
     gap: 5px;
     padding: 20px 10px;
+    will-change: filter;
     filter: drop-shadow(0px 4px 30px rgba(33, 33, 33, 0.05));
   }
   .likeBox {

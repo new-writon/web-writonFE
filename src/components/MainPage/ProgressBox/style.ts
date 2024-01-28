@@ -13,6 +13,7 @@ export const Container = styled.div`
   }
   @media (min-width: 530px) {
     &:hover {
+      will-change: filter;
       filter: drop-shadow(0px 14px 20px rgba(33, 33, 33, 0.05));
     }
   }

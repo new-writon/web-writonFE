@@ -8,6 +8,7 @@ export const Container = styled.div`
   margin-top: 23px;
   padding: 26px 29px;
   &:hover {
+    will-change: filter;
     filter: drop-shadow(0px 14px 20px rgba(33, 33, 33, 0.05));
   }
   .topBar {
@@ -52,6 +53,7 @@ export const Container = styled.div`
   }
   @media (min-width: 530px) {
     &:hover {
+      will-change: filter;
       filter: drop-shadow(0px 14px 20px rgba(33, 33, 33, 0.05));
     }
   }
@@ -68,6 +70,7 @@ export const Container = styled.div`
   }
   @media (max-width: 530px) {
     & {
+      will-change: filter;
       filter: drop-shadow(0px 14px 20px rgba(33, 33, 33, 0.05));
     }
     padding: 15px 15px 10px;

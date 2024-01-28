@@ -73,6 +73,7 @@ export const Container = styled.div`
   }
 
   .writeActive {
+    will-change: filter;
     filter: drop-shadow(0px 5px 20px rgba(106, 99, 245, 0.3));
     cursor: pointer;
   }
