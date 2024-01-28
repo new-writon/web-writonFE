@@ -1,6 +1,7 @@
 export interface UserInfo {
   accessToken: string;
   refreshToken: string;
+  affiliatedConfirmation: boolean;
   challengedConfirmation: boolean;
   role: string;
 }

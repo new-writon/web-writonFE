@@ -2,6 +2,7 @@ import { useEffect } from "react";
 
 import { useNavigate } from "react-router-dom";
 
+import { postChallengeStart } from "@/apis/OnboardingPage";
 import { getChallengingList, postKakaoAuth, postKakaoLogin } from "@/apis/login";
 import Loading from "@/components/Common/Loading";
 
@@ -22,9 +23,22 @@ export const KakaoCallback = () => {
         );
         localStorage.setItem("accessToken", res.accessToken);
         localStorage.setItem("refreshToken", res.refreshToken);
-        if (res.challengedConfirmation === true) {
-          navigate("/");
-        } else if (res.challengedConfirmation === false) {
+        if (res.affiliatedConfirmation === true) {
+          if (res.challengedConfirmation === true) {
+            navigate("/");
+          } else {
+            try {
+              const res = await postChallengeStart(
+                localStorage.getItem("organization") || "null",
+                localStorage.getItem("challengeId") || "1"
+              );
+              console.log(res);
+              navigate("/");
+            } catch {
+              new Error("shit");
+            }
+          }
+        } else if (res.affiliatedConfirmation === false) {
           navigate("/onboarding"); //나중에 온보딩 페이지로
         } else {
           // null이 들어오면 listapi 요청 얘가 초대장으로 접속한 후, 재접속인지, 초대장 없이 그냥 라이톤 사이트 접속인지
