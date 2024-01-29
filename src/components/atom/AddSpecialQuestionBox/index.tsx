@@ -42,9 +42,10 @@ export const AddSpecialQuestionBox = ({ data }: { data: SpecialQuestionType }) =
       if (!isClickArray.includes(question_id)) {
         // isClickArray에 없을 경우만 추가함.
         setIsClickArray([...isClickArray, question_id]);
+
         setAddSpecialQuestionData([
-          { question_id: question_id, question: question },
           ...addSpecialQuestionData,
+          { question_id: question_id, question: question },
         ]);
         setpostWritingData([
           ...postWritingData,
@@ -85,9 +86,7 @@ export const AddSpecialQuestionBox = ({ data }: { data: SpecialQuestionType }) =
         onMouseOut={() => setIsHover(false)}
         onClick={() => AddSpecialQuestionFunc(data?.question_id, data?.question, data?.category)}
       >
-        <div className="question">
-          {data?.question}wefewfwefwefeqwfqewfqewfweqfweqfweqfwefwqefqwfqwefwqefweqfweqfweaaaaaaa
-        </div>
+        <div className="question">{data?.question}</div>
         <div className="etcBox">
           <TitleSideBox type="special">{data?.category}</TitleSideBox>
           <div className="addBtn">
