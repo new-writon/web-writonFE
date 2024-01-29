@@ -16,6 +16,9 @@ export const Container = styled.div`
     word-wrap: break-word;
     margin-left: 46px;
     padding: 16px 0;
+    font-size: 0.875rem;
+    font-weight: 400;
+    color: var(--Gray-100, #212121);
   }
 
   .reply {
