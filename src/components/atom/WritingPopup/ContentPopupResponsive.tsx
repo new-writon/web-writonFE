@@ -24,8 +24,8 @@ const ContentPopupResponsive = () => {
       // isClickArray에 없을 경우만 추가함.
       setIsClickArray([...isClickArray, modalContent.question_id]);
       setAddSpecialQuestionData([
-        { question_id: modalContent.question_id, question: modalContent.question },
         ...addSpecialQuestionData,
+        { question_id: modalContent.question_id, question: modalContent.question },
       ]);
       setpostWritingData([
         ...postWritingData,
