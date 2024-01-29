@@ -73,13 +73,15 @@ export const CommnetAndLikeFloating = ({
         <div className="ment">응원해요</div>
       </div>
       <div className="Box">
-        <div className="commentBox round">
-          <img
-            src={comment}
-            alt="fire"
-          />
-          <div className="num">{commentCount}</div>
-        </div>
+        <a href="#comment">
+          <div className="commentBox round">
+            <img
+              src={comment}
+              alt="fire"
+            />
+            <div className="num">{commentCount}</div>
+          </div>
+        </a>
         <div className="ment">댓글</div>
       </div>
     </Container>

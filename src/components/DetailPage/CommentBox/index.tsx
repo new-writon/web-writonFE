@@ -23,6 +23,7 @@ export const CommentBox = ({
         commentGroup={-1}
       />
       <div
+        id="comment"
         className="commentNum"
         onClick={() => setCommentOn(!commentOn)}
       >
