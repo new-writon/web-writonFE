@@ -154,6 +154,9 @@ export const Inner = styled.div`
       padding: 0;
       max-width: 100vw;
     }
+    &:has(.DetailBox) {
+      max-width: 100vw;
+    }
   }
 `;
 
