@@ -143,6 +143,7 @@ export interface communityStoryProps {
   company: string | null;
   cheering_phrase: string | null;
   cheering_phrase_date: string;
+  email?: string;
 }
 
 export interface communitySecondCoponentType {
