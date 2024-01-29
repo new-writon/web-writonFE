@@ -33,6 +33,8 @@ const Header = () => {
   const [isHover, setIsHover] = useState<boolean>(false);
   const [profileImage, setProfileImage] = useState<string>(profile);
   const [headerTooltip, setHeaderTooltip] = useState<boolean>(false);
+  const [TooltipMobile, setTooltipMobile] = useState<boolean>(false);
+
   const [userProfile, setUserProfile] = useState<communityStoryProps>();
 
   const today = format(new Date(), "yyyy-MM-dd");
@@ -60,6 +62,11 @@ const Header = () => {
 
   const ProfileOn = () => {
     setHeaderTooltip(!headerTooltip);
+    if (width <= 530) {
+      setTimeout(() => {
+        setTooltipMobile(true);
+      }, 10);
+    }
   };
 
   const headerRendering = async () => {
@@ -152,15 +159,19 @@ const Header = () => {
         {headerTooltip && 531 <= width && (
           <TooltipProfile
             headerTooltip={headerTooltip}
+            TooltipMobile={TooltipMobile}
             userProfile={userProfile}
             setHeaderTooltip={setHeaderTooltip}
+            setTooltipMobile={setTooltipMobile}
           />
         )}
         {width <= 530 && (
           <TooltipProfile
             headerTooltip={headerTooltip}
+            TooltipMobile={TooltipMobile}
             userProfile={userProfile}
             setHeaderTooltip={setHeaderTooltip}
+            setTooltipMobile={setTooltipMobile}
           />
         )}
       </Container>
