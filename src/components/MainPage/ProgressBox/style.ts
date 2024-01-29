@@ -19,10 +19,13 @@ export const Container = styled.div`
   }
   @media (max-width: 530px) {
     background-color: transparent;
-    padding: 5px 0;
+    padding: 5px 0 0;
     .title {
       margin: 0 auto;
       width: fit-content;
+    }
+    .webCountingLabelBox {
+      display: none;
     }
   }
 `;

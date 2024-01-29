@@ -28,43 +28,74 @@ export const ProgressBox = ({
     }, 500);
   }, [ChallengeCurrent?.challengeOverlapCount, ChallengeCurrent?.challengeSuccessCount]);
   return (
-    <Inner>
-      <Container>
-        <div className="title">
-          <MainSemiTitle font={1.25}>
-            {ChallengeCurrent?.nickname || "00"}님의 렛츠인턴 1월 TIL 챌린지
-          </MainSemiTitle>
-          <TitleSideBox type="default">D-{ChallengeCurrent?.overlapPeriod || "15"}</TitleSideBox>
-        </div>
-        <ProgressBar
-          value={value} // 퍼센티지 받기 && 날짜만 받아서 가중치 곱해도 될듯
-          startDate={ChallengeCurrent?.challengeSuccessCount} //날짜 받기
-          endDate={ChallengeCurrent?.challengeOverlapCount}
-        />
-        <CountingLabelContainer>
-          <CountingLabelCard
-            title={"작성된 회고"}
-            currentContent={`${ChallengeCurrent?.challengeSuccessCount}일`}
-            defaultContent={`${ChallengeCurrent?.challengeOverlapCount}일`}
-          />
-          <CountingLabelCard
-            title={"환급 가능 보증금"}
-            currentContent={`${ChallengeCurrent?.overlapDeposit.toLocaleString()}원`}
-            defaultContent={`${ChallengeCurrent?.challengeDeposit.toLocaleString()}원`}
-          />
-          {/* <div className="priceMessage">
-            회고 {20 - 15}일 더 작성하면, 보증급 전액 환급 가능해요.
-          </div> */}
-          <div className="priceCondition">
-            <TooltipButton
-              tooltipOn={tooltipOn}
-              onClick={() => setTooltopOn(!tooltipOn)}
-            >
-              환급 조건
-            </TooltipButton>
+    <>
+      <Inner>
+        <Container>
+          <div className="title">
+            <MainSemiTitle font={1.25}>
+              {ChallengeCurrent?.nickname || "00"}님의 렛츠인턴 1월 TIL 챌린지
+            </MainSemiTitle>
+            <TitleSideBox type="default">D-{ChallengeCurrent?.overlapPeriod || "15"}</TitleSideBox>
           </div>
-        </CountingLabelContainer>
-      </Container>
-    </Inner>
+          <ProgressBar
+            value={value} // 퍼센티지 받기 && 날짜만 받아서 가중치 곱해도 될듯
+            startDate={ChallengeCurrent?.challengeSuccessCount} //날짜 받기
+            endDate={ChallengeCurrent?.challengeOverlapCount}
+          />
+          <div className="webCountingLabelBox">
+            <CountingLabelContainer>
+              <CountingLabelCard
+                title={"작성된 회고"}
+                currentContent={`${ChallengeCurrent?.challengeSuccessCount}일`}
+                defaultContent={`${ChallengeCurrent?.challengeOverlapCount}일`}
+              />
+              <CountingLabelCard
+                title={"환급 가능 보증금"}
+                currentContent={`${ChallengeCurrent?.overlapDeposit.toLocaleString()}원`}
+                defaultContent={`${ChallengeCurrent?.challengeDeposit.toLocaleString()}원`}
+              />
+              {/* <div className="priceMessage">
+        회고 {20 - 15}일 더 작성하면, 보증급 전액 환급 가능해요.
+      </div> */}
+              <div className="priceCondition">
+                <TooltipButton
+                  tooltipOn={tooltipOn}
+                  onClick={() => setTooltopOn(!tooltipOn)}
+                >
+                  환급 조건
+                </TooltipButton>
+              </div>
+            </CountingLabelContainer>
+          </div>
+        </Container>
+      </Inner>
+      <Inner>
+        <div className="mobileCountingLabelBox">
+          <CountingLabelContainer>
+            <CountingLabelCard
+              title={"작성된 회고"}
+              currentContent={`${ChallengeCurrent?.challengeSuccessCount}일`}
+              defaultContent={`${ChallengeCurrent?.challengeOverlapCount}일`}
+            />
+            <CountingLabelCard
+              title={"환급 가능 보증금"}
+              currentContent={`${ChallengeCurrent?.overlapDeposit.toLocaleString()}원`}
+              defaultContent={`${ChallengeCurrent?.challengeDeposit.toLocaleString()}원`}
+            />
+            {/* <div className="priceMessage">
+        회고 {20 - 15}일 더 작성하면, 보증급 전액 환급 가능해요.
+      </div> */}
+            <div className="priceCondition">
+              <TooltipButton
+                tooltipOn={tooltipOn}
+                onClick={() => setTooltopOn(!tooltipOn)}
+              >
+                환급 조건
+              </TooltipButton>
+            </div>
+          </CountingLabelContainer>
+        </div>
+      </Inner>
+    </>
   );
 };
