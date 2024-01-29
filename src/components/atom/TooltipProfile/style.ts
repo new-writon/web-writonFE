@@ -13,7 +13,7 @@ export const BackDrop = styled.div<{ $headerTooltip: boolean }>`
   background: rgba(0, 0, 0, 0.4);
 `;
 
-export const Container = styled.div<{ $headerTooltip: boolean }>`
+export const Container = styled.div<{ $headerTooltip: boolean; $TooltipMobile: boolean }>`
   max-width: 300px;
   min-width: 300px;
   position: absolute;
@@ -26,7 +26,7 @@ export const Container = styled.div<{ $headerTooltip: boolean }>`
   padding: 26px 16px;
   z-index: 99999;
   @media (max-width: 530px) {
-    //display: ${(props) => (props.$headerTooltip ? "block" : "none")};
+    display: ${(props) => (props.$headerTooltip ? "block" : "none")};
     height: 100vh;
     width: 272px;
     position: absolute;
@@ -34,7 +34,15 @@ export const Container = styled.div<{ $headerTooltip: boolean }>`
     right: -320px;
     border-radius: 0;
     transition: transform 0.6s ease-in-out;
-    transform: ${(props) => (props.$headerTooltip ? "translateX(-304px)" : "translateX(0)")};
+    transform: ${(props) => (props.$TooltipMobile ? "translateX(-304px)" : "translateX(0)")};
+    /* ${(props) =>
+      props.$headerTooltip
+        ? `
+      display: block;
+      transition-delay: 3s;
+      transform: translateX(-304px);
+    `
+        : "transform: translateX(0);"} */
   }
   .line {
     height: 1px;

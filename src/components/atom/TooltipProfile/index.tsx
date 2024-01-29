@@ -8,14 +8,19 @@ import { BackDrop, Bottom, Container, Header, Middle } from "./style";
 
 export const TooltipProfile = ({
   headerTooltip,
+  TooltipMobile,
   userProfile,
   setHeaderTooltip,
+  setTooltipMobile,
 }: {
   headerTooltip: boolean;
+  TooltipMobile: boolean;
   userProfile: communityStoryProps | undefined;
   setHeaderTooltip: (headerTooltip: boolean) => void;
+  setTooltipMobile: (TooltipMobile: boolean) => void;
 }) => {
   const navigate = useNavigate();
+
   const Logout = async () => {
     try {
       const response = await deleteLogout();
@@ -28,13 +33,27 @@ export const TooltipProfile = ({
     }
   };
 
+  const BackDropFunc = () => {
+    if (TooltipMobile) {
+      setTooltipMobile(false);
+      setTimeout(() => {
+        setHeaderTooltip(false);
+      }, 600);
+    } else {
+      setHeaderTooltip(false);
+    }
+  };
+
   return (
     <>
       <BackDrop
         $headerTooltip={headerTooltip}
-        onClick={() => setHeaderTooltip(false)}
+        onClick={BackDropFunc}
       ></BackDrop>
-      <Container $headerTooltip={headerTooltip}>
+      <Container
+        $headerTooltip={headerTooltip}
+        $TooltipMobile={TooltipMobile}
+      >
         <Header>
           <div className="profileImageCover">
             <img
