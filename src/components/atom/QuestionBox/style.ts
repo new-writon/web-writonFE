@@ -47,6 +47,8 @@ export const ToggleBtnBox = styled.div<{ $toggleSwitchOn: boolean }>`
   font-size: 0.75rem;
   font-weight: 500;
   line-height: 15px;
+  min-width: fit-content;
+  padding-left: 25px;
   .toggleSwitch {
     width: 32px;
     height: 18px;
