@@ -1,4 +1,4 @@
-import { getData } from ".";
+import { deleteData, getData } from ".";
 
 //header 버튼 클릭시, 오늘 쓰는 날짜인지 체크
 export const getCheckDate = async (challengeId: number, date: string) => {
@@ -40,4 +40,9 @@ export const dateCheck = async (navigate: (arg0: string) => void, today: string)
     alert("오늘은 챌린지 쓰는 날이 아니에요!");
     new Error("shit");
   }
+};
+
+export const deleteLogout = async () => {
+  const response = await deleteData("/auth/logout");
+  return response.data;
 };
