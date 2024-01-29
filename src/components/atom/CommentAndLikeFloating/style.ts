@@ -24,6 +24,7 @@ export const Container = styled.div`
     will-change: filter;
     filter: drop-shadow(0px 4px 30px rgba(33, 33, 33, 0.05));
   }
+
   .likeBox {
     cursor: pointer;
   }
@@ -59,9 +60,9 @@ export const Container = styled.div`
     /* display: none; */
     position: fixed;
     right: 16px;
-    top: 426px;
-    /* bottom: 50px;
-    top: auto; */
+    /* top: 426px; */
+    bottom: 50px;
+    top: auto;
     gap: 12px;
     .round {
       width: 50px;
@@ -71,6 +72,7 @@ export const Container = styled.div`
       display: flex;
       flex-direction: column;
       padding-top: 4px;
+      box-shadow: 0px 4px 20px 0px rgba(33, 33, 33, 0.15);
     }
     .ment {
       display: none;
