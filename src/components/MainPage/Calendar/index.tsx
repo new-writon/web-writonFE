@@ -22,7 +22,7 @@ export const Calendar = ({ CalendarData }: { CalendarData: CalendarRecordCurrent
   return (
     <Inner>
       <Container>
-        <div className="topBar">
+        <div className="topBar mainCalendar">
           <div className="topBarLeft">
             <MainSemiTitle font={1.25}>
               {format(today, "M")}월 {getISOWeek(today)}주차 도전중
