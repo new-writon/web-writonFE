@@ -109,11 +109,11 @@ export const CommunityBox = () => {
                   <div className="number">{CommunitySecondData?.challengeCompleteCount}</div>
                   명이 챌린지를 완료했어요.
                 </MainSemiTitle>
-                <TitleSideBox type="default">오늘</TitleSideBox>
+                {dateLastLength === dateLength && <TitleSideBox type="default">오늘</TitleSideBox>}
               </>
             ) : (
               <>
-                <MainSemiTitle font={1.125}>
+                <MainSemiTitle font={1.25}>
                   {format(dateActive[dateLength], "M")}월 {format(dateActive[dateLength], "d")}일,
                   <div className="flex">
                     <div className="number">{CommunitySecondData?.challengeCompleteCount}</div>

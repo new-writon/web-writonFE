@@ -27,6 +27,7 @@ export const CommunityHeader = styled.div`
   }
   .flex {
     display: flex;
+    font-size: 1.25rem;
   }
   .flex .number {
     margin: 0;
