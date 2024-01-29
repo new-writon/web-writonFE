@@ -144,7 +144,9 @@ export const StoryBox = ({
                 </div>
                 <div className="userAddInfo">
                   <div className="job">{popUpdata?.job}</div>
-                  <div className="company">{popUpdata?.company}</div>
+                  <div className={`company ${popUpdata?.company === null && "none"}`}>
+                    {popUpdata?.company}
+                  </div>
                 </div>
               </div>
               <div className="oneline">{popUpdata?.job_introduce}</div>

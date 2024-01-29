@@ -89,7 +89,10 @@ export const IntroducePopup = styled.div<{ $xValue: number }>`
     font-weight: 500;
     gap: 6px;
   }
-  .userAddInfo .job::after {
+  .userAddInfo .company.none::before {
+    display: none;
+  }
+  .userAddInfo .company::before {
     content: "";
     display: block;
     width: 1px;
