@@ -5,8 +5,8 @@ import { useNavigate } from "react-router-dom";
 import { useRecoilCallback } from "recoil";
 import styled from "styled-components";
 
+import { getMyCommunityStory } from "@/apis/CommunityPage";
 import { dateCheck } from "@/apis/header";
-import { getChallengeCurrent } from "@/apis/mainPage";
 import profile from "@/assets/communityPage/profile.png";
 import pencil_color from "@/assets/header/pencil_color.svg";
 import pencil_white from "@/assets/header/pencil_white.svg";
@@ -18,15 +18,22 @@ import {
   postWritingDataState,
 } from "@/recoil/atoms";
 import { Inner } from "@/style/global";
+import { communityStoryProps } from "@/types";
+
+import { TooltipProfile } from "../atom/TooltipProfile";
 
 const ICON = [letsintern, writon];
 const Tabs = ["내 챌린지", "커뮤니티"];
 
 const Header = () => {
   const navigate = useNavigate();
+  const [width, setWidth] = useState<number>(window.innerWidth);
+
   const [selectTab, setSelectTab] = useState<string>("내 챌린지");
   const [isHover, setIsHover] = useState<boolean>(false);
   const [profileImage, setProfileImage] = useState<string>(profile);
+  const [headerTooltip, setHeaderTooltip] = useState<boolean>(false);
+  const [userProfile, setUserProfile] = useState<communityStoryProps>();
 
   const today = format(new Date(), "yyyy-MM-dd");
   const resetState = useRecoilCallback(({ reset }) => () => {
@@ -51,20 +58,22 @@ const Header = () => {
     }
   };
 
+  const ProfileOn = () => {
+    setHeaderTooltip(!headerTooltip);
+  };
+
   const headerRendering = async () => {
     try {
-      const response = await getChallengeCurrent(
-        localStorage.getItem("organization") || "",
-        localStorage.getItem("challengeId") || "1"
-      );
-      console.log(response);
-      if (response.userProfile !== null) {
-        setProfileImage(response.userProfile);
+      const data = await getMyCommunityStory(localStorage.getItem("challengeId") || "");
+      if (data?.profile !== null) {
+        setProfileImage(data?.profile);
       }
+      setUserProfile(data);
     } catch {
       throw new Error("shit");
     }
   };
+
   useEffect(() => {
     if (location.pathname === "/community") {
       setSelectTab("커뮤니티");
@@ -74,9 +83,19 @@ const Header = () => {
       setSelectTab("");
     }
     headerRendering();
+    setHeaderTooltip(false);
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [location.pathname]);
+  const handleResize = () => {
+    //뷰크기 강제로 강져오기
+    setWidth(window.innerWidth);
+  };
+  useEffect(() => {
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize); //clean
+  }, [width]);
+
   return (
     <Inner>
       <Container>
@@ -120,13 +139,30 @@ const Header = () => {
               alt="pen"
             />
           </div>
-          <div className="profileImageCover">
+          <div
+            className="profileImageCover"
+            onClick={ProfileOn}
+          >
             <img
               src={profileImage} //{data?.profile}
               alt="profile"
             />
           </div>
         </HeaderRight>
+        {headerTooltip && 531 <= width && (
+          <TooltipProfile
+            headerTooltip={headerTooltip}
+            userProfile={userProfile}
+            setHeaderTooltip={setHeaderTooltip}
+          />
+        )}
+        {width <= 530 && (
+          <TooltipProfile
+            headerTooltip={headerTooltip}
+            userProfile={userProfile}
+            setHeaderTooltip={setHeaderTooltip}
+          />
+        )}
       </Container>
       <HeaderMiddleResponsive>
         {Tabs.map((tab, idx) => (
@@ -152,7 +188,7 @@ const Container = styled.div`
   height: 71px;
   display: flex;
   justify-content: space-between;
-
+  position: relative;
   @media (max-width: 530px) {
     height: 56px;
   }
