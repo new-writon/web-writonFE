@@ -222,7 +222,7 @@ export const OnboardingBox = () => {
                 ""
               )}
             </div>
-            <div>({nicknameNum}/15)</div>
+            <div className="numCheck">({nicknameNum}/15)</div>
           </div>
         </NicknameBox>
         <JobBox>
@@ -251,7 +251,7 @@ export const OnboardingBox = () => {
           />
           <div className="parityCheck">
             <div></div>
-            <div>({jobIntroduceNum}/50)</div>
+            <div className="numCheck">({jobIntroduceNum}/50)</div>
           </div>
         </JobIntroBox>
         <CompanyBox>
@@ -275,7 +275,7 @@ export const OnboardingBox = () => {
           />
           <div className="parityCheck">
             <div></div>
-            <div>({companyNum}/20)</div>
+            <div className="numCheck">({companyNum}/20)</div>
           </div>
         </CompanyBox>
         <JoinDateBox>

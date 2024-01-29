@@ -13,6 +13,9 @@ export const Container = styled.div`
     padding: 50px 20px 100px;
     min-width: 340px;
   }
+  @media (max-width: 530px) {
+    margin: 0 auto;
+  }
 `;
 
 export const Title = styled.div`
@@ -79,6 +82,9 @@ export const OnboardBox = styled.div`
     p {
       font-size: 0.75rem;
     }
+  }
+  .numCheck {
+    font-size: 0.8rem;
   }
   input {
     border-radius: 8px;
