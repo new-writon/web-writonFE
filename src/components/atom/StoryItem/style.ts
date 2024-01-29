@@ -61,6 +61,7 @@ export const Container = styled.div<{ $someone: string; $message: string | null 
       color: var(--Gray-90, #424242);
       overflow-x: hidden;
       justify-content: flex-start;
+      overflow-y: hidden;
     }
   }
 
