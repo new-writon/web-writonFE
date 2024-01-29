@@ -12,6 +12,7 @@ import { CommentAndLike } from "@/components/atom/CommentAndLike";
 import { CommnetAndLikeFloating } from "@/components/atom/CommentAndLikeFloating";
 import { UserInfoDetail } from "@/components/atom/UserInfoDetail";
 import { CommentState, DetailDataState, DetailModalState, LikeState } from "@/recoil/atoms";
+import { Inner } from "@/style/global";
 
 export const DetailPage = () => {
   const { templeteId } = useParams();
@@ -65,39 +66,41 @@ export const DetailPage = () => {
   }
 
   return (
-    <Container onClick={() => setDetailModal(false)}>
-      <div
-        className="DetailBox"
-        onClick={(e) => defaultClick(e)}
-      >
-        <WriteView detailData={detailData} />
-        <div className="WriterUser">
-          <UserInfoDetail
-            data={{
-              profile: detailData[0]?.profile,
-              nickname: detailData[0]?.nickname,
-              job: detailData[0]?.job,
-              company: detailData[0]?.company,
-              created_at: detailData[0]?.created_at,
-            }}
+    <Inner>
+      <Container onClick={() => setDetailModal(false)}>
+        <div
+          className="DetailBox"
+          onClick={(e) => defaultClick(e)}
+        >
+          <WriteView detailData={detailData} />
+          <div className="WriterUser">
+            <UserInfoDetail
+              data={{
+                profile: detailData[0]?.profile,
+                nickname: detailData[0]?.nickname,
+                job: detailData[0]?.job,
+                company: detailData[0]?.company,
+                created_at: detailData[0]?.created_at,
+              }}
+            />
+            <CommentAndLike
+              commentCount={commentList?.length.toString()}
+              likeCount={likeCount}
+            />
+          </div>
+          <CommentBox
+            commentList={commentList}
+            userTemplateId={detailData[0]?.user_templete_id} //
           />
-          <CommentAndLike
+          <CommnetAndLikeFloating
+            userTemplateId={detailData[0]?.user_templete_id}
+            myLikeSign={detailData[0]?.myLikeSign}
             commentCount={commentList?.length.toString()}
             likeCount={likeCount}
           />
         </div>
-        <CommentBox
-          commentList={commentList}
-          userTemplateId={detailData[0]?.user_templete_id} //
-        />
-        <CommnetAndLikeFloating
-          userTemplateId={detailData[0]?.user_templete_id}
-          myLikeSign={detailData[0]?.myLikeSign}
-          commentCount={commentList?.length.toString()}
-          likeCount={likeCount}
-        />
-      </div>
-    </Container>
+      </Container>
+    </Inner>
   );
 };
 
@@ -127,6 +130,7 @@ const Container = styled.div`
       width: 80.15%;
       min-width: 530px;
     }
+
     position: relative;
   }
   .WriterUser {
@@ -145,8 +149,9 @@ const Container = styled.div`
     height: auto;
     z-index: 0;
     .DetailBox {
-      padding: 20px 10px 110px;
+      padding: 20px 0 110px;
       min-width: 343px;
+      width: 100%;
     }
   }
 `;
