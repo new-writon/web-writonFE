@@ -13,6 +13,7 @@ export const Container = styled.div<{ $font: number }>`
   .number {
     color: var(--purple-50);
     margin-left: 5px;
+    font-size: 1.25rem;
   }
   p {
     display: flex;
@@ -21,7 +22,7 @@ export const Container = styled.div<{ $font: number }>`
   @media (max-width: 560px) {
     display: block;
     &:has(.number) {
-      font-size: 1.125rem;
+      font-size: 1.25rem;
     }
     &:has(.second) {
       display: flex;
