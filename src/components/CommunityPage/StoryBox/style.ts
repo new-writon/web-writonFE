@@ -28,12 +28,12 @@ export const Container = styled.div`
 
 export const IntroducePopup = styled.div<{ $xValue: number }>`
   width: 279px;
-  height: 128px;
+  height: 137px;
   padding: 16px;
   border-radius: 10px;
   background-color: var(--White);
   position: absolute;
-  bottom: -140px;
+  bottom: -150px;
   left: ${(props) => `calc(${props.$xValue}px - 170px)`};
   @media (max-width: 1140px) {
     left: ${(props) => `calc(${props.$xValue}px - 190px)`};
@@ -108,6 +108,11 @@ export const IntroducePopup = styled.div<{ $xValue: number }>`
     font-weight: 400;
     line-height: 120%;
     overflow-wrap: break-word;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow-y: hidden;
   }
 `;
 
