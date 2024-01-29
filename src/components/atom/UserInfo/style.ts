@@ -29,10 +29,17 @@ export const Container = styled.div`
   }
   .user .top .job {
     display: flex;
+    align-items: center;
+  }
+  .user .top .company {
+    display: flex;
     gap: 6px;
     align-items: center;
   }
-  .user .top .job::after {
+  .user .top .company.hide::before {
+    display: none;
+  }
+  .user .top .company::before {
     content: "";
     display: block;
     width: 1px;

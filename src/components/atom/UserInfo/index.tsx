@@ -24,7 +24,7 @@ export const UserInfo = ({ data }: { data: userProps }) => {
       <div className="user">
         <div className="top">
           <div className="job">{data?.job}</div>
-          <div className="company">{data?.company}</div>
+          <div className={`company ${data?.company === null && "hide"}`}>{data?.company}</div>
         </div>
         <div className="date">{format(data?.date, "M월 d일")}</div>{" "}
         {/* 해당 날짜 데이터 받아서 formating 시키기 */}
