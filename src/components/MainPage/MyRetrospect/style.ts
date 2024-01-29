@@ -19,7 +19,7 @@ export const Container = styled.div`
     margin-top: 18px;
 
     .RetrospectTitle {
-      max-width: 375px; //모바일
+      padding-left: 15px;
       width: 100%;
       margin: 0 auto;
     }
