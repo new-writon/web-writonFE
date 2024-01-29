@@ -25,6 +25,9 @@ export const Container = styled.div`
     align-items: center;
     margin-top: 12px;
     padding: 0 20px;
+    @media (max-width: 1090px) {
+      flex-wrap: wrap;
+    }
     @media (max-width: 846px) {
       display: block;
       .keywordList div {
@@ -38,10 +41,15 @@ export const Container = styled.div`
     font-weight: 600;
     line-height: 120%;
     margin-right: 10px;
+    width: 50px;
+    @media (max-width: 1090px) {
+      padding-bottom: 10px;
+    }
   }
   .keywordBox .keywordList {
     display: flex;
     gap: 6px;
+    flex-wrap: wrap;
   }
   .addQuestionBox {
     display: flex;

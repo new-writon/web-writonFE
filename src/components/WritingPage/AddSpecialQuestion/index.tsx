@@ -54,7 +54,7 @@ export const AddSpecialQuestion = () => {
         </div>
       </div>
       <div className="addQuestionBoxTitle">
-        <TitleSideBox type="special">적성</TitleSideBox>
+        <TitleSideBox type="special">{categoryIdx}</TitleSideBox>
         관련 스페셜 질문
       </div>
       <div className="addQuestionBox">
