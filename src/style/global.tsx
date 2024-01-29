@@ -111,6 +111,11 @@ export const Inner = styled.div`
     background-color: var(--White);
     border-bottom: 1px solid var(--Gray-30);
   }
+  @media (min-width: 531px) {
+    .mobileCountingLabelBox {
+      display: none;
+    }
+  }
   @media (max-width: 530px) {
     max-width: 375px; //모바일
     width: 100%;
@@ -121,7 +126,17 @@ export const Inner = styled.div`
     &:has(.RetrospectTitle) {
       max-width: 100vw;
     }
+    &:has(.mobileCountingLabelBox) {
+      max-width: 100vw;
+    }
+    .mobileCountingLabelBox {
+      padding-bottom: 5px;
+    }
+    &:has(.mainCalendar) {
+      max-width: 100vw;
+    }
     &:has(.first) {
+      max-width: 100vw;
       border-radius: 0px 0px 20px 20px;
       background: var(--Gray-10, #fafafa);
       box-shadow: 0px 4px 30px 0px rgba(33, 33, 33, 0.05);
@@ -129,6 +144,7 @@ export const Inner = styled.div`
     }
     &:has(.changeDate) {
       // 모바일 커뮤니티 아래
+      max-width: 100vw;
       background-color: var(--Gray-20, #f5f5f5);
     }
     &:has(.weekCalendar) {
