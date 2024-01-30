@@ -67,7 +67,10 @@ export const DetailPage = () => {
 
   return (
     <Inner>
-      <Container onClick={() => setDetailModal(false)}>
+      <Container
+        id="DetailBox"
+        onClick={() => setDetailModal(false)}
+      >
         <div
           className="DetailBox"
           onClick={(e) => defaultClick(e)}
