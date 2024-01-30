@@ -26,6 +26,7 @@ export const TooltipProfile = ({
       const response = await deleteLogout();
       console.log(response);
       localStorage.clear();
+      sessionStorage.clear();
       navigate("/login");
       window.location.reload();
     } catch {
