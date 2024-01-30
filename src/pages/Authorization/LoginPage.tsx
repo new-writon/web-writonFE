@@ -13,6 +13,10 @@ const LoginPage = () => {
       localStorage.setItem("organization", organization);
       localStorage.setItem("challengeId", challengeId);
     }
+    if (localStorage.getItem("organization") !== "" || localStorage.getItem("challengeId") !== "") {
+      localStorage.removeItem("organization");
+      localStorage.removeItem("challengeId");
+    }
   }, []);
   return (
     <Container>
