@@ -35,6 +35,9 @@ export const RegisterBox = styled.div`
   }
   .title {
     color: var(--Gray10_900, #212121);
+    font-size: 0.875rem;
+    font-weight: 600;
+    line-height: 160%;
   }
   p {
     font-size: 0.875rem;
@@ -56,6 +59,9 @@ export const RegisterBox = styled.div`
     font-size: 0.75rem;
     p {
       font-size: 0.75rem;
+    }
+    .numCheck {
+      font-size: 0.8rem;
     }
   }
 `;

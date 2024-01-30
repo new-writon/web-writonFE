@@ -350,7 +350,7 @@ const RegisterEmail = () => {
                 ""
               )}
             </div>
-            <div>({userIdNum}/15)</div>
+            <div className="numCheck">({userIdNum}/15)</div>
           </div>
         </IdBox>
         <PasswordBox>
@@ -370,7 +370,7 @@ const RegisterEmail = () => {
           </div>
           <div className="parityCheck">
             <div></div>
-            <div>({password1Num}/30)</div>
+            <div className="numCheck">({password1Num}/30)</div>
           </div>
         </PasswordBox>
 
@@ -397,7 +397,7 @@ const RegisterEmail = () => {
                 ""
               )}
             </div>
-            <div>({password2Num}/30)</div>
+            <div className="numCheck">({password2Num}/30)</div>
           </div>
         </PasswordCheckBox>
         {/* <NicknameBox>
