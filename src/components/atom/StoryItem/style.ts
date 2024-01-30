@@ -56,12 +56,12 @@ export const Container = styled.div<{ $someone: string; $message: string | null 
     }
     .storyMessage {
       background-color: #fff;
-      height: fit-content;
-      font-size: 0.625rem;
+      font-size: 10px;
       color: var(--Gray-90, #424242);
       overflow-x: hidden;
       justify-content: flex-start;
       overflow-y: hidden;
+      padding: 10px;
     }
   }
 

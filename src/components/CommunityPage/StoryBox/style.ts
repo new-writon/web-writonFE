@@ -153,6 +153,13 @@ export const StoryItemBoxResponsive = styled.div`
   white-space: nowrap;
   gap: 22px;
   margin-top: 28px;
+  .job {
+    margin-bottom: 2px;
+  }
+  .job,
+  .company {
+    font-size: 12px;
+  }
   &::-webkit-scrollbar {
     display: none;
   }
