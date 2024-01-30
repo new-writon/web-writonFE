@@ -13,10 +13,6 @@ const LoginPage = () => {
       localStorage.setItem("organization", organization);
       localStorage.setItem("challengeId", challengeId);
     }
-    if (localStorage.getItem("accessToken") !== "" || localStorage.getItem("refreshToken") !== "") {
-      localStorage.removeItem("accessToken");
-      localStorage.removeItem("refreshToken");
-    }
   }, []);
   return (
     <Container>

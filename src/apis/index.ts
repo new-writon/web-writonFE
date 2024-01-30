@@ -10,7 +10,7 @@ export const WRITON = axios.create({
 });
 
 WRITON.interceptors.request.use(async (req: InternalAxiosRequestConfig) => {
-  const accessToken = localStorage.getItem("accessToken");
+  const accessToken = localStorage.getItem("accessToken") || sessionStorage.getItem("accessToken");
 
   if (req.headers && accessToken) req.headers.Authentication = `${accessToken}`;
   return req;

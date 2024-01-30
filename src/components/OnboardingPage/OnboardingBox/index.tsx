@@ -143,10 +143,12 @@ export const OnboardingBox = () => {
         console.log(data);
         try {
           const response = await postChallengeStart(
-            localStorage.getItem("organization") || "letsintern",
+            localStorage.getItem("organization") || "Letsintern",
             localStorage.getItem("challengeId") || "1"
           );
           console.log(response);
+          localStorage.setItem("accessToken", sessionStorage.getItem("accessToken") || "");
+          localStorage.setItem("refreshToken", sessionStorage.getItem("refreshToken") || "");
           navigate("/");
         } catch {
           new Error("shit");

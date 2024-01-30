@@ -21,18 +21,22 @@ export const KakaoCallback = () => {
           localStorage.getItem("organization") || "null",
           Number(localStorage.getItem("challengeId")) || 1
         );
-        localStorage.setItem("accessToken", res.accessToken);
-        localStorage.setItem("refreshToken", res.refreshToken);
+        sessionStorage.setItem("accessToken", res.accessToken);
+        sessionStorage.setItem("refreshToken", res.refreshToken);
         if (res.affiliatedConfirmation === true) {
           if (res.challengedConfirmation === true) {
+            localStorage.setItem("accessToken", res.accessToken);
+            localStorage.setItem("refreshToken", res.refreshToken);
             navigate("/");
           } else {
             try {
-              const res = await postChallengeStart(
+              const data = await postChallengeStart(
                 localStorage.getItem("organization") || "null",
                 localStorage.getItem("challengeId") || "1"
               );
-              console.log(res);
+              console.log(data);
+              localStorage.setItem("accessToken", res.accessToken);
+              localStorage.setItem("refreshToken", res.refreshToken);
               navigate("/");
             } catch {
               new Error("shit");
@@ -45,6 +49,8 @@ export const KakaoCallback = () => {
           try {
             const data = await getChallengingList(); // 니중에 여기서 워크스페이스 만들어야함.
             if (data.length > 0) {
+              localStorage.setItem("accessToken", res.accessToken);
+              localStorage.setItem("refreshToken", res.refreshToken);
               localStorage.setItem("organization", data[0]?.name);
               localStorage.setItem("challengeId", data[0]?.challenge_id.toString());
               navigate("/");

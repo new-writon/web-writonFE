@@ -29,11 +29,12 @@ const Login = () => {
         localStorage.getItem("organization") || "null",
         Number(localStorage.getItem("challengeId")) || 1
       );
-      localStorage.setItem("accessToken", response.accessToken);
-      localStorage.setItem("refreshToken", response.refreshToken);
-
+      sessionStorage.setItem("accessToken", response.accessToken);
+      sessionStorage.setItem("refreshToken", response.refreshToken);
       if (response.affiliatedConfirmation === true) {
         if (response.challengedConfirmation === true) {
+          localStorage.setItem("accessToken", response.accessToken);
+          localStorage.setItem("refreshToken", response.refreshToken);
           navigate("/");
         } else {
           try {
@@ -42,6 +43,8 @@ const Login = () => {
               localStorage.getItem("challengeId") || "1"
             );
             console.log(res);
+            localStorage.setItem("accessToken", response.accessToken);
+            localStorage.setItem("refreshToken", response.refreshToken);
             navigate("/");
           } catch {
             new Error("shit");
@@ -54,6 +57,8 @@ const Login = () => {
         try {
           const data = await getChallengingList(); // 니중에 여기서 워크스페이스 만들어야함.
           if (data.length > 0) {
+            localStorage.setItem("accessToken", response.accessToken);
+            localStorage.setItem("refreshToken", response.refreshToken);
             localStorage.setItem("organization", data[0]?.name);
             localStorage.setItem("challengeId", data[0]?.challenge_id.toString());
             navigate("/");
