@@ -37,6 +37,7 @@ export const Container = styled.div`
     display: flex;
     gap: 8px;
     cursor: pointer;
+    font-size: 0.75rem;
   }
   .reply .replyRead::before {
     content: "";
