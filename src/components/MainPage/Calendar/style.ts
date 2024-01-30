@@ -83,7 +83,7 @@ export const Container = styled.div`
       font-size: 16px;
     }
     .tooltipBox {
-      top: -185px;
+      top: -200px;
       left: 0;
       right: 0;
       margin: 0 auto;
