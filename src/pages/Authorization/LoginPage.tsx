@@ -13,9 +13,9 @@ const LoginPage = () => {
       localStorage.setItem("organization", organization);
       localStorage.setItem("challengeId", challengeId);
     }
-    if (localStorage.getItem("organization") !== "" || localStorage.getItem("challengeId") !== "") {
-      localStorage.removeItem("organization");
-      localStorage.removeItem("challengeId");
+    if (localStorage.getItem("accessToken") !== "" || localStorage.getItem("refreshToken") !== "") {
+      localStorage.removeItem("accessToken");
+      localStorage.removeItem("refreshToken");
     }
   }, []);
   return (
