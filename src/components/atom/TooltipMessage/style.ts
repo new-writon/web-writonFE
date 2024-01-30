@@ -71,10 +71,10 @@ export const Container = styled.div<{ $direction: string }>`
     &::before {
       transform: rotate(-45deg); // 여기 바꿔주면 된다. 화살표 방향
       position: absolute;
-      top: 181px;
+      top: 192px;
       margin: 0 auto;
       left: 0;
-      right: 80px;
+      right: 90px;
     }
   }
   @media (max-width: 355px) {
