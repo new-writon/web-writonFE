@@ -6,6 +6,7 @@ import {
   addSpecialQuestionArrayType,
   commentProps,
   communityContentProps,
+  communitySecondCoponentType,
   //communityContentProps,
   postWritingDataType,
 } from "@/types";
@@ -119,4 +120,9 @@ export const DateResponsiveState = atom<string | undefined>({
 export const PreTodayWriteState = atom<string>({
   key: "PreTodayWriteState",
   default: "",
+});
+
+export const CommunitySecondDataState = atom<communitySecondCoponentType>({
+  key: "CommunitySecondDataState",
+  default: { challengeCompleteCount: 0, templateData: [] },
 });

@@ -2,6 +2,7 @@
 import React, { useEffect, useState } from "react";
 
 import { format } from "date-fns";
+import { useRecoilState } from "recoil";
 
 import { getCommunityContentData, getCommunityDate } from "@/apis/CommunityPage";
 import arrow from "@/assets/communityPage/storyArrow.svg";
@@ -9,6 +10,7 @@ import { NoRetrospect } from "@/components/MainPage/NoRetrospect";
 import { CommunityItem } from "@/components/atom/CommunityItem";
 import { MainSemiTitle } from "@/components/atom/MainSemiTitle";
 import { TitleSideBox } from "@/components/atom/TitleSideBox";
+import { CommunitySecondDataState } from "@/recoil/atoms";
 import { Inner } from "@/style/global";
 import { communitySecondCoponentType } from "@/types";
 
@@ -20,7 +22,8 @@ export const CommunityBox = () => {
   const [dateActive, setDateActive] = useState<string[]>([]);
   const [dateLength, setDateLength] = useState<number>(-1);
   const [dateLastLength, setDateLastLength] = useState<number>(0);
-  const [CommunitySecondData, setCommunitySecondData] = useState<communitySecondCoponentType>();
+  const [CommunitySecondData, setCommunitySecondData] =
+    useRecoilState<communitySecondCoponentType>(CommunitySecondDataState);
 
   const CommunitySecondRendering = async () => {
     if (dateLength !== -1 || !dateActive) {
@@ -77,6 +80,7 @@ export const CommunityBox = () => {
         setDateLength(dateLastLength);
         break;
     }
+    localStorage.setItem("date", dateActive[dateLength]);
   };
 
   const handleResize = () => {
@@ -91,6 +95,7 @@ export const CommunityBox = () => {
 
   useEffect(() => {
     CommunitySecondRendering();
+    localStorage.setItem("date", dateActive[dateLength]);
   }, [dateLength]);
 
   if (!dateActive || dateLength === -1) {

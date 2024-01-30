@@ -1,13 +1,15 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { useEffect, useState } from "react";
 
-import { useRecoilState, useSetRecoilState } from "recoil";
+import { useSetRecoilState } from "recoil";
 
+import { getCommunityContentData } from "@/apis/CommunityPage";
 import { postLike, postLikeDelete } from "@/apis/DetailPage";
 import comment from "@/assets/DetailPage/comment.svg";
 import fireOff from "@/assets/DetailPage/fireOff.svg";
 import fireOn from "@/assets/DetailPage/fireOn.svg";
-import { LikeClickState, LikeState } from "@/recoil/atoms";
+import { CommunitySecondDataState, LikeState } from "@/recoil/atoms";
+import { communitySecondCoponentType } from "@/types";
 
 import { Container } from "./style";
 
@@ -23,8 +25,10 @@ export const CommnetAndLikeFloating = ({
   likeCount: string;
 }) => {
   const [IsHover, setIsHover] = useState<boolean>(false);
-  const [IsClick, setIsCick] = useRecoilState(LikeClickState);
+  const [IsClick, setIsCick] = useState<boolean>(false);
   const setLikeCount = useSetRecoilState(LikeState);
+  const setCommunitySecondData =
+    useSetRecoilState<communitySecondCoponentType>(CommunitySecondDataState);
 
   const LikeFunc = async () => {
     if (!IsClick) {
@@ -45,6 +49,16 @@ export const CommnetAndLikeFloating = ({
       console.log(response);
       setLikeCount((Number(likeCount) - 1).toString());
       setIsCick(false);
+    }
+    try {
+      const result = await getCommunityContentData(
+        localStorage.getItem("organization") || "",
+        localStorage.getItem("challengeId") || "1",
+        localStorage.getItem("date") || ""
+      );
+      setCommunitySecondData(result); // 밖에 커뮤니티 데이터 수정
+    } catch {
+      new Error("shit");
     }
   };
 
