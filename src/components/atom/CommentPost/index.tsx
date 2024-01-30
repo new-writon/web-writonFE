@@ -27,6 +27,7 @@ export const CommentPost = ({
   type?: string;
 }) => {
   const textareaRef = useRef<HTMLTextAreaElement | null>(null);
+  const [width, setWidth] = useState<number>(window.innerWidth);
   const [text, setText] = useState<string>("");
   const [registerBtn, setRegisterBtn] = useState<boolean>(true);
   const [profileImage, setProfileImage] = useState<string>(profile);
@@ -84,6 +85,7 @@ export const CommentPost = ({
         const myData = await getMyCommunityStory(localStorage.getItem("challengeId") || "1");
         if (commentGroup === -1) {
           setCommentList([
+            ...commentList,
             {
               job: myData.job,
               company: myData.company,
@@ -98,11 +100,21 @@ export const CommentPost = ({
               comment_group: commentGroup.toString(),
               reply: [],
             },
-            ...commentList,
           ]);
+          console.log(commentList);
+
+          if (width <= 530) {
+            window.scrollTo({ top: document.body.scrollHeight + 100, behavior: "smooth" });
+          } else {
+            const DetailBox = document.getElementById("DetailBox");
+            if (DetailBox) {
+              DetailBox.scrollTop = DetailBox.scrollHeight;
+            }
+          }
         } else {
           if (replyArray && setReplyArray) {
             setReplyArray([
+              ...replyArray,
               {
                 job: myData.job,
                 company: myData.company,
@@ -117,8 +129,8 @@ export const CommentPost = ({
                 comment_group: commentGroup.toString(),
                 reply: [],
               },
-              ...replyArray,
             ]);
+            console.log(replyArray);
           }
         }
       } catch {
@@ -133,6 +145,16 @@ export const CommentPost = ({
   useEffect(() => {
     myProfileRendering();
   }, []);
+
+  const handleResize = () => {
+    //뷰크기 강제로 강져오기
+    setWidth(window.innerWidth);
+  };
+  useEffect(() => {
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize); //clean
+  }, [width]);
+
   return (
     <Container $type={type}>
       <div className="profileImageCover">
