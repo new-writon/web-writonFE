@@ -125,6 +125,7 @@ export const JobIntroBox = styled.div`
     caret-color: #6a63f5;
     color: var(--Gray-100, #212121);
     line-height: 24px;
+    overflow-y: hidden;
     &::placeholder {
       color: var(--Gray-60, #959595);
       font-size: 1rem;
