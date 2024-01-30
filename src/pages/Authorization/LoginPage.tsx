@@ -13,6 +13,11 @@ const LoginPage = () => {
       localStorage.setItem("organization", organization);
       localStorage.setItem("challengeId", challengeId);
     }
+    if (localStorage.getItem("accessToken") && localStorage.getItem("refreshToken")) {
+      //탭 열린 상태에서 초대장 받았을때는 지워야함. 초대장 로직
+      localStorage.removeItem("accessToken");
+      localStorage.removeItem("refreshToken");
+    }
   }, []);
   return (
     <Container>
