@@ -27,6 +27,7 @@ export const PreviewBody = styled.div`
   }
   .content {
     font-weight: 400;
+    white-space: pre-wrap;
   }
 `;
 export const PreviewInfo = styled.div`

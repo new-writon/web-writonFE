@@ -62,12 +62,12 @@ export const PreviewBody = styled.div`
   .content {
     color: var(--Gray-70, #757575);
     font-weight: 400;
-    white-space: pre;
+    white-space: pre-wrap;
   }
   @media (max-width: 530px) {
     .content {
       line-height: 25px;
-      white-space: pre;
+      white-space: pre-wrap;
     }
   }
 `;

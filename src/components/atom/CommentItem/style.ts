@@ -19,7 +19,7 @@ export const Container = styled.div`
     font-size: 0.875rem;
     font-weight: 400;
     color: var(--Gray-100, #212121);
-    white-space: pre;
+    white-space: pre-wrap;
     line-height: 120%;
   }
 
