@@ -1,6 +1,5 @@
 import React, { MouseEvent, useCallback, useEffect, useRef, useState } from "react";
 
-import { format } from "date-fns";
 import Slider from "react-slick";
 import styled from "styled-components";
 
@@ -10,7 +9,7 @@ import { MainSemiTitle } from "@/components/atom/MainSemiTitle";
 import { StoryItem } from "@/components/atom/StoryItem";
 import { TitleSideBox } from "@/components/atom/TitleSideBox";
 import { Inner } from "@/style/global";
-import { communityFirstComponentType, communityStoryProps } from "@/types";
+import { ChallengeCurrentType, communityFirstComponentType, communityStoryProps } from "@/types";
 
 import {
   Container,
@@ -21,9 +20,11 @@ import {
 } from "./style";
 
 export const StoryBox = ({
+  ChallengeCurrent,
   CommunityFirstData,
   myCommunityStoryData,
 }: {
+  ChallengeCurrent: ChallengeCurrentType | undefined;
   CommunityFirstData: communityFirstComponentType | undefined;
   myCommunityStoryData: communityStoryProps | undefined;
 }) => {
@@ -107,7 +108,7 @@ export const StoryBox = ({
               지금 <div className="number">{CommunityFirstData?.challengeParticipantCount}</div>명이
               함께&nbsp;
             </p>
-            {`렛츠인턴 ${format(new Date(), "M월")} TIL 챌린지`} 도전중!
+            {ChallengeCurrent?.organization} {ChallengeCurrent?.challenge} 챌린지 도전중!
           </MainSemiTitle>
           <TitleSideBox type="default">D-{CommunityFirstData?.challengeOverlapPeriod}</TitleSideBox>
         </div>

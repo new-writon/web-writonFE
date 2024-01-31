@@ -88,6 +88,8 @@ export interface ChallengeCurrentType {
   overlapDeposit: number;
   challengeDeposit: number;
   userProfile: string;
+  organization: string;
+  challenge: string;
 }
 
 export interface CalendarRecordCurrentType {
