@@ -21,8 +21,8 @@ export const Container = styled.div`
     background-color: transparent;
     padding: 5px 0 0;
     .title {
-      margin: 0 auto;
-      width: fit-content;
+      gap: 0;
+      justify-content: space-between;
     }
     .webCountingLabelBox {
       display: none;

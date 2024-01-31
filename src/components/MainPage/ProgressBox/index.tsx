@@ -17,6 +17,8 @@ export const ProgressBox = ({
 }) => {
   const [value, setValue] = useState<number>(0);
   const [tooltipOn, setTooltopOn] = useState<boolean>(false);
+  const [width, setWidth] = useState<number>(window.innerWidth);
+
   useEffect(() => {
     const count = ChallengeCurrent?.challengeSuccessCount || 0;
     const percentage = ChallengeCurrent?.challengeOverlapCount || 20;
@@ -27,14 +29,24 @@ export const ProgressBox = ({
       }, 100);
     }, 500);
   }, [ChallengeCurrent?.challengeOverlapCount, ChallengeCurrent?.challengeSuccessCount]);
+
+  const handleResize = () => {
+    //뷰크기 강제로 강져오기
+    setWidth(window.innerWidth);
+  };
+  useEffect(() => {
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize); //clean
+  }, [width]);
   return (
     <>
       <Inner>
         <Container>
           <div className="title">
             <MainSemiTitle font={1.25}>
-              {ChallengeCurrent?.nickname || "00"}님의 {ChallengeCurrent?.organization}{" "}
-              {ChallengeCurrent?.challenge} 챌린지
+              {ChallengeCurrent?.nickname || "00"}님의
+              {width <= 530 && <br />}
+              {ChallengeCurrent?.organization} {ChallengeCurrent?.challenge} 챌린지
             </MainSemiTitle>
             <TitleSideBox type="default">D-{ChallengeCurrent?.overlapPeriod || "15"}</TitleSideBox>
           </div>
