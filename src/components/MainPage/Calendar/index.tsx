@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-import { format, getISOWeek } from "date-fns";
+import { differenceInCalendarWeeks, format, startOfMonth } from "date-fns";
 
 import downArrow from "@/assets/mainPage/downArrow.svg";
 import clalendarIcon from "@/assets/mainPage/icon-calendar.svg";
@@ -16,16 +16,18 @@ import { RenderDays } from "./RenderDays";
 import { Container } from "./style";
 export const Calendar = ({ CalendarData }: { CalendarData: CalendarRecordCurrentType[] }) => {
   const today = new Date();
+  const monthStart = startOfMonth(today);
+
   const [fold, setFold] = useState<boolean>(false);
   const [tooltipOn, setTooltopOn] = useState<boolean>(false);
-
+  const weekNumber = differenceInCalendarWeeks(today, monthStart) + 1;
   return (
     <Inner>
       <Container>
         <div className="topBar mainCalendar">
           <div className="topBarLeft">
             <MainSemiTitle font={1.25}>
-              {format(today, "M")}월 {getISOWeek(today)}주차 도전중
+              {format(today, "M")}월 {weekNumber}주차 도전중
             </MainSemiTitle>
             <TooltipButton
               tooltipOn={tooltipOn}

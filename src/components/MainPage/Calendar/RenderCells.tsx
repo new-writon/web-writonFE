@@ -1,7 +1,14 @@
 /* eslint-disable no-case-declarations */
 import { useEffect, useState } from "react";
 
-import { startOfMonth, endOfMonth, startOfWeek, endOfWeek, getISOWeek } from "date-fns";
+import {
+  startOfMonth,
+  endOfMonth,
+  startOfWeek,
+  endOfWeek,
+  getISOWeek,
+  differenceInCalendarWeeks,
+} from "date-fns";
 import { isSameMonth, isSameDay, addDays, format } from "date-fns";
 import { useNavigate } from "react-router-dom";
 
@@ -42,7 +49,7 @@ export const RenderCell = ({
   const monthEnd = endOfMonth(today); // 1월 31일이 나옴.(그 달의 끝)
   const startDate = startOfWeek(monthStart); // 해당 날짜의 해당 주의 시작 날짜
   const endDate = endOfWeek(monthEnd); // 해당 날짜의 해당 주의 끝 날짜
-  const weekNumber = getISOWeek(today) - 1; // 몇주차인지
+  const weekNumber = differenceInCalendarWeeks(today, monthStart); // 몇주차인지
   const pageWeekNumber = getISOWeek(pageDay || "") - 1;
 
   const mouseEvent = (isTODAY: boolean, type: string, clickDay: string) => {
@@ -158,8 +165,8 @@ export const RenderCell = ({
             <div
               className={format(today, "M") !== format(day, "M") ? "text not-valid" : "text valid"}
             >
-              {Number(format(day, "d")) > Number(format(today, "d")) ||
-              !isSameMonth(day, monthStart) ? (
+              {Number(format(day, "d")) > Number(format(today, "d")) &&
+              isSameMonth(day, monthStart) ? (
                 ""
               ) : (
                 <img
@@ -193,8 +200,8 @@ export const RenderCell = ({
               )}
               {formattedDate}
             </div>
-            {Number(format(day, "d")) > Number(format(today, "d")) ||
-            !isSameMonth(day, monthStart) ? ( // 이미지 안나와여하는것 : 주말, 오늘 이후 날짜들, 다른 달 짜투리들
+            {Number(format(day, "d")) > Number(format(today, "d")) &&
+            isSameMonth(day, monthStart) ? ( // 이미지 안나와여하는것 : 주말, 오늘 이후 날짜들, 다른 달 짜투리들
               <img
                 className="virtualImg"
                 src={silverBadge} //상관없음. 어차피 opacity 0
