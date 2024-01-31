@@ -57,7 +57,7 @@ export const Container = styled.div`
     gap: 16px;
     padding: 0 20px;
     overflow-y: scroll;
-    height: calc(100% - 135px);
+    height: calc(100% - 180px);
     scrollbar-width: thin;
     scrollbar-color: #d9d9d9 #fff; /* 검은색 Thumb 와 흰색 Track */
   }
