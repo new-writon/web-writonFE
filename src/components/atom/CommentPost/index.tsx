@@ -29,6 +29,7 @@ export const CommentPost = ({
   const textareaRef = useRef<HTMLTextAreaElement | null>(null);
   const [width, setWidth] = useState<number>(window.innerWidth);
   const [text, setText] = useState<string>("");
+
   const [registerBtn, setRegisterBtn] = useState<boolean>(true);
   const [profileImage, setProfileImage] = useState<string>(profile);
   const [commentList, setCommentList] = useRecoilState(CommentState);
@@ -53,6 +54,9 @@ export const CommentPost = ({
       if (!e.shiftKey) {
         e.preventDefault();
         commentRegister();
+        if (textareaRef && textareaRef.current) {
+          textareaRef.current.style.height = "38px";
+        }
       }
     }
   };
@@ -63,7 +67,6 @@ export const CommentPost = ({
         localStorage.getItem("organization") || "",
         localStorage.getItem("challengeId") || "1"
       );
-      console.log(response);
       if (response.userProfile !== null) {
         setProfileImage(response.userProfile);
       }
@@ -80,7 +83,6 @@ export const CommentPost = ({
         text,
         commentGroup
       );
-      console.log(response);
       try {
         const myData = await getMyCommunityStory(localStorage.getItem("challengeId") || "1");
         if (commentGroup === -1) {
@@ -101,8 +103,6 @@ export const CommentPost = ({
               reply: [],
             },
           ]);
-          console.log(commentList);
-
           if (width <= 530) {
             window.scrollTo({ top: document.body.scrollHeight + 100, behavior: "smooth" });
           } else {
@@ -130,7 +130,6 @@ export const CommentPost = ({
                 reply: [],
               },
             ]);
-            console.log(replyArray);
           }
         }
       } catch {
