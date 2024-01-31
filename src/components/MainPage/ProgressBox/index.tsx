@@ -44,8 +44,7 @@ export const ProgressBox = ({
         <Container>
           <div className="title">
             <MainSemiTitle font={1.25}>
-              {ChallengeCurrent?.nickname || "00"}님의
-              {width <= 530 && <br />}
+              {ChallengeCurrent?.nickname || "00"}님의 {width <= 530 && <br />}
               {ChallengeCurrent?.organization} {ChallengeCurrent?.challenge} 챌린지
             </MainSemiTitle>
             <TitleSideBox type="default">D-{ChallengeCurrent?.overlapPeriod || "15"}</TitleSideBox>
