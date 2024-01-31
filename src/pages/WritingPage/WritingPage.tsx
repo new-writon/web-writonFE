@@ -1,8 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { useEffect, useState } from "react";
 
-import { format } from "date-fns";
-import { useParams } from "react-router-dom";
 import { useSetRecoilState } from "recoil";
 import styled from "styled-components";
 
@@ -19,7 +17,6 @@ import { CalendarRecordCurrentType } from "@/types";
 import { WritingBox } from "./WritingBox";
 
 export const WritingPage = () => {
-  const { date } = useParams();
   const [CalendarData, setCalendarData] = useState<CalendarRecordCurrentType[]>([]);
   const setGetBasicQuestionData = useSetRecoilState(getBasicQuestionState);
   const setGetSpecialQuestionData = useSetRecoilState(getSpecialQuestionState);
@@ -30,8 +27,7 @@ export const WritingPage = () => {
       const result = await Promise.all([
         getCalendarRecordCurrent(
           localStorage.getItem("organization") || "",
-          localStorage.getItem("challengeId") || "1",
-          format(date || new Date(), "yyyy-MM")
+          localStorage.getItem("challengeId") || "1"
         ),
         getBasicQuestion(localStorage.getItem("challengeId") || "1"),
         getSpecialQuestion(localStorage.getItem("challengeId") || "1"),

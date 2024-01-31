@@ -6,7 +6,6 @@ import {
   endOfMonth,
   startOfWeek,
   endOfWeek,
-  getISOWeek,
   differenceInCalendarWeeks,
 } from "date-fns";
 import { isSameMonth, isSameDay, addDays, format } from "date-fns";
@@ -50,7 +49,7 @@ export const RenderCell = ({
   const startDate = startOfWeek(monthStart); // 해당 날짜의 해당 주의 시작 날짜
   const endDate = endOfWeek(monthEnd); // 해당 날짜의 해당 주의 끝 날짜
   const weekNumber = differenceInCalendarWeeks(today, monthStart); // 몇주차인지
-  const pageWeekNumber = getISOWeek(pageDay || "") - 1;
+  const pageWeekNumber = differenceInCalendarWeeks(pageDay || today, monthStart);
 
   const mouseEvent = (isTODAY: boolean, type: string, clickDay: string) => {
     // 오늘만 이동 가능 추가로 안쓴 날도 이동가능, 안쓴날은 따로 체크해야할듯
