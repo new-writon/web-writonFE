@@ -37,6 +37,7 @@ export const TodayWritePopup = () => {
     if (e.key === "Enter") {
       if (!e.shiftKey) {
         e.preventDefault();
+        completeTodayWrite();
       }
     }
   };
