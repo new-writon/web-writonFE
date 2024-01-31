@@ -69,7 +69,10 @@ export const DetailPage = () => {
     <Inner>
       <Container
         id="DetailBox"
-        onClick={() => setDetailModal(false)}
+        onClick={() => {
+          setDetailModal(false);
+          document.body.style.overflowY = "auto";
+        }}
       >
         <div
           className="DetailBox"

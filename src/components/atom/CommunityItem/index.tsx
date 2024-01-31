@@ -26,6 +26,7 @@ export const CommunityItem = ({ data }: { data: communityContentProps[] }) => {
       setDetailData(data);
       setLikeCount(data[0]?.likeCount);
       setDetailModal(true);
+      document.body.style.overflowY = "hidden";
     }
   };
 
