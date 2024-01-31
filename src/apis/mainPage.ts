@@ -11,13 +11,9 @@ export const getChallengeCurrent = async (organization: string, challengeId: str
 };
 
 //메인페이지 챌린지 달력 2번째 컴포넌트
-export const getCalendarRecordCurrent = async (
-  organization: string,
-  challengeId: string,
-  month: string
-) => {
+export const getCalendarRecordCurrent = async (organization: string, challengeId: string) => {
   const response = await getData<CalendarRecordCurrentType[]>(
-    `/challenge/record/calendar/${organization}/${challengeId}/${month}`
+    `/challenge/record/calendar/${organization}/${challengeId}`
   );
   return response.data;
 };

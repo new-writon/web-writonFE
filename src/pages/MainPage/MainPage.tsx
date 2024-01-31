@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import { useEffect, useState } from "react";
 
 import { format } from "date-fns";
@@ -36,15 +37,15 @@ const MainPage = () => {
         ),
         getCalendarRecordCurrent(
           localStorage.getItem("organization") || "",
-          localStorage.getItem("challengeId") || "1",
-          "2024-01"
+          localStorage.getItem("challengeId") || "1"
         ),
         getRetrospectCurrent(
           localStorage.getItem("organization") || "",
           localStorage.getItem("challengeId") || "1",
-          "2024-01"
+          format(today, "yyyy-MM")
         ),
       ]);
+      console.log(result);
       setChallengeCurrent(result[0]);
       setCalendarData(result[1]);
       setRetrospectData(result[2]);
