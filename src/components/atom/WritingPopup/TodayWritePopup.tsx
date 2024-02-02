@@ -35,10 +35,8 @@ export const TodayWritePopup = () => {
 
   const handleOnKeyPress = (e: KeyboardEvent) => {
     if (e.key === "Enter") {
-      if (!e.shiftKey) {
-        e.preventDefault();
-        completeTodayWrite();
-      }
+      e.preventDefault();
+      completeTodayWrite();
     }
   };
 

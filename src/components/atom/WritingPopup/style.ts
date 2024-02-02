@@ -133,6 +133,7 @@ export const ContainerResponsive = styled.div`
     line-height: 160%;
     outline: none;
     border: none;
+    overflow-y: hidden;
     &::placeholder {
       line-height: 160%;
       font-size: 1rem;
