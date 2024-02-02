@@ -19,13 +19,9 @@ export const getCalendarRecordCurrent = async (organization: string, challengeId
 };
 
 //메인페이지 나의 회고 3번째 컴포넌트
-export const getRetrospectCurrent = async (
-  organization: string,
-  challengeId: string,
-  month: string
-) => {
+export const getRetrospectCurrent = async (organization: string, challengeId: string) => {
   const response = await getData<communityContentProps[][]>(
-    `/challenge/record/reminiscence/${organization}/${challengeId}/${month}`
+    `/challenge/record/reminiscence/${organization}/${challengeId}`
   );
   return response.data;
 };

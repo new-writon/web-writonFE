@@ -41,8 +41,7 @@ const MainPage = () => {
         ),
         getRetrospectCurrent(
           localStorage.getItem("organization") || "",
-          localStorage.getItem("challengeId") || "1",
-          format(today, "yyyy-MM")
+          localStorage.getItem("challengeId") || "1"
         ),
       ]);
       console.log(result);
