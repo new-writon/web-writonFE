@@ -11,6 +11,7 @@ import { BasicQuestion } from "@/components/WritingPage/BasicQuestion";
 import { SpecialQuestion } from "@/components/WritingPage/SpecialQuestion";
 import { CompletePopup } from "@/components/atom/WritingPopup/CompletePopup";
 import { WritingSubmitButton } from "@/components/atom/button";
+import useAsyncWithLoading from "@/hooks/useAsyncWithLoading";
 import {
   DateResponsiveState,
   addSpecialQuestionArrayState,
@@ -27,18 +28,26 @@ export const WritingBox = () => {
   const setDateResponsive = useSetRecoilState(DateResponsiveState);
   const addSpecialQuestionData = useRecoilValue(addSpecialQuestionArrayState);
   const postWritingData = useRecoilValue(postWritingDataState);
+  const executeAsyncTask = useAsyncWithLoading();
+
   useEffect(() => {
     setDateResponsive(date);
   }, [date, postWritingData, setDateResponsive]);
   const submitWrite = async () => {
-    const response = await postwritingSubmit(
-      localStorage.getItem("organization") || "",
-      localStorage.getItem("challengeId") || "1",
-      date || "",
-      postWritingData
-    );
-    console.log(response);
-    navigate("/");
+    executeAsyncTask(async () => {
+      try {
+        const response = await postwritingSubmit(
+          localStorage.getItem("organization") || "",
+          localStorage.getItem("challengeId") || "1",
+          date || "",
+          postWritingData
+        );
+        console.log(response);
+        navigate("/");
+      } catch {
+        new Error("shit");
+      }
+    });
   };
   return (
     <Inner>

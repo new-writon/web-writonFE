@@ -24,7 +24,7 @@ const LoadingWrapper = styled.div`
   position: fixed;
   top: 0;
   left: 0;
-  z-index: 9;
+  z-index: 99999999999999;
 `;
 const LoadingBox = styled.div`
   display: flex;

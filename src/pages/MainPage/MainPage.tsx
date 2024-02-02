@@ -15,6 +15,7 @@ import { Calendar } from "@/components/MainPage/Calendar";
 import { MyRetrospect } from "@/components/MainPage/MyRetrospect";
 import { ProgressBox } from "@/components/MainPage/ProgressBox";
 import { FloatingWriteButton } from "@/components/atom/button";
+import useAsyncWithLoading from "@/hooks/useAsyncWithLoading";
 import { CalendarRecordCurrentType, ChallengeCurrentType, communityContentProps } from "@/types";
 
 const MainPage = () => {
@@ -23,34 +24,36 @@ const MainPage = () => {
   const [ChallengeCurrent, setChallengeCurrent] = useState<ChallengeCurrentType>();
   const [CalendarData, setCalendarData] = useState<CalendarRecordCurrentType[]>([]);
   const [RetrospectData, setRetrospectData] = useState<communityContentProps[][]>([]);
-
+  const executeAsyncTask = useAsyncWithLoading();
   const spaceToWritingPage = () => {
     dateCheck(navigate, today);
   };
 
   const mainPageRendering = async () => {
-    try {
-      const result = await Promise.all([
-        getChallengeCurrent(
-          localStorage.getItem("organization") || "",
-          localStorage.getItem("challengeId") || "1"
-        ),
-        getCalendarRecordCurrent(
-          localStorage.getItem("organization") || "",
-          localStorage.getItem("challengeId") || "1"
-        ),
-        getRetrospectCurrent(
-          localStorage.getItem("organization") || "",
-          localStorage.getItem("challengeId") || "1"
-        ),
-      ]);
-      console.log(result);
-      setChallengeCurrent(result[0]);
-      setCalendarData(result[1]);
-      setRetrospectData(result[2]);
-    } catch {
-      throw new Error("shit");
-    }
+    executeAsyncTask(async () => {
+      try {
+        const result = await Promise.all([
+          getChallengeCurrent(
+            localStorage.getItem("organization") || "",
+            localStorage.getItem("challengeId") || "1"
+          ),
+          getCalendarRecordCurrent(
+            localStorage.getItem("organization") || "",
+            localStorage.getItem("challengeId") || "1"
+          ),
+          getRetrospectCurrent(
+            localStorage.getItem("organization") || "",
+            localStorage.getItem("challengeId") || "1"
+          ),
+        ]);
+        console.log(result);
+        setChallengeCurrent(result[0]);
+        setCalendarData(result[1]);
+        setRetrospectData(result[2]);
+      } catch {
+        throw new Error("shit");
+      }
+    });
   };
 
   useEffect(() => {

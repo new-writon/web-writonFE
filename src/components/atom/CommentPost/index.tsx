@@ -8,6 +8,7 @@ import { getMyCommunityStory } from "@/apis/CommunityPage";
 import { postCommentWrite } from "@/apis/DetailPage";
 import { getChallengeCurrent } from "@/apis/mainPage";
 import profile from "@/assets/communityPage/profile.png";
+import useAsyncWithLoading from "@/hooks/useAsyncWithLoading";
 import { CommentState } from "@/recoil/atoms";
 import { commentProps } from "@/types";
 
@@ -33,6 +34,7 @@ export const CommentPost = ({
   const [registerBtn, setRegisterBtn] = useState<boolean>(true);
   const [profileImage, setProfileImage] = useState<string>(profile);
   const [commentList, setCommentList] = useRecoilState(CommentState);
+  const executeAsyncTask = useAsyncWithLoading();
 
   const onChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     setText(e.currentTarget.value);
@@ -76,45 +78,19 @@ export const CommentPost = ({
   };
 
   const commentRegister = async () => {
-    try {
-      const response = await postCommentWrite(
-        userTemplateId,
-        localStorage.getItem("organization") || "letsintern",
-        text,
-        commentGroup
-      );
+    executeAsyncTask(async () => {
       try {
-        const myData = await getMyCommunityStory(localStorage.getItem("challengeId") || "1");
-        if (commentGroup === -1) {
-          setCommentList([
-            ...commentList,
-            {
-              job: myData.job,
-              company: myData.company,
-              company_public: myData.company_public,
-              profile: myData.profile,
-              comment_id: response?.comment_id.toString(),
-              nickname: myData.nickname,
-              user_templete_id: userTemplateId,
-              content: text,
-              created_at: format(new Date(), "yyyy-MM-dd"),
-              myCommentSign: 1,
-              comment_group: commentGroup.toString(),
-              reply: [],
-            },
-          ]);
-          if (width <= 530) {
-            window.scrollTo({ top: document.body.scrollHeight + 100, behavior: "smooth" });
-          } else {
-            const DetailBox = document.getElementById("DetailBox");
-            if (DetailBox) {
-              DetailBox.scrollTop = DetailBox.scrollHeight;
-            }
-          }
-        } else {
-          if (replyArray && setReplyArray) {
-            setReplyArray([
-              ...replyArray,
+        const response = await postCommentWrite(
+          userTemplateId,
+          localStorage.getItem("organization") || "letsintern",
+          text,
+          commentGroup
+        );
+        try {
+          const myData = await getMyCommunityStory(localStorage.getItem("challengeId") || "1");
+          if (commentGroup === -1) {
+            setCommentList([
+              ...commentList,
               {
                 job: myData.job,
                 company: myData.company,
@@ -130,15 +106,43 @@ export const CommentPost = ({
                 reply: [],
               },
             ]);
+            if (width <= 530) {
+              window.scrollTo({ top: document.body.scrollHeight + 100, behavior: "smooth" });
+            } else {
+              const DetailBox = document.getElementById("DetailBox");
+              if (DetailBox) {
+                DetailBox.scrollTop = DetailBox.scrollHeight;
+              }
+            }
+          } else {
+            if (replyArray && setReplyArray) {
+              setReplyArray([
+                ...replyArray,
+                {
+                  job: myData.job,
+                  company: myData.company,
+                  company_public: myData.company_public,
+                  profile: myData.profile,
+                  comment_id: response?.comment_id.toString(),
+                  nickname: myData.nickname,
+                  user_templete_id: userTemplateId,
+                  content: text,
+                  created_at: format(new Date(), "yyyy-MM-dd"),
+                  myCommentSign: 1,
+                  comment_group: commentGroup.toString(),
+                  reply: [],
+                },
+              ]);
+            }
           }
+        } catch {
+          new Error("shit");
         }
       } catch {
         new Error("shit");
       }
-    } catch {
-      new Error("shit");
-    }
-    setText("");
+      setText("");
+    });
   };
 
   useEffect(() => {

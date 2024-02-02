@@ -11,6 +11,7 @@ import { WriteView } from "@/components/DetailPage/WriteView";
 import { CommentAndLike } from "@/components/atom/CommentAndLike";
 import { CommnetAndLikeFloating } from "@/components/atom/CommentAndLikeFloating";
 import { UserInfoDetail } from "@/components/atom/UserInfoDetail";
+import useAsyncWithLoading from "@/hooks/useAsyncWithLoading";
 import { CommentState, DetailDataState, DetailModalState, LikeState } from "@/recoil/atoms";
 import { Inner } from "@/style/global";
 
@@ -21,31 +22,35 @@ export const DetailPage = () => {
   const setDetailModal = useSetRecoilState(DetailModalState);
   const [likeCount, setLikeCount] = useRecoilState(LikeState);
   const [commentList, setCommentList] = useRecoilState(CommentState);
+  const executeAsyncTask = useAsyncWithLoading();
+
   const defaultClick = (e: MouseEvent<HTMLDivElement>) => {
     e.stopPropagation(); // 이벤트 캡쳐링 방지
   };
 
   const DetailPageRendering = async () => {
-    if (width <= 530) {
-      try {
-        const data = await Promise.all([
-          getTemplete(localStorage.getItem("organization") || "", Number(templeteId), true),
-          getComment(Number(templeteId)),
-        ]);
-        setDetailData(data[0]);
-        setCommentList(data[1]);
-        setLikeCount(data[0][0]?.likeCount);
-      } catch {
-        new Error("shit");
+    executeAsyncTask(async () => {
+      if (width <= 530) {
+        try {
+          const data = await Promise.all([
+            getTemplete(localStorage.getItem("organization") || "", Number(templeteId), true),
+            getComment(Number(templeteId)),
+          ]);
+          setDetailData(data[0]);
+          setCommentList(data[1]);
+          setLikeCount(data[0][0]?.likeCount);
+        } catch {
+          new Error("shit");
+        }
+      } else {
+        try {
+          const data = await getComment(detailData[0]?.user_templete_id);
+          setCommentList(data);
+        } catch {
+          new Error("shit");
+        }
       }
-    } else {
-      try {
-        const data = await getComment(detailData[0]?.user_templete_id);
-        setCommentList(data);
-      } catch {
-        new Error("shit");
-      }
-    }
+    });
   };
 
   const handleResize = () => {

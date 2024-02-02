@@ -7,6 +7,7 @@ import styled from "styled-components";
 import { getBasicQuestion, getSpecialQuestion } from "@/apis/WritingPage";
 import { getCalendarRecordCurrent } from "@/apis/mainPage";
 import { WeekCalendar } from "@/components/WritingPage/WeekCalendar";
+import useAsyncWithLoading from "@/hooks/useAsyncWithLoading";
 import {
   getBasicQuestionState,
   getSpecialQuestionState,
@@ -21,30 +22,33 @@ export const WritingPage = () => {
   const setGetBasicQuestionData = useSetRecoilState(getBasicQuestionState);
   const setGetSpecialQuestionData = useSetRecoilState(getSpecialQuestionState);
   const setpostWritingData = useSetRecoilState(postWritingDataState);
+  const executeAsyncTask = useAsyncWithLoading();
 
   const writingPageRendering = async () => {
-    try {
-      const result = await Promise.all([
-        getCalendarRecordCurrent(
-          localStorage.getItem("organization") || "",
-          localStorage.getItem("challengeId") || "1"
-        ),
-        getBasicQuestion(localStorage.getItem("challengeId") || "1"),
-        getSpecialQuestion(localStorage.getItem("challengeId") || "1"),
-      ]);
-      setCalendarData(result[0]);
-      setGetBasicQuestionData(result[1]);
-      setGetSpecialQuestionData(result[2]);
-      setpostWritingData(
-        result[1].map((item) => ({
-          question_id: item.question_id,
-          content: "",
-          visibility: true,
-        }))
-      );
-    } catch {
-      throw new Error("shit");
-    }
+    executeAsyncTask(async () => {
+      try {
+        const result = await Promise.all([
+          getCalendarRecordCurrent(
+            localStorage.getItem("organization") || "",
+            localStorage.getItem("challengeId") || "1"
+          ),
+          getBasicQuestion(localStorage.getItem("challengeId") || "1"),
+          getSpecialQuestion(localStorage.getItem("challengeId") || "1"),
+        ]);
+        setCalendarData(result[0]);
+        setGetBasicQuestionData(result[1]);
+        setGetSpecialQuestionData(result[2]);
+        setpostWritingData(
+          result[1].map((item) => ({
+            question_id: item.question_id,
+            content: "",
+            visibility: true,
+          }))
+        );
+      } catch {
+        throw new Error("shit");
+      }
+    });
   };
   useEffect(() => {
     writingPageRendering();
