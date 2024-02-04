@@ -9,12 +9,14 @@ import { commentProps } from "@/types";
 import { Container } from "./style";
 export const CommentBox = ({
   commentList,
+  commentCount,
   userTemplateId,
 }: {
   commentList: commentProps[];
+  commentCount: string;
   userTemplateId: number;
 }) => {
-  const [commentOn, setCommentOn] = useState<boolean>(false);
+  const [commentOn, setCommentOn] = useState<boolean>(true);
 
   return (
     <Container>
@@ -27,7 +29,7 @@ export const CommentBox = ({
         className="commentNum"
         onClick={() => setCommentOn(!commentOn)}
       >
-        댓글 {commentList?.length}개
+        댓글 {commentCount}개
         <img
           src={commentOn ? topArrow : downArrow}
           alt="V"

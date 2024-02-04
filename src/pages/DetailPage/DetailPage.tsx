@@ -95,18 +95,19 @@ export const DetailPage = () => {
               }}
             />
             <CommentAndLike
-              commentCount={commentList?.length.toString()}
+              commentCount={detailData[0]?.commentCount}
               likeCount={likeCount}
             />
           </div>
           <CommentBox
             commentList={commentList}
+            commentCount={detailData[0]?.commentCount}
             userTemplateId={detailData[0]?.user_templete_id} //
           />
           <CommnetAndLikeFloating
             userTemplateId={detailData[0]?.user_templete_id}
             myLikeSign={detailData[0]?.myLikeSign}
-            commentCount={commentList?.length.toString()}
+            commentCount={detailData[0]?.commentCount}
             likeCount={likeCount}
           />
         </div>

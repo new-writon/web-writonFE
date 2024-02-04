@@ -96,6 +96,7 @@ export const CommunityBox = () => {
   useEffect(() => {
     CommunitySecondRendering();
     localStorage.setItem("date", dateActive[dateLength]);
+    console.log("리렌더링");
   }, [dateLength]);
 
   if (!dateActive || dateLength === -1) {
