@@ -14,6 +14,7 @@ import checkable from "@/assets/register/signup_checkall.svg";
 import checkdisable from "@/assets/register/signup_checkall_disabled.svg";
 import { AuthorizationTitle } from "@/components/atom/AuthorizationTitle";
 import Input from "@/components/atom/input";
+import useAsyncWithLoading from "@/hooks/useAsyncWithLoading";
 import { agreeTextState, loadingState } from "@/recoil/atoms";
 
 import {
@@ -37,6 +38,7 @@ import {
 const agreeText = ["[필수] 라이톤 이용약관 동의", "[필수] 개인정보 수집 및 이용 동의"];
 
 const RegisterEmail = () => {
+  const executeAsyncTask = useAsyncWithLoading();
   const MINUTES_IN_MS = 3 * 60 * 1000;
   const INTERVAL = 1000;
   const [timeLeft, setTimeLeft] = useState<number>(MINUTES_IN_MS);
@@ -255,14 +257,16 @@ const RegisterEmail = () => {
 
   //회원가입 완료
   const RegisterOk = async () => {
-    try {
-      const response = await postRegister(userId, password2, email);
-      console.log(response);
-      alert("회원가입 완료!");
-      navigate("/login");
-    } catch {
-      throw new Error("shit");
-    }
+    executeAsyncTask(async () => {
+      try {
+        const response = await postRegister(userId, password2, email);
+        console.log(response);
+        alert("회원가입 완료!");
+        navigate("/login");
+      } catch {
+        throw new Error("shit");
+      }
+    });
   };
 
   //이메일 타이머 작동

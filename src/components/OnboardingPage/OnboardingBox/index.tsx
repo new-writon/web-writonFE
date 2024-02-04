@@ -12,6 +12,7 @@ import { DuplicateBtn } from "@/components/Authorization/RegisterEmailPage/style
 import { ToggleBtnBox } from "@/components/atom/QuestionBox/style";
 import { KeywordButton, OnboardingButton } from "@/components/atom/button";
 import Input from "@/components/atom/input";
+import useAsyncWithLoading from "@/hooks/useAsyncWithLoading";
 
 import {
   CompanyBox,
@@ -37,6 +38,7 @@ interface onBoardingDataProps {
 
 export const OnboardingBox = () => {
   const navigate = useNavigate();
+  const executeAsyncTask = useAsyncWithLoading();
   const [onBoardingData, setOnBoardingData] = useState<onBoardingDataProps>({
     nickname: "",
     job: "",
@@ -137,26 +139,28 @@ export const OnboardingBox = () => {
   };
 
   const OnboardingComplete = async () => {
-    if (ButtonOn) {
-      try {
-        const data = await postOnboardingComplete(onBoardingData);
-        console.log(data);
+    executeAsyncTask(async () => {
+      if (ButtonOn) {
         try {
-          const response = await postChallengeStart(
-            localStorage.getItem("organization") || "Letsintern",
-            localStorage.getItem("challengeId") || "1"
-          );
-          console.log(response);
-          localStorage.setItem("accessToken", sessionStorage.getItem("accessToken") || "");
-          localStorage.setItem("refreshToken", sessionStorage.getItem("refreshToken") || "");
-          navigate("/");
+          const data = await postOnboardingComplete(onBoardingData);
+          console.log(data);
+          try {
+            const response = await postChallengeStart(
+              localStorage.getItem("organization") || "Letsintern",
+              localStorage.getItem("challengeId") || "1"
+            );
+            console.log(response);
+            localStorage.setItem("accessToken", sessionStorage.getItem("accessToken") || "");
+            localStorage.setItem("refreshToken", sessionStorage.getItem("refreshToken") || "");
+            navigate("/");
+          } catch {
+            new Error("shit");
+          }
         } catch {
           new Error("shit");
         }
-      } catch {
-        new Error("shit");
       }
-    }
+    });
   };
 
   useEffect(() => {

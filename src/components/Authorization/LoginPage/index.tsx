@@ -7,6 +7,7 @@ import { getChallengingList, postLogin } from "@/apis/login";
 import { AuthorizationTitle } from "@/components/atom/AuthorizationTitle";
 import { BlueButton, KakaoButton } from "@/components/atom/button";
 import Input from "@/components/atom/input";
+import useAsyncWithLoading from "@/hooks/useAsyncWithLoading";
 
 import { Container, EtcBox, InputBox, OrLine } from "./style";
 
@@ -14,6 +15,7 @@ const Login = () => {
   const navigate = useNavigate();
   const [id, setId] = useState<string>("");
   const [pw, setPw] = useState<string>("");
+  const executeAsyncTask = useAsyncWithLoading();
 
   const handleOnKeyPress = (e: KeyboardEvent<HTMLInputElement>) => {
     if (e.key === "Enter") {
@@ -22,57 +24,59 @@ const Login = () => {
   };
 
   const LocalLogin = async () => {
-    try {
-      const response = await postLogin(
-        id,
-        pw,
-        localStorage.getItem("organization") || "null",
-        Number(localStorage.getItem("challengeId")) || 1
-      );
-      sessionStorage.setItem("accessToken", response.accessToken);
-      sessionStorage.setItem("refreshToken", response.refreshToken);
-      if (response.affiliatedConfirmation === true) {
-        if (response.challengedConfirmation === true) {
-          localStorage.setItem("accessToken", response.accessToken);
-          localStorage.setItem("refreshToken", response.refreshToken);
-          navigate("/");
-        } else {
-          try {
-            const res = await postChallengeStart(
-              localStorage.getItem("organization") || "null",
-              localStorage.getItem("challengeId") || "1"
-            );
-            console.log(res);
+    executeAsyncTask(async () => {
+      try {
+        const response = await postLogin(
+          id,
+          pw,
+          localStorage.getItem("organization") || "null",
+          Number(localStorage.getItem("challengeId")) || 1
+        );
+        sessionStorage.setItem("accessToken", response.accessToken);
+        sessionStorage.setItem("refreshToken", response.refreshToken);
+        if (response.affiliatedConfirmation === true) {
+          if (response.challengedConfirmation === true) {
             localStorage.setItem("accessToken", response.accessToken);
             localStorage.setItem("refreshToken", response.refreshToken);
             navigate("/");
+          } else {
+            try {
+              const res = await postChallengeStart(
+                localStorage.getItem("organization") || "null",
+                localStorage.getItem("challengeId") || "1"
+              );
+              console.log(res);
+              localStorage.setItem("accessToken", response.accessToken);
+              localStorage.setItem("refreshToken", response.refreshToken);
+              navigate("/");
+            } catch {
+              new Error("shit");
+            }
+          }
+        } else if (response.affiliatedConfirmation === false) {
+          navigate("/onboarding"); //나중에 온보딩 페이지로
+        } else {
+          // null이 들어오면 listapi 요청 얘가 초대장으로 접속한 후, 재접속인지, 초대장 없이 그냥 라이톤 사이트 접속인지
+          try {
+            const data = await getChallengingList(); // 니중에 여기서 워크스페이스 만들어야함.
+            if (data.length > 0) {
+              localStorage.setItem("accessToken", response.accessToken);
+              localStorage.setItem("refreshToken", response.refreshToken);
+              localStorage.setItem("organization", data[0]?.name);
+              localStorage.setItem("challengeId", data[0]?.challenge_id.toString());
+              navigate("/");
+            } else {
+              alert("초대장을 받고 들어와주세요!"); // 모달창으로 변경하기
+            }
           } catch {
             new Error("shit");
           }
         }
-      } else if (response.affiliatedConfirmation === false) {
-        navigate("/onboarding"); //나중에 온보딩 페이지로
-      } else {
-        // null이 들어오면 listapi 요청 얘가 초대장으로 접속한 후, 재접속인지, 초대장 없이 그냥 라이톤 사이트 접속인지
-        try {
-          const data = await getChallengingList(); // 니중에 여기서 워크스페이스 만들어야함.
-          if (data.length > 0) {
-            localStorage.setItem("accessToken", response.accessToken);
-            localStorage.setItem("refreshToken", response.refreshToken);
-            localStorage.setItem("organization", data[0]?.name);
-            localStorage.setItem("challengeId", data[0]?.challenge_id.toString());
-            navigate("/");
-          } else {
-            alert("초대장을 받고 들어와주세요!"); // 모달창으로 변경하기
-          }
-        } catch {
-          new Error("shit");
-        }
+      } catch (err) {
+        alert("아이디 및 비밀번호를 다시 입력해주세요"); // 모달창으로 변경하기
+        console.log(err);
       }
-    } catch (err) {
-      alert("아이디 및 비밀번호를 다시 입력해주세요"); // 모달창으로 변경하기
-      console.log(err);
-    }
+    });
   };
 
   const KakaoLogin = () => {
