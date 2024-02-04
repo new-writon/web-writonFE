@@ -59,6 +59,7 @@ export const WeekCalendar = ({ CalendarData }: { CalendarData: CalendarRecordCur
             <TooltipMessage
               onClick={() => setTooltopOn(false)}
               direction={"left"}
+              page="writing"
             ></TooltipMessage>
           </div>
         )}

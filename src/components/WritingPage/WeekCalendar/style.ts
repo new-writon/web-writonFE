@@ -60,7 +60,7 @@ export const Container = styled.div<{ $weekFold: boolean }>`
       font-size: 16px;
     }
     .tooltipBox {
-      top: -185px;
+      top: 55px;
       left: 0;
       right: 0;
       margin: 0 auto;

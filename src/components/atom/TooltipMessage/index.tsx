@@ -5,12 +5,17 @@ import { Container } from "./style";
 export const TooltipMessage = ({
   onClick,
   direction,
+  page,
 }: {
   onClick: () => void;
   direction: string;
+  page: string;
 }) => {
   return (
-    <Container $direction={direction}>
+    <Container
+      $direction={direction}
+      $page={page}
+    >
       <div className="messageBox">
         <ol>
           <li>챌린지 인증 기간 내에, 오늘의 회고를 작성해주세요.</li>

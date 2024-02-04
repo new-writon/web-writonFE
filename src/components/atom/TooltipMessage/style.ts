@@ -1,6 +1,6 @@
 import styled from "styled-components";
 
-export const Container = styled.div<{ $direction: string }>`
+export const Container = styled.div<{ $direction: string; $page: string }>`
   z-index: 9999;
   padding: 16px 10px 12px;
   border-radius: 10px;
@@ -69,12 +69,15 @@ export const Container = styled.div<{ $direction: string }>`
       display: none;
     }
     &::before {
-      transform: rotate(-45deg); // 여기 바꿔주면 된다. 화살표 방향
+      transform: ${(props) =>
+        props.$page === "writing"
+          ? " rotate(135deg)"
+          : " rotate(-45deg)"}; // 여기 바꿔주면 된다. 화살표 방향
       position: absolute;
-      top: 192px;
+      top: ${(props) => (props.$page === "writing" ? " -10px" : " 192px")};
       margin: 0 auto;
       left: 0;
-      right: 90px;
+      right: ${(props) => (props.$page === "writing" ? " 70px" : " 90px")};
     }
   }
   @media (max-width: 355px) {

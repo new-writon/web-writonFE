@@ -62,6 +62,7 @@ export const Calendar = ({ CalendarData }: { CalendarData: CalendarRecordCurrent
             <TooltipMessage
               onClick={() => setTooltopOn(false)}
               direction={"left"}
+              page="main"
             ></TooltipMessage>
           </div>
         )}
