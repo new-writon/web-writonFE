@@ -110,7 +110,9 @@ export const StoryBox = ({
             </p>
             {ChallengeCurrent?.organization} {ChallengeCurrent?.challenge} 챌린지 도전중!
           </MainSemiTitle>
-          <TitleSideBox type="default">D-{CommunityFirstData?.challengeOverlapPeriod}</TitleSideBox>
+          <TitleSideBox type="default">
+            D-{CommunityFirstData?.challengeOverlapPeriod || "Day"}
+          </TitleSideBox>
         </div>
         <StoryItemBox>
           <StyledSlider

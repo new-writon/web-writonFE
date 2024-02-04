@@ -2,7 +2,7 @@ import { useNavigate } from "react-router-dom";
 
 import { deleteLogout } from "@/apis/header";
 import profile from "@/assets/communityPage/profile.png";
-import { communityStoryProps } from "@/types";
+import { ChallengeCurrentType, communityStoryProps } from "@/types";
 
 import { BackDrop, Bottom, Container, Header, Middle } from "./style";
 
@@ -12,12 +12,14 @@ export const TooltipProfile = ({
   userProfile,
   setHeaderTooltip,
   setTooltipMobile,
+  ChallengeCurrent,
 }: {
   headerTooltip: boolean;
   TooltipMobile: boolean;
   userProfile: communityStoryProps | undefined;
   setHeaderTooltip: (headerTooltip: boolean) => void;
   setTooltipMobile: (TooltipMobile: boolean) => void;
+  ChallengeCurrent: ChallengeCurrentType | undefined;
 }) => {
   const navigate = useNavigate();
 
@@ -79,7 +81,10 @@ export const TooltipProfile = ({
         <Bottom>
           <div className="currentChallengeTitle">현재 참여중인 챌린지</div>
           <div className="currentChallenge">
-            <div className="title">렛츠인턴 1월 회고 챌린지</div>
+            <div className="title">
+              {" "}
+              {ChallengeCurrent?.organization} {ChallengeCurrent?.challenge} 챌린지
+            </div>
             <div className="currentPage">현재 페이지</div>
           </div>
         </Bottom>

@@ -7,6 +7,7 @@ import styled from "styled-components";
 
 import { getMyCommunityStory } from "@/apis/CommunityPage";
 import { dateCheck } from "@/apis/header";
+import { getChallengeCurrent } from "@/apis/mainPage";
 import profile from "@/assets/communityPage/profile.png";
 import pencil_color from "@/assets/header/pencil_color.svg";
 import pencil_white from "@/assets/header/pencil_white.svg";
@@ -18,7 +19,7 @@ import {
   postWritingDataState,
 } from "@/recoil/atoms";
 import { Inner } from "@/style/global";
-import { communityStoryProps } from "@/types";
+import { ChallengeCurrentType, communityStoryProps } from "@/types";
 
 import { TooltipProfile } from "../atom/TooltipProfile";
 
@@ -35,6 +36,7 @@ const Header = () => {
   const [headerTooltip, setHeaderTooltip] = useState<boolean>(false);
   const [TooltipMobile, setTooltipMobile] = useState<boolean>(false);
 
+  const [ChallengeCurrent, setChallengeCurrent] = useState<ChallengeCurrentType>();
   const [userProfile, setUserProfile] = useState<communityStoryProps>();
 
   const today = format(new Date(), "yyyy-MM-dd");
@@ -71,11 +73,18 @@ const Header = () => {
 
   const headerRendering = async () => {
     try {
-      const data = await getMyCommunityStory(localStorage.getItem("challengeId") || "");
-      if (data?.profile !== null) {
-        setProfileImage(data?.profile);
+      const data = await Promise.all([
+        getMyCommunityStory(localStorage.getItem("challengeId") || ""),
+        getChallengeCurrent(
+          localStorage.getItem("organization") || "",
+          localStorage.getItem("challengeId") || "1"
+        ),
+      ]);
+      if (data[0]?.profile !== null) {
+        setProfileImage(data[0]?.profile);
       }
-      setUserProfile(data);
+      setUserProfile(data[0]);
+      setChallengeCurrent(data[1]);
     } catch {
       throw new Error("shit");
     }
@@ -163,6 +172,7 @@ const Header = () => {
             userProfile={userProfile}
             setHeaderTooltip={setHeaderTooltip}
             setTooltipMobile={setTooltipMobile}
+            ChallengeCurrent={ChallengeCurrent}
           />
         )}
         {width <= 530 && (
@@ -172,6 +182,7 @@ const Header = () => {
             userProfile={userProfile}
             setHeaderTooltip={setHeaderTooltip}
             setTooltipMobile={setTooltipMobile}
+            ChallengeCurrent={ChallengeCurrent}
           />
         )}
       </Container>
