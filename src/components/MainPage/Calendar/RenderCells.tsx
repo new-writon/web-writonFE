@@ -54,7 +54,7 @@ export const RenderCell = ({
       ? differenceInCalendarWeeks(today, monthStart) - 1
       : differenceInCalendarWeeks(today, monthStart); // 몇주차인지
   const pageWeekNumber =
-    getWeek(today) === 6
+    getWeek(pageDay || today) === 6
       ? differenceInCalendarWeeks(pageDay || today, monthStart) - 1
       : differenceInCalendarWeeks(pageDay || today, monthStart);
 
