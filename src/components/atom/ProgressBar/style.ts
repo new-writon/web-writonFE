@@ -29,9 +29,11 @@ export const Container = styled.div<{ $value: number }>`
     left: ${(props) =>
       props.$value > 0 && props.$value < 16
         ? `calc(${props.$value}% - 25px)`
-        : props.$value > 84
-          ? `calc(${props.$value}% - 165px)`
-          : `calc(${props.$value}% - 97px)`};
+        : props.$value > 99
+          ? `calc(${props.$value}% - 155px)`
+          : props.$value > 84
+            ? `calc(${props.$value}% - 165px)`
+            : `calc(${props.$value}% - 97px)`};
     top: -42px;
     width: fit-content;
     padding: 8.5px 14px;
@@ -55,8 +57,8 @@ export const Container = styled.div<{ $value: number }>`
     height: 12px;
     transform: rotate(45deg);
     position: absolute;
-    bottom: -5px;
-    right: ${(props) => (props.$value > 84 ? "16px" : 0)};
+    bottom: ${(props) => (props.$value > 99 ? "" : "-5px")};
+    right: ${(props) => (props.$value > 99 ? "-3px" : props.$value > 84 ? "16px" : 0)};
     left: ${(props) =>
       props.$value > 0 && props.$value < 16 ? "13px" : props.$value > 84 ? "" : 0};
     margin: ${(props) =>
@@ -65,9 +67,11 @@ export const Container = styled.div<{ $value: number }>`
     overflow: hidden;
     background-color: var(--Gray-20, #f5f5f5);
   }
+
   .date {
     position: absolute;
-    left: ${(props) => `calc(${props.$value}% - 29px)`};
+    left: ${(props) =>
+      props.$value > 99 ? `calc(${props.$value}% - 45px)` : `calc(${props.$value}% - 29px)`};
     bottom: -23px;
     color: var(--Gray-80, #616161);
     display: flex;
@@ -76,6 +80,7 @@ export const Container = styled.div<{ $value: number }>`
     color: var(--Gray-50, #bdbdbd);
   }
   .endDate {
+    display: ${(props) => (props.$value > 99 ? "none" : "block")};
     position: absolute;
     right: 10px;
     bottom: -23px;

@@ -47,6 +47,8 @@ export const ProgressBar = ({ value, startDate, endDate }: ProgressBarProps) => 
           <div className="message">
             {value === 1 ? (
               <p>첫 회고를 작성해 주세요! 🔥</p>
+            ) : value === 100 ? (
+              <p>챌린지 성공! 🔥</p>
             ) : (
               <p>{startDate}일 회고 성공! 대단해요 🔥</p>
             )}
