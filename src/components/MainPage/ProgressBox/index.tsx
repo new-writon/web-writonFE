@@ -48,7 +48,11 @@ export const ProgressBox = ({
               {ChallengeCurrent?.nickname || "00"}님의 {width <= 530 && <br />}
               {ChallengeCurrent?.organization} {ChallengeCurrent?.challenge} 챌린지
             </MainSemiTitle>
-            <TitleSideBox type="default">D-{ChallengeCurrent?.overlapPeriod || "Day"}</TitleSideBox>
+            <TitleSideBox type="default">
+              {Math.sign(ChallengeCurrent?.overlapPeriod || -1) === -1
+                ? "END"
+                : `D-${ChallengeCurrent?.overlapPeriod}` || "Day"}
+            </TitleSideBox>
           </div>
           <ProgressBar
             value={value} // 퍼센티지 받기 && 날짜만 받아서 가중치 곱해도 될듯

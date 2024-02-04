@@ -111,7 +111,9 @@ export const StoryBox = ({
             {ChallengeCurrent?.organization} {ChallengeCurrent?.challenge} 챌린지 도전중!
           </MainSemiTitle>
           <TitleSideBox type="default">
-            D-{CommunityFirstData?.challengeOverlapPeriod || "Day"}
+            {Math.sign(ChallengeCurrent?.overlapPeriod || -1) === -1
+              ? "END"
+              : `D-${ChallengeCurrent?.overlapPeriod}` || "Day"}
           </TitleSideBox>
         </div>
         <StoryItemBox>
