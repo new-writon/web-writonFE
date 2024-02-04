@@ -68,6 +68,12 @@ export const CountingLabelContainer = styled.div`
     right: 0;
     bottom: 5px;
   }
+  .tooltipBox {
+    position: absolute;
+    left: -305px;
+    top: -45px;
+  }
+
   @media (max-width: 530px) {
     flex-direction: row;
     width: 100%;
@@ -79,6 +85,10 @@ export const CountingLabelContainer = styled.div`
     }
     .priceCondition {
       display: none;
+    }
+    .tooltipBox {
+      left: 30px;
+      top: -120px;
     }
   }
 `;

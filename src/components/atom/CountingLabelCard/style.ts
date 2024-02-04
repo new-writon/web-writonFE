@@ -60,6 +60,7 @@ export const Container = styled.div`
       width: 13px;
       height: fit-content;
       margin-top: 1.45px;
+      cursor: pointer;
     }
   }
 `;

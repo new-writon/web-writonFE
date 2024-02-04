@@ -5,6 +5,7 @@ import { MainSemiTitle } from "@/components/atom/MainSemiTitle";
 import { ProgressBar } from "@/components/atom/ProgressBar";
 import { TitleSideBox } from "@/components/atom/TitleSideBox";
 import { TooltipButton } from "@/components/atom/TooltipButton";
+import { TooltipMessageRefund } from "@/components/atom/TooltipMessage";
 import { Inner } from "@/style/global";
 import { ChallengeCurrentType } from "@/types";
 
@@ -60,11 +61,14 @@ export const ProgressBox = ({
                 title={"작성된 회고"}
                 currentContent={`${ChallengeCurrent?.challengeSuccessCount}일`}
                 defaultContent={`${ChallengeCurrent?.challengeOverlapCount}일`}
+                onClick={() => {}}
               />
               <CountingLabelCard
                 title={"환급 가능 보증금"}
                 currentContent={`${ChallengeCurrent?.overlapDeposit.toLocaleString()}원`}
                 defaultContent={`${ChallengeCurrent?.challengeDeposit.toLocaleString()}원`}
+                tooltipOn={tooltipOn}
+                onClick={() => {}}
               />
               {/* <div className="priceMessage">
         회고 {20 - 15}일 더 작성하면, 보증급 전액 환급 가능해요.
@@ -76,6 +80,16 @@ export const ProgressBox = ({
                 >
                   환급 조건
                 </TooltipButton>
+                {tooltipOn && (
+                  <div className="tooltipBox">
+                    <TooltipMessageRefund
+                      onClick={() => setTooltopOn(false)}
+                      direction="right"
+                      page="main"
+                      refundMessage={ChallengeCurrent?.refundCondition}
+                    />
+                  </div>
+                )}
               </div>
             </CountingLabelContainer>
           </div>
@@ -88,23 +102,24 @@ export const ProgressBox = ({
               title={"작성된 회고"}
               currentContent={`${ChallengeCurrent?.challengeSuccessCount}일`}
               defaultContent={`${ChallengeCurrent?.challengeOverlapCount}일`}
+              onClick={() => {}}
             />
             <CountingLabelCard
               title={"환급 가능 보증금"}
               currentContent={`${ChallengeCurrent?.overlapDeposit.toLocaleString()}원`}
               defaultContent={`${ChallengeCurrent?.challengeDeposit.toLocaleString()}원`}
+              onClick={() => setTooltopOn(!tooltipOn)}
             />
-            {/* <div className="priceMessage">
-        회고 {20 - 15}일 더 작성하면, 보증급 전액 환급 가능해요.
-      </div> */}
-            <div className="priceCondition">
-              <TooltipButton
-                tooltipOn={tooltipOn}
-                onClick={() => setTooltopOn(!tooltipOn)}
-              >
-                환급 조건
-              </TooltipButton>
-            </div>
+            {tooltipOn && (
+              <div className="tooltipBox">
+                <TooltipMessageRefund
+                  onClick={() => setTooltopOn(false)}
+                  direction="right"
+                  page="main"
+                  refundMessage={ChallengeCurrent?.refundCondition}
+                />
+              </div>
+            )}
           </CountingLabelContainer>
         </div>
       </Inner>

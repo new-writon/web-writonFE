@@ -90,6 +90,7 @@ export interface ChallengeCurrentType {
   userProfile: string;
   organization: string;
   challenge: string;
+  refundCondition: string;
 }
 
 export interface CalendarRecordCurrentType {

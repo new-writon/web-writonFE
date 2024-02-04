@@ -21,13 +21,19 @@ export const Container = styled.div<{ $direction: string; $page: string }>`
     transform: ${(props) =>
       props.$direction === "left"
         ? "rotate(45deg)"
-        : "rotate(-45deg)"}; // 여기 바꿔주면 된다. 화살표 방향
+        : props.$direction === "right"
+          ? "rotate(-135deg)"
+          : "rotate(-45deg)"}; // 여기 바꿔주면 된다. 화살표 방향
     position: absolute;
-    top: ${(props) => (props.$direction === "left" ? "0" : "")};
-    bottom: ${(props) => (props.$direction === "left" ? "0" : "-9px")};
+    top: ${(props) =>
+      props.$direction === "left" ? "0" : props.$direction === "right" ? "0" : ""};
+    bottom: ${(props) =>
+      props.$direction === "left" ? "0" : props.$direction === "right" ? "0" : "-9px"};
     margin: auto;
-    left: ${(props) => (props.$direction === "left" ? "-9px" : "0")};
-    right: ${(props) => (props.$direction === "left" ? "" : "0")};
+    left: ${(props) =>
+      props.$direction === "left" ? "-9px" : props.$direction === "right" ? "" : "0"};
+    right: ${(props) =>
+      props.$direction === "left" ? "" : props.$direction === "right" ? "-9px" : "0"};
     background-color: var(--Gray-20);
     border-bottom-left-radius: 3px;
     border-left: 1px solid var(--Gray-40);
@@ -59,16 +65,17 @@ export const Container = styled.div<{ $direction: string; $page: string }>`
   }
 
   @media (max-width: 890px) {
-    width: 70%;
-    min-width: 365px;
+    width: ${(props) => (props.$direction === "right" ? "auto" : "70%")};
+    min-width: ${(props) => (props.$direction === "right" ? "auto" : " 365px")};
   }
   @media (max-width: 700px) {
-    min-width: 300px;
+    min-width: ${(props) => (props.$direction === "right" ? "auto" : "300px")};
     padding: 16px 10px 16px;
     img {
-      display: none;
+      display: ${(props) => (props.$direction === "right" ? "block" : " none")};
     }
     &::before {
+      display: ${(props) => (props.$direction === "right" ? "none" : "block")};
       transform: ${(props) =>
         props.$page === "writing"
           ? " rotate(135deg)"

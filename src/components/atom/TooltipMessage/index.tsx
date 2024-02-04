@@ -32,3 +32,32 @@ export const TooltipMessage = ({
     </Container>
   );
 };
+
+export const TooltipMessageRefund = ({
+  onClick,
+  direction,
+  page,
+  refundMessage,
+}: {
+  onClick: () => void;
+  direction: string;
+  page: string;
+  refundMessage: string | undefined;
+}) => {
+  return (
+    <Container
+      $direction={direction}
+      $page={page}
+    >
+      <div
+        className="messageBox"
+        dangerouslySetInnerHTML={{ __html: refundMessage || "<div></div>" }}
+      ></div>
+      <img
+        onClick={onClick}
+        src={close}
+        alt="X"
+      />
+    </Container>
+  );
+};

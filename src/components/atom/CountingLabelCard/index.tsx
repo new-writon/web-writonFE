@@ -5,12 +5,16 @@ interface LabelCountingLabelCardPrps {
   title: string;
   currentContent: string;
   defaultContent: string;
+  tooltipOn?: boolean;
+  onClick: (tooltipOn: boolean) => void;
 }
 
 export const CountingLabelCard = ({
   title,
   currentContent,
   defaultContent,
+  onClick,
+  tooltipOn,
 }: LabelCountingLabelCardPrps) => {
   return (
     <Container className="cardWrapper">
@@ -21,6 +25,7 @@ export const CountingLabelCard = ({
             className="question"
             src={question}
             alt="?"
+            onClick={() => onClick(!tooltipOn)}
           />
         )}
       </div>
