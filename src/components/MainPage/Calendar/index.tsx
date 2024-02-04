@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-import { differenceInCalendarWeeks, format, getWeek, startOfMonth } from "date-fns";
+import { differenceInCalendarWeeks, format, getDay, startOfMonth } from "date-fns";
 
 import downArrow from "@/assets/mainPage/downArrow.svg";
 import clalendarIcon from "@/assets/mainPage/icon-calendar.svg";
@@ -21,9 +21,10 @@ export const Calendar = ({ CalendarData }: { CalendarData: CalendarRecordCurrent
   const [fold, setFold] = useState<boolean>(false);
   const [tooltipOn, setTooltopOn] = useState<boolean>(false);
   const weekNumber =
-    getWeek(today) === 6
+    getDay(today) === 0
       ? differenceInCalendarWeeks(today, monthStart)
       : differenceInCalendarWeeks(today, monthStart) + 1;
+
   return (
     <Inner>
       <Container>

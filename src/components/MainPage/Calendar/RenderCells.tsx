@@ -7,7 +7,7 @@ import {
   startOfWeek,
   endOfWeek,
   differenceInCalendarWeeks,
-  getWeek,
+  getDay,
 } from "date-fns";
 import { isSameMonth, isSameDay, addDays, format } from "date-fns";
 import { useNavigate } from "react-router-dom";
@@ -50,11 +50,11 @@ export const RenderCell = ({
   const startDate = startOfWeek(monthStart); // 해당 날짜의 해당 주의 시작 날짜
   const endDate = endOfWeek(monthEnd); // 해당 날짜의 해당 주의 끝 날짜
   const weekNumber =
-    getWeek(today) === 6
+    getDay(today) === 0
       ? differenceInCalendarWeeks(today, monthStart) - 1
       : differenceInCalendarWeeks(today, monthStart); // 몇주차인지
   const pageWeekNumber =
-    getWeek(pageDay || today) === 6
+    getDay(pageDay || today) === 0
       ? differenceInCalendarWeeks(pageDay || today, monthStart) - 1
       : differenceInCalendarWeeks(pageDay || today, monthStart);
 
