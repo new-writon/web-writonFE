@@ -15,6 +15,7 @@ import { Calendar } from "@/components/MainPage/Calendar";
 import { MyRetrospect } from "@/components/MainPage/MyRetrospect";
 import { ProgressBox } from "@/components/MainPage/ProgressBox";
 import { FloatingWriteButton } from "@/components/atom/button";
+import { mainCalendarDummyData } from "@/dummy/main";
 import useAsyncWithLoading from "@/hooks/useAsyncWithLoading";
 import { CalendarRecordCurrentType, ChallengeCurrentType, communityContentProps } from "@/types";
 
@@ -46,6 +47,7 @@ const MainPage = () => {
             localStorage.getItem("challengeId") || "1"
           ),
         ]);
+        console.log(result[1]);
         setChallengeCurrent(result[0]);
         setCalendarData(result[1]);
         setRetrospectData(result[2]);
@@ -59,21 +61,17 @@ const MainPage = () => {
     mainPageRendering();
   }, []);
 
-  if (CalendarData.length === 0) {
-    return <></>;
-  } else {
-    return (
-      <Container>
-        <ProgressBox ChallengeCurrent={ChallengeCurrent} />
-        <Calendar CalendarData={CalendarData} />
-        <MyRetrospect RetrospectData={RetrospectData} />
-        <FloatingWriteButton onClick={spaceToWritingPage}>
-          {/*모바일 일 때만 보인다/ */}
-          회고 작성하기
-        </FloatingWriteButton>
-      </Container>
-    );
-  }
+  return (
+    <Container>
+      <ProgressBox ChallengeCurrent={ChallengeCurrent} />
+      <Calendar CalendarData={CalendarData.length === 0 ? mainCalendarDummyData : CalendarData} />
+      <MyRetrospect RetrospectData={RetrospectData} />
+      <FloatingWriteButton onClick={spaceToWritingPage}>
+        {/*모바일 일 때만 보인다/ */}
+        회고 작성하기
+      </FloatingWriteButton>
+    </Container>
+  );
 };
 
 export default MainPage;
