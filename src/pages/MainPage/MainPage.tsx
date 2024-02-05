@@ -47,7 +47,6 @@ const MainPage = () => {
             localStorage.getItem("challengeId") || "1"
           ),
         ]);
-        console.log(result[1]);
         setChallengeCurrent(result[0]);
         setCalendarData(result[1]);
         setRetrospectData(result[2]);
