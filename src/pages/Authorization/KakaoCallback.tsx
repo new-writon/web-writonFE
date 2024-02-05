@@ -15,6 +15,7 @@ export const KakaoCallback = () => {
       throw new Error("No CODE");
     } else {
       const response = await postKakaoAuth(CODE);
+      console.log(response.access_token);
       try {
         const res = await postKakaoLogin(
           response.access_token,
