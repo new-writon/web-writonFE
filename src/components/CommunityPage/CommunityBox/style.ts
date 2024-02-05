@@ -1,6 +1,9 @@
 import styled from "styled-components";
 
 export const Container = styled.div`
+  .nodata {
+    margin-top: 80px;
+  }
   @media (max-width: 530px) {
     background-color: var(--Gray-20, #f5f5f5);
   }

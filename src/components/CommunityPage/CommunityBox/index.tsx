@@ -99,7 +99,15 @@ export const CommunityBox = () => {
   }, [dateLength]);
 
   if (!dateActive || dateLength === -1) {
-    return <></>;
+    return (
+      <Inner>
+        <Container>
+          <div className="nodata">
+            <NoRetrospect type="community" />
+          </div>
+        </Container>
+      </Inner>
+    );
   }
 
   return (
