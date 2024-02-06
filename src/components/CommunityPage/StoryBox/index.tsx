@@ -179,7 +179,7 @@ export const StoryBox = ({
             <StoryItem
               data={myCommunityStoryData}
               someone={"me"}
-              onClick={() => {}}
+              onClick={(e) => PopupOn(e, myCommunityStoryData)}
             />
             {CommunityFirstData?.participantData.map((data, idx) => (
               <React.Fragment key={idx}>
