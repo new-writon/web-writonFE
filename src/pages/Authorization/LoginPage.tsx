@@ -17,6 +17,8 @@ const LoginPage = () => {
       //탭 열린 상태에서 초대장 받았을때는 지워야함. 초대장 로직
       localStorage.removeItem("accessToken");
       localStorage.removeItem("refreshToken");
+      sessionStorage.removeItem("accessToken");
+      sessionStorage.removeItem("refreshToken");
     }
   }, []);
   return (
