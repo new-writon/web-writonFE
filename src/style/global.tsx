@@ -67,7 +67,8 @@ footer, header, hgroup, menu, nav, section {
 }
 body {
 	line-height: 1;
-	background-color: #fff;
+	/* background-color: #fff; */
+  background: var(--Gray2_100, #f5f5f5);
 //드래그 방지
 	-webkit-user-select:none;
   -moz-user-select:none;
