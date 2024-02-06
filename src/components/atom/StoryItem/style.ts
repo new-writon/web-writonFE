@@ -58,10 +58,10 @@ export const Container = styled.div<{ $someone: string; $message: string | null 
       background-color: #fff;
       font-size: 10px;
       color: var(--Gray-90, #424242);
-      overflow-x: hidden;
       justify-content: flex-start;
-      overflow-y: hidden;
       padding: 10px;
+      white-space: pre-wrap;
+      height: auto;
     }
   }
 
