@@ -32,7 +32,7 @@ export const StoryItem = ({
             className="storyMessage"
             onClick={TodayWrite === "" ? TodayWriteFunc : () => {}}
           >
-            {TodayWrite === "" ? "오늘의 한마디+" : TodayWrite}
+            {TodayWrite === "" ? "오늘의\n 한마디+" : TodayWrite}
           </div>
         ) : (
           <div className="storyMessage">{data?.cheering_phrase}</div>
