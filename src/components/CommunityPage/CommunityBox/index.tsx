@@ -10,7 +10,13 @@ import { NoRetrospect } from "@/components/MainPage/NoRetrospect";
 import { CommunityItem } from "@/components/atom/CommunityItem";
 import { MainSemiTitle } from "@/components/atom/MainSemiTitle";
 import { TitleSideBox } from "@/components/atom/TitleSideBox";
-import { CommunitySecondDataState } from "@/recoil/atoms";
+import useAsyncWithLoading from "@/hooks/useAsyncWithLoading";
+import {
+  CommunitySecondDataState,
+  communityState,
+  dateActiveState,
+  dateLengthState,
+} from "@/recoil/atoms";
 import { Inner } from "@/style/global";
 import { communitySecondCoponentType } from "@/types";
 
@@ -18,32 +24,24 @@ import { CommunityHeader, CommunityItemBox, Container } from "./style";
 
 export const CommunityBox = () => {
   // const today = new Date();
+  const [community, setCommunity] = useRecoilState(communityState);
   const [width, setWidth] = useState<number>(window.innerWidth);
-  const [dateActive, setDateActive] = useState<string[]>([]);
-  const [dateLength, setDateLength] = useState<number>(-1);
+  const [dateActive, setDateActive] = useRecoilState(dateActiveState);
+  const [dateLength, setDateLength] = useRecoilState(dateLengthState);
   const [dateLastLength, setDateLastLength] = useState<number>(0);
   const [CommunitySecondData, setCommunitySecondData] =
     useRecoilState<communitySecondCoponentType>(CommunitySecondDataState);
+  const executeAsyncTask = useAsyncWithLoading();
 
   const CommunitySecondRendering = async () => {
-    if (dateLength !== -1 || !dateActive) {
-      try {
-        const result = await getCommunityContentData(
-          localStorage.getItem("organization") || "",
-          localStorage.getItem("challengeId") || "1",
-          dateActive[dateLength]
-        );
-        setCommunitySecondData(result);
-      } catch {
-        throw new Error("shit");
-      }
-    } else {
+    executeAsyncTask(async () => {
       try {
         const response = await getCommunityDate(localStorage.getItem("challengeId") || "1");
         const dateArray = response.map((item) => format(item, "yyyy-MM-dd"));
         setDateActive(dateArray);
         setDateLength(dateArray.length - 1);
         setDateLastLength(dateArray.length - 1);
+        localStorage.setItem("date", dateArray[dateArray.length - 1]);
         try {
           const result = await getCommunityContentData(
             localStorage.getItem("organization") || "",
@@ -57,7 +55,22 @@ export const CommunityBox = () => {
       } catch {
         throw new Error("shit");
       }
-    }
+    });
+  };
+
+  const ChangeDate = async () => {
+    executeAsyncTask(async () => {
+      try {
+        const result = await getCommunityContentData(
+          localStorage.getItem("organization") || "",
+          localStorage.getItem("challengeId") || "1",
+          dateActive[dateLength]
+        );
+        setCommunitySecondData(result);
+      } catch {
+        throw new Error("shit");
+      }
+    });
   };
 
   const CommunitySpaceDate = async (type: string) => {
@@ -68,7 +81,7 @@ export const CommunityBox = () => {
           break;
       }
     }
-    if (dateLength < dateLastLength) {
+    if (dateLength < dateActive.length - 1) {
       switch (type) {
         case "next":
           setDateLength(dateLength + 1);
@@ -77,9 +90,10 @@ export const CommunityBox = () => {
     }
     switch (type) {
       case "today":
-        setDateLength(dateLastLength);
+        setDateLength(dateActive.length - 1);
         break;
     }
+    window.scrollTo({ top: 0 });
     localStorage.setItem("date", dateActive[dateLength]);
   };
 
@@ -94,7 +108,15 @@ export const CommunityBox = () => {
   }, [width]);
 
   useEffect(() => {
-    CommunitySecondRendering();
+    if (!community) {
+      //처음 커뮤니티 접근했을 때만 렌더링
+      CommunitySecondRendering();
+      setCommunity(true);
+    }
+  }, []);
+
+  useEffect(() => {
+    ChangeDate();
     localStorage.setItem("date", dateActive[dateLength]);
   }, [dateLength]);
 
