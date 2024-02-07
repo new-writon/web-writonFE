@@ -41,6 +41,7 @@ export const CommnetAndLikeFloating = ({
       console.log(response);
       setLikeCount((Number(likeCount) + 1).toString());
       setIsCick(true);
+      setIsHover(true);
     } else {
       const response = await postLikeDelete(
         userTemplateId,
@@ -49,6 +50,7 @@ export const CommnetAndLikeFloating = ({
       console.log(response);
       setLikeCount((Number(likeCount) - 1).toString());
       setIsCick(false);
+      setIsHover(false);
     }
     try {
       const result = await getCommunityContentData(
@@ -63,9 +65,9 @@ export const CommnetAndLikeFloating = ({
   };
 
   useEffect(() => {
-    if (myLikeSign === "1" || IsClick === true) {
+    if (myLikeSign === "1") {
       setIsCick(true);
-    } else if (myLikeSign === "0" || IsClick === false) {
+    } else if (myLikeSign === "0") {
       setIsCick(false);
     }
   }, [myLikeSign, setIsCick]);
