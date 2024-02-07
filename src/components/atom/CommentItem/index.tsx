@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 
 import { commentProps } from "@/types";
 
@@ -20,7 +20,9 @@ export const CommentItem = ({
   //reply 배열 들어오면 useState로 관리하고 있다.
   // CommentPost 딴에서 commentGroup이 null값이 아닌 string이 들어오면 setState 배열 보내서 없데이트하기
   // 그리고 여기 딴에서 state로 배열 뿌려주기 하니까 자동 없데이트
-
+  useEffect(() => {
+    setReplyArray(data?.reply);
+  }, [data?.reply]);
   return (
     <Container>
       <UserInfoDetail
