@@ -31,6 +31,7 @@ export const DetailPage = () => {
   const DetailPageRendering = async () => {
     executeAsyncTask(async () => {
       if (width <= 530) {
+        window.scrollTo({ top: 0 });
         try {
           const data = await Promise.all([
             getTemplete(localStorage.getItem("organization") || "", Number(templeteId), true),
