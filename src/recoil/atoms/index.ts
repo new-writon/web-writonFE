@@ -126,3 +126,19 @@ export const CommunitySecondDataState = atom<communitySecondCoponentType>({
   key: "CommunitySecondDataState",
   default: { challengeCompleteCount: 0, templateData: [] },
 });
+
+//커뮤니티 페이지 렌더링
+export const communityState = atom({
+  key: "communityState",
+  default: false,
+});
+
+export const dateActiveState = atom<string[]>({
+  key: "dateActiveState",
+  default: [],
+});
+
+export const dateLengthState = atom<number>({
+  key: "dateLengthState",
+  default: -1,
+});

@@ -21,7 +21,7 @@ export const CommunityHeader = styled.div`
   background-color: var(--Gray-20, #f5f5f5);
   padding-left: 26px;
   @media (max-width: 530px) {
-    top: 107px;
+    top: 105px;
     padding-left: 0;
   }
   .title {

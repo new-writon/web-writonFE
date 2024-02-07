@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 
 import { format } from "date-fns";
 import { useNavigate } from "react-router-dom";
-import { useRecoilCallback } from "recoil";
+import { useRecoilCallback, useSetRecoilState } from "recoil";
 import styled from "styled-components";
 
 import { getMyCommunityStory } from "@/apis/CommunityPage";
@@ -16,6 +16,7 @@ import writon from "@/assets/logo/writon_long.svg";
 import {
   addSpecialQuestionArrayState,
   addSpecialQuestionState,
+  communityState,
   postWritingDataState,
 } from "@/recoil/atoms";
 import { Inner } from "@/style/global";
@@ -39,6 +40,8 @@ const Header = () => {
   const [ChallengeCurrent, setChallengeCurrent] = useState<ChallengeCurrentType>();
   const [userProfile, setUserProfile] = useState<communityStoryProps>();
 
+  const setCommunity = useSetRecoilState(communityState);
+
   const today = format(new Date(), "yyyy-MM-dd");
   const resetState = useRecoilCallback(({ reset }) => () => {
     reset(addSpecialQuestionState);
@@ -53,6 +56,7 @@ const Header = () => {
         navigate("/");
         break;
       case "커뮤니티":
+        setCommunity(false);
         navigate("/community");
         break;
       case "작성하기":
