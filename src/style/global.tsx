@@ -157,6 +157,7 @@ export const Inner = styled.div`
     }
     &:has(.DetailBox) {
       max-width: 100vw;
+      background-color: #fff;
     }
   }
 `;
