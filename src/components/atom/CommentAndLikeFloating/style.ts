@@ -61,7 +61,7 @@ export const Container = styled.div`
     position: fixed;
     right: 16px;
     /* top: 426px; */
-    bottom: 50px;
+    bottom: 75px;
     top: auto;
     gap: 12px;
     .round {
