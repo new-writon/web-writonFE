@@ -9,7 +9,7 @@ export const Container = styled.div<{ $someone: string; $message: string | null 
   line-height: 130%;
   color: var(--Gray-100, #212121);
   position: relative;
-  justify-content: space-between;
+  justify-content: flex-end;
   .profileBox {
     display: flex;
     flex-direction: column;

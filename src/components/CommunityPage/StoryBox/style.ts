@@ -10,6 +10,7 @@ export const Container = styled.div`
     display: flex;
     gap: 6px;
     align-items: flex-end;
+    flex-wrap: wrap;
   }
 
   @media (max-width: 530px) {
@@ -152,7 +153,7 @@ export const StoryItemBoxResponsive = styled.div`
   overflow-y: hidden;
   white-space: nowrap;
   gap: 22px;
-  margin-top: 28px;
+  margin-top: 20px;
   .job {
     margin-bottom: 2px;
   }
