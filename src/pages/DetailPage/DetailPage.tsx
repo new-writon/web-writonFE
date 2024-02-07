@@ -161,7 +161,7 @@ const Container = styled.div`
     height: auto;
     z-index: 0;
     .DetailBox {
-      padding: 20px 0 110px;
+      padding: 20px 0 260px;
       min-width: 343px;
       width: 100%;
     }
