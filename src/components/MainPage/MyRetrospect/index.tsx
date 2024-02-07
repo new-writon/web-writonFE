@@ -1,4 +1,4 @@
-import React, { useCallback, useRef } from "react";
+import React, { useCallback, useEffect, useRef, useState } from "react";
 
 // eslint-disable-next-line import/order
 import Slider from "react-slick";
@@ -18,6 +18,8 @@ import { ArrowButton, Container, RetroSpectBox, RetroSpectBoxResponsive } from "
 
 export const MyRetrospect = ({ RetrospectData }: { RetrospectData: communityContentProps[][] }) => {
   const slickRef = useRef<Slider | null>(null);
+  const [width, setWidth] = useState<number>(window.innerWidth);
+
   const REACT_SLIDER_SETTINGS = {
     infinite: true,
     slidesToShow: RetrospectData?.length > 2 ? 3 : RetrospectData?.length > 1 ? 2 : 1,
@@ -50,7 +52,7 @@ export const MyRetrospect = ({ RetrospectData }: { RetrospectData: communityCont
       {
         breakpoint: 830,
         settings: {
-          slidesToShow: 2,
+          slidesToShow: RetrospectData?.length === 1 ? 1 : 2,
           slidesToScroll: 1,
         },
       },
@@ -60,6 +62,14 @@ export const MyRetrospect = ({ RetrospectData }: { RetrospectData: communityCont
   const previous = useCallback(() => slickRef.current?.slickPrev(), []);
   const next = useCallback(() => slickRef.current?.slickNext(), []);
 
+  const handleResize = () => {
+    //뷰크기 강제로 강져오기
+    setWidth(window.innerWidth);
+  };
+  useEffect(() => {
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize); //clean
+  }, [width]);
   return (
     <Inner>
       <Container>
@@ -80,24 +90,25 @@ export const MyRetrospect = ({ RetrospectData }: { RetrospectData: communityCont
                   </React.Fragment>
                 ))}
               </StyledSlider>
-              {RetrospectData?.length > 2 && (
-                <>
-                  <ArrowButton onClick={previous}>
-                    <img
-                      className="previous"
-                      src={arrow}
-                      alt="<"
-                    />
-                  </ArrowButton>
-                  <ArrowButton onClick={next}>
-                    <img
-                      className="next"
-                      src={arrow}
-                      alt=">"
-                    />
-                  </ArrowButton>
-                </>
-              )}
+              {RetrospectData?.length > 2 ||
+                (width < 631 && RetrospectData?.length === 2 && (
+                  <>
+                    <ArrowButton onClick={previous}>
+                      <img
+                        className="previous"
+                        src={arrow}
+                        alt="<"
+                      />
+                    </ArrowButton>
+                    <ArrowButton onClick={next}>
+                      <img
+                        className="next"
+                        src={arrow}
+                        alt=">"
+                      />
+                    </ArrowButton>
+                  </>
+                ))}
             </RetroSpectBox>
             <RetroSpectBoxResponsive>
               {RetrospectData.map((data, idx) => (
