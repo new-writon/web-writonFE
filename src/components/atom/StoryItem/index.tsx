@@ -35,10 +35,16 @@ export const StoryItem = ({
             {TodayWrite === "" ? "오늘의\n 한마디+" : TodayWrite}
           </div>
         ) : (
-          <div className="storyMessage">{data?.cheering_phrase}</div>
+          <div
+            className="storyMessage"
+            dangerouslySetInnerHTML={{ __html: data?.cheering_phrase || "<div></div>" }}
+          ></div>
         )
       ) : (
-        <div className="storyMessage">{data?.cheering_phrase}</div>
+        <div
+          className="storyMessage"
+          dangerouslySetInnerHTML={{ __html: data?.cheering_phrase || "<div></div>" }}
+        ></div>
       )}
       <div className="profileBox">
         <div
