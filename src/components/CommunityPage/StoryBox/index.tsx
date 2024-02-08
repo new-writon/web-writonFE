@@ -37,7 +37,7 @@ export const StoryBox = ({
   const REACT_SLIDER_SETTINGS = {
     infinite: false,
     slidesToShow: 10,
-    slidesToScroll: 1,
+    slidesToScroll: 10,
     speed: 700,
     arrows: false,
     responsive: [
@@ -45,35 +45,35 @@ export const StoryBox = ({
         breakpoint: 640,
         settings: {
           slidesToShow: 4,
-          slidesToScroll: 1,
+          slidesToScroll: 4,
         },
       },
       {
         breakpoint: 750,
         settings: {
           slidesToShow: 5,
-          slidesToScroll: 1,
+          slidesToScroll: 5,
         },
       },
       {
         breakpoint: 850,
         settings: {
           slidesToShow: 6,
-          slidesToScroll: 1,
+          slidesToScroll: 6,
         },
       },
       {
         breakpoint: 1015,
         settings: {
           slidesToShow: 7,
-          slidesToScroll: 1,
+          slidesToScroll: 7,
         },
       },
       {
         breakpoint: 1110,
         settings: {
           slidesToShow: 9,
-          slidesToScroll: 1,
+          slidesToScroll: 9,
         },
       },
     ],
