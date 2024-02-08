@@ -23,7 +23,7 @@ export const MyRetrospect = ({ RetrospectData }: { RetrospectData: communityCont
   const REACT_SLIDER_SETTINGS = {
     infinite: true,
     slidesToShow: RetrospectData?.length > 2 ? 3 : RetrospectData?.length > 1 ? 2 : 1,
-    slidesToScroll: 1,
+    slidesToScroll: 3,
     speed: 1200,
     dots: true,
     arrows: false,
@@ -53,7 +53,7 @@ export const MyRetrospect = ({ RetrospectData }: { RetrospectData: communityCont
         breakpoint: 830,
         settings: {
           slidesToShow: RetrospectData?.length === 1 ? 1 : 2,
-          slidesToScroll: 1,
+          slidesToScroll: 2,
         },
       },
     ],
@@ -90,25 +90,26 @@ export const MyRetrospect = ({ RetrospectData }: { RetrospectData: communityCont
                   </React.Fragment>
                 ))}
               </StyledSlider>
-              {RetrospectData?.length > 2 ||
-                (width < 631 && RetrospectData?.length === 2 && (
-                  <>
-                    <ArrowButton onClick={previous}>
-                      <img
-                        className="previous"
-                        src={arrow}
-                        alt="<"
-                      />
-                    </ArrowButton>
-                    <ArrowButton onClick={next}>
-                      <img
-                        className="next"
-                        src={arrow}
-                        alt=">"
-                      />
-                    </ArrowButton>
-                  </>
-                ))}
+              {RetrospectData?.length > 3 || (width < 631 && RetrospectData?.length === 2) ? (
+                <>
+                  <ArrowButton onClick={previous}>
+                    <img
+                      className="previous"
+                      src={arrow}
+                      alt="<"
+                    />
+                  </ArrowButton>
+                  <ArrowButton onClick={next}>
+                    <img
+                      className="next"
+                      src={arrow}
+                      alt=">"
+                    />
+                  </ArrowButton>
+                </>
+              ) : (
+                ""
+              )}
             </RetroSpectBox>
             <RetroSpectBoxResponsive>
               {RetrospectData.map((data, idx) => (
