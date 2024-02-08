@@ -17,6 +17,7 @@ import { Inner } from "@/style/global";
 
 export const DetailPage = () => {
   const { templeteId } = useParams();
+  const type = new URL(window.location.href).searchParams.get("type");
   const [width, setWidth] = useState<number>(window.innerWidth);
   const [detailData, setDetailData] = useRecoilState(DetailDataState);
   const setDetailModal = useSetRecoilState(DetailModalState);
@@ -34,7 +35,11 @@ export const DetailPage = () => {
         window.scrollTo({ top: 0 });
         try {
           const data = await Promise.all([
-            getTemplete(localStorage.getItem("organization") || "", Number(templeteId), true),
+            getTemplete(
+              localStorage.getItem("organization") || "",
+              Number(templeteId),
+              type === "my" ? false : true
+            ),
             getComment(Number(templeteId)),
           ]);
           setDetailData(data[0]);

@@ -22,7 +22,7 @@ export const RetrospectItem = ({ data }: { data: communityContentProps[] }) => {
 
   const spaceToDetail = () => {
     if (width <= 530) {
-      navigate(`/detail/${data[0].user_templete_id}`);
+      navigate(`/detail/${data[0].user_templete_id}?type=my`);
       // setDetailData(data);
       // setLikeCount(data[0]?.likeCount);
     } else {
