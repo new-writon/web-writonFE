@@ -61,6 +61,7 @@ export const CommentItem = ({
             replyArray={replyArray}
             setReplyArray={setReplyArray}
             type="reply"
+            setReplyReadOn={setReplyReadOn}
           />
         )}
         {replyReadOn && replyArray.length > 0 ? (

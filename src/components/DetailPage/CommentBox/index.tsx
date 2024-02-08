@@ -23,6 +23,7 @@ export const CommentBox = ({
       <CommentPost
         userTemplateId={userTemplateId}
         commentGroup={-1}
+        setReplyReadOn={() => {}}
       />
       <div
         id="comment"

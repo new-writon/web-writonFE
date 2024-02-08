@@ -20,12 +20,14 @@ export const CommentPost = ({
   replyArray,
   setReplyArray,
   type,
+  setReplyReadOn,
 }: {
   userTemplateId: number;
   commentGroup: number;
   replyArray?: commentProps[];
   setReplyArray?: Dispatch<SetStateAction<commentProps[]>>;
   type?: string;
+  setReplyReadOn: (replyReadOn: boolean) => void;
 }) => {
   const textareaRef = useRef<HTMLTextAreaElement | null>(null);
   const [width, setWidth] = useState<number>(window.innerWidth);
@@ -133,6 +135,7 @@ export const CommentPost = ({
                   reply: [],
                 },
               ]);
+              setReplyReadOn(true);
             }
           }
         } catch {
