@@ -128,7 +128,7 @@ const Container = styled.div`
   left: 0;
   height: 100vh;
   width: 100%;
-  background: rgba(0, 0, 0, 0.4);
+  background: rgba(0, 0, 0, 0.6);
   z-index: 9999999;
   display: flex;
   justify-content: center;

@@ -10,7 +10,7 @@ export const BackDrop = styled.div<{ $headerTooltip: boolean }>`
   left: 0;
   height: 100%;
   width: 100%;
-  background: rgba(0, 0, 0, 0.4);
+  background: rgba(0, 0, 0, 0.6);
 `;
 
 export const Container = styled.div<{ $headerTooltip: boolean; $TooltipMobile: boolean }>`
