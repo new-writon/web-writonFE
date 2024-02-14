@@ -167,4 +167,7 @@ export const StoryItemBoxResponsive = styled.div`
   @media (min-width: 531px) {
     display: none;
   }
+  @media (max-width: 530px) {
+    gap: 8px;
+  }
 `;

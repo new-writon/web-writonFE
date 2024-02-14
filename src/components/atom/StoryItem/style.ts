@@ -4,6 +4,7 @@ export const Container = styled.div<{ $someone: string; $message: string | null 
   display: flex;
   flex-direction: column;
   width: 88px;
+  min-width: 83px;
   align-items: center;
   font-size: var(--text_cap1);
   line-height: 130%;
