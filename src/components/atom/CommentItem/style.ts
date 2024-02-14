@@ -20,7 +20,7 @@ export const Container = styled.div`
     font-weight: 400;
     color: var(--Gray-100, #212121);
     white-space: pre-wrap;
-    line-height: 120%;
+    line-height: 150%;
   }
 
   .reply {
