@@ -30,6 +30,17 @@ export const WritingBox = () => {
   const postWritingData = useRecoilValue(postWritingDataState);
   const executeAsyncTask = useAsyncWithLoading();
 
+  const completeBtn = (type: string) => {
+    if (postWritingData?.every((item) => item.content.trim() !== "")) {
+      if (type === "mobile") {
+        setModal({ ...modal, completeModal: true });
+        document.body.style.overflowY = "hidden";
+      } else if (type === "web") {
+        setpopUpOn(true);
+      }
+    }
+  };
+
   useEffect(() => {
     setDateResponsive(date);
   }, [date, postWritingData, setDateResponsive]);
@@ -65,10 +76,7 @@ export const WritingBox = () => {
           <BasicQuestion />
           <div className="submitBtnResponsive">
             <WritingSubmitButton
-              onClick={() => {
-                setModal({ ...modal, completeModal: true });
-                document.body.style.overflowY = "hidden";
-              }}
+              onClick={() => completeBtn("mobile")}
               disabled={postWritingData?.every((item) => item.content.trim() !== "")}
             >
               작성 완료
@@ -77,7 +85,7 @@ export const WritingBox = () => {
         </div>
         <div className="writingBox right">
           <WritingSubmitButton
-            onClick={() => setpopUpOn(true)}
+            onClick={() => completeBtn("web")}
             disabled={postWritingData?.every((item) => item.content.trim() !== "")}
           >
             작성 완료

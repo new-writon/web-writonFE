@@ -61,6 +61,7 @@ const Header = () => {
         break;
       case "작성하기":
         dateCheck(navigate, today);
+
         //navigate(`/writing/${today}`);
         break;
     }
@@ -150,7 +151,11 @@ const Header = () => {
             className="writingBtn"
             onMouseOver={() => setIsHover(true)}
             onMouseOut={() => setIsHover(false)}
-            onClick={() => SpaceTab("작성하기")}
+            onClick={() => {
+              if (location.pathname.split("/")[1] !== "writing") {
+                SpaceTab("작성하기");
+              }
+            }}
           >
             <p>회고 작성하기</p>
             <p className="responsive">작성</p>
