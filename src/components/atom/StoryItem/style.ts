@@ -61,7 +61,7 @@ export const Container = styled.div<{ $someone: string; $message: string | null 
       color: var(--Gray-90, #424242);
       justify-content: flex-start;
       padding: 10px;
-      white-space: ${(props) => (props.$someone === "me" ? "" : "pre-wrap")};
+      white-space: wrap;
       height: auto;
     }
   }
