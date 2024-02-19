@@ -65,6 +65,7 @@ export const Container = styled.div<{ $someone: string; $message: string | null 
       white-space: ${(props) => (props.$message === null ? "pre-wrap" : "wrap")};
       height: auto;
       width: fit-content;
+      max-width: fit-content;
     }
   }
 
