@@ -13,37 +13,62 @@ export const Container = styled.div`
   align-items: center;
   perspective: 1000px;
 
-  .finishBox {
-    padding: 50px 0;
+  .finishWrapper {
     min-width: 520px;
     border-radius: 16px;
     background: #fff;
-    backface-visibility: hidden;
-    transition: 1s;
+    height: 600px;
     display: flex;
     flex-direction: column;
     align-items: center;
+    overflow-x: hidden;
   }
-  @media (max-width: 530px) {
-    .finishBox {
-      min-width: 343px;
-    }
+
+  .finishBox {
+    background: #fff;
+    backface-visibility: hidden;
+    transition: 0.8s;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
   }
 
   .finishBox.front {
     position: absolute;
-    transform: rotateY(0deg);
+    /* transform: rotateY(0deg); */
+    padding: 50px 0;
+    transform: translateX(0);
   }
   .finishBox.front.next {
-    transform: rotateY(-180deg);
+    /* transform: rotateY(-180deg); */
+    transform: translateX(-500px);
+    visibility: hidden;
   }
   .finishBox.back {
     position: absolute;
-    transform: rotateY(180deg);
+    /* transform: rotateY(180deg); */
     padding: 30px 30px 50px;
+    transform: translateX(500px);
+    visibility: hidden;
   }
   .finishBox.back.next {
-    transform: rotateY(0deg);
+    /* transform: rotateY(0deg); */
+    transform: translateX(0);
+    visibility: visible;
+  }
+
+  @media (max-width: 530px) {
+    .finishWrapper {
+      min-width: 343px;
+      height: 560px;
+    }
+    .finishBox.front {
+      padding: 40px 0;
+    }
+    .finishBox.back {
+      padding: 30px 15px;
+    }
   }
 
   .challengeName {
