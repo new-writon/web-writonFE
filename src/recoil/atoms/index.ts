@@ -142,3 +142,9 @@ export const dateLengthState = atom<number>({
   key: "dateLengthState",
   default: -1,
 });
+
+//finish modal
+export const finishModalState = atom<boolean>({
+  key: "finishModalState",
+  default: false,
+});
