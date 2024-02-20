@@ -139,3 +139,20 @@ export const OnboardingBtn = styled.div<{ $ButtonOn: boolean }>`
   line-height: 130%; /* 23.4px */
   cursor: pointer;
 `;
+
+export const FinishModalBtn = styled.div`
+  width: fit-content;
+  padding: 18px 121px;
+  background-color: var(--purple-50);
+  border-radius: 12px;
+  color: #fff;
+  cursor: pointer;
+  font-weight: 600;
+  @media (max-width: 530px) {
+    width: 283px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 18px 0;
+  }
+`;

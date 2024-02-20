@@ -11,6 +11,7 @@ import { ButtonProps, SubmitButtonProps } from "@/types";
 import {
   AddQuestionBtn,
   BlueBtn,
+  FinishModalBtn,
   FloatingWriteBtn,
   KakaoBtn,
   KeywordBtn,
@@ -111,4 +112,8 @@ export const OnboardingButton = ({ children, onClick, ButtonOn }: OnboardingButt
       {children}
     </OnboardingBtn>
   );
+};
+
+export const FinishModalButton = ({ children, onClick }: ButtonProps) => {
+  return <FinishModalBtn onClick={onClick}>{children}</FinishModalBtn>;
 };
