@@ -22,6 +22,7 @@ export const Container = styled.div`
     flex-direction: column;
     align-items: center;
     overflow-x: hidden;
+    overflow-y: hidden;
   }
 
   .finishBox {
