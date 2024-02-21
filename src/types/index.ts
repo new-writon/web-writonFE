@@ -187,3 +187,14 @@ export interface commentProps {
   comment_group: string | number;
   reply: commentProps[];
 }
+
+export interface finishModalType {
+  nickname: string;
+  organization: string;
+  challenge: string;
+  challengeOverlapCount: number;
+  challengeSuccessCount: number;
+  overlapDeposit: number;
+  challengeDeposit: number;
+  reviewUrl: string | null;
+}
