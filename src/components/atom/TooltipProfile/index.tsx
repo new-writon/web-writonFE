@@ -2,9 +2,10 @@ import { useNavigate } from "react-router-dom";
 
 import { deleteLogout } from "@/apis/header";
 import profile from "@/assets/communityPage/profile.png";
+import arrow from "@/assets/header/rightArrow.svg";
 import { ChallengeCurrentType, communityStoryProps } from "@/types";
 
-import { BackDrop, Bottom, Container, Header, Middle } from "./style";
+import { BackDrop, Bottom, Container, Header, Middle, MypageBtn } from "./style";
 
 export const TooltipProfile = ({
   headerTooltip,
@@ -69,6 +70,13 @@ export const TooltipProfile = ({
             <div className="email">{userProfile?.email}</div>
           </div>
         </Header>
+        <MypageBtn onClick={() => navigate("/mypage")}>
+          마이페이지
+          <img
+            src={arrow}
+            alt=">"
+          />
+        </MypageBtn>
         <div className="line"></div>
         <Middle>
           <div className="userAddInfo">
@@ -82,7 +90,6 @@ export const TooltipProfile = ({
           <div className="currentChallengeTitle">현재 참여중인 챌린지</div>
           <div className="currentChallenge">
             <div className="title">
-              {" "}
               {ChallengeCurrent?.organization} {ChallengeCurrent?.challenge} 챌린지
             </div>
             <div className="currentPage">현재 페이지</div>

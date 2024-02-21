@@ -63,7 +63,7 @@ export const Container = styled.div<{ $headerTooltip: boolean; $TooltipMobile: b
 
 export const Header = styled.div`
   display: flex;
-  padding: 0 10px 20px;
+  padding: 0 10px 12px;
   align-items: center;
   gap: 12px;
   .profileImageCover {
@@ -153,5 +153,25 @@ export const Bottom = styled.div`
     font-size: 0.875rem;
     font-weight: 600;
     line-height: 160%; /* 14.4px */
+  }
+`;
+
+export const MypageBtn = styled.div`
+  width: 100%;
+  border-radius: 10px;
+  border: 1px solid var(--Gray-40, #d9d9d9);
+  background: #fff;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 8px 0 4px;
+  color: var(--Gray-80, #616161);
+  text-align: center;
+  font-size: 0.875rem;
+  line-height: 120%; /* 16.8px */
+  cursor: pointer;
+  margin-bottom: 16px;
+  img {
+    padding-bottom: 2px;
   }
 `;
