@@ -29,7 +29,7 @@ export const FinishModal = () => {
     //   );
     //   console.log(response);
     window.open(reviewUrl || "http://www.writon.co.kr");
-    setFinishModal(true);
+    setFinishModal(false);
     document.body.style.overflowY = "scroll";
     // } catch {
     //   throw new Error("shit");
