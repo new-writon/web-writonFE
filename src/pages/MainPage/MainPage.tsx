@@ -51,12 +51,11 @@ const MainPage = () => {
             localStorage.getItem("challengeId") || "1"
           ),
         ]);
-        console.log(result);
         setChallengeCurrent(result[0]);
         setCalendarData(result[1]);
         setRetrospectData(result[2]);
 
-        // 마지막 프로세스
+        // 챌린지 마지막 프로세스 모달창 띄우기
         try {
           const { review } = await getFinishModal(
             localStorage.getItem("organization") || "",
