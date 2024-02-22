@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 
 import pencil_white from "@/assets/header/pencil_white.svg";
 import kakao from "@/assets/logo/kakao.svg";
@@ -12,6 +12,7 @@ import {
   AddQuestionBtn,
   BlueBtn,
   FinishModalBtn,
+  CurrrentChallengeBtn,
   FloatingWriteBtn,
   KakaoBtn,
   KeywordBtn,
@@ -111,6 +112,22 @@ export const OnboardingButton = ({ children, onClick, ButtonOn }: OnboardingButt
     >
       {children}
     </OnboardingBtn>
+  );
+};
+
+export const CurrrentChallengeButton = ({ children, onClick }: ButtonProps) => {
+  const [isHover, setIsHover] = useState<boolean>(false);
+
+  return (
+    <CurrrentChallengeBtn
+      onClick={onClick}
+      onMouseOver={() => setIsHover(true)}
+      onMouseOut={() => setIsHover(false)}
+    >
+      <div className="title">{children}</div>
+      <div className="currentPage">현재 페이지</div>
+      {isHover ? <div className="viewPage">보러가기</div> : ""}
+    </CurrrentChallengeBtn>
   );
 };
 
