@@ -156,3 +156,30 @@ export const FinishModalBtn = styled.div`
     padding: 18px 0;
   }
 `;
+
+export const CurrrentChallengeBtn = styled.div`
+  padding: 8px 10px;
+  display: flex;
+  justify-content: space-between;
+  color: var(--Gray-100, #212121);
+  font-size: 0.875rem;
+  line-height: 160%; /* 22.4px */
+  cursor: pointer;
+  .currentPage {
+    color: var(--Gray-60, #959595);
+    font-size: 0.875rem;
+    font-weight: 600;
+    line-height: 160%; /* 14.4px */
+  }
+  .viewPage {
+    color: var(--purple-50, #6a63f5);
+    font-size: 0.875rem;
+    font-weight: 600;
+    line-height: 160%; /* 14.4px */
+  }
+
+  &:hover {
+    border-radius: 7px;
+    background: var(--Gray-20, #f5f5f5);
+  }
+`;
