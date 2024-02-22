@@ -7,6 +7,7 @@ import styled from "styled-components";
 
 import { getMyCommunityStory } from "@/apis/CommunityPage";
 import { dateCheck } from "@/apis/header";
+import { getChallengingList } from "@/apis/login";
 import { getChallengeCurrent } from "@/apis/mainPage";
 import profile from "@/assets/communityPage/profile.png";
 import pencil_color from "@/assets/header/pencil_color.svg";
@@ -20,7 +21,7 @@ import {
   postWritingDataState,
 } from "@/recoil/atoms";
 import { Inner } from "@/style/global";
-import { ChallengeCurrentType, communityStoryProps } from "@/types";
+import { ChallengeCurrentType, communityStoryProps, challengeListProps } from "@/types";
 
 import { TooltipProfile } from "../atom/TooltipProfile";
 
@@ -38,6 +39,7 @@ const Header = () => {
   const [TooltipMobile, setTooltipMobile] = useState<boolean>(false);
 
   const [ChallengeCurrent, setChallengeCurrent] = useState<ChallengeCurrentType>();
+  const [ChallengeList, setChallengeList] = useState<challengeListProps[]>();
   const [userProfile, setUserProfile] = useState<communityStoryProps>();
 
   const setCommunity = useSetRecoilState(communityState);
@@ -84,12 +86,14 @@ const Header = () => {
           localStorage.getItem("organization") || "",
           localStorage.getItem("challengeId") || "1"
         ),
+        getChallengingList(),
       ]);
       if (data[0]?.profile !== null) {
         setProfileImage(data[0]?.profile);
       }
       setUserProfile(data[0]);
       setChallengeCurrent(data[1]);
+      setChallengeList(data[2]);
     } catch {
       throw new Error("shit");
     }
@@ -182,6 +186,7 @@ const Header = () => {
             setHeaderTooltip={setHeaderTooltip}
             setTooltipMobile={setTooltipMobile}
             ChallengeCurrent={ChallengeCurrent}
+            ChallengeList={ChallengeList}
           />
         )}
         {width <= 530 && (
@@ -192,6 +197,7 @@ const Header = () => {
             setHeaderTooltip={setHeaderTooltip}
             setTooltipMobile={setTooltipMobile}
             ChallengeCurrent={ChallengeCurrent}
+            ChallengeList={ChallengeList}
           />
         )}
       </Container>

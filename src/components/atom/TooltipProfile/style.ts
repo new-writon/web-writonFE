@@ -132,27 +132,18 @@ export const Middle = styled.div`
 `;
 
 export const Bottom = styled.div`
-  padding: 24px 10px 40px;
-  .currentChallengeTitle {
+  padding: 24px 0 40px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  .currentChallengeTitle,
+  .pastChallengeTitle {
     color: var(--Gray-60, #959595);
     font-size: 0.75rem;
     font-weight: 600;
     line-height: 120%; /* 14.4px */
     padding-bottom: 4px;
-  }
-  .currentChallenge {
-    padding: 8px 0;
-    display: flex;
-    justify-content: space-between;
-    color: var(--Gray-100, #212121);
-    font-size: 0.875rem;
-    line-height: 160%; /* 22.4px */
-  }
-  .currentChallenge .currentPage {
-    color: var(--Gray-60, #959595);
-    font-size: 0.875rem;
-    font-weight: 600;
-    line-height: 160%; /* 14.4px */
+    padding: 0 10px;
   }
 `;
 
