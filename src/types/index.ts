@@ -187,3 +187,9 @@ export interface commentProps {
   comment_group: string | number;
   reply: commentProps[];
 }
+export interface challengeListProps {
+  organization: string;
+  challenge_id: number;
+  challenge: string;
+  challengeFinishSign: string;
+}

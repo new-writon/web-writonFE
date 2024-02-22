@@ -1,4 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
+import { challengeListProps } from "@/types";
 import { UserInfo, kakaoType } from "@/types/user";
 
 import { getData, postData } from ".";
@@ -73,11 +74,6 @@ export const postRegister = async (id: string, pw: string, email: string) => {
   });
   return response.data;
 };
-
-interface challengeListProps {
-  name: string;
-  challenge_id: number;
-}
 
 export const getChallengingList = async () => {
   const response = await getData<challengeListProps[]>("/challenge/start");

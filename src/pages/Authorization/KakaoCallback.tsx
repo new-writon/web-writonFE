@@ -51,7 +51,7 @@ export const KakaoCallback = () => {
             if (data.length > 0) {
               localStorage.setItem("accessToken", res.accessToken);
               localStorage.setItem("refreshToken", res.refreshToken);
-              localStorage.setItem("organization", data[0]?.name);
+              localStorage.setItem("organization", data[0]?.organization);
               localStorage.setItem("challengeId", data[0]?.challenge_id.toString());
               navigate("/");
             } else {
