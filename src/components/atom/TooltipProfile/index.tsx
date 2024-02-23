@@ -80,7 +80,7 @@ export const TooltipProfile = ({
             <div className="email">{userProfile?.email}</div>
           </div>
         </Header>
-        <MypageBtn onClick={() => navigate("/mypage")}>
+        <MypageBtn onClick={() => navigate("/mypage?category=프로필 설정")}>
           마이페이지
           <img
             src={arrow}
