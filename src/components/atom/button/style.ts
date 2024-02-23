@@ -164,7 +164,7 @@ export const CurrrentChallengeBtn = styled.div`
   color: var(--Gray-100, #212121);
   font-size: 0.875rem;
   line-height: 160%; /* 22.4px */
-  cursor: pointer;
+
   .currentPage {
     color: var(--Gray-60, #959595);
     font-size: 0.875rem;
@@ -178,7 +178,8 @@ export const CurrrentChallengeBtn = styled.div`
     line-height: 160%; /* 14.4px */
   }
 
-  &:hover {
+  &:has(.viewPage):hover {
+    cursor: pointer;
     border-radius: 7px;
     background: var(--Gray-20, #f5f5f5);
   }

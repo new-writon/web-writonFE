@@ -115,7 +115,17 @@ export const OnboardingButton = ({ children, onClick, ButtonOn }: OnboardingButt
   );
 };
 
-export const CurrrentChallengeButton = ({ children, onClick }: ButtonProps) => {
+interface ChallengeButtonProps {
+  children: React.ReactNode;
+  onClick: () => void;
+  challengeId: string;
+}
+
+export const CurrrentChallengeButton = ({
+  children,
+  onClick,
+  challengeId,
+}: ChallengeButtonProps) => {
   const [isHover, setIsHover] = useState<boolean>(false);
 
   return (
@@ -125,8 +135,13 @@ export const CurrrentChallengeButton = ({ children, onClick }: ButtonProps) => {
       onMouseOut={() => setIsHover(false)}
     >
       <div className="title">{children}</div>
-      <div className="currentPage">현재 페이지</div>
-      {isHover ? <div className="viewPage">보러가기</div> : ""}
+      {challengeId === localStorage.getItem("challengeId") ? (
+        <div className="currentPage">현재 페이지</div>
+      ) : isHover ? (
+        <div className="viewPage">보러가기</div>
+      ) : (
+        ""
+      )}
     </CurrrentChallengeBtn>
   );
 };

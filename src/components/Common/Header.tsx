@@ -8,7 +8,6 @@ import styled from "styled-components";
 import { getMyCommunityStory } from "@/apis/CommunityPage";
 import { dateCheck } from "@/apis/header";
 import { getChallengingList } from "@/apis/login";
-import { getChallengeCurrent } from "@/apis/mainPage";
 import profile from "@/assets/communityPage/profile.png";
 import pencil_color from "@/assets/header/pencil_color.svg";
 import pencil_white from "@/assets/header/pencil_white.svg";
@@ -21,7 +20,7 @@ import {
   postWritingDataState,
 } from "@/recoil/atoms";
 import { Inner } from "@/style/global";
-import { ChallengeCurrentType, communityStoryProps, challengeListProps } from "@/types";
+import { communityStoryProps, challengeListProps } from "@/types";
 
 import { TooltipProfile } from "../atom/TooltipProfile";
 
@@ -38,7 +37,6 @@ const Header = () => {
   const [headerTooltip, setHeaderTooltip] = useState<boolean>(false);
   const [TooltipMobile, setTooltipMobile] = useState<boolean>(false);
 
-  const [ChallengeCurrent, setChallengeCurrent] = useState<ChallengeCurrentType>();
   const [ChallengeList, setChallengeList] = useState<challengeListProps[]>();
   const [userProfile, setUserProfile] = useState<communityStoryProps>();
 
@@ -82,18 +80,15 @@ const Header = () => {
     try {
       const data = await Promise.all([
         getMyCommunityStory(localStorage.getItem("challengeId") || ""),
-        getChallengeCurrent(
-          localStorage.getItem("organization") || "",
-          localStorage.getItem("challengeId") || "1"
-        ),
+
         getChallengingList(),
       ]);
       if (data[0]?.profile !== null) {
         setProfileImage(data[0]?.profile);
       }
+      console.log(data);
       setUserProfile(data[0]);
-      setChallengeCurrent(data[1]);
-      setChallengeList(data[2]);
+      setChallengeList(data[1]);
     } catch {
       throw new Error("shit");
     }
@@ -185,7 +180,6 @@ const Header = () => {
             userProfile={userProfile}
             setHeaderTooltip={setHeaderTooltip}
             setTooltipMobile={setTooltipMobile}
-            ChallengeCurrent={ChallengeCurrent}
             ChallengeList={ChallengeList}
           />
         )}
@@ -196,7 +190,6 @@ const Header = () => {
             userProfile={userProfile}
             setHeaderTooltip={setHeaderTooltip}
             setTooltipMobile={setTooltipMobile}
-            ChallengeCurrent={ChallengeCurrent}
             ChallengeList={ChallengeList}
           />
         )}

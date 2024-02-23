@@ -135,7 +135,7 @@ export const Bottom = styled.div`
   padding: 24px 0 40px;
   display: flex;
   flex-direction: column;
-  gap: 16px;
+  gap: 20px;
   .currentChallengeTitle,
   .pastChallengeTitle {
     color: var(--Gray-60, #959595);

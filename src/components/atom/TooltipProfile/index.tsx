@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { deleteLogout } from "@/apis/header";
 import profile from "@/assets/communityPage/profile.png";
 import arrow from "@/assets/header/rightArrow.svg";
-import { ChallengeCurrentType, challengeListProps, communityStoryProps } from "@/types";
+import { challengeListProps, communityStoryProps } from "@/types";
 
 import { CurrrentChallengeButton } from "../button";
 
@@ -15,7 +15,7 @@ export const TooltipProfile = ({
   userProfile,
   setHeaderTooltip,
   setTooltipMobile,
-  ChallengeCurrent,
+
   ChallengeList,
 }: {
   headerTooltip: boolean;
@@ -23,7 +23,6 @@ export const TooltipProfile = ({
   userProfile: communityStoryProps | undefined;
   setHeaderTooltip: (headerTooltip: boolean) => void;
   setTooltipMobile: (TooltipMobile: boolean) => void;
-  ChallengeCurrent: ChallengeCurrentType | undefined;
   ChallengeList: challengeListProps[] | undefined;
 }) => {
   const navigate = useNavigate();
@@ -51,6 +50,12 @@ export const TooltipProfile = ({
       setHeaderTooltip(false);
     }
   };
+
+  const ChangeChallenge = (challengeId: string) => {
+    localStorage.setItem("challengeId", challengeId);
+    window.location.reload();
+  };
+
   console.log(ChallengeList);
 
   return (
@@ -92,19 +97,32 @@ export const TooltipProfile = ({
         </Middle>
         <div className="line"></div>
         <Bottom>
-          <div className="currentChallenge">
-            <div className="currentChallengeTitle">현재 참여중인 챌린지</div>
-            <CurrrentChallengeButton onClick={() => {}}>
-              {ChallengeCurrent?.organization} {ChallengeCurrent?.challenge} 챌린지
-            </CurrrentChallengeButton>
-          </div>
-
-          <div className="pastChallenge">
-            <div className="pastChallengeTitle">지난 챌린지</div>
-            <CurrrentChallengeButton onClick={() => {}}>
-              {ChallengeCurrent?.organization} {ChallengeCurrent?.challenge} 챌린지
-            </CurrrentChallengeButton>
-          </div>
+          {ChallengeList?.filter((data) => data.challengeFinishSign === "0").length !== 0 && (
+            <div className="currentChallenge">
+              <div className="currentChallengeTitle">참여중인 챌린지</div>
+              {ChallengeList?.filter((data) => data.challengeFinishSign === "0").map((item) => (
+                <CurrrentChallengeButton
+                  challengeId={item.challenge_id.toString()}
+                  onClick={() => ChangeChallenge(item.challenge_id.toString())}
+                >
+                  {item?.organization} {item?.challenge} 챌린지
+                </CurrrentChallengeButton>
+              ))}
+            </div>
+          )}
+          {ChallengeList?.filter((data) => data.challengeFinishSign === "1").length !== 0 && (
+            <div className="pastChallenge">
+              <div className="pastChallengeTitle">지난 챌린지</div>
+              {ChallengeList?.filter((data) => data.challengeFinishSign === "1").map((item) => (
+                <CurrrentChallengeButton
+                  challengeId={item.challenge_id.toString()}
+                  onClick={() => ChangeChallenge(item.challenge_id.toString())}
+                >
+                  {item?.organization} {item?.challenge} 챌린지
+                </CurrrentChallengeButton>
+              ))}
+            </div>
+          )}
         </Bottom>
         <div
           className="logout"
