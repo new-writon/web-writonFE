@@ -84,7 +84,7 @@ export const MyRetrospect = ({ RetrospectData }: { RetrospectData: communityCont
                 {...REACT_SLIDER_SETTINGS}
                 ref={slickRef}
               >
-                {RetrospectData.map((data, idx) => (
+                {RetrospectData.reverse().map((data, idx) => (
                   <React.Fragment key={idx}>
                     <RetrospectItem data={data} />
                   </React.Fragment>
@@ -112,7 +112,7 @@ export const MyRetrospect = ({ RetrospectData }: { RetrospectData: communityCont
               )}
             </RetroSpectBox>
             <RetroSpectBoxResponsive>
-              {RetrospectData.map((data, idx) => (
+              {RetrospectData.reverse().map((data, idx) => (
                 <React.Fragment key={idx}>
                   <RetrospectItem data={data} />
                 </React.Fragment>
