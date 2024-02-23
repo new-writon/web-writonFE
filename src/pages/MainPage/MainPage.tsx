@@ -64,7 +64,7 @@ const MainPage = () => {
           if (!review) {
             if (
               (result[0].overlapPeriod === 0 && result[1][result[1].length - 1].badge === "Gold") ||
-              result[0].overlapPeriod === -1
+              result[0].overlapPeriod <= -1
             ) {
               setFinishModal(true);
             }
