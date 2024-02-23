@@ -3,8 +3,10 @@ import { useEffect, useState } from "react";
 
 import { format } from "date-fns";
 import { useNavigate } from "react-router-dom";
+import { useSetRecoilState } from "recoil";
 import styled from "styled-components";
 
+import { getFinishModal } from "@/apis/FinishModal";
 import { dateCheck } from "@/apis/header";
 import {
   getCalendarRecordCurrent,
@@ -17,6 +19,7 @@ import { ProgressBox } from "@/components/MainPage/ProgressBox";
 import { FloatingWriteButton } from "@/components/atom/button";
 import { mainCalendarDummyData } from "@/dummy/main";
 import useAsyncWithLoading from "@/hooks/useAsyncWithLoading";
+import { finishModalState } from "@/recoil/atoms";
 import { CalendarRecordCurrentType, ChallengeCurrentType, communityContentProps } from "@/types";
 
 const MainPage = () => {
@@ -25,6 +28,7 @@ const MainPage = () => {
   const [ChallengeCurrent, setChallengeCurrent] = useState<ChallengeCurrentType>();
   const [CalendarData, setCalendarData] = useState<CalendarRecordCurrentType[]>([]);
   const [RetrospectData, setRetrospectData] = useState<communityContentProps[][]>([]);
+  const setFinishModal = useSetRecoilState(finishModalState);
   const executeAsyncTask = useAsyncWithLoading();
   const spaceToWritingPage = () => {
     dateCheck(navigate, today);
@@ -50,6 +54,24 @@ const MainPage = () => {
         setChallengeCurrent(result[0]);
         setCalendarData(result[1]);
         setRetrospectData(result[2]);
+
+        // 챌린지 마지막 프로세스 모달창 띄우기
+        try {
+          const { review } = await getFinishModal(
+            localStorage.getItem("organization") || "",
+            localStorage.getItem("challengeId") || "1"
+          );
+          if (!review) {
+            if (
+              (result[0].overlapPeriod === 0 && result[1][result[1].length - 1].badge === "Gold") ||
+              result[0].overlapPeriod <= -1
+            ) {
+              setFinishModal(true);
+            }
+          }
+        } catch {
+          throw new Error("shit");
+        }
       } catch {
         throw new Error("shit");
       }
