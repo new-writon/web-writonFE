@@ -22,18 +22,18 @@ export const FinishModal = () => {
   const executeAsyncTask = useAsyncWithLoading();
 
   const reviewForm = async (reviewUrl: string | null | undefined) => {
-    // try {
-    //   const response = await putFinishModal(
-    //     localStorage.getItem("organization") || "",
-    //     localStorage.getItem("challengeId") || "1"
-    //   );
-    //   console.log(response);
-    window.open(reviewUrl || "http://www.writon.co.kr");
-    setFinishModal(false);
-    document.body.style.overflowY = "scroll";
-    // } catch {
-    //   throw new Error("shit");
-    // }
+    try {
+      const response = await putFinishModal(
+        localStorage.getItem("organization") || "",
+        localStorage.getItem("challengeId") || "1"
+      );
+      console.log(response);
+      window.open(reviewUrl || "http://www.writon.co.kr");
+      setFinishModal(false);
+      document.body.style.overflowY = "scroll";
+    } catch {
+      throw new Error("shit");
+    }
   };
 
   const FinishModalRendering = async () => {
