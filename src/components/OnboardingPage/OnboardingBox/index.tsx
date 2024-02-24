@@ -11,7 +11,7 @@ import letsintern from "@/assets/logo/letsintern.png";
 import { DuplicateBtn } from "@/components/Authorization/RegisterEmailPage/style";
 import { ToggleBtnBox } from "@/components/atom/QuestionBox/style";
 import { KeywordButton, OnboardingButton } from "@/components/atom/button";
-import Input from "@/components/atom/input";
+import { Input } from "@/components/atom/input/index";
 import useAsyncWithLoading from "@/hooks/useAsyncWithLoading";
 
 import {
