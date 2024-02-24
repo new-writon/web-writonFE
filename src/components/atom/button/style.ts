@@ -184,3 +184,35 @@ export const CurrrentChallengeBtn = styled.div`
     background: var(--Gray-20, #f5f5f5);
   }
 `;
+
+export const PublicBtn = styled.div<{ $secret: number | undefined | null; $state: string }>`
+  width: fit-content;
+  min-width: 55px;
+  height: fit-content;
+  display: flex;
+  gap: 7px;
+  justify-content: space-between;
+  padding: 5px 8px;
+  border-radius: 40px;
+  border: ${(props) =>
+    props.$secret === 0
+      ? " 1px solid var(--purple-50, #6A63F5)"
+      : " 1px solid var(--Gray-40, #d9d9d9);"};
+
+  background: transparent;
+  cursor: ${(props) => (props.$state === "default" ? "auto" : "pointer")};
+  p {
+    color: ${(props) =>
+      props.$secret === 0 ? "var(--purple-50, #6A63F5)" : "var(--Gray-60, #959595)"};
+    font-size: 0.75rem;
+    margin-top: 3px;
+  }
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  margin: auto 0;
+  right: 16px;
+  &:hover {
+    background: ${(props) => props.$state === "edit" && "var(--Gray-20, #f5f5f5)"};
+  }
+`;
