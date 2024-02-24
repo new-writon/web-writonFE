@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import styled from "styled-components";
 
 import { getMyCommunityStory } from "@/apis/CommunityPage";
+import { ProfileSetting } from "@/components/MyPage/ProfileSetting";
 import { SideTab } from "@/components/MyPage/SideTab";
 import { MainSemiTitle } from "@/components/atom/MainSemiTitle";
 import useAsyncWithLoading from "@/hooks/useAsyncWithLoading";
@@ -31,6 +32,7 @@ export const MyPage = () => {
     const category = new URL(window.location.href).searchParams.get("category");
     setActiveCategory(category);
   }, []);
+
   return (
     <Inner>
       <Container>
@@ -40,11 +42,13 @@ export const MyPage = () => {
             myData={myData}
             setActiveCategory={setActiveCategory}
           ></SideTab>
-          {activeCategory === "프로필 설정"
-            ? "ㅎㅇㅎㅇㅎㅇ"
-            : activeCategory === "보안 설정"
-              ? "ㄷㄹㄷㄹㄷㄹ"
-              : ""}
+          {activeCategory === "프로필 설정" ? (
+            <ProfileSetting myData={myData} />
+          ) : activeCategory === "보안 설정" ? (
+            "ㄷㄹㄷㄹㄷㄹ"
+          ) : (
+            ""
+          )}
         </div>
       </Container>
     </Inner>
