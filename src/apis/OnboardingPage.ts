@@ -1,7 +1,7 @@
 import { getData, postData } from ".";
 
 //닉네임중복
-export const getDuplicateNickname = async (organization: string, NickName: string) => {
+export const getDuplicateNickname = async (organization: string, NickName: string | undefined) => {
   const response = await getData(`/challenge/start/check/${organization}?nickname=${NickName}`);
   return response.data;
 };
