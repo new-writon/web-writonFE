@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 
 import activity from "@/assets/mypage/icon-myactivity.svg";
 import information from "@/assets/mypage/icon-personal.svg";
-import { communityStoryProps } from "@/types";
+import { myPageProps } from "@/types";
 
 import { Bottom, Container, Top } from "./style";
 
@@ -15,7 +15,7 @@ export const SideTab = ({
   myData,
   setActiveCategory,
 }: {
-  myData: communityStoryProps | undefined;
+  myData: myPageProps | undefined;
   setActiveCategory: (activeCategry: string) => void;
 }) => {
   const navigate = useNavigate();
@@ -32,7 +32,7 @@ export const SideTab = ({
         <div className="topWrapper">
           <div className="profileImageCover">
             <img
-              src={myData?.profile}
+              src={myData?.userProfile}
               alt="profile"
             />
           </div>
