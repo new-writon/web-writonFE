@@ -205,3 +205,28 @@ export interface challengeListProps {
   challenge: string;
   challengeFinishSign: string;
 }
+
+export interface myPageProps {
+  email: string;
+  userProfile: string;
+  accountNumber: string;
+  bank: string;
+  nickname: string;
+  hiredate: string;
+  company: string;
+  job: string;
+  jobIntroduce: string;
+}
+export interface myProfileEditProps {
+  nickname: string | undefined;
+  hireDate: string;
+  company: string | undefined;
+  job: string | undefined;
+  jobIntroduce: string | undefined;
+  companyPublic: boolean;
+}
+
+export interface accountNumberProps {
+  accountNumber: string;
+  bank: string;
+}
