@@ -1,25 +1,30 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { useEffect, useState } from "react";
 
+import { useRecoilValue } from "recoil";
 import styled from "styled-components";
 
-import { getMyCommunityStory } from "@/apis/CommunityPage";
+import { getMyPageData } from "@/apis/MyPage";
 import { ProfileSetting } from "@/components/MyPage/ProfileSetting";
+import { SecuritySetting } from "@/components/MyPage/SecuritySetting";
 import { SideTab } from "@/components/MyPage/SideTab";
 import { MainSemiTitle } from "@/components/atom/MainSemiTitle";
 import useAsyncWithLoading from "@/hooks/useAsyncWithLoading";
+import { accountNumberState } from "@/recoil/atoms";
 import { Inner } from "@/style/global";
-import { communityStoryProps } from "@/types";
+import { myPageProps } from "@/types";
 
 export const MyPage = () => {
-  const [myData, setMyData] = useState<communityStoryProps>();
+  const [myData, setMyData] = useState<myPageProps>();
   const executeAsyncTask = useAsyncWithLoading();
   const [activeCategory, setActiveCategory] = useState<string | null>("");
+  const accountNumberModal = useRecoilValue(accountNumberState);
+
   const MyPageRendering = async () => {
     executeAsyncTask(async () => {
       try {
         const result = await Promise.all([
-          getMyCommunityStory(localStorage.getItem("challengeId") || "1"),
+          getMyPageData(localStorage.getItem("organization") || ""),
         ]);
         setMyData(result[0]);
       } catch {
@@ -31,7 +36,7 @@ export const MyPage = () => {
     MyPageRendering();
     const category = new URL(window.location.href).searchParams.get("category");
     setActiveCategory(category);
-  }, []);
+  }, [accountNumberModal]);
 
   return (
     <Inner>
@@ -45,7 +50,7 @@ export const MyPage = () => {
           {activeCategory === "프로필 설정" ? (
             <ProfileSetting myData={myData} />
           ) : activeCategory === "보안 설정" ? (
-            "ㄷㄹㄷㄹㄷㄹ"
+            <SecuritySetting />
           ) : (
             ""
           )}
@@ -62,5 +67,6 @@ const Container = styled.div`
     margin-top: 16px;
     display: flex;
     gap: 18px;
+    min-width: 930px;
   }
 `;
