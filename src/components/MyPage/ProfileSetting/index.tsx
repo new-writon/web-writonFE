@@ -4,11 +4,12 @@ import React, { ChangeEvent, useEffect, useRef, useState } from "react";
 import { format } from "date-fns";
 import { useSetRecoilState } from "recoil";
 
+import { putMyPageData } from "@/apis/MyPage";
 import { getDuplicateNickname } from "@/apis/OnboardingPage";
 import { KeywordButton, PublicButton } from "@/components/atom/button";
 import { MyPageInput } from "@/components/atom/input/style";
 import { accountNumberState } from "@/recoil/atoms";
-import { communityStoryProps } from "@/types";
+import { myPageProps, myProfileEditProps } from "@/types";
 
 import {
   AccountButton,
@@ -23,24 +24,15 @@ import {
 
 const JobCategory = ["기획", "운영", "경영", "개발", "마케팅", "디자인"];
 
-interface ProfileSettingProps {
-  nickname: string | undefined;
-  job: string | undefined;
-  jobIntroduce: string | undefined;
-  hireDate: string | undefined;
-  company: string | undefined | null;
-  companyPublic: number | undefined | null;
-}
-
-export const ProfileSetting = ({ myData }: { myData: communityStoryProps | undefined }) => {
+export const ProfileSetting = ({ myData }: { myData: myPageProps | undefined }) => {
   const [editActive, setEditActive] = useState<boolean>(false);
-  const [ProfileData, setProfileData] = useState<ProfileSettingProps>({
+  const [ProfileData, setProfileData] = useState<myProfileEditProps>({
     nickname: "",
     job: "",
     jobIntroduce: "",
     hireDate: "",
     company: "",
-    companyPublic: 0,
+    companyPublic: false,
   });
   const [duplicateShow, setDuplicateShow] = useState<boolean>(false);
   const [duplicate, setDuplicate] = useState<boolean>(false);
@@ -116,12 +108,17 @@ export const ProfileSetting = ({ myData }: { myData: communityStoryProps | undef
     }
   };
 
-  const EditComplete = () => {
+  const EditComplete = async () => {
     // 수정 api 발송 ProfileData
-    setEditActive(false);
-    console.log(ProfileData);
-    window.location.reload();
-    window.scrollTo({ top: 0 });
+    try {
+      const response = await putMyPageData(localStorage.getItem("organization") || "", ProfileData);
+      console.log(response);
+      setEditActive(false);
+      window.location.reload();
+      window.scrollTo({ top: 0 });
+    } catch {
+      new Error("siht");
+    }
   };
 
   useEffect(() => {
@@ -129,10 +126,10 @@ export const ProfileSetting = ({ myData }: { myData: communityStoryProps | undef
       ...ProfileData,
       nickname: myData?.nickname,
       job: myData?.job,
-      jobIntroduce: myData?.job_introduce,
-      hireDate: format(myData?.cheering_phrase_date || new Date(), "yyyy-MM-dd"),
+      jobIntroduce: myData?.jobIntroduce,
+      hireDate: format(myData?.hiredate || new Date(), "yyyy-MM-dd"),
       company: myData?.company,
-      companyPublic: myData?.company_public,
+      companyPublic: true, // myData?.companyPublic ===1?true:false
     });
   }, [myData, editActive]);
 
@@ -161,14 +158,16 @@ export const ProfileSetting = ({ myData }: { myData: communityStoryProps | undef
             <div className="editField">
               <div className="editTitle">계좌번호</div>
               <div className="editText account">
-                계좌번호를 입력해주세요.
+                {myData?.accountNumber === null
+                  ? "계좌번호를 입력해주세요."
+                  : `${myData?.bank}  ${myData?.accountNumber}`}
                 <AccountButton
                   onClick={() => {
                     setAccountNumberModal(true);
                     document.body.style.overflowY = "hidden";
                   }}
                 >
-                  추가
+                  {myData?.accountNumber === null ? "추가" : "변경"}
                 </AccountButton>
                 {/* 계좌번호 데이터가 없으면 입력해주세요 글씨 , 추가 버튼 만약 있으면 계좌번호랑 변경 버튼 */}
               </div>
@@ -183,16 +182,14 @@ export const ProfileSetting = ({ myData }: { myData: communityStoryProps | undef
                 {myData?.company}
                 <PublicButton
                   onClick={() => {}}
-                  secret={myData?.company_public}
+                  secret={true} // {myData?.companyPublic ===1?true:false}
                   state="default"
                 />
               </div>
             </div>
             <div className="editField">
               <div className="editTitle">입사 날짜</div>
-              <div className="editText">
-                {format(myData?.cheering_phrase_date || new Date(), "yyyy-MM-dd")}
-              </div>
+              <div className="editText">{format(myData?.hiredate || new Date(), "yyyy-MM-dd")}</div>
             </div>
             <div className="editField">
               <div className="editTitle">직무</div>
@@ -207,7 +204,7 @@ export const ProfileSetting = ({ myData }: { myData: communityStoryProps | undef
             </div>
             <div className="editField">
               <div className="editTitle">직무에 대한 한 줄 소개</div>
-              <div className="editText">{myData?.job_introduce}</div>
+              <div className="editText">{myData?.jobIntroduce}</div>
             </div>
           </ChallengeSetting>
         </>
@@ -255,14 +252,16 @@ export const ProfileSetting = ({ myData }: { myData: communityStoryProps | undef
             <div className="editField">
               <div className="editTitle">계좌번호</div>
               <div className="editText account">
-                계좌번호를 입력해주세요.
+                {myData?.accountNumber === null
+                  ? "계좌번호를 입력해주세요."
+                  : `${myData?.bank}  ${myData?.accountNumber}`}
                 <AccountButton
                   onClick={() => {
                     setAccountNumberModal(true);
                     document.body.style.overflowY = "hidden";
                   }}
                 >
-                  추가
+                  {myData?.accountNumber === null ? "추가" : "변경"}
                 </AccountButton>
               </div>
             </div>
@@ -283,7 +282,7 @@ export const ProfileSetting = ({ myData }: { myData: communityStoryProps | undef
                   onClick={() =>
                     setProfileData({
                       ...ProfileData,
-                      companyPublic: ProfileData.companyPublic === 1 ? 0 : 1,
+                      companyPublic: !ProfileData.companyPublic,
                     })
                   }
                   secret={ProfileData?.companyPublic}
