@@ -6,12 +6,7 @@ import {
   finishModalState,
   loadingState,
   modalBackgroundState,
-} from "@/recoil/atoms";
-import {
-  DetailModalState,
   accountNumberState,
-  loadingState,
-  modalBackgroundState,
 } from "@/recoil/atoms";
 
 import { AccountNumberModal } from "../atom/AccountNumberModal";
