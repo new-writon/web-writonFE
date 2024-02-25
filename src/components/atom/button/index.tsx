@@ -154,7 +154,7 @@ export const FinishModalButton = ({ children, onClick }: ButtonProps) => {
 };
 
 interface PublicButtonProps {
-  secret: number | undefined | null;
+  secret: boolean;
   onClick: () => void;
   state: string;
 }
@@ -165,9 +165,9 @@ export const PublicButton = ({ onClick, secret, state }: PublicButtonProps) => {
       $secret={secret}
       $state={state}
     >
-      <p>{secret === 0 ? "비공개" : "공개"}</p>
+      <p>{!secret ? "비공개" : "공개"}</p>
       <img
-        src={secret === 0 ? secretIMG : publicIMG}
+        src={!secret ? secretIMG : publicIMG}
         alt="0"
       />
     </PublicBtn>

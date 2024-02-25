@@ -185,7 +185,7 @@ export const CurrrentChallengeBtn = styled.div`
   }
 `;
 
-export const PublicBtn = styled.div<{ $secret: number | undefined | null; $state: string }>`
+export const PublicBtn = styled.div<{ $secret: boolean; $state: string }>`
   width: fit-content;
   min-width: 55px;
   height: fit-content;
@@ -195,15 +195,14 @@ export const PublicBtn = styled.div<{ $secret: number | undefined | null; $state
   padding: 5px 8px;
   border-radius: 40px;
   border: ${(props) =>
-    props.$secret === 0
+    !props.$secret
       ? " 1px solid var(--purple-50, #6A63F5)"
       : " 1px solid var(--Gray-40, #d9d9d9);"};
 
   background: transparent;
   cursor: ${(props) => (props.$state === "default" ? "auto" : "pointer")};
   p {
-    color: ${(props) =>
-      props.$secret === 0 ? "var(--purple-50, #6A63F5)" : "var(--Gray-60, #959595)"};
+    color: ${(props) => (!props.$secret ? "var(--purple-50, #6A63F5)" : "var(--Gray-60, #959595)")};
     font-size: 0.75rem;
     margin-top: 3px;
   }
