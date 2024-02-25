@@ -2,17 +2,14 @@ import { ChangeEvent, useState } from "react";
 
 import { useSetRecoilState } from "recoil";
 
+import { patchAccountNumberData } from "@/apis/MyPage";
 import { accountNumberState } from "@/recoil/atoms";
+import { accountNumberProps } from "@/types";
 
 import { MainSemiTitle } from "../MainSemiTitle";
 import { Input } from "../input";
 
 import { AccountNumberBox, Container, EditButton } from "./style";
-
-interface accountNumberProps {
-  accountNumber: string;
-  bank: string;
-}
 
 export const AccountNumberModal = () => {
   const setAccountNumberModal = useSetRecoilState(accountNumberState);
@@ -39,6 +36,17 @@ export const AccountNumberModal = () => {
 
     if (value.length < 30) {
       setAccountNumberData({ ...accountNumberData, accountNumber: validCharacters.join("") }); // 추출된 문자를 다시 합침
+    }
+  };
+
+  const AccountEditComplete = async () => {
+    try {
+      const response = await patchAccountNumberData(accountNumberData);
+      console.log(response);
+      setAccountNumberModal(false);
+      document.body.style.overflowY = "scroll";
+    } catch {
+      new Error("shit");
     }
   };
 
@@ -79,9 +87,7 @@ export const AccountNumberModal = () => {
           </div>
           <div
             className="editCompleteBtn"
-            onClick={() => {
-              console.log(accountNumberData);
-            }}
+            onClick={AccountEditComplete}
           >
             완료
           </div>
