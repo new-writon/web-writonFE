@@ -56,8 +56,6 @@ export const TooltipProfile = ({
     window.location.reload();
   };
 
-  console.log(ChallengeList);
-
   return (
     <>
       <BackDrop
