@@ -129,7 +129,7 @@ export const ProfileSetting = ({ myData }: { myData: myPageProps | undefined }) 
       jobIntroduce: myData?.jobIntroduce,
       hireDate: format(myData?.hiredate || new Date(), "yyyy-MM-dd"),
       company: myData?.company,
-      companyPublic: true, // myData?.companyPublic ===1?true:false
+      companyPublic: myData?.companyPublic === 1 ? true : false,
     });
   }, [myData, editActive]);
 
@@ -182,7 +182,7 @@ export const ProfileSetting = ({ myData }: { myData: myPageProps | undefined }) 
                 {myData?.company}
                 <PublicButton
                   onClick={() => {}}
-                  secret={true} // {myData?.companyPublic ===1?true:false}
+                  secret={myData?.companyPublic === 1 ? true : false}
                   state="default"
                 />
               </div>

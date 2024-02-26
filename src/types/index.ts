@@ -216,6 +216,7 @@ export interface myPageProps {
   company: string;
   job: string;
   jobIntroduce: string;
+  companyPublic: number;
 }
 export interface myProfileEditProps {
   nickname: string | undefined;
