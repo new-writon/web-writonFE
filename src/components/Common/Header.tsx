@@ -86,7 +86,6 @@ const Header = () => {
       if (data[0]?.profile !== null) {
         setProfileImage(data[0]?.profile);
       }
-      console.log(data);
       setUserProfile(data[0]);
       setChallengeList(data[1]);
     } catch {
