@@ -1,4 +1,9 @@
-import { accountNumberProps, myPageProps, myProfileEditProps } from "@/types";
+import {
+  accountNumberProps,
+  communityContentProps,
+  myPageProps,
+  myProfileEditProps,
+} from "@/types";
 
 import { getData, patchData, putData } from ".";
 
@@ -17,5 +22,13 @@ export const putMyPageData = async (organization: string, editData: myProfileEdi
 //계좌번호
 export const patchAccountNumberData = async (accountNumberData: accountNumberProps) => {
   const response = await patchData("/user/account-number", accountNumberData);
+  return response.data;
+};
+
+//마이페이지 나의 회고 모아보기
+export const getMyPageRetrospectItem = async (organization: string, challengeId: string) => {
+  const response = await getData<communityContentProps[][]>(
+    `/challenge/record/reminiscence/${organization}/${challengeId}`
+  );
   return response.data;
 };
