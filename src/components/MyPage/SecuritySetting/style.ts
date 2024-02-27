@@ -7,6 +7,7 @@ export const Container = styled.div`
   border-radius: 16px;
   margin-bottom: 300px;
   padding: 50px 50px 80px 60px;
+  max-height: 700px;
   .title {
     color: #000;
     font-size: 1.125rem;
