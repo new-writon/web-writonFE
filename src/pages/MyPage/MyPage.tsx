@@ -5,6 +5,7 @@ import { useRecoilValue } from "recoil";
 import styled from "styled-components";
 
 import { getMyPageData } from "@/apis/MyPage";
+import { MyPageRetrospect } from "@/components/MyPage/MyPageRetrospect";
 import { ProfileSetting } from "@/components/MyPage/ProfileSetting";
 import { SecuritySetting } from "@/components/MyPage/SecuritySetting";
 import { SideTab } from "@/components/MyPage/SideTab";
@@ -51,8 +52,10 @@ export const MyPage = () => {
             <ProfileSetting myData={myData} />
           ) : activeCategory === "보안 설정" ? (
             <SecuritySetting />
+          ) : activeCategory === "작성한 회고" ? (
+            <MyPageRetrospect />
           ) : (
-            ""
+            <div className="ready">아직 준비 중입니다.</div>
           )}
         </div>
       </Container>
@@ -68,5 +71,14 @@ const Container = styled.div`
     display: flex;
     gap: 18px;
     min-width: 930px;
+  }
+  .ready {
+    width: 100%;
+    color: var(--Gray-80, #616161);
+    font-size: 1.15rem;
+    font-weight: 600;
+    display: flex;
+    justify-content: center;
+    align-items: center;
   }
 `;
