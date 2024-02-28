@@ -16,6 +16,7 @@ export const Container = styled.div`
   }
 
   .date {
+    min-width: 105px;
     width: fit-content;
     color: #000;
     font-size: 0.875rem;
