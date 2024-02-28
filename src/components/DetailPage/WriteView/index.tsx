@@ -7,6 +7,7 @@ import { Container } from "./style";
 
 export const WriteView = ({ detailData }: { detailData: communityContentProps[] }) => {
   const arr = detailData?.filter((item) => item.category === "스페셜 질문");
+  console.log(detailData);
   return (
     <Container>
       <div className="date">{format(detailData[0]?.created_at, "M월 d일 회고")}</div>
@@ -26,7 +27,9 @@ export const WriteView = ({ detailData }: { detailData: communityContentProps[] 
         </div>
       )}
       <div className="basicQuestion">
-        <TitleSideBox type="special">베이직 질문</TitleSideBox>
+        {detailData.filter((item) => item.category !== "스페셜 질문").length > 0 && (
+          <TitleSideBox type="special">베이직 질문</TitleSideBox>
+        )}
         <div className="QuestionBox">
           {detailData
             .filter((item) => item.category !== "스페셜 질문")
