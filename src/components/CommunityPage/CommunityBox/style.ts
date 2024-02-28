@@ -45,6 +45,7 @@ export const CommunityHeader = styled.div`
     justify-content: space-between;
   }
   .categoriesMobile {
+    width: fit-content;
     display: flex;
     gap: 4px;
     p {
