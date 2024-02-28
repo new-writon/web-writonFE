@@ -1,3 +1,5 @@
+import { useEffect, useState } from "react";
+
 import { useNavigate } from "react-router-dom";
 
 import { deleteLogout } from "@/apis/header";
@@ -26,6 +28,7 @@ export const TooltipProfile = ({
   ChallengeList: challengeListProps[] | undefined;
 }) => {
   const navigate = useNavigate();
+  const [width, setWidth] = useState<number>(window.innerWidth);
 
   const Logout = async () => {
     try {
@@ -56,6 +59,16 @@ export const TooltipProfile = ({
     window.location.reload();
   };
 
+  const handleResize = () => {
+    //뷰크기 강제로 강져오기
+    setWidth(window.innerWidth);
+  };
+
+  useEffect(() => {
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize); //clean
+  }, [width]);
+
   return (
     <>
       <BackDrop
@@ -78,7 +91,15 @@ export const TooltipProfile = ({
             <div className="email">{userProfile?.email}</div>
           </div>
         </Header>
-        <MypageBtn onClick={() => navigate("/mypage?category=프로필 설정")}>
+        <MypageBtn
+          onClick={() => {
+            if (width >= 530) {
+              navigate("/mypage?category=프로필 설정");
+            } else {
+              alert("모바일은 준비중입니다.");
+            }
+          }}
+        >
           마이페이지
           <img
             src={arrow}
