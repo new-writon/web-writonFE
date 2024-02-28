@@ -13,7 +13,7 @@ import {
 import checkable from "@/assets/register/signup_checkall.svg";
 import checkdisable from "@/assets/register/signup_checkall_disabled.svg";
 import { AuthorizationTitle } from "@/components/atom/AuthorizationTitle";
-import Input from "@/components/atom/input";
+import { Input } from "@/components/atom/input";
 import useAsyncWithLoading from "@/hooks/useAsyncWithLoading";
 import { agreeTextState, loadingState } from "@/recoil/atoms";
 

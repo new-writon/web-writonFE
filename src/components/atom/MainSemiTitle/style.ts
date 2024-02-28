@@ -19,7 +19,7 @@ export const Container = styled.div<{ $font: number }>`
     display: flex;
     font-size: ${(props) => `${props.$font}rem`};
   }
-  @media (max-width: 560px) {
+  @media (max-width: 565px) {
     display: block;
     &:has(.number) {
       font-size: 1.25rem;

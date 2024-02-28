@@ -2,6 +2,7 @@ import { useNavigate } from "react-router-dom";
 import { useRecoilState, useRecoilValue } from "recoil";
 
 import { postwritingSubmit } from "@/apis/WritingPage";
+import useAsyncWithLoading from "@/hooks/useAsyncWithLoading";
 import { DateResponsiveState, modalBackgroundState, postWritingDataState } from "@/recoil/atoms";
 import { writingPagePopUpProps } from "@/types";
 
@@ -35,18 +36,20 @@ export const CompletePopupResponsive = () => {
   const [modal, setModal] = useRecoilState(modalBackgroundState);
   const postWritingData = useRecoilValue(postWritingDataState);
   const DateResponsive = useRecoilValue(DateResponsiveState);
-
+  const executeAsyncTask = useAsyncWithLoading();
   const submitWrite = async () => {
-    const response = await postwritingSubmit(
-      localStorage.getItem("organization") || "",
-      localStorage.getItem("challengeId") || "1",
-      DateResponsive || "",
-      postWritingData
-    );
-    console.log(response);
-    navigate("/");
-    setModal({ ...modal, completeModal: false });
-    document.body.style.overflowY = "auto";
+    executeAsyncTask(async () => {
+      const response = await postwritingSubmit(
+        localStorage.getItem("organization") || "",
+        localStorage.getItem("challengeId") || "1",
+        DateResponsive || "",
+        postWritingData
+      );
+      console.log(response);
+      navigate("/");
+      setModal({ ...modal, completeModal: false });
+      document.body.style.overflowY = "auto";
+    });
   };
 
   return (

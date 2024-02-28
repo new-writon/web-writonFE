@@ -148,3 +148,8 @@ export const finishModalState = atom<boolean>({
   key: "finishModalState",
   default: false,
 });
+
+export const accountNumberState = atom<boolean>({
+  key: "accountNumberState",
+  default: false,
+});

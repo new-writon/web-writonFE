@@ -1,10 +1,15 @@
+import { useEffect, useState } from "react";
+
 import { useNavigate } from "react-router-dom";
 
 import { deleteLogout } from "@/apis/header";
 import profile from "@/assets/communityPage/profile.png";
-import { ChallengeCurrentType, communityStoryProps } from "@/types";
+import arrow from "@/assets/header/rightArrow.svg";
+import { challengeListProps, communityStoryProps } from "@/types";
 
-import { BackDrop, Bottom, Container, Header, Middle } from "./style";
+import { CurrrentChallengeButton } from "../button";
+
+import { BackDrop, Bottom, Container, Header, Middle, MypageBtn } from "./style";
 
 export const TooltipProfile = ({
   headerTooltip,
@@ -12,16 +17,18 @@ export const TooltipProfile = ({
   userProfile,
   setHeaderTooltip,
   setTooltipMobile,
-  ChallengeCurrent,
+
+  ChallengeList,
 }: {
   headerTooltip: boolean;
   TooltipMobile: boolean;
   userProfile: communityStoryProps | undefined;
   setHeaderTooltip: (headerTooltip: boolean) => void;
   setTooltipMobile: (TooltipMobile: boolean) => void;
-  ChallengeCurrent: ChallengeCurrentType | undefined;
+  ChallengeList: challengeListProps[] | undefined;
 }) => {
   const navigate = useNavigate();
+  const [width, setWidth] = useState<number>(window.innerWidth);
 
   const Logout = async () => {
     try {
@@ -47,6 +54,21 @@ export const TooltipProfile = ({
     }
   };
 
+  const ChangeChallenge = (challengeId: string) => {
+    localStorage.setItem("challengeId", challengeId);
+    window.location.reload();
+  };
+
+  const handleResize = () => {
+    //뷰크기 강제로 강져오기
+    setWidth(window.innerWidth);
+  };
+
+  useEffect(() => {
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize); //clean
+  }, [width]);
+
   return (
     <>
       <BackDrop
@@ -69,6 +91,21 @@ export const TooltipProfile = ({
             <div className="email">{userProfile?.email}</div>
           </div>
         </Header>
+        <MypageBtn
+          onClick={() => {
+            if (width >= 530) {
+              navigate("/mypage?category=프로필 설정");
+            } else {
+              alert("모바일은 준비중입니다.");
+            }
+          }}
+        >
+          마이페이지
+          <img
+            src={arrow}
+            alt=">"
+          />
+        </MypageBtn>
         <div className="line"></div>
         <Middle>
           <div className="userAddInfo">
@@ -79,14 +116,32 @@ export const TooltipProfile = ({
         </Middle>
         <div className="line"></div>
         <Bottom>
-          <div className="currentChallengeTitle">현재 참여중인 챌린지</div>
-          <div className="currentChallenge">
-            <div className="title">
-              {" "}
-              {ChallengeCurrent?.organization} {ChallengeCurrent?.challenge} 챌린지
+          {ChallengeList?.filter((data) => data.challengeFinishSign === "0").length !== 0 && (
+            <div className="currentChallenge">
+              <div className="currentChallengeTitle">참여중인 챌린지</div>
+              {ChallengeList?.filter((data) => data.challengeFinishSign === "0").map((item) => (
+                <CurrrentChallengeButton
+                  challengeId={item.challenge_id.toString()}
+                  onClick={() => ChangeChallenge(item.challenge_id.toString())}
+                >
+                  {item?.organization} {item?.challenge} 챌린지
+                </CurrrentChallengeButton>
+              ))}
             </div>
-            <div className="currentPage">현재 페이지</div>
-          </div>
+          )}
+          {ChallengeList?.filter((data) => data.challengeFinishSign === "1").length !== 0 && (
+            <div className="pastChallenge">
+              <div className="pastChallengeTitle">지난 챌린지</div>
+              {ChallengeList?.filter((data) => data.challengeFinishSign === "1").map((item) => (
+                <CurrrentChallengeButton
+                  challengeId={item.challenge_id.toString()}
+                  onClick={() => ChangeChallenge(item.challenge_id.toString())}
+                >
+                  {item?.organization} {item?.challenge} 챌린지
+                </CurrrentChallengeButton>
+              ))}
+            </div>
+          )}
         </Bottom>
         <div
           className="logout"

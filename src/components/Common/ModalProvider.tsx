@@ -6,8 +6,10 @@ import {
   finishModalState,
   loadingState,
   modalBackgroundState,
+  accountNumberState,
 } from "@/recoil/atoms";
 
+import { AccountNumberModal } from "../atom/AccountNumberModal";
 import { FinishModal } from "../atom/FinishModal";
 import ContentPopupResponsive from "../atom/WritingPopup/ContentPopupResponsive";
 import { DeletePopupResponsive } from "../atom/WritingPopup/DeletePopup";
@@ -20,6 +22,7 @@ export const ModalProvider = () => {
   const detailModal = useRecoilValue(DetailModalState);
   const isLoading = useRecoilValue(loadingState);
   const finishModal = useRecoilValue(finishModalState);
+  const accountNumberModal = useRecoilValue(accountNumberState);
   return (
     <>
       {modal.todayWriteModal && <TodayWritePopup />}
@@ -28,6 +31,7 @@ export const ModalProvider = () => {
       {detailModal && <DetailPage />}
       {isLoading && <Loading />}
       {finishModal && <FinishModal />}
+      {accountNumberModal && <AccountNumberModal />}
     </>
   );
 };

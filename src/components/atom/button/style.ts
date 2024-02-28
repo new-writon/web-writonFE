@@ -156,3 +156,62 @@ export const FinishModalBtn = styled.div`
     padding: 18px 0;
   }
 `;
+
+export const CurrrentChallengeBtn = styled.div`
+  padding: 8px 10px;
+  display: flex;
+  justify-content: space-between;
+  color: var(--Gray-100, #212121);
+  font-size: 0.875rem;
+  line-height: 160%; /* 22.4px */
+
+  .currentPage {
+    color: var(--Gray-60, #959595);
+    font-size: 0.875rem;
+    font-weight: 600;
+    line-height: 160%; /* 14.4px */
+  }
+  .viewPage {
+    color: var(--purple-50, #6a63f5);
+    font-size: 0.875rem;
+    font-weight: 600;
+    line-height: 160%; /* 14.4px */
+  }
+
+  &:has(.viewPage):hover {
+    cursor: pointer;
+    border-radius: 7px;
+    background: var(--Gray-20, #f5f5f5);
+  }
+`;
+
+export const PublicBtn = styled.div<{ $secret: boolean; $state: string }>`
+  width: fit-content;
+  min-width: 55px;
+  height: fit-content;
+  display: flex;
+  gap: 7px;
+  justify-content: space-between;
+  padding: 5px 8px;
+  border-radius: 40px;
+  border: ${(props) =>
+    !props.$secret
+      ? " 1px solid var(--purple-50, #6A63F5)"
+      : " 1px solid var(--Gray-40, #d9d9d9);"};
+
+  background: transparent;
+  cursor: ${(props) => (props.$state === "default" ? "auto" : "pointer")};
+  p {
+    color: ${(props) => (!props.$secret ? "var(--purple-50, #6A63F5)" : "var(--Gray-60, #959595)")};
+    font-size: 0.75rem;
+    margin-top: 3px;
+  }
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  margin: auto 0;
+  right: 16px;
+  &:hover {
+    background: ${(props) => props.$state === "edit" && "var(--Gray-20, #f5f5f5)"};
+  }
+`;

@@ -66,6 +66,20 @@ export const putData = async <T>(
   }
 };
 
+//TODO: PATCH 메서드
+export const patchData = async <T>(
+  url: string,
+  data?: any,
+  config?: AxiosRequestConfig
+): Promise<ApiResponse<T>> => {
+  try {
+    const response = await WRITON.patch(url, data, config);
+    return response;
+  } catch (error) {
+    throw new Error();
+  }
+};
+
 //TODO: Delete 메서드
 export const deleteData = async <T>(
   url: string,

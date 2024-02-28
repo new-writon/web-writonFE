@@ -6,7 +6,7 @@ import { postChallengeStart } from "@/apis/OnboardingPage";
 import { getChallengingList, postLogin } from "@/apis/login";
 import { AuthorizationTitle } from "@/components/atom/AuthorizationTitle";
 import { BlueButton, KakaoButton } from "@/components/atom/button";
-import Input from "@/components/atom/input";
+import { Input } from "@/components/atom/input";
 import useAsyncWithLoading from "@/hooks/useAsyncWithLoading";
 
 import { Container, EtcBox, InputBox, OrLine } from "./style";

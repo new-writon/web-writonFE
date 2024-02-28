@@ -1,6 +1,6 @@
 import { InputProps } from "@/types";
 
-import { BasicInput } from "./style";
+import { BasicInput, MyPageInput } from "./style";
 
 export const Input = ({
   value,
@@ -26,4 +26,26 @@ export const Input = ({
   );
 };
 
-export default Input;
+export const myPageInput = ({
+  value,
+  type,
+  placeholder,
+  onChange,
+  onFocus,
+  errorLine,
+  onKeyDown,
+}: InputProps) => {
+  return (
+    <div>
+      <MyPageInput
+        type={type}
+        value={value}
+        placeholder={placeholder}
+        onChange={onChange}
+        onFocus={onFocus}
+        errorLine={errorLine}
+        onKeyDown={onKeyDown}
+      />
+    </div>
+  );
+};

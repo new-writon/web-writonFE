@@ -1,7 +1,9 @@
-import React from "react";
+import React, { useState } from "react";
 
 import pencil_white from "@/assets/header/pencil_white.svg";
 import kakao from "@/assets/logo/kakao.svg";
+import publicIMG from "@/assets/mypage/public.svg";
+import secretIMG from "@/assets/mypage/secret.svg";
 import check_white from "@/assets/writingPage/icon-check-white.svg";
 import check from "@/assets/writingPage/icon-check.svg";
 import question_minus from "@/assets/writingPage/question-minus.svg";
@@ -12,10 +14,12 @@ import {
   AddQuestionBtn,
   BlueBtn,
   FinishModalBtn,
+  CurrrentChallengeBtn,
   FloatingWriteBtn,
   KakaoBtn,
   KeywordBtn,
   OnboardingBtn,
+  PublicBtn,
   WritingSubmitBtn,
 } from "./style";
 
@@ -114,6 +118,58 @@ export const OnboardingButton = ({ children, onClick, ButtonOn }: OnboardingButt
   );
 };
 
+interface ChallengeButtonProps {
+  children: React.ReactNode;
+  onClick: () => void;
+  challengeId: string;
+}
+
+export const CurrrentChallengeButton = ({
+  children,
+  onClick,
+  challengeId,
+}: ChallengeButtonProps) => {
+  const [isHover, setIsHover] = useState<boolean>(false);
+
+  return (
+    <CurrrentChallengeBtn
+      onClick={onClick}
+      onMouseOver={() => setIsHover(true)}
+      onMouseOut={() => setIsHover(false)}
+    >
+      <div className="title">{children}</div>
+      {challengeId === localStorage.getItem("challengeId") ? (
+        <div className="currentPage">현재 페이지</div>
+      ) : isHover ? (
+        <div className="viewPage">보러가기</div>
+      ) : (
+        ""
+      )}
+    </CurrrentChallengeBtn>
+  );
+};
+
 export const FinishModalButton = ({ children, onClick }: ButtonProps) => {
   return <FinishModalBtn onClick={onClick}>{children}</FinishModalBtn>;
+};
+
+interface PublicButtonProps {
+  secret: boolean;
+  onClick: () => void;
+  state: string;
+}
+export const PublicButton = ({ onClick, secret, state }: PublicButtonProps) => {
+  return (
+    <PublicBtn
+      onClick={onClick}
+      $secret={secret}
+      $state={state}
+    >
+      <p>{!secret ? "비공개" : "공개"}</p>
+      <img
+        src={!secret ? secretIMG : publicIMG}
+        alt="0"
+      />
+    </PublicBtn>
+  );
 };
