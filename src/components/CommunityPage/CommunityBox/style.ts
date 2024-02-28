@@ -48,18 +48,20 @@ export const CommunityHeader = styled.div`
     min-width: fit-content;
     display: flex;
     gap: 4px;
-    p {
-      color: var(--Gray-80, #616161);
-      font-size: 14px;
-      font-style: normal;
-      font-weight: 500;
-      line-height: 10px;
-    }
     cursor: pointer;
     padding: 10px;
     border-radius: 6px;
     border: 1px solid var(--Gray-40, #d9d9d9);
     height: 30px;
+  }
+  .categoriesMobile p {
+    color: var(--Gray-80, #616161);
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: 10px;
+    white-space: nowrap;
+    display: flex;
   }
   .categoriesMobileActvie {
     border: 1px solid var(--purple-50, #6a63f5);
