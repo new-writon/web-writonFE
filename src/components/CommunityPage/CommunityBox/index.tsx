@@ -48,7 +48,6 @@ export const CommunityBox = () => {
   const [mobileCategoriesActive, setMobileCategoriesActive] = useState<boolean>(false);
 
   const executeAsyncTask = useAsyncWithLoading();
-  const [today, setToday] = useState(new Date());
   const [categoriesArray, setCategoriesArray] = useState(["전체"]);
 
   const ChangeCategories = (item: string) => {
@@ -97,8 +96,7 @@ export const CommunityBox = () => {
           format(value, "yyyy-MM-dd")
         );
         localStorage.setItem("date", format(value, "yyyy-MM-dd"));
-
-        setToday(value);
+        setDateLength(dateActive.indexOf(format(value, "yyyy-MM-dd")));
         setCommunitySecondData(result);
 
         // 카테고리에 따른 글 필터링
@@ -225,7 +223,6 @@ export const CommunityBox = () => {
   useEffect(() => {
     ChangeDate();
     localStorage.setItem("date", dateActive[dateLength]);
-    localStorage.setItem("categories", JSON.stringify(["전체"]));
   }, [dateLength]);
 
   if (!dateActive || dateLength === -1) {
@@ -314,14 +311,21 @@ export const CommunityBox = () => {
                 <Calendar
                   locale="ko"
                   formatDay={(_locale, date) => moment(date).format("D")}
-                  onChange={() => setToday(today)}
-                  value={today}
+                  value={localStorage.getItem("date")}
                   minDate={new Date(dateActive[0])}
                   maxDate={new Date(dateActive[dateLastLength])}
                   minDetail="month" // 상단 네비게이션에서 '월' 단위만 보이게 설정
                   maxDetail="month" // 상단 네비게이션에서 '월' 단위만 보이게 설정
                   onClickDay={clickDay}
                   goToRangeStartOnSelect={true}
+                  tileDisabled={({ date }) => {
+                    // 비활성화할 날짜들을 포함하는 Set 객체 생성
+                    const disabledDates = new Set(
+                      dateActive.map((dateString) => new Date(dateString).toDateString())
+                    );
+                    // 현재 날짜가 비활성화할 날짜 목록에 포함되어 있는지 확인하여 반환
+                    return !disabledDates.has(date.toDateString());
+                  }}
                 />
               )}
               <div
