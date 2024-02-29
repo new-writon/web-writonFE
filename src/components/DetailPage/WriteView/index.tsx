@@ -7,7 +7,6 @@ import { Container } from "./style";
 
 export const WriteView = ({ detailData }: { detailData: communityContentProps[] }) => {
   const arr = detailData?.filter((item) => item.category === "스페셜 질문");
-  console.log(detailData);
   return (
     <Container>
       <div className="date">{format(detailData[0]?.created_at, "M월 d일 회고")}</div>

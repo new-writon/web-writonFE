@@ -200,13 +200,13 @@ export const PublicBtn = styled.div<{ $secret: boolean; $state: string }>`
       : " 1px solid var(--Gray-40, #d9d9d9);"};
 
   background: transparent;
-  cursor: ${(props) => (props.$state === "default" ? "auto" : "pointer")};
+  cursor: ${(props) => (props.$state === "edit" ? "pointer" : "auto")};
   p {
     color: ${(props) => (!props.$secret ? "var(--purple-50, #6A63F5)" : "var(--Gray-60, #959595)")};
     font-size: 0.75rem;
     margin-top: 3px;
   }
-  position: absolute;
+  position: ${(props) => (props.$state === "mobileDefault" ? "relative" : "absolute")};
   top: 0;
   bottom: 0;
   margin: auto 0;

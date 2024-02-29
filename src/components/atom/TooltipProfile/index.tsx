@@ -96,7 +96,7 @@ export const TooltipProfile = ({
             if (width >= 530) {
               navigate("/mypage?category=프로필 설정");
             } else {
-              alert("모바일은 준비중입니다.");
+              navigate("/mypageMobile?category=마이페이지");
             }
           }}
         >

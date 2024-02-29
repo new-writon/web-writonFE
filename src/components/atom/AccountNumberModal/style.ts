@@ -18,6 +18,10 @@ export const AccountNumberBox = styled.div`
   min-width: 490px;
   border-radius: 16px;
   background: #fff;
+  @media (max-width: 530px) {
+    width: 100%;
+    height: 100vh;
+  }
   input {
     border-radius: 8px;
     border: 1px solid var(--Gray-40, #d9d9d9);
@@ -61,5 +65,14 @@ export const EditButton = styled.div`
   .editCompleteBtn {
     background: var(--purple-50, #6a63f5);
     color: var(--White, #fff);
+  }
+  @media (max-width: 530px) {
+    width: 100%;
+    margin-top: 30px;
+    div {
+      width: 50%;
+      padding: 16px 0;
+      text-align: center;
+    }
   }
 `;

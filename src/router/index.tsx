@@ -13,6 +13,7 @@ import { CommunityPage } from "@/pages/CommunityPage/CommunityPage";
 import { DetailPage } from "@/pages/DetailPage/DetailPage";
 import MainPage from "@/pages/MainPage/MainPage";
 import { MyPage } from "@/pages/MyPage/MyPage";
+import { MyPageMobile } from "@/pages/MyPage/MyPageMobile";
 import { OnboardingPage } from "@/pages/OnboardingPage/OnboardingPage";
 import { WritingPage } from "@/pages/WritingPage/WritingPage";
 import { modalBackgroundState } from "@/recoil/atoms";
@@ -51,6 +52,10 @@ const router = () => {
         <Route
           path="/onboarding"
           element={<OnboardingPage />}
+        />
+        <Route
+          path="/mypageMobile"
+          element={<MyPageMobile />}
         />
         <Route element={<Layout />}>
           <Route

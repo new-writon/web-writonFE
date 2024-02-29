@@ -43,7 +43,6 @@ export const FinishModal = () => {
           localStorage.getItem("organization") || "",
           localStorage.getItem("challengeId") || "1"
         );
-        console.log(data);
         setModalData(data);
       } catch {
         throw new Error("shit");
