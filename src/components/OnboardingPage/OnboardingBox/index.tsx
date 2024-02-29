@@ -25,7 +25,7 @@ import {
   Title,
 } from "./style";
 
-const JobCategory = ["기획", "운영", "경영", "개발", "마케팅", "디자인"];
+const JobCategory = ["기획", "운영", "개발", "마케팅", "홍보", "디자인"];
 interface onBoardingDataProps {
   nickname: string;
   job: string;
