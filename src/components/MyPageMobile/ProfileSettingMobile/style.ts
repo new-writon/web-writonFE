@@ -103,9 +103,12 @@ export const AccountButton = styled.div`
   }
 `;
 
-export const BasicSetting = styled.div``;
+export const BasicSetting = styled.div`
+  background: #fff;
+`;
 
 export const ChallengeSetting = styled.div`
+  background: #fff;
   .jobField {
     max-width: 480px;
     .editJob {
