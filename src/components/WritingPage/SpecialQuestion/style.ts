@@ -24,6 +24,10 @@ export const Container = styled.div`
       justify-content: space-between;
       margin: 14px 0 12px;
     }
+    .textQuestion {
+      white-space: pre-wrap;
+      width: calc(100% - 100px);
+    }
 
     textarea {
       width: 100%;

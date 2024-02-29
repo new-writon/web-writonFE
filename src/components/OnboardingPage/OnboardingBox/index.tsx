@@ -9,8 +9,7 @@ import {
 } from "@/apis/OnboardingPage";
 import letsintern from "@/assets/logo/letsintern.png";
 import { DuplicateBtn } from "@/components/Authorization/RegisterEmailPage/style";
-import { ToggleBtnBox } from "@/components/atom/QuestionBox/style";
-import { KeywordButton, OnboardingButton } from "@/components/atom/button";
+import { KeywordButton, OnboardingButton, PublicButton } from "@/components/atom/button";
 import { Input } from "@/components/atom/input/index";
 import useAsyncWithLoading from "@/hooks/useAsyncWithLoading";
 
@@ -263,15 +262,11 @@ export const OnboardingBox = () => {
         <CompanyBox>
           <div className="topTitle">
             <p className="title">회사명</p>
-            <ToggleBtnBox $toggleSwitchOn={!onBoardingData.companyPublic}>
-              {!onBoardingData.companyPublic ? "공개" : "비공개"}
-              <label
-                className={`toggleSwitch ${!onBoardingData.companyPublic && "active"}`}
-                onClick={onVisibility}
-              >
-                <span className="toggleButton"></span>
-              </label>
-            </ToggleBtnBox>
+            <PublicButton
+              onClick={onVisibility}
+              secret={onBoardingData.companyPublic}
+              state="editWrite"
+            />
           </div>
           <Input
             type="text"

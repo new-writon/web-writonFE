@@ -6,8 +6,9 @@ import { postWritingDataState } from "@/recoil/atoms";
 import { BasicQuestionType } from "@/types";
 
 import { MainSemiTitle } from "../MainSemiTitle";
+import { PublicButton } from "../button";
 
-import { Container, ToggleBtnBox } from "./style";
+import { Container } from "./style";
 
 export const QuestionBox = ({ data, idx }: { data: BasicQuestionType; idx: number }) => {
   const [toggleSwitchOn, setToggleSwitchOn] = useState<boolean>(false);
@@ -37,10 +38,17 @@ export const QuestionBox = ({ data, idx }: { data: BasicQuestionType; idx: numbe
   return (
     <Container>
       <div className="title">
-        <MainSemiTitle font={1.125}>
-          {idx + 1}. {data.question}
-        </MainSemiTitle>
-        <ToggleBtnBox $toggleSwitchOn={toggleSwitchOn}>
+        <div className="textQuestion">
+          <MainSemiTitle font={1.125}>
+            {idx + 1}. {data.question}
+          </MainSemiTitle>
+        </div>
+        <PublicButton
+          onClick={() => onVisibility(data?.question_id)}
+          secret={!toggleSwitchOn}
+          state="editWrite"
+        />
+        {/* <ToggleBtnBox $toggleSwitchOn={toggleSwitchOn}>
           {toggleSwitchOn ? "비공개" : "공개"}
           <label
             className={`toggleSwitch ${toggleSwitchOn && "active"}`}
@@ -48,7 +56,7 @@ export const QuestionBox = ({ data, idx }: { data: BasicQuestionType; idx: numbe
           >
             <span className="toggleButton"></span>
           </label>
-        </ToggleBtnBox>
+        </ToggleBtnBox> */}
       </div>
       <textarea
         ref={textareaRef}

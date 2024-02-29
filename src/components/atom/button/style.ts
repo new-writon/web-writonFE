@@ -200,7 +200,8 @@ export const PublicBtn = styled.div<{ $secret: boolean; $state: string }>`
       : " 1px solid var(--Gray-40, #d9d9d9);"};
 
   background: transparent;
-  cursor: ${(props) => (props.$state === "edit" ? "pointer" : "auto")};
+  cursor: ${(props) =>
+    props.$state === "edit" || props.$state === "editWrite" ? "pointer" : "auto"};
   p {
     color: ${(props) => (!props.$secret ? "var(--purple-50, #6A63F5)" : "var(--Gray-60, #959595)")};
     font-size: 0.75rem;
@@ -210,8 +211,9 @@ export const PublicBtn = styled.div<{ $secret: boolean; $state: string }>`
   top: 0;
   bottom: 0;
   margin: auto 0;
-  right: 16px;
+  right: ${(props) => (props.$state === "editWrite" ? "0" : "16px")};
   &:hover {
-    background: ${(props) => props.$state === "edit" && "var(--Gray-20, #f5f5f5)"};
+    background: ${(props) =>
+      props.$state === "edit" || props.$state === "editWrite" ? "var(--Gray-20, #f5f5f5)" : ""};
   }
 `;

@@ -4,9 +4,9 @@ import { useRecoilState, useSetRecoilState } from "recoil";
 
 import close from "@/assets/mainPage/close.svg";
 import { MainSemiTitle } from "@/components/atom/MainSemiTitle";
-import { ToggleBtnBox } from "@/components/atom/QuestionBox/style";
 import { TitleSideBox } from "@/components/atom/TitleSideBox";
 import { DeletePopup } from "@/components/atom/WritingPopup/DeletePopup";
+import { PublicButton } from "@/components/atom/button";
 import {
   addSpecialQuestionArrayState,
   addSpecialQuestionState,
@@ -102,10 +102,17 @@ export const SpecialQuestion = ({
       </div>
       <div className="questionBox">
         <div className="title">
-          <MainSemiTitle font={1.125}>
-            {idx + 1}. {data?.question}
-          </MainSemiTitle>
-          <ToggleBtnBox $toggleSwitchOn={toggleSwitchOn}>
+          <div className="textQuestion">
+            <MainSemiTitle font={1.125}>
+              {idx + 1}. {data?.question}
+            </MainSemiTitle>
+          </div>
+          <PublicButton
+            onClick={() => onVisibility(data?.question_id)}
+            secret={!toggleSwitchOn}
+            state="editWrite"
+          />
+          {/* <ToggleBtnBox $toggleSwitchOn={toggleSwitchOn}>
             {toggleSwitchOn ? "비공개" : "공개"}
             <label
               className={`toggleSwitch ${toggleSwitchOn && "active"}`}
@@ -113,7 +120,7 @@ export const SpecialQuestion = ({
             >
               <span className="toggleButton"></span>
             </label>
-          </ToggleBtnBox>
+          </ToggleBtnBox> */}
         </div>
         <textarea
           ref={textareaRef}
