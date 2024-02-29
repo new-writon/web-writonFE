@@ -11,7 +11,10 @@ export const Container = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  perspective: 1000px;
+  @media (max-width: 530px) {
+    align-items: baseline;
+    padding-top: 56px;
+  }
 
   .finishWrapper {
     min-width: 520px;
