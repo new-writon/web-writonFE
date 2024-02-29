@@ -210,8 +210,7 @@ export const DuplicateBtn = styled.button`
 
 export const EditButton = styled.div`
   background-color: #fff;
-  padding: 0 20px 40px;
-  margin-top: 40px;
+  padding: 40px 20px 40px;
   width: 100%;
   display: flex;
   gap: 10px;
