@@ -10,7 +10,7 @@ export const CommentAndLike = ({
   likeCount: string;
 }) => {
   return (
-    <Container>
+    <Container className="commentAndLike">
       <Item>
         <img
           src={comment}
