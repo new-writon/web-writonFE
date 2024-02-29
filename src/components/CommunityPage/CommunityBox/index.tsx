@@ -123,6 +123,7 @@ export const CommunityBox = () => {
         setDateActive(dateArray);
         setDateLength(dateArray.length - 1);
         setDateLastLength(dateArray.length - 1);
+        localStorage.setItem("dateLastLength", (dateArray.length - 1).toString());
         localStorage.setItem("date", dateArray[dateArray.length - 1]);
         try {
           const result = await getCommunityContentData(
@@ -313,7 +314,7 @@ export const CommunityBox = () => {
                   formatDay={(_locale, date) => moment(date).format("D")}
                   value={localStorage.getItem("date")}
                   minDate={new Date(dateActive[0])}
-                  maxDate={new Date(dateActive[dateLastLength])}
+                  maxDate={new Date(dateActive[Number(localStorage.getItem("dateLastLength"))])}
                   minDetail="month" // 상단 네비게이션에서 '월' 단위만 보이게 설정
                   maxDetail="month" // 상단 네비게이션에서 '월' 단위만 보이게 설정
                   onClickDay={clickDay}
