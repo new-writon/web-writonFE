@@ -71,7 +71,7 @@ export const Container = styled.div<{ $value: number }>`
   .date {
     position: absolute;
     left: ${(props) =>
-      props.$value > 99 ? `calc(${props.$value}% - 45px)` : `calc(${props.$value}% - 29px)`};
+      props.$value > 99 ? `calc(${props.$value}% - 50px)` : `calc(${props.$value}% - 29px)`};
     bottom: -23px;
     color: var(--Gray-80, #616161);
     display: flex;
