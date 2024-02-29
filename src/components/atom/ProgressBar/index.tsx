@@ -55,7 +55,7 @@ export const ProgressBar = ({ value, startDate, endDate }: ProgressBarProps) => 
             <div className="arrow"></div>
           </div>
           <div className="date">
-            {startDate}일<p>/{endDate}일</p>
+            {startDate}일 <p>/ {endDate}일</p>
           </div>
         </>
       )}
