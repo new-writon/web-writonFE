@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-import { differenceInCalendarWeeks, format, getDay, startOfMonth } from "date-fns";
+import { differenceInCalendarWeeks, format, getDay, getMonth, startOfMonth } from "date-fns";
 
 import downArrow from "@/assets/mainPage/downArrow.svg";
 import clalendarIcon from "@/assets/mainPage/icon-calendar.svg";
@@ -24,6 +24,7 @@ export const Calendar = ({ CalendarData }: { CalendarData: CalendarRecordCurrent
     getDay(today) === 0
       ? differenceInCalendarWeeks(today, monthStart)
       : differenceInCalendarWeeks(today, monthStart) + 1;
+  const finishDay = getMonth(CalendarData[CalendarData.length - 1].date) === getMonth(new Date());
 
   return (
     <Inner>
@@ -31,7 +32,9 @@ export const Calendar = ({ CalendarData }: { CalendarData: CalendarRecordCurrent
         <div className="topBar mainCalendar">
           <div className="topBarLeft">
             <MainSemiTitle font={1.25}>
-              {format(today, "M")}월 {weekNumber}주차 도전중
+              {finishDay
+                ? `${format(today, "M")}월 ${weekNumber}주차 도전중`
+                : `${format(CalendarData[CalendarData.length - 1].date, "M")}월 챌린지 종료`}
             </MainSemiTitle>
             <TooltipButton
               tooltipOn={tooltipOn}

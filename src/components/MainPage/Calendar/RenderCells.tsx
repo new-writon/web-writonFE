@@ -8,6 +8,7 @@ import {
   endOfWeek,
   differenceInCalendarWeeks,
   getDay,
+  getMonth,
 } from "date-fns";
 import { isSameMonth, isSameDay, addDays, format } from "date-fns";
 import { useNavigate } from "react-router-dom";
@@ -44,7 +45,12 @@ export const RenderCell = ({
   const [isHover, setIsHover] = useState<boolean>(false);
   const [mouseClick, setMouseClick] = useState<boolean>(false);
   const [width, setWidth] = useState<number>(window.innerWidth);
-  const today = new Date();
+  const today =
+    getMonth(CalendarData[CalendarData.length - 1].date) !== getMonth(new Date())
+      ? new Date(CalendarData[CalendarData.length - 1].date)
+      : new Date(); // 월이 바뀌면 챌린지 마지막날 유지
+  const finishDay = getMonth(CalendarData[CalendarData.length - 1].date) === getMonth(new Date());
+
   const monthStart = startOfMonth(today); // 1월 1일 (그 달의 시작이 나오게 됨.)
   const monthEnd = endOfMonth(today); // 1월 31일이 나옴.(그 달의 끝)
   const startDate = startOfWeek(monthStart); // 해당 날짜의 해당 주의 시작 날짜
@@ -146,7 +152,7 @@ export const RenderCell = ({
           className={`cell ${
             !isSameMonth(day, monthStart) // 1월이면 12월 2월 비활성화
               ? "disabled"
-              : pageDay === "" && isSameDay(day, today) // 오늘 날짜 나올때까지 돌리기 오늘날짜 select!!
+              : pageDay === "" && isSameDay(day, today) && finishDay // 오늘 날짜 나올때까지 돌리기 오늘날짜 select!!
                 ? "selected"
                 : format(today, "M") === format(day, "M") // 해당 달이면 활성화
                   ? "valid"
