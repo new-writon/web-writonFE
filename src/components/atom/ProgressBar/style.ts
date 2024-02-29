@@ -81,7 +81,7 @@ export const Container = styled.div<{ $value: number }>`
     color: var(--Gray-50, #bdbdbd);
   }
   .endDate {
-    display: ${(props) => (props.$value > 99 ? "none" : "block")};
+    display: ${(props) => (props.$value > 92 ? "none" : "block")};
     position: absolute;
     right: 10px;
     bottom: -23px;
