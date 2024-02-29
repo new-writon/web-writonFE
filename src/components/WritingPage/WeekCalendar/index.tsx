@@ -64,11 +64,13 @@ export const WeekCalendar = ({ CalendarData }: { CalendarData: CalendarRecordCur
           </div>
         )}
         {weekFold && <RenderDays />}
-        <RenderCell
-          pageDay={date}
-          fold={weekFold}
-          CalendarData={CalendarData}
-        />
+        {CalendarData.length > 0 && (
+          <RenderCell
+            pageDay={date}
+            fold={weekFold}
+            CalendarData={CalendarData}
+          />
+        )}
       </Container>
     </Inner>
   );
