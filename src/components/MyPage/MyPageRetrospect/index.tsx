@@ -82,7 +82,10 @@ export const MyPageRetrospect = () => {
     pages.push(
       <div
         className={`${activePage === i + 1 ? "active" : "notactive"} page`}
-        onClick={() => setActivePage(i + 1)}
+        onClick={() => {
+          setActivePage(i + 1);
+          window.scrollTo({ top: 0 });
+        }}
         key={i}
       >
         {i + 1}

@@ -6,7 +6,7 @@ export const Container = styled.div`
   border-radius: 16px;
   margin-bottom: 300px;
   padding: 50px 50px 80px 60px;
-  height: 812px;
+  max-height: 812px;
   position: relative;
 
   .title {
