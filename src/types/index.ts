@@ -237,3 +237,12 @@ export interface accountNumberProps {
   accountNumber: string;
   bank: string;
 }
+
+export interface myPageCommentType {
+  commentId: number;
+  commentCreateAt: string;
+  content: string;
+  userTemplateFinishedAt: string;
+  writorNickname: string;
+  userTemplateId: number;
+}
