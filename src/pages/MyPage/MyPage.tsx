@@ -5,6 +5,7 @@ import { useRecoilValue } from "recoil";
 import styled from "styled-components";
 
 import { getMyPageData } from "@/apis/MyPage";
+import { MyPageComment } from "@/components/MyPage/MyPageComment";
 import { MyPageRetrospect } from "@/components/MyPage/MyPageRetrospect";
 import { ProfileSetting } from "@/components/MyPage/ProfileSetting";
 import { SecuritySetting } from "@/components/MyPage/SecuritySetting";
@@ -54,6 +55,8 @@ export const MyPage = () => {
             <SecuritySetting />
           ) : activeCategory === "작성한 회고" ? (
             <MyPageRetrospect />
+          ) : activeCategory === "작성한 댓글" ? (
+            <MyPageComment />
           ) : (
             <div className="ready">아직 준비 중입니다.</div>
           )}

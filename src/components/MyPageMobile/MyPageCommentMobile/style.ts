@@ -1,33 +1,18 @@
 import styled from "styled-components";
 
-export const Container = styled.div`
-  background-color: #fff;
-  width: 805px;
-  border-radius: 16px;
-  margin-bottom: 300px;
-  padding: 50px 50px 80px 60px;
-  max-height: 812px;
-  position: relative;
-
-  .title {
-    color: #000;
-    font-size: 1.25rem;
-    font-weight: 700;
-    line-height: 130%; /* 23.4px */
-  }
-`;
+export const Container = styled.div``;
 
 export const Top = styled.div`
-  margin-top: 20px;
+  padding: 27px 20px 20px;
   display: flex;
   justify-content: space-between;
-  align-items: flex-end;
+  align-items: center;
   .toggleList {
     position: relative;
   }
   .listmain {
     display: inline-flex;
-    padding: 7px 10px 7px 16px;
+    padding: 7px 10px 7px 10px;
     gap: 10px;
     border-radius: 6px;
     border: 1px solid var(--Gray-40, #d9d9d9);
@@ -105,36 +90,6 @@ export const Top = styled.div`
   }
 `;
 
-export const RetroSpectList = styled.div`
-  margin-top: 24px;
-`;
-
-export const RetrospectPagination = styled.div`
-  position: absolute;
-  bottom: 50px;
-  right: 0;
-  left: 0;
-  margin: 0 auto;
-  width: 100%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: 2px;
-  .page {
-    padding: 7px 6px;
-    color: var(--Gray-80, #616161);
-    font-size: 0.875rem;
-    font-weight: 500;
-    line-height: 120%; /* 16.8px */
-    cursor: pointer;
-  }
-  .notactive {
-  }
-  .page:hover {
-    border-radius: 6px;
-    background: var(--Gray-20, #f5f5f5);
-  }
-  .page.active {
-    color: var(--purple-50, #6a63f5);
-  }
+export const CommentList = styled.div`
+  padding-bottom: 60px;
 `;

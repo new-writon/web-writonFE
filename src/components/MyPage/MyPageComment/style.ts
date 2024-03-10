@@ -5,8 +5,8 @@ export const Container = styled.div`
   width: 805px;
   border-radius: 16px;
   margin-bottom: 300px;
-  padding: 50px 50px 80px 60px;
-  max-height: 812px;
+  padding: 50px 50px 80px 50px;
+  max-height: 1120px;
   position: relative;
 
   .title {
@@ -105,11 +105,12 @@ export const Top = styled.div`
   }
 `;
 
-export const RetroSpectList = styled.div`
+export const CommentList = styled.div`
   margin-top: 24px;
+  margin-bottom: 20px;
 `;
 
-export const RetrospectPagination = styled.div`
+export const CommentPagination = styled.div`
   position: absolute;
   bottom: 50px;
   right: 0;

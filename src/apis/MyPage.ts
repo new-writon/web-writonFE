@@ -1,6 +1,7 @@
 import {
   accountNumberProps,
   communityContentProps,
+  myPageCommentType,
   myPageProps,
   myProfileEditProps,
 } from "@/types";
@@ -29,6 +30,14 @@ export const patchAccountNumberData = async (accountNumberData: accountNumberPro
 export const getMyPageRetrospectItem = async (organization: string, challengeId: string) => {
   const response = await getData<communityContentProps[][]>(
     `/challenge/record/reminiscence/${organization}/${challengeId}`
+  );
+  return response.data;
+};
+
+//마이페이지 나의 댓글 모아보기
+export const getMyPageCommentItem = async (organization: string, challengeId: string) => {
+  const response = await getData<myPageCommentType[]>(
+    `/user/${organization}/${challengeId}/writing-comment`
   );
   return response.data;
 };

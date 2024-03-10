@@ -1,31 +1,30 @@
 import React, { useEffect, useState } from "react";
 
-import { getMyPageRetrospectItem } from "@/apis/MyPage";
+import { getMyPageCommentItem } from "@/apis/MyPage";
 import { getChallengingList } from "@/apis/login";
 import downArrow from "@/assets/mainPage/downArrow.svg";
 import topArrow from "@/assets/mainPage/topArrow.svg";
 import { NoRetrospect } from "@/components/MainPage/NoRetrospect";
-import { MyPageRetrospectItem } from "@/components/atom/MyPageRetrospectItem";
-//import { communityContentDummy } from "@/dummy/retrospect";
-import { challengeListProps, communityContentProps } from "@/types";
+import { MyPageCommentItem } from "@/components/atom/MyPageCommentItem";
+import { challengeListProps, myPageCommentType } from "@/types";
 
-import { Container, RetroSpectList, RetrospectPagination, Top } from "./style";
+import { CommentList, CommentPagination, Container, Top } from "./style";
 
-export const MyPageRetrospect = () => {
+export const MyPageComment = () => {
   const [challengeList, setChallengeList] = useState<challengeListProps[]>();
   const [selectChallenge, setSelectChallenge] = useState<string>("");
   const [listOn, setListOn] = useState<boolean>(false);
   const [viewState, setViewState] = useState<string>("new");
-  const [RetrospectData, setRetrospectData] = useState<communityContentProps[][]>([]);
+  const [CommentData, setCommentData] = useState<myPageCommentType[]>([]);
   const [activePage, setActivePage] = useState<number>(1); // 나중에 쿼리스트링으로 바꿔여함.
 
   const ChangeChallenge = async (item: challengeListProps) => {
     try {
-      const data = await getMyPageRetrospectItem(item.organization, item.challenge_id.toString());
+      const data = await getMyPageCommentItem(item.organization, item.challenge_id.toString());
       if (viewState === "new") {
-        setRetrospectData(data.reverse());
+        setCommentData(data.reverse());
       } else if (viewState === "old") {
-        setRetrospectData(data);
+        setCommentData(data);
       }
       setSelectChallenge(`${item.organization} ${item.challenge} 챌린지`);
       setListOn(false);
@@ -37,23 +36,23 @@ export const MyPageRetrospect = () => {
   const ChangeViewState = (state: string) => {
     setViewState(state);
     if (viewState === "new") {
-      setRetrospectData(RetrospectData.reverse());
+      setCommentData(CommentData.reverse());
     } else if (viewState === "old") {
-      setRetrospectData(RetrospectData.reverse());
+      setCommentData(CommentData.reverse());
     }
   };
 
-  const RetrospectRendering = async () => {
+  const CommentRendering = async () => {
     try {
       const list = await getChallengingList();
       setChallengeList(list);
       setSelectChallenge(`${list[0].organization} ${list[0].challenge} 챌린지`);
       try {
-        const data = await getMyPageRetrospectItem(
+        const data = await getMyPageCommentItem(
           list[0].organization,
           list[0].challenge_id.toString()
         );
-        setRetrospectData(data.reverse());
+        setCommentData(data.reverse());
       } catch {
         new Error("shit");
       }
@@ -63,19 +62,19 @@ export const MyPageRetrospect = () => {
   };
 
   useEffect(() => {
-    RetrospectRendering();
+    CommentRendering();
   }, []);
 
   //pagination 로직
   const pages = [];
   let pageCount;
-  if (RetrospectData.length % 10 === 0) {
-    pageCount = Math.floor(RetrospectData.length / 10);
+  if (CommentData.length % 10 === 0) {
+    pageCount = Math.floor(CommentData.length / 10);
   } else {
-    if (Math.floor(RetrospectData.length / 10) === 0) {
+    if (Math.floor(CommentData.length / 10) === 0) {
       pageCount = 1;
     } else {
-      pageCount = Math.floor(RetrospectData.length / 10) + 1;
+      pageCount = Math.floor(CommentData.length / 10) + 1;
     }
   }
   for (let i = 0; i < pageCount; i++) {
@@ -95,7 +94,7 @@ export const MyPageRetrospect = () => {
 
   return (
     <Container>
-      <div className="title">작성한 회고</div>
+      <div className="title">작성한 댓글</div>
       <Top>
         <div className="toggleList">
           <div
@@ -142,18 +141,18 @@ export const MyPageRetrospect = () => {
           </div>
         </div>
       </Top>
-      <RetroSpectList>
-        {RetrospectData.length !== 0 ? (
-          RetrospectData.slice(activePage * 10 - 10, activePage * 10).map((item, idx) => (
+      <CommentList>
+        {CommentData.length !== 0 ? (
+          CommentData.slice(activePage * 10 - 10, activePage * 10).map((item, idx) => (
             <React.Fragment key={idx}>
-              <MyPageRetrospectItem data={item} />
+              <MyPageCommentItem data={item} />
             </React.Fragment>
           ))
         ) : (
-          <NoRetrospect type="my" />
+          <NoRetrospect type="comment" />
         )}
-      </RetroSpectList>
-      <RetrospectPagination>{pages}</RetrospectPagination>
+      </CommentList>
+      <CommentPagination>{pages}</CommentPagination>
     </Container>
   );
 };
