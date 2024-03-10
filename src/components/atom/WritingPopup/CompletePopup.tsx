@@ -122,7 +122,7 @@ export const CompleteEditPopupResponsive = () => {
           <div
             className="close"
             onClick={() => {
-              setModal({ ...modal, completeModal: false });
+              setModal({ ...modal, completeEditModal: false });
               document.body.style.overflowY = "auto";
             }}
           >
