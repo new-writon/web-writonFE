@@ -11,6 +11,10 @@ import {
 
 import { AccountNumberModal } from "../atom/AccountNumberModal";
 import { FinishModal } from "../atom/FinishModal";
+import {
+  CompleteEditPopupResponsive,
+  CompletePopupResponsive,
+} from "../atom/WritingPopup/CompletePopup";
 import ContentPopupResponsive from "../atom/WritingPopup/ContentPopupResponsive";
 import { DeletePopupResponsive } from "../atom/WritingPopup/DeletePopup";
 import { TodayWritePopup } from "../atom/WritingPopup/TodayWritePopup";
@@ -32,6 +36,8 @@ export const ModalProvider = () => {
       {isLoading && <Loading />}
       {finishModal && <FinishModal />}
       {accountNumberModal && <AccountNumberModal />}
+      {modal.completeModal && <CompletePopupResponsive />}
+      {modal.completeEditModal && <CompleteEditPopupResponsive />}
     </>
   );
 };
