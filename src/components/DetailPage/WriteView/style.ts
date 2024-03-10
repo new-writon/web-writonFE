@@ -3,13 +3,37 @@ import styled from "styled-components";
 export const Container = styled.div`
   color: var(--Gray-100, #212121);
 
-  .date {
+  .top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
     color: var(--Gray-80, #616161);
     font-size: 0.875rem;
     font-weight: 600;
-    line-height: 160%; /* 22.4px */
     padding-bottom: 20px;
     border-bottom: 1px solid #eee;
+  }
+  .top .option {
+    cursor: pointer;
+  }
+  .top .editBox {
+    cursor: pointer;
+    position: absolute;
+    right: 0;
+    top: 34px;
+    display: flex;
+    align-items: center;
+    gap: 85px;
+    padding: 8px 16px;
+    border-radius: 6px;
+    background: #fff;
+    box-shadow: 0px 4px 16px 0px rgba(33, 33, 33, 0.24);
+    p {
+      color: var(--Gray-80, #616161);
+      font-size: 0.875rem;
+      line-height: 120%; /* 16.8px */
+      margin-top: 3px;
+    }
   }
   .specialQuestion {
     margin-top: 20px;

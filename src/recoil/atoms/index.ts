@@ -7,6 +7,7 @@ import {
   commentProps,
   communityContentProps,
   communitySecondCoponentType,
+  postEditWritingDataType,
   //communityContentProps,
   postWritingDataType,
 } from "@/types";
@@ -53,11 +54,18 @@ export const postWritingDataState = atom<postWritingDataType[]>({
   default: [],
 });
 
+// post edit writing 배열
+export const postEditWritingDataState = atom<postEditWritingDataType[]>({
+  key: "postEditWritingDataState",
+  default: [],
+});
+
 // 모달 백그라운드
 export const modalBackgroundState = atom<{
   contentModal: boolean;
   deleteModal: boolean;
   completeModal: boolean;
+  completeEditModal: boolean;
   todayWriteModal: boolean;
 }>({
   key: "modalBackgroundState",
@@ -65,6 +73,7 @@ export const modalBackgroundState = atom<{
     contentModal: false,
     deleteModal: false,
     completeModal: false,
+    completeEditModal: false,
     todayWriteModal: false,
   },
 });

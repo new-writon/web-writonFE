@@ -39,7 +39,7 @@ const MainPage = () => {
       try {
         const result = await Promise.all([
           getChallengeCurrent(
-            localStorage.getItem("organization") || "",
+            localStorage.getItem("organization") as string,
             localStorage.getItem("challengeId") || "1"
           ),
           getCalendarRecordCurrent(
@@ -51,10 +51,10 @@ const MainPage = () => {
             localStorage.getItem("challengeId") || "1"
           ),
         ]);
+
         setChallengeCurrent(result[0]);
         setCalendarData(result[1]);
         setRetrospectData(result[2]);
-
         // 챌린지 마지막 프로세스 모달창 띄우기
         try {
           const { review } = await getFinishModal(
@@ -86,7 +86,7 @@ const MainPage = () => {
     <Container>
       <ProgressBox ChallengeCurrent={ChallengeCurrent} />
       <Calendar CalendarData={CalendarData.length === 0 ? mainCalendarDummyData : CalendarData} />
-      <MyRetrospect RetrospectData={RetrospectData} />
+      <MyRetrospect RetrospectData={RetrospectData.reverse()} />
       <FloatingWriteButton onClick={spaceToWritingPage}>
         {/*모바일 일 때만 보인다/ */}
         회고 작성하기

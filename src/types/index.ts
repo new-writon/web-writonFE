@@ -94,7 +94,7 @@ export interface ChallengeCurrentType {
 }
 
 export interface CalendarRecordCurrentType {
-  date: string;
+  date: string | Date;
   badge: string;
   length: number;
 }
@@ -129,6 +129,11 @@ export interface postWritingDataType {
   question_id: number;
   content: string;
   visibility: boolean;
+}
+export interface postEditWritingDataType extends postWritingDataType {
+  question: string;
+  category: string;
+  userTempleteId: number;
 }
 
 export interface communityFirstComponentType {
@@ -171,6 +176,7 @@ export interface communityContentProps {
   likeCount: string;
   commentCount: string;
   myLikeSign: string;
+  visibility: number;
 }
 
 export interface commentProps {

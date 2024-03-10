@@ -6,6 +6,7 @@ import { useRecoilState, useSetRecoilState } from "recoil";
 import styled from "styled-components";
 
 import { getComment, getTemplete } from "@/apis/DetailPage";
+import { getMyPageData } from "@/apis/MyPage";
 import { CommentBox } from "@/components/DetailPage/CommentBox";
 import { WriteView } from "@/components/DetailPage/WriteView";
 import { CommentAndLike } from "@/components/atom/CommentAndLike";
@@ -25,6 +26,8 @@ export const DetailPage = () => {
   const [commentList, setCommentList] = useRecoilState(CommentState);
   const executeAsyncTask = useAsyncWithLoading();
 
+  const [nickName, setNickName] = useState<string>(""); // 내가 쓴 글인지 타인의 글을 누르고 들어간건지 비교하기 위해서
+
   const defaultClick = (e: MouseEvent<HTMLDivElement>) => {
     e.stopPropagation(); // 이벤트 캡쳐링 방지
   };
@@ -41,17 +44,23 @@ export const DetailPage = () => {
               type === "my" ? false : true
             ),
             getComment(Number(templeteId)),
+            getMyPageData(localStorage.getItem("organization") as string),
           ]);
           setDetailData(data[0]);
           setCommentList(data[1]);
           setLikeCount(data[0][0]?.likeCount);
+          setNickName(data[2].nickname);
         } catch {
           new Error("shit");
         }
       } else {
         try {
-          const data = await getComment(detailData[0]?.user_templete_id);
-          setCommentList(data);
+          const data = await Promise.all([
+            getComment(detailData[0]?.user_templete_id),
+            getMyPageData(localStorage.getItem("organization") as string),
+          ]);
+          setCommentList(data[0]);
+          setNickName(data[1].nickname);
         } catch {
           new Error("shit");
         }
@@ -89,7 +98,10 @@ export const DetailPage = () => {
           className="DetailBox"
           onClick={(e) => defaultClick(e)}
         >
-          <WriteView detailData={detailData} />
+          <WriteView
+            detailData={detailData}
+            nickName={nickName}
+          />
           <div className="WriterUser">
             <UserInfoDetail
               data={{
