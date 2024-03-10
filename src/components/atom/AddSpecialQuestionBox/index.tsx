@@ -10,6 +10,7 @@ import {
   addSpecialQuestionState,
   modalBackgroundState,
   modalContentState,
+  postEditWritingDataState,
   postWritingDataState,
 } from "@/recoil/atoms";
 import { SpecialQuestionType } from "@/types";
@@ -26,6 +27,9 @@ export const AddSpecialQuestionBox = ({ data }: { data: SpecialQuestionType }) =
     addSpecialQuestionArrayState
   );
   const [postWritingData, setpostWritingData] = useRecoilState(postWritingDataState);
+  // 원래 따로 파일 만들어야하는데, 그냥 edit데이터와 new데이터 새로 할당
+  const [postEditWritingData, setpostEditWritingData] = useRecoilState(postEditWritingDataState);
+
   const [width, setWidth] = useState<number>(window.innerWidth);
 
   const [modal, setModal] = useRecoilState(modalBackgroundState);
@@ -50,6 +54,19 @@ export const AddSpecialQuestionBox = ({ data }: { data: SpecialQuestionType }) =
         setpostWritingData([
           ...postWritingData,
           { question_id: question_id, content: "", visibility: true },
+        ]);
+
+        // 원래 따로 파일 만들어야하는데, 그냥 edit데이터와 new데이터 새로 할당
+        setpostEditWritingData([
+          ...postEditWritingData,
+          {
+            question_id: question_id,
+            content: "",
+            visibility: true,
+            question: question,
+            category: "스페셜 질문",
+            userTempleteId: 0,
+          },
         ]);
       }
     }
