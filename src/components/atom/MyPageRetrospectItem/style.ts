@@ -32,7 +32,6 @@ export const Container = styled.div`
     line-height: 160%; /* 22.4px */
     white-space: nowrap;
     overflow: hidden;
-    text-overflow: ellipsis;
   }
 `;
 
