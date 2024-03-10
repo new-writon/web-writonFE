@@ -6,6 +6,7 @@ import styled from "styled-components";
 import { getMyPageData } from "@/apis/MyPage";
 import backArrow from "@/assets/mypage/backArrow.svg";
 import { MainTab } from "@/components/MyPageMobile/MainTab";
+import { MyPageCommentMobile } from "@/components/MyPageMobile/MyPageCommentMobile";
 import { MyPageRetrospectMobile } from "@/components/MyPageMobile/MyPageRetrospectMobile";
 import { ProfileSettingMobile } from "@/components/MyPageMobile/ProfileSettingMobile";
 import { SecuritySettingMobile } from "@/components/MyPageMobile/SecuritySettingMobile";
@@ -59,6 +60,8 @@ export const MyPageMobile = () => {
         <SecuritySettingMobile />
       ) : activeCategory === "작성한 회고" ? (
         <MyPageRetrospectMobile />
+      ) : activeCategory === "작성한 댓글" ? (
+        <MyPageCommentMobile />
       ) : (
         <div className="ready">아직 준비 중입니다.</div>
       )}
