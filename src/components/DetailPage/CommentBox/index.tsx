@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 
 import downArrow from "@/assets/mainPage/downArrow.svg";
 import topArrow from "@/assets/mainPage/topArrow.svg";
@@ -39,12 +39,15 @@ export const CommentBox = ({
       {commentOn && commentList.length > 0 ? (
         <div className="commentList">
           {commentList?.map((item, idx) => (
-            <React.Fragment key={idx}>
+            <div
+              key={idx}
+              id={item.comment_id.toString()}
+            >
               <CommentItem
                 userTemplateId={userTemplateId}
                 data={item}
               />
-            </React.Fragment>
+            </div>
           ))}
         </div>
       ) : (
