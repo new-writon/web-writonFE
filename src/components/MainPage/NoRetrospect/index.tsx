@@ -17,11 +17,16 @@ const textCommunityData = {
   semititleFirst: "아직 회고를 작성한 사람이 없어요.",
   semititleSecond: "1등으로 작성하러 가볼까요?",
 };
-
+const commentData = {
+  title: "아직 작성한 댓글이 없어요.",
+  semititleFirst: "작성한 댓글은 여기서 모아볼 수 있어요.",
+  semititleSecond: "댓글을 작성하러 가볼까요?",
+};
 export const NoRetrospect = ({ type }: { type: string }) => {
   const navigate = useNavigate();
   const today = format(new Date(), "yyyy-MM-dd");
-  const stringData = type === "my" ? textMyData : textCommunityData;
+  const stringData =
+    type === "my" ? textMyData : type === "comment" ? commentData : textCommunityData;
   return (
     <Container>
       <div className="noRetrospectItemBox">
