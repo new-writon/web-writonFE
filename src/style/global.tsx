@@ -70,10 +70,10 @@ body {
 	/* background-color: #fff; */
   background: var(--Gray2_100, #f5f5f5);
 //드래그 방지
-	-webkit-user-select:none;
+	/* -webkit-user-select:none;
   -moz-user-select:none;
   -ms-user-select:none;
-  user-select:none;
+  user-select:none; */
 	
 }
 ol, ul {
