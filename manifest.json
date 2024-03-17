@@ -18,7 +18,8 @@
     {
       "src": "/public/writon-192.png",
       "type": "image/png",
-      "sizes": "192x192"
+      "sizes": "192x192",
+      "purpose": "maskable any"
     },
     {
       "src": "/public/writon-512.png",
