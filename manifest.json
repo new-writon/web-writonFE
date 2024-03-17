@@ -16,10 +16,15 @@
       "type": "image/x-icon"
     },
     {
-      "src": "/public/writon-192.png",
+      "src": "/public/writon-rect.png",
       "type": "image/png",
       "sizes": "192x192",
       "purpose": "maskable any"
+    },
+    {
+      "src": "/public/writon-192.png",
+      "type": "image/png",
+      "sizes": "192x192"
     },
     {
       "src": "/public/writon-512.png",
