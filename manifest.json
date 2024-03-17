@@ -3,10 +3,10 @@
   "description": "글쓰기 챌린지 \"라이톤\"",
   "dir": "ltr",
   "display": "standalone",
-  "name": "writon",
+  "name": "Writon",
   "orientation": "any",
   "scope": "/",
-  "short_name": "writon",
+  "short_name": "Writon",
   "start_url": "/",
   "theme_color": "#ffffff",
   "icons": [
@@ -17,18 +17,13 @@
     },
     {
       "src": "/public/writon-192.png",
-      "sizes": "192x192",
-      "type": "image/png"
-    },
-    {
-      "src": "/public/writon-384.png",
-      "sizes": "384x384",
-      "type": "image/png"
+      "type": "image/png",
+      "sizes": "192x192"
     },
     {
       "src": "/public/writon-512.png",
-      "sizes": "512x512",
-      "type": "image/png"
+      "type": "image/png",
+      "sizes": "512x512"
     }
   ]
 }
