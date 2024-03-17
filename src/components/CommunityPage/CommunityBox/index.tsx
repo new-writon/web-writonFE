@@ -78,11 +78,11 @@ export const CommunityBox = () => {
 
   useEffect(() => {
     if (categoriesArray.includes("전체")) {
-      setFilteredData(CommunitySecondData.templateData); // "전체"를 선택한 경우, 모든 데이터를 보여줍니다.
+      setFilteredData(Array.from(CommunitySecondData.templateData).reverse()); // "전체"를 선택한 경우, 모든 데이터를 보여줍니다.
     } else {
-      const filtered = CommunitySecondData.templateData.filter((item) =>
-        categoriesArray.includes(item[0].job)
-      ); // 선택한 카테고리에 해당하는 데이터를 필터링합니다.
+      const filtered = Array.from(CommunitySecondData.templateData)
+        .reverse()
+        .filter((item) => categoriesArray.includes(item[0].job)); // 선택한 카테고리에 해당하는 데이터를 필터링합니다.
       setFilteredData(filtered);
     }
   }, [categoriesArray]);
@@ -98,14 +98,13 @@ export const CommunityBox = () => {
         localStorage.setItem("date", format(value, "yyyy-MM-dd"));
         setDateLength(dateActive.indexOf(format(value, "yyyy-MM-dd")));
         setCommunitySecondData(result);
+        const templateData = Array.from(result.templateData).reverse();
 
         // 카테고리에 따른 글 필터링
         if (categoriesArray.includes("전체")) {
-          setFilteredData(result.templateData); // "전체"를 선택한 경우, 모든 데이터를 보여줍니다.
+          setFilteredData(templateData); // "전체"를 선택한 경우, 모든 데이터를 보여줍니다.
         } else {
-          const filtered = result.templateData.filter((item) =>
-            categoriesArray.includes(item[0].job)
-          ); // 선택한 카테고리에 해당하는 데이터를 필터링합니다.
+          const filtered = templateData.filter((item) => categoriesArray.includes(item[0].job)); // 선택한 카테고리에 해당하는 데이터를 필터링합니다.
           setFilteredData(filtered);
         }
         setCalendarOn(false);
@@ -132,14 +131,12 @@ export const CommunityBox = () => {
             dateArray[dateArray.length - 1]
           );
           setCommunitySecondData(result);
-
+          const templateData = Array.from(result.templateData).reverse();
           // 카테고리에 따른 글 필터링
           if (categoriesArray.includes("전체")) {
-            setFilteredData(result.templateData); // "전체"를 선택한 경우, 모든 데이터를 보여줍니다.
+            setFilteredData(templateData); // "전체"를 선택한 경우, 모든 데이터를 보여줍니다.
           } else {
-            const filtered = result.templateData.filter((item) =>
-              categoriesArray.includes(item[0].job)
-            ); // 선택한 카테고리에 해당하는 데이터를 필터링합니다.
+            const filtered = templateData.filter((item) => categoriesArray.includes(item[0].job)); // 선택한 카테고리에 해당하는 데이터를 필터링합니다.
             setFilteredData(filtered);
           }
         } catch {
@@ -160,14 +157,12 @@ export const CommunityBox = () => {
           dateActive[dateLength]
         );
         setCommunitySecondData(result);
-
+        const templateData = Array.from(result.templateData).reverse();
         // 카테고리에 따른 글 필터링
         if (categoriesArray.includes("전체")) {
-          setFilteredData(result.templateData); // "전체"를 선택한 경우, 모든 데이터를 보여줍니다.
+          setFilteredData(templateData); // "전체"를 선택한 경우, 모든 데이터를 보여줍니다.
         } else {
-          const filtered = result.templateData.filter((item) =>
-            categoriesArray.includes(item[0].job)
-          ); // 선택한 카테고리에 해당하는 데이터를 필터링합니다.
+          const filtered = templateData.filter((item) => categoriesArray.includes(item[0].job)); // 선택한 카테고리에 해당하는 데이터를 필터링합니다.
           setFilteredData(filtered);
         }
       } catch {
