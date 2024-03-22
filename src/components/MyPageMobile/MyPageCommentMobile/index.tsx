@@ -51,7 +51,7 @@ export const MyPageCommentMobile = () => {
           list[0].organization,
           list[0].challenge_id.toString()
         );
-        setCommentData(data.reverse());
+        setCommentData(data);
       } catch {
         new Error("shit");
       }
