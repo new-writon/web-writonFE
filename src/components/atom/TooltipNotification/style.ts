@@ -56,11 +56,11 @@ export const Container = styled.div`
     min-width: 100%;
     .notification-wrapper {
       width: 100%;
-      max-height: calc(100vh - 150px);
+      max-height: calc(100vh - 60px);
     }
     .notification-list {
       width: 100%;
-      max-height: calc(100vh - 150px);
+      max-height: calc(100vh - 60px);
     }
     .notification-add {
       position: absolute;
