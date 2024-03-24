@@ -6,6 +6,7 @@ import styled from "styled-components";
 
 import { getMyPageData } from "@/apis/MyPage";
 import { MyPageComment } from "@/components/MyPage/MyPageComment";
+import { MyPageNotification } from "@/components/MyPage/MyPageNotification";
 import { MyPageRetrospect } from "@/components/MyPage/MyPageRetrospect";
 import { ProfileSetting } from "@/components/MyPage/ProfileSetting";
 import { SecuritySetting } from "@/components/MyPage/SecuritySetting";
@@ -57,8 +58,10 @@ export const MyPage = () => {
             <MyPageRetrospect />
           ) : activeCategory === "작성한 댓글" ? (
             <MyPageComment />
+          ) : activeCategory === "알림" ? (
+            <MyPageNotification />
           ) : (
-            <div className="ready">아직 준비 중입니다.</div>
+            <></>
           )}
         </div>
       </Container>
