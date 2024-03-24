@@ -246,3 +246,14 @@ export interface myPageCommentType {
   writorNickname: string;
   userTemplateId: number;
 }
+export interface notificationDataType {
+  LikeId?: number;
+  commentId?: number;
+  content: string;
+  createdAt: string;
+  sign: number;
+  userTempleteId: number;
+  templateName: string;
+  nickname: string;
+  type: string;
+}
