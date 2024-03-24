@@ -22,11 +22,22 @@ const commentData = {
   semititleFirst: "작성한 댓글은 여기서 모아볼 수 있어요.",
   semititleSecond: "댓글을 작성하러 가볼까요?",
 };
+const notificationData = {
+  title: "새로온 알림이 없어요.",
+  semititleFirst: "작성한 댓글은 여기서 모아볼 수 있어요.",
+  semititleSecond: "댓글을 작성하러 가볼까요?",
+};
 export const NoRetrospect = ({ type }: { type: string }) => {
   const navigate = useNavigate();
   const today = format(new Date(), "yyyy-MM-dd");
   const stringData =
-    type === "my" ? textMyData : type === "comment" ? commentData : textCommunityData;
+    type === "my"
+      ? textMyData
+      : type === "comment"
+        ? commentData
+        : type === "notification"
+          ? notificationData
+          : textCommunityData;
   return (
     <Container>
       <div className="noRetrospectItemBox">
