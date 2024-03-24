@@ -162,3 +162,8 @@ export const accountNumberState = atom<boolean>({
   key: "accountNumberState",
   default: false,
 });
+
+export const notficationNumberState = atom<number>({
+  key: "notficationNumberState",
+  default: 0,
+});
