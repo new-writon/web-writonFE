@@ -1,14 +1,20 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 
 import { format } from "date-fns";
 import { useNavigate } from "react-router-dom";
-import { useRecoilCallback, useSetRecoilState } from "recoil";
+import { useRecoilCallback, useRecoilState, useSetRecoilState } from "recoil";
 import styled from "styled-components";
 
 import { getMyCommunityStory } from "@/apis/CommunityPage";
 import { dateCheck } from "@/apis/header";
 import { getChallengingList } from "@/apis/login";
+import {
+  getNotificationCount,
+  getNotificationData,
+  patchNotificationCount,
+} from "@/apis/notification";
 import profile from "@/assets/communityPage/profile.png";
+import notificationIcon from "@/assets/header/icon-notification.svg";
 import pencil_color from "@/assets/header/pencil_color.svg";
 import pencil_white from "@/assets/header/pencil_white.svg";
 import letsintern from "@/assets/logo/letsintern.png";
@@ -17,11 +23,13 @@ import {
   addSpecialQuestionArrayState,
   addSpecialQuestionState,
   communityState,
+  notficationNumberState,
   postWritingDataState,
 } from "@/recoil/atoms";
 import { Inner } from "@/style/global";
-import { communityStoryProps, challengeListProps } from "@/types";
+import { communityStoryProps, challengeListProps, notificationDataType } from "@/types";
 
+import { TooltipNotification } from "../atom/TooltipNotification";
 import { TooltipProfile } from "../atom/TooltipProfile";
 
 const ICON = [letsintern, writon];
@@ -40,7 +48,17 @@ const Header = () => {
   const [ChallengeList, setChallengeList] = useState<challengeListProps[]>();
   const [userProfile, setUserProfile] = useState<communityStoryProps>();
 
+  const [notificationData, setNotificationData] = useState<notificationDataType[]>([]);
+
+  const [notificationTooltip, setNotificationTooltip] = useState<boolean>(false);
+  const [notificationNumber, setNotificationNumber] = useRecoilState(notficationNumberState);
+
   const setCommunity = useSetRecoilState(communityState);
+
+  const profileTooltipRef = useRef<HTMLDivElement>(null);
+  const profileTooltipOnRef = useRef<HTMLDivElement>(null);
+  const notificationTooltipRef = useRef<HTMLDivElement>(null);
+  const notificationTooltipOnRef = useRef<HTMLDivElement>(null);
 
   const today = format(new Date(), "yyyy-MM-dd");
   const resetState = useRecoilCallback(({ reset }) => () => {
@@ -68,6 +86,9 @@ const Header = () => {
   };
 
   const ProfileOn = () => {
+    if (notificationTooltip) {
+      setNotificationTooltip(false);
+    }
     setHeaderTooltip(!headerTooltip);
     if (width <= 530) {
       setTimeout(() => {
@@ -75,12 +96,60 @@ const Header = () => {
       }, 10);
     }
   };
+  const NotificationOn = () => {
+    if (width < 531) {
+      navigate("/notificationMobile");
+    } else {
+      if (headerTooltip) {
+        setHeaderTooltip(false);
+      }
+      setNotificationTooltip(!notificationTooltip);
+    }
+    // 알림 툴팁 딱 열었을 때
+    updateNotificationCount();
+  };
+
+  const updateNotificationCount = async () => {
+    try {
+      patchNotificationCount(
+        localStorage.getItem("organization") as string,
+        localStorage.getItem("challengeId") as string,
+        notificationData.length
+      );
+      setNotificationNumber(0);
+    } catch {
+      new Error("shit");
+    }
+  };
+
+  // 툴팁 외부영역 클릭시, 툴팁 제거
+  useEffect(() => {
+    const handleClick = (e: MouseEvent) => {
+      if (
+        profileTooltipRef.current &&
+        !profileTooltipRef.current.contains(e.target as Node) &&
+        profileTooltipOnRef.current &&
+        !profileTooltipOnRef.current.contains(e.target as Node)
+      ) {
+        setHeaderTooltip(false);
+      }
+      if (
+        notificationTooltipRef.current &&
+        !notificationTooltipRef.current.contains(e.target as Node) &&
+        notificationTooltipOnRef.current &&
+        !notificationTooltipOnRef.current.contains(e.target as Node)
+      ) {
+        setNotificationTooltip(false);
+      }
+    };
+    window.addEventListener("mousedown", handleClick);
+    return () => window.removeEventListener("mousedown", handleClick);
+  }, [profileTooltipRef, profileTooltipOnRef, notificationTooltipRef, notificationTooltipOnRef]);
 
   const headerRendering = async () => {
     try {
       const data = await Promise.all([
         getMyCommunityStory(localStorage.getItem("challengeId") || ""),
-
         getChallengingList(),
       ]);
       if (data[0]?.profile !== null) {
@@ -88,10 +157,35 @@ const Header = () => {
       }
       setUserProfile(data[0]);
       setChallengeList(data[1]);
+      notificationRendering();
     } catch {
       throw new Error("shit");
     }
   };
+
+  const notificationRendering = async () => {
+    try {
+      const data = await Promise.all([
+        getNotificationData(
+          localStorage.getItem("organization") as string,
+          localStorage.getItem("challengeId") as string
+        ),
+        getNotificationCount(
+          localStorage.getItem("organization") as string,
+          localStorage.getItem("challengeId") as string
+        ),
+      ]);
+      setNotificationData(data[0]);
+      setNotificationNumber(data[0].length - data[1].checkCount);
+    } catch {
+      throw new Error("shit");
+    }
+  };
+
+  useEffect(() => {
+    notificationRendering();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [notificationTooltip]);
 
   useEffect(() => {
     if (location.pathname === "/community") {
@@ -106,6 +200,7 @@ const Header = () => {
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [location.pathname]);
+
   const handleResize = () => {
     //뷰크기 강제로 강져오기
     setWidth(window.innerWidth);
@@ -162,9 +257,27 @@ const Header = () => {
               alt="pen"
             />
           </div>
+          {/* 알람 아이콘 */}
+          <div
+            className="notification-cover"
+            onClick={NotificationOn}
+            ref={notificationTooltipOnRef}
+          >
+            <img
+              src={notificationIcon}
+              alt="A"
+            />
+            {notificationNumber !== 0 && (
+              <div className={`notification-number ${notificationNumber > 9 && "ten-number"}`}>
+                {notificationNumber}
+              </div>
+            )}
+          </div>
+
           <div
             className="profileImageCover"
             onClick={ProfileOn}
+            ref={profileTooltipOnRef}
           >
             <img
               src={profileImage} //{data?.profile}
@@ -172,15 +285,33 @@ const Header = () => {
             />
           </div>
         </HeaderRight>
+        {notificationTooltip && 531 <= width && (
+          <div
+            ref={notificationTooltipRef}
+            style={{ position: "absolute", right: "0" }}
+          >
+            <TooltipNotification
+              data={notificationData}
+              setNotificationTooltip={setNotificationTooltip}
+              type="web"
+            />
+          </div>
+        )}
+
         {headerTooltip && 531 <= width && (
-          <TooltipProfile
-            headerTooltip={headerTooltip}
-            TooltipMobile={TooltipMobile}
-            userProfile={userProfile}
-            setHeaderTooltip={setHeaderTooltip}
-            setTooltipMobile={setTooltipMobile}
-            ChallengeList={ChallengeList}
-          />
+          <div
+            ref={profileTooltipRef}
+            style={{ position: "absolute", right: "0" }}
+          >
+            <TooltipProfile
+              headerTooltip={headerTooltip}
+              TooltipMobile={TooltipMobile}
+              userProfile={userProfile}
+              setHeaderTooltip={setHeaderTooltip}
+              setTooltipMobile={setTooltipMobile}
+              ChallengeList={ChallengeList}
+            />
+          </div>
         )}
         {width <= 530 && (
           <TooltipProfile
@@ -320,6 +451,7 @@ const HeaderRight = styled.div`
   margin: auto 0;
   display: flex;
   gap: 16px;
+  align-items: center;
   .writingBtn {
     display: flex;
     padding: 7px 15px 7px 16px;
@@ -329,6 +461,7 @@ const HeaderRight = styled.div`
     align-items: center;
     gap: 7.5px;
     cursor: pointer;
+    min-height: 40px;
   }
   .writingBtn:hover {
     background-color: var(--purple-50, #6a63f5);
@@ -350,6 +483,43 @@ const HeaderRight = styled.div`
     width: fit-content;
     height: fit-content;
   }
+
+  .notification-cover {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    position: relative;
+  }
+  .notification-cover:hover {
+    background: var(--Gray-20, #f8f8fa);
+  }
+
+  .notification-cover .notification-number {
+    width: 16px;
+    height: 16px;
+    position: absolute;
+    top: 4px;
+    right: 4px;
+    font-size: 0.75rem;
+    color: #fff;
+    border-radius: 50%;
+    padding: 0 4px;
+    background-color: var(--purple-50, #6a63f5);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding-top: 2px;
+  }
+
+  .notification-cover .notification-number.ten-number {
+    font-size: 0.65rem;
+    padding-top: 3px;
+  }
+
   .profileImageCover {
     width: 36px;
     height: 36px;
@@ -372,6 +542,14 @@ const HeaderRight = styled.div`
     }
     p.responsive {
       display: block;
+    }
+  }
+  @media (max-width: 610px) {
+    p {
+      display: none;
+    }
+    p.responsive {
+      display: none;
     }
   }
 
