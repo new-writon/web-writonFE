@@ -14,6 +14,7 @@ import { EditWritingPage } from "@/pages/EditWritingPage/EditWritingPage";
 import MainPage from "@/pages/MainPage/MainPage";
 import { MyPage } from "@/pages/MyPage/MyPage";
 import { MyPageMobile } from "@/pages/MyPage/MyPageMobile";
+import { NotificationPage } from "@/pages/NotificationPage/NotificationPage";
 import { OnboardingPage } from "@/pages/OnboardingPage/OnboardingPage";
 import { WritingPage } from "@/pages/WritingPage/WritingPage";
 
@@ -55,6 +56,10 @@ const router = () => {
           path="/mypageMobile"
           element={<MyPageMobile />}
         />
+        <Route
+          path="/notificationMobile"
+          element={<NotificationPage />}
+        />
         <Route element={<Layout />}>
           <Route
             path="/"
@@ -74,6 +79,12 @@ const router = () => {
           />
           <Route
             path="/detail/:templeteId"
+            element={<DetailPage />}
+          />
+
+          {/* 알림창에서 디테일 들어가기 (모바일) */}
+          <Route
+            path="/notificationMobile/detail/:templeteId"
             element={<DetailPage />}
           />
           <Route
