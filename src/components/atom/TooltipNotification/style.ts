@@ -3,6 +3,7 @@ import styled from "styled-components";
 export const Container = styled.div`
   /* max-height: 426px; */
   min-width: 375px;
+  width: max-content;
   position: absolute;
   top: 71px;
   right: 0;
@@ -99,8 +100,9 @@ export const ItemContainer = styled.div<{ $click: boolean }>`
       font-size: 0.875rem;
       line-height: 160%;
       font-weight: 500;
+      align-items: center;
     }
-    .title .data {
+    .notification-title .data {
       color: var(--Gray-100, #212121);
       line-height: 130%; /* 15.6px */
       font-weight: 600;

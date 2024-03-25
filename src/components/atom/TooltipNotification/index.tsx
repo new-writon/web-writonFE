@@ -158,7 +158,10 @@ export const TooltipNotificationItem = ({ data }: { data: notificationDataType }
       </div>
       <div className="second">
         <div className="notification-title">
-          <div className="data">{data?.nickname}</div>님이&nbsp;
+          <div className="data">
+            {data?.nickname.length < 6 ? data?.nickname : `${data?.nickname.slice(0, 5)}...`}
+          </div>
+          님이&nbsp;
           <div className="data">{format(data?.templateName, "M월 dd일 회고")}</div>에{" "}
           {data?.type === "comment" ? "댓글을 남겼어요." : "응원을 보냈어요."}
         </div>
