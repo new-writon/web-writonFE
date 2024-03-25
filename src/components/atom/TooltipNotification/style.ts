@@ -50,6 +50,9 @@ export const Container = styled.div`
       width: 100%;
     }
   }
+  .notification-wrapper .gradient.gradient-on {
+    display: none;
+  }
   @media (max-width: 530px) {
     box-shadow: none;
     border-radius: 0;
@@ -57,11 +60,11 @@ export const Container = styled.div`
     min-width: 100%;
     .notification-wrapper {
       width: 100%;
-      max-height: calc(100vh - 120px);
+      height: calc(100vh - 120px);
     }
     .notification-list {
       width: 100%;
-      max-height: calc(100vh - 120px);
+      max-height: calc(100vh - 235px);
     }
     .notification-add {
       position: absolute;

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 
 import { format } from "date-fns";
 import { ko } from "date-fns/locale";
@@ -25,6 +25,37 @@ export const TooltipNotification = ({
   type: string;
 }) => {
   const navigate = useNavigate();
+  const [gradientOn, setGradientOn] = useState<boolean>(false);
+
+  const listRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      if (listRef.current) {
+        const { scrollTop, scrollHeight, clientHeight } = listRef.current;
+        const windowHeight = window.innerHeight - 130; // 뷰포트 높이에서 120px를 뺌
+
+        if (scrollHeight > windowHeight) {
+          setGradientOn(false);
+        }
+        const isAtBottom = scrollTop + clientHeight > scrollHeight - 20;
+        if (isAtBottom) {
+          setGradientOn(true);
+        }
+      }
+    };
+
+    if (listRef.current) {
+      listRef.current.addEventListener("scroll", handleScroll);
+    }
+
+    return () => {
+      if (listRef.current) {
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+        listRef.current.removeEventListener("scroll", handleScroll);
+      }
+    };
+  }, [listRef]);
   return (
     <Container>
       {type === "web" ? (
@@ -37,14 +68,17 @@ export const TooltipNotification = ({
         </div>
       ) : (
         <div className="notification-wrapper">
-          <div className="notification-list">
+          <div
+            className="notification-list"
+            ref={listRef}
+          >
             {data?.map((item, idx) => (
               <React.Fragment key={idx}>
                 <TooltipNotificationItem data={item} />
               </React.Fragment>
             ))}
           </div>
-          <div className="gradient">
+          <div className={`gradient ${gradientOn ? "gradient-on" : ""}`}>
             <img
               src={gradient}
               alt=""
