@@ -62,19 +62,6 @@ export const Container = styled.div`
     visibility: visible;
   }
 
-  @media (max-width: 530px) {
-    .finishWrapper {
-      min-width: 343px;
-      height: 560px;
-    }
-    .finishBox.front {
-      padding: 40px 0;
-    }
-    .finishBox.back {
-      padding: 30px 15px;
-    }
-  }
-
   .challengeName {
     color: var(--Gray-60);
     font-size: 0.875rem;
@@ -88,7 +75,7 @@ export const Container = styled.div`
     color: var(--Gray-100, #212121);
     font-size: 1.5rem;
     font-weight: 700;
-    line-height: 130%;
+    line-height: 132%;
     text-align: center;
     margin-bottom: 20px;
   }
@@ -106,8 +93,8 @@ export const Container = styled.div`
   .texts {
     display: flex;
     flex-direction: column;
-    gap: 20px;
-    margin: 14px 0 30px;
+    gap: 32px;
+    margin: 14px 0 56px;
   }
   .texts .text {
     color: var(--Gray-80, #616161);
@@ -147,6 +134,26 @@ export const Container = styled.div`
     }
     img {
       padding-bottom: 3px;
+    }
+  }
+
+  @media (max-width: 530px) {
+    .finishWrapper {
+      min-width: 343px;
+      height: 560px;
+    }
+    .finishBox.front {
+      padding: 40px 0;
+    }
+    .finishBox.back {
+      padding: 30px 15px;
+    }
+
+    .close {
+      margin-right: 10px;
+    }
+    .texts {
+      margin: 14px 0 40px;
     }
   }
 `;
