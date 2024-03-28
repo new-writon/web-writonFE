@@ -8,7 +8,7 @@ import check_white from "@/assets/writingPage/icon-check-white.svg";
 import check from "@/assets/writingPage/icon-check.svg";
 import question_minus from "@/assets/writingPage/question-minus.svg";
 import question_plus from "@/assets/writingPage/question-plus.svg";
-import { ButtonProps, SubmitButtonProps } from "@/types";
+import { ButtonProps, SubmitButtonProps, finishModalButtonProps } from "@/types";
 
 import {
   AddQuestionBtn,
@@ -149,8 +149,15 @@ export const CurrrentChallengeButton = ({
   );
 };
 
-export const FinishModalButton = ({ children, onClick }: ButtonProps) => {
-  return <FinishModalBtn onClick={onClick}>{children}</FinishModalBtn>;
+export const FinishModalButton = ({ children, onClick, type }: finishModalButtonProps) => {
+  return (
+    <FinishModalBtn
+      onClick={onClick}
+      $type={type}
+    >
+      {children}
+    </FinishModalBtn>
+  );
 };
 
 interface PublicButtonProps {

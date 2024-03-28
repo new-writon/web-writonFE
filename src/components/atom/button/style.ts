@@ -140,9 +140,9 @@ export const OnboardingBtn = styled.div<{ $ButtonOn: boolean }>`
   cursor: pointer;
 `;
 
-export const FinishModalBtn = styled.div`
+export const FinishModalBtn = styled.div<{ $type: string }>`
   width: fit-content;
-  padding: 18px 121px;
+  padding: ${(props) => (props.$type === "next" ? "18px 121px" : "18px 89px")};
   background-color: var(--purple-50);
   border-radius: 12px;
   color: #fff;
