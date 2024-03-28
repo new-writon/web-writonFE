@@ -84,7 +84,12 @@ export const FinishModal = () => {
             <br />
             관련 문의는 채널톡을 이용해주세요.
           </div>
-          <FinishModalButton onClick={() => setStep("next")}>다음</FinishModalButton>
+          <FinishModalButton
+            onClick={() => setStep("next")}
+            type="next"
+          >
+            다음
+          </FinishModalButton>
         </div>
         <div className={`${step === "next" && "next"} finishBox back`}>
           <div className="topBtns">
@@ -108,7 +113,7 @@ export const FinishModal = () => {
           <div className="title second">
             챌린지 어떠셨나요?
             <br />
-            {modalData?.nickname}님의 후기를 들려주세요.
+            다음달도 함께 회고하러가요
           </div>
           <img
             src={finishSecond}
@@ -116,19 +121,25 @@ export const FinishModal = () => {
           />
           <div className="texts">
             <div className="text">
-              <div className="highlight">챌린지 만족도 조사</div>는 구글 폼으로 진행되며,
+              지금 바로 다음 달 챌린지를 신청할 수 있어요!
+              {/* <div className="highlight">챌린지 만족도 조사</div>는 구글 폼으로 진행되며,
               <br />
-              예상 소요 시간은 <div className="purple">5분</div>이에요.
+              예상 소요 시간은 <div className="purple">5분</div>이에요. */}
             </div>
             <div className="text">
-              라이톤에서 성실하게 챌린지에 참여해주신
+              객관식 두 문항으로 구성된 <br /> 챌린지 만족도 조사도 함께 진행되며,
+              <br /> 예상 소요시간은 <div className="purple">30초</div>에요.
+              {/* 라이톤에서 성실하게 챌린지에 참여해주신
               <br />
               {modalData?.nickname}님의 소중한 의견을 반영해
-              <br />더 나은 라이톤 서비스를 만들어 갈게요.
+              <br />더 나은 라이톤 서비스를 만들어 갈게요. */}
             </div>
           </div>
-          <FinishModalButton onClick={() => reviewForm(modalData?.reviewUrl)}>
-            후기 작성하러 가기
+          <FinishModalButton
+            onClick={() => reviewForm(modalData?.reviewUrl)}
+            type="finish"
+          >
+            다음 달 회고 챌린지 신청하기
           </FinishModalButton>
         </div>
       </div>
