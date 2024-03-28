@@ -257,3 +257,7 @@ export interface notificationDataType {
   nickname: string;
   type: string;
 }
+
+export interface finishModalButtonProps extends ButtonProps {
+  type: string;
+}
