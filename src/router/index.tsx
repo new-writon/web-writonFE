@@ -4,6 +4,7 @@ import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import Layout from "@/Layout";
 import { ModalProvider } from "@/components/Common/ModalProvider";
 import { ScrollToTop } from "@/components/Common/ScrollToTop";
+import { SnackBarProvider } from "@/components/Common/SnackBarProvider";
 import { KakaoCallback } from "@/pages/Authorization/KakaoCallback";
 import LoginPage from "@/pages/Authorization/LoginPage";
 import RegisterEmailPage from "@/pages/Authorization/RegisterEmailPage";
@@ -28,6 +29,7 @@ const router = () => {
   };
   return (
     <BrowserRouter>
+      <SnackBarProvider />
       <ModalProvider />
       <ScrollToTop />
 
