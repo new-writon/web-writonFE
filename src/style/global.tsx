@@ -75,7 +75,17 @@ body {
   -ms-user-select:none;
   user-select:none; */
 	
+  
 }
+button {
+    background: inherit;
+    border: none;
+    box-shadow: none;
+    border-radius: 0;
+    padding: 0;
+    overflow: visible;
+    cursor: pointer;
+  }
 ol, ul {
 	list-style: none;
 }
@@ -139,7 +149,7 @@ export const Inner = styled.div`
     &:has(.first) {
       max-width: 100vw;
       border-radius: 0px 0px 20px 20px;
-      background: var(--Gray-10, #fafafa);
+      background: var(--Gray-10, #fcfcfc);
       box-shadow: 0px 4px 30px 0px rgba(33, 33, 33, 0.05);
       //모바일 커뮤니티 위
     }
