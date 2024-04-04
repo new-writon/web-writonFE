@@ -4,6 +4,7 @@ import {
   BasicQuestionType,
   SpecialQuestionType,
   addSpecialQuestionArrayType,
+  agoraDataType,
   commentProps,
   communityContentProps,
   communitySecondCoponentType,
@@ -67,6 +68,7 @@ export const modalBackgroundState = atom<{
   completeModal: boolean;
   completeEditModal: boolean;
   todayWriteModal: boolean;
+  agoraWriteModal: boolean;
 }>({
   key: "modalBackgroundState",
   default: {
@@ -75,6 +77,7 @@ export const modalBackgroundState = atom<{
     completeModal: false,
     completeEditModal: false,
     todayWriteModal: false,
+    agoraWriteModal: false,
   },
 });
 
@@ -166,4 +169,51 @@ export const accountNumberState = atom<boolean>({
 export const notficationNumberState = atom<number>({
   key: "notficationNumberState",
   default: 0,
+});
+
+//스낵바 관리
+export const snackBarState = atom<{
+  agoraSnackBar: boolean;
+}>({
+  key: "snackBarState",
+  default: {
+    agoraSnackBar: false,
+  },
+});
+
+export const agoraModalState = atom<boolean>({
+  key: "agoraModalState",
+  default: false,
+});
+export const agoraModalBoxState = atom<boolean>({
+  key: "agoraModalBoxState",
+  default: false,
+});
+
+export const agoraDataState = atom<agoraDataType>({
+  key: "agoraDataState",
+  default: {
+    agoraId: 0,
+    question: "",
+    participateCount: 0,
+    nickname: "",
+    createdAt: "",
+    profile: "",
+    myAgoraSign: "",
+  },
+});
+
+export const agoraBoxDataState = atom<agoraDataType[]>({
+  key: "agoraBoxDataState",
+  default: [],
+});
+
+export const dateAgoraActiveState = atom<string[]>({
+  key: "dateAgoraActiveState",
+  default: [],
+});
+
+export const dateAgoraLengthState = atom<number>({
+  key: "dateAgoraLengthState",
+  default: -1,
 });
