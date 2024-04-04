@@ -5,6 +5,7 @@ import styled from "styled-components";
 
 import { getCommunityFirstComponent, getMyCommunityStory } from "@/apis/CommunityPage";
 import { getChallengeCurrent } from "@/apis/mainPage";
+import { AgoraBox } from "@/components/CommunityPage/AgoraBox";
 import { CommunityBox } from "@/components/CommunityPage/CommunityBox";
 import { StoryBox } from "@/components/CommunityPage/StoryBox";
 import useAsyncWithLoading from "@/hooks/useAsyncWithLoading";
@@ -46,6 +47,10 @@ export const CommunityPage = () => {
         ChallengeCurrent={ChallengeCurrent}
         CommunityFirstData={CommunityFirstData}
         myCommunityStoryData={myCommunityStoryData}
+      />
+      <AgoraBox
+        ChallengeCurrent={ChallengeCurrent}
+        CommunityFirstData={CommunityFirstData}
       />
       <CommunityBox />
     </Container>
