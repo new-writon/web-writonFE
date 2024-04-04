@@ -1,8 +1,11 @@
 import {
+  agoraCommentType,
+  agoraDataType,
   communityFirstComponentType,
   communitySecondCoponentType,
   communityStoryProps,
 } from "@/types";
+import { ErrorData } from "@/types/axios";
 
 import { getData, postData } from ".";
 
@@ -51,5 +54,52 @@ export const getCommunityContentData = async (
   const response = await getData<communitySecondCoponentType>(
     `community/${challengeId}/template/${date}/${organization}`
   );
+  return response.data;
+};
+
+// 아고라
+
+// 날짜에 따른 아고라 조회 (배열)
+export const getAgoraData = async (challengeId: string, date: string) => {
+  const response = await getData<agoraDataType[]>(`community/agora/${challengeId}/${date}`);
+  return response.data;
+};
+
+// 해당 아고라 댓글들
+export const getAgoraChat = async (agoraId: number) => {
+  const response = await getData<agoraCommentType[]>(`community/agora/comment/${agoraId}`);
+  return response.data;
+};
+
+// 아고라 생성하기
+export const postAgoraTopic = async (
+  organization: string,
+  challengeId: number,
+  agoraQuestion: string
+) => {
+  try {
+    const response = await postData(`community/agora`, {
+      organization,
+      challengeId,
+      agoraQuestion,
+    });
+    return response.data;
+  } catch (error) {
+    console.log(error);
+    throw error as ErrorData;
+  }
+};
+
+// 아고라 댓글달기
+export const postAgoraComment = async (
+  organization: string,
+  agoraId: number,
+  agoraComment: string
+) => {
+  const response = await postData(`community/agora/comment`, {
+    organization: organization,
+    agoraId: agoraId,
+    agoraComment: agoraComment,
+  });
   return response.data;
 };
