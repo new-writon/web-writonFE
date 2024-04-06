@@ -74,6 +74,7 @@ export const CommentPostAgora = ({
                 return {
                   ...item,
                   participateCount: item.participateCount + 1,
+                  myAgoraSign: "1",
                 };
               }
               // agoraId가 일치하지 않는 경우 기존 아이템 반환

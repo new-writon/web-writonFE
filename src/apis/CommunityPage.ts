@@ -60,8 +60,10 @@ export const getCommunityContentData = async (
 // 아고라
 
 // 날짜에 따른 아고라 조회 (배열)
-export const getAgoraData = async (challengeId: string, date: string) => {
-  const response = await getData<agoraDataType[]>(`community/agora/${challengeId}/${date}`);
+export const getAgoraData = async (organization: string, challengeId: string, date: string) => {
+  const response = await getData<agoraDataType[]>(
+    `community/agora/${organization}/${challengeId}/${date}`
+  );
   return response.data;
 };
 
