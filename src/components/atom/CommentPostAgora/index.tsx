@@ -1,11 +1,13 @@
 import { Dispatch, KeyboardEvent, SetStateAction, useRef, useState } from "react";
 
 import { format, isSameDay } from "date-fns";
+import { useRecoilState } from "recoil";
 
 import { postAgoraComment } from "@/apis/CommunityPage";
 import profile from "@/assets/communityPage/profile.png";
 import useAsyncWithLoading from "@/hooks/useAsyncWithLoading";
-import { agoraCommentType } from "@/types";
+import { agoraBoxDataState, agoraDataState } from "@/recoil/atoms";
+import { agoraCommentType, agoraDataType } from "@/types";
 
 import { Container } from "./style";
 
@@ -28,6 +30,8 @@ export const CommentPostAgora = ({
   const [text, setText] = useState<string>("");
   const [registerBtn, setRegisterBtn] = useState<boolean>(true);
   const executeAsyncTask = useAsyncWithLoading();
+  const [agoraData] = useRecoilState(agoraDataState);
+  const [agoraDataArray, setAgoraDataArray] = useRecoilState(agoraBoxDataState);
 
   const onChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     setText(e.currentTarget.value);
@@ -62,6 +66,22 @@ export const CommentPostAgora = ({
             myCommentSign: "1",
           },
         ]);
+        if (agoraData.myAgoraSign !== "1") {
+          const updatedAgoraData = agoraDataArray
+            ?.map((item) => {
+              // agoraId가 일치하는 경우에만 number를 증가시킴
+              if (item.agoraId === agoraId) {
+                return {
+                  ...item,
+                  participateCount: item.participateCount + 1,
+                };
+              }
+              // agoraId가 일치하지 않는 경우 기존 아이템 반환
+              return item;
+            })
+            .filter((item): item is agoraDataType => !!item);
+          setAgoraDataArray(updatedAgoraData);
+        }
         setText("");
         setRegisterBtn(true);
       } catch (error) {
