@@ -77,7 +77,6 @@ export const AgoraPage = () => {
     const handleScroll = () => {
       if (ChattingRef.current) {
         const { scrollTop, scrollHeight, clientHeight } = ChattingRef.current;
-        console.log(scrollTop, scrollHeight, clientHeight);
         if (scrollHeight === 0) {
           setScrollTop(false); // 현재 높이가 0일 때
         } else if (scrollTop + clientHeight + 1 > scrollHeight) {
