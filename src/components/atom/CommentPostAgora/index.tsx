@@ -1,6 +1,6 @@
 import { Dispatch, KeyboardEvent, SetStateAction, useRef, useState } from "react";
 
-import { format } from "date-fns";
+import { format, isSameDay } from "date-fns";
 
 import { postAgoraComment } from "@/apis/CommunityPage";
 import profile from "@/assets/communityPage/profile.png";
@@ -15,12 +15,14 @@ export const CommentPostAgora = ({
   agoraId,
   chatData,
   setChatData,
+  agoraDate,
 }: {
   nickname: string;
   myProfile: string;
   agoraId: number;
   chatData: agoraCommentType[];
   setChatData: Dispatch<SetStateAction<agoraCommentType[]>>;
+  agoraDate: string;
 }) => {
   const textareaRef = useRef<HTMLTextAreaElement | null>(null);
   const [text, setText] = useState<string>("");
@@ -61,6 +63,7 @@ export const CommentPostAgora = ({
           },
         ]);
         setText("");
+        setRegisterBtn(true);
       } catch (error) {
         console.log(error);
       }
@@ -68,7 +71,7 @@ export const CommentPostAgora = ({
   };
 
   return (
-    <Container>
+    <Container $today={isSameDay(agoraDate, new Date())}>
       <div className="profileImageCover">
         <img
           src={myProfile || profile} //{data?.profile}
@@ -79,7 +82,9 @@ export const CommentPostAgora = ({
         ref={textareaRef}
         value={text}
         onChange={onChange}
-        placeholder="내용을 입력해주세요."
+        placeholder={
+          isSameDay(agoraDate, new Date()) ? "내용을 입력해주세요." : "종료된 스몰톡이에요."
+        } // 날짜 보내서 창에 이름 변경하기
         onKeyDown={handleOnKeyPress}
       />
       <button

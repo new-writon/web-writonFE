@@ -1,6 +1,6 @@
 import styled from "styled-components";
 
-export const Container = styled.div`
+export const Container = styled.div<{ $today: boolean }>`
   display: flex;
   gap: 8px;
   width: 100%;
@@ -30,7 +30,9 @@ export const Container = styled.div`
     outline: none;
     border-radius: 10px;
     border: 1px solid var(--Gray-30, #edeef1);
-    background: var(--Base-White, #fff);
+    background-color: ${(props) =>
+      props.$today ? "var(--Base-White, #fff)" : " var(--Gray-20, #F8F8FA)"};
+    pointer-events: ${(props) => (props.$today ? "auto" : "none")};
     padding: 8px 12px;
     box-sizing: border-box;
     resize: none;
@@ -55,7 +57,6 @@ export const Container = styled.div`
   button {
     height: inherit;
     border-radius: 10px;
-    background: var(--Purple-10, #f0efff);
     padding: 8px 12px;
     color: var(--purple-50, #6a63f5);
     font-size: 0.875rem;
@@ -66,6 +67,10 @@ export const Container = styled.div`
     right: 0;
     top: 0;
     cursor: pointer;
+    background-color: ${(props) =>
+      props.$today ? "var(--Purple-10, #f0efff)" : " var(--Gray-30, #EDEEF1)"};
+    color: ${(props) => (props.$today ? "var(--purple-50, #6a63f5)" : " var(--Gray-60, #94989F)")};
+    pointer-events: ${(props) => (props.$today ? "auto" : "none")};
   }
   button.abled:hover {
     background: var(--Purple-60, #524dd4);

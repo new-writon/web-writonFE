@@ -30,7 +30,7 @@ export const AgoraPage = () => {
   const [chatBasicTopicData] = useState<agoraCommentType>({
     agora_comment_id: agoraData?.agoraId,
     nickname: agoraData?.nickname,
-    created_time: agoraData?.createdAt,
+    created_time: agoraData?.createdTime,
     profile: agoraData?.profile,
     content: agoraData?.question,
     myCommentSign: "0",
@@ -40,6 +40,7 @@ export const AgoraPage = () => {
   const [chatData, setChatData] = useState<agoraCommentType[]>([]);
   const dateActive = useRecoilValue(dateAgoraActiveState);
   const dateLength = useRecoilValue(dateAgoraLengthState);
+  const [width, setWidth] = useState<number>(window.innerWidth);
 
   const executeAsyncTask = useAsyncWithLoading();
 
@@ -134,15 +135,28 @@ export const AgoraPage = () => {
     }
   }, [agoraModal]);
 
+  const handleResize = () => {
+    //뷰크기 강제로 강져오기
+    setWidth(window.innerWidth);
+  };
+  useEffect(() => {
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize); //clean
+  }, [width]);
   return (
     <Inner>
       <Container
         onClick={() => {
           setAgoraModalBox(false);
-          setTimeout(() => {
+          if (width < 531) {
+            document.body.style.position = "relative";
+            setTimeout(() => {
+              setAgoraModal(false);
+            }, 600);
+          } else {
+            document.body.style.overflowY = "scroll";
             setAgoraModal(false);
-          }, 600);
-          document.body.style.overflowY = "auto";
+          }
         }}
         $agoraModalBox={agoraModalBox}
       >
@@ -188,6 +202,7 @@ export const AgoraPage = () => {
               agoraId={agoraData?.agoraId}
               chatData={chatData}
               setChatData={setChatData}
+              agoraDate={agoraData?.createdDate}
             />
           </Bottom>
           {scrollTop && (
@@ -231,11 +246,12 @@ const Container = styled.div<{ $agoraModalBox: boolean }>`
   top: 0;
   left: 0;
   height: 100vh;
+  height: calc(var(--vh, 1vh) * 100);
   width: 100%;
   z-index: 9999999;
   display: flex;
   justify-content: center;
-  overflow-y: scroll;
+  overflow: scroll;
   padding: 60px 30px 254px;
 
   .agora-box {
@@ -267,6 +283,7 @@ const Container = styled.div<{ $agoraModalBox: boolean }>`
   }
 
   @media (max-width: 530px) {
+    overflow-y: hidden;
     padding: 0;
     left: 50%;
     transform: translateX(-50%);
@@ -334,8 +351,9 @@ const Chatting = styled.div`
   overflow-y: scroll;
   background-color: #fcfcfc;
   @media (max-width: 530px) {
-    min-height: 59vh;
-    max-height: 59vh;
+    min-height: 39vh;
+    min-height: calc(var(--vh, 1vh) * 100 - 330px);
+    max-height: 340px;
   }
 `;
 

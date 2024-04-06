@@ -5,6 +5,8 @@ import { format, isSameDay } from "date-fns";
 import { useRecoilState } from "recoil";
 
 import { getAgoraData, getCommunityDate } from "@/apis/CommunityPage";
+import noSmallTalk from "@/assets/AgoraPage/noSmallTalk.svg";
+import smallTalkArrow from "@/assets/AgoraPage/smallTalkArrow.svg";
 import arrow from "@/assets/communityPage/storyArrow.svg";
 import { AgoraItem, AgoraThrowingTopicItem } from "@/components/atom/AgoraItem";
 import { MainSemiTitle } from "@/components/atom/MainSemiTitle";
@@ -15,7 +17,7 @@ import { agoraBoxDataState, dateAgoraActiveState, dateAgoraLengthState } from "@
 import { Inner } from "@/style/global";
 import { ChallengeCurrentType, communityFirstComponentType } from "@/types";
 
-import { AgoraItemView, Container } from "./style";
+import { AgoraItemView, Container, NoAgoraView, TodayNoAgoraView } from "./style";
 
 export const AgoraBox = ({
   ChallengeCurrent,
@@ -108,7 +110,7 @@ export const AgoraBox = ({
   return (
     <Inner>
       <Container>
-        <div className="title first">
+        <div className="title first agora">
           <MainSemiTitle font={1.25}>
             <span>
               지금 <div className="number">{CommunityFirstData?.challengeParticipantCount}</div>명이
@@ -154,12 +156,33 @@ export const AgoraBox = ({
           {isSameDay(dateActive[dateLength], new Date()) && (
             <AgoraThrowingTopicItem type={agoraData?.length === 3 ? "full" : "empty"} />
           )}
-          {/* 아고라데이터 없을 때 보여줄 곳 */}
-          {agoraData?.map((agoraData, idx) => (
-            <React.Fragment key={idx}>
-              <AgoraItem data={agoraData} />
-            </React.Fragment>
-          ))}
+          {agoraData?.length === 0 && isSameDay(dateActive[dateLength], new Date()) && (
+            <TodayNoAgoraView>
+              <span>
+                아직 등록된 스몰톡이 없네요.
+                <br /> 먼저 이야기를 꺼내볼까요? 💬
+              </span>
+              <img
+                src={smallTalkArrow}
+                alt="<-"
+              />
+            </TodayNoAgoraView>
+          )}
+          {agoraData?.length === 0 && !isSameDay(dateActive[dateLength], new Date()) ? (
+            <NoAgoraView>
+              <img
+                src={noSmallTalk}
+                alt="없습니다"
+              />
+              <span>등록된 스몰톡이 없어요.</span>
+            </NoAgoraView>
+          ) : (
+            agoraData?.map((agoraData, idx) => (
+              <React.Fragment key={idx}>
+                <AgoraItem data={agoraData} />
+              </React.Fragment>
+            ))
+          )}
         </AgoraItemView>
       </Container>
     </Inner>

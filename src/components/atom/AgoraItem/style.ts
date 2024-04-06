@@ -3,6 +3,7 @@ import styled from "styled-components";
 export const Container = styled.div<{ $type: string }>`
   min-width: 245px;
   max-width: 245px;
+  min-height: 134px;
   border-radius: 12px;
   border: 1px solid var(--Gray-30, #edeef1);
   background: var(--Base-White, #fff);
@@ -87,6 +88,7 @@ export const Container = styled.div<{ $type: string }>`
 export const ThrowingContainer = styled.div<{ $type: string }>`
   min-width: 245px;
   max-width: 245px;
+  min-height: 134px;
   border-radius: 12px;
   border: 1px solid var(--Gray-30, #edeef1);
   background: var(--Base-White, #fff);

@@ -267,7 +267,8 @@ export interface agoraDataType {
   question: string;
   participateCount: number;
   nickname: string;
-  createdAt: string;
+  createdTime: string;
+  createdDate: string;
   profile: string;
   myAgoraSign: string;
 }

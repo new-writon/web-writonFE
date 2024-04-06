@@ -18,6 +18,7 @@ export const AgoraItem = ({ data }: { data: agoraDataType }) => {
   const setAgoraData = useSetRecoilState(agoraDataState);
   const setAgoraModal = useSetRecoilState(agoraModalState);
   const setAgoraModalBox = useSetRecoilState(agoraModalBoxState);
+  const [width, setWidth] = useState<number>(window.innerWidth);
 
   const spaceAgoraBox = () => {
     setAgoraData(data);
@@ -26,15 +27,28 @@ export const AgoraItem = ({ data }: { data: agoraDataType }) => {
     setTimeout(() => {
       setAgoraModalBox(true);
     }, 10);
-    document.body.style.overflowY = "hidden";
+    if (width < 531) {
+      document.body.style.position = "fixed";
+    } else {
+      document.body.style.overflowY = "hidden";
+    }
   };
+
+  const handleResize = () => {
+    //뷰크기 강제로 강져오기
+    setWidth(window.innerWidth);
+  };
+  useEffect(() => {
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize); //clean
+  }, [width]);
   return (
     <Container
       onClick={spaceAgoraBox}
       $type={
         data?.myAgoraSign === "1"
           ? "답변 완료"
-          : isSameDay(data?.createdAt, new Date())
+          : isSameDay(data?.createdDate, new Date())
             ? "답변 달기"
             : "종료"
       }
@@ -53,7 +67,7 @@ export const AgoraItem = ({ data }: { data: agoraDataType }) => {
         <button className="comment">
           {data?.myAgoraSign === "1"
             ? "답변 완료"
-            : isSameDay(data?.createdAt, new Date())
+            : isSameDay(data?.createdDate, new Date())
               ? "답변 달기"
               : "종료"}
         </button>
