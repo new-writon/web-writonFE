@@ -9,6 +9,7 @@ export const Container = styled.div`
   right: 0;
   border-radius: 16px;
   border: 1px solid var(--Gray-30, #edeef1);
+  border-bottom: none;
   background: #fff;
   padding: 20px;
   /* Dropshadow/popup */
@@ -17,7 +18,6 @@ export const Container = styled.div`
   flex-direction: column;
   /* justify-content: center; */
   align-items: center;
-
   .notification-list {
     max-height: 375px;
     overflow-y: scroll;
@@ -33,7 +33,7 @@ export const Container = styled.div`
     display: flex;
     align-items: center;
     justify-content: center;
-    p {
+    span {
       margin-top: 2px;
       color: var(--Gray-70, #73777e);
       font-size: 0.875rem;
@@ -42,7 +42,6 @@ export const Container = styled.div`
   }
 
   .notification-wrapper .gradient {
-    height: 200px;
     width: 100%;
     position: absolute;
     bottom: 0;
@@ -60,15 +59,15 @@ export const Container = styled.div`
     min-width: 100%;
     .notification-wrapper {
       width: 100%;
-      height: calc(100vh - 120px);
+      height: calc(var(--vh, 1vh) * 100 - 120px);
     }
     .notification-list {
       width: 100%;
-      max-height: calc(100vh - 235px);
+      max-height: calc(var(--vh, 1vh) * 100 - 235px);
     }
     .notification-add {
       position: absolute;
-      bottom: 40px;
+      bottom: 20px;
       border: 1px solid var(--Gray-40, #d2d5db);
       border-radius: 6px;
       width: calc(100% - 32px);
@@ -116,5 +115,27 @@ export const ItemContainer = styled.div<{ $click: boolean }>`
       font-size: 0.75rem;
       line-height: 130%; /* 15.6px */
     }
+  }
+`;
+
+export const NoNotificationView = styled.div<{ $type: string }>`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  width: fit-content;
+  margin: auto;
+  margin-top: ${(props) => (props.$type === "mobile" ? "20px" : "0")};
+  height: ${(props) => (props.$type === "mobile" ? "calc(var(--vh, 1vh) * 100 - 120px)" : "auto")};
+
+  span {
+    overflow: hidden;
+    color: #94989f;
+    text-align: center;
+    font-size: 0.875rem;
+    font-style: normal;
+    font-weight: 500;
+    line-height: 160%; /* 22.4px */
   }
 `;

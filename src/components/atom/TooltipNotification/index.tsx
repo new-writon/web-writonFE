@@ -7,6 +7,7 @@ import { useSetRecoilState } from "recoil";
 
 import { getTemplete } from "@/apis/DetailPage";
 import { patchNotificationComment, patchNotificationLike } from "@/apis/notification";
+import noSmallTalk from "@/assets/AgoraPage/noSmallTalk.svg";
 import commentIcon from "@/assets/DetailPage/comment.svg";
 import fireIcon from "@/assets/DetailPage/fireOff.svg";
 import arrow from "@/assets/header/rightArrow.svg";
@@ -14,7 +15,7 @@ import gradient from "@/assets/notification/background-gradient.svg";
 import { DetailDataState, DetailModalState, LikeState } from "@/recoil/atoms";
 import { notificationDataType } from "@/types";
 
-import { Container, ItemContainer } from "./style";
+import { Container, ItemContainer, NoNotificationView } from "./style";
 export const TooltipNotification = ({
   data,
   setNotificationTooltip,
@@ -56,15 +57,26 @@ export const TooltipNotification = ({
       }
     };
   }, [listRef]);
+
   return (
     <Container>
       {type === "web" ? (
         <div className="notification-list">
-          {data?.map((item, idx) => (
-            <React.Fragment key={idx}>
-              <TooltipNotificationItem data={item} />
-            </React.Fragment>
-          ))}
+          {data.length === 0 ? (
+            <NoNotificationView $type="web">
+              <img
+                src={noSmallTalk}
+                alt="없습니다"
+              />
+              <span>아직 알람이 안왔어요.</span>
+            </NoNotificationView>
+          ) : (
+            data?.map((item, idx) => (
+              <React.Fragment key={idx}>
+                <TooltipNotificationItem data={item} />
+              </React.Fragment>
+            ))
+          )}
         </div>
       ) : (
         <div className="notification-wrapper">
@@ -72,11 +84,21 @@ export const TooltipNotification = ({
             className="notification-list"
             ref={listRef}
           >
-            {data?.map((item, idx) => (
-              <React.Fragment key={idx}>
-                <TooltipNotificationItem data={item} />
-              </React.Fragment>
-            ))}
+            {data.length === 0 ? (
+              <NoNotificationView $type="mobile">
+                <img
+                  src={noSmallTalk}
+                  alt="없습니다"
+                />
+                <span>아직 알람이 안왔어요.</span>
+              </NoNotificationView>
+            ) : (
+              data?.map((item, idx) => (
+                <React.Fragment key={idx}>
+                  <TooltipNotificationItem data={item} />
+                </React.Fragment>
+              ))
+            )}
           </div>
           <div className={`gradient ${gradientOn ? "gradient-on" : ""}`}>
             <img
@@ -86,25 +108,27 @@ export const TooltipNotification = ({
           </div>
         </div>
       )}
-      <div
-        className="notification-add"
-        onClick={() => {
-          if (type === "web") {
-            navigate("/mypage?category=알림");
-          } else {
-            navigate("/mypageMobile?category=알림");
-          }
-          if (setNotificationTooltip) {
-            setNotificationTooltip(false);
-          }
-        }}
-      >
-        <p>알림 더보기</p>
-        <img
-          src={arrow}
-          alt=">"
-        />
-      </div>
+      {data.length !== 0 && (
+        <div
+          className="notification-add"
+          onClick={() => {
+            if (type === "web") {
+              navigate("/mypage?category=알림");
+            } else {
+              navigate("/mypageMobile?category=알림");
+            }
+            if (setNotificationTooltip) {
+              setNotificationTooltip(false);
+            }
+          }}
+        >
+          <span>알림 더보기</span>
+          <img
+            src={arrow}
+            alt=">"
+          />
+        </div>
+      )}
     </Container>
   );
 };

@@ -1,3 +1,5 @@
+import { useEffect } from "react";
+
 import { useRecoilValue } from "recoil";
 import styled from "styled-components";
 
@@ -31,6 +33,11 @@ export const ModalProvider = () => {
   const finishModal = useRecoilValue(finishModalState);
   const accountNumberModal = useRecoilValue(accountNumberState);
   const agoraModal = useRecoilValue(agoraModalState);
+
+  useEffect(() => {
+    const vh = window.innerHeight * 0.01;
+    document.documentElement.style.setProperty("--vh", `${vh}px`);
+  }, []);
   return (
     <>
       {modal.todayWriteModal && <TodayWritePopup />}
@@ -56,10 +63,12 @@ const Container = styled.div`
   position: fixed;
   top: 0;
   left: 0;
-  height: 100vh;
   width: 100%;
   background: rgba(0, 0, 0, 0.6);
   z-index: 9999999;
   display: flex;
   justify-content: center;
+  overflow: scroll;
+  height: 100vh;
+  height: calc(var(--vh, 1vh) * 100);
 `;

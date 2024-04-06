@@ -27,6 +27,7 @@ export const Container = styled.div<{ $headerTooltip: boolean; $TooltipMobile: b
   @media (max-width: 530px) {
     display: ${(props) => (props.$headerTooltip ? "block" : "none")};
     height: 100vh;
+    height: calc(var(--vh, 1vh) * 100);
     width: 272px;
     position: absolute;
     top: 0;
