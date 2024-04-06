@@ -49,6 +49,8 @@ export const OtherContainer = styled.div<{ $type: string | undefined }>`
     font-style: normal;
     font-weight: 400;
     line-height: 160%; /* 22.4px */
+    word-wrap: break-word;
+    white-space: pre-wrap;
   }
   .time {
     display: flex;
@@ -97,6 +99,8 @@ export const MyContainer = styled.div`
     font-style: normal;
     font-weight: 400;
     line-height: 160%; /* 22.4px */
+    word-wrap: break-word;
+    white-space: pre-wrap;
   }
   .time {
     display: flex;

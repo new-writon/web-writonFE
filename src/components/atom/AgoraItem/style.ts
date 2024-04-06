@@ -56,6 +56,8 @@ export const Container = styled.div<{ $type: string }>`
     font-weight: 500;
     line-height: 130%;
     padding-top: 3px;
+    word-wrap: break-word;
+    white-space: pre-wrap;
   }
   .bottom .participant .text .participant-number {
     color: var(--Gray-70, #73777e);
