@@ -76,9 +76,13 @@ export const AgoraPage = () => {
   useEffect(() => {
     const handleScroll = () => {
       if (ChattingRef.current) {
-        const currentHeight = ChattingRef.current.scrollHeight;
-        if (currentHeight === 0) {
+        const { scrollTop, scrollHeight, clientHeight } = ChattingRef.current;
+        console.log(scrollTop, scrollHeight, clientHeight);
+        if (scrollHeight === 0) {
           setScrollTop(false); // 현재 높이가 0일 때
+        } else if (scrollTop + clientHeight + 1 > scrollHeight) {
+          // 스크롤이 맨 아래에 있을 때
+          setScrollTop(false);
         } else {
           if (ChattingRef.current.scrollTop !== 0) {
             setScrollTop(true); // 스크롤이 맨 위에 있지 않을 때
@@ -277,6 +281,7 @@ const Container = styled.div<{ $agoraModalBox: boolean }>`
     width: 40px;
     height: 40px;
     padding: 8px;
+    display: flex;
     justify-content: center;
     align-items: center;
     cursor: pointer;
@@ -298,6 +303,10 @@ const Container = styled.div<{ $agoraModalBox: boolean }>`
       border-top-left-radius: 16px;
       position: absolute;
       bottom: 0;
+    }
+    .agora-box .top-arrow {
+      right: 16px;
+      bottom: 110px;
     }
   }
 `;
@@ -339,6 +348,10 @@ const Top = styled.div`
     font-weight: 500;
     line-height: 130%; /* 15.6px */
   }
+
+  @media (max-width: 530px) {
+    padding: 20px 16px 24px;
+  }
 `;
 
 const Chatting = styled.div`
@@ -354,10 +367,14 @@ const Chatting = styled.div`
     min-height: 39vh;
     min-height: calc(var(--vh, 1vh) * 100 - 330px);
     max-height: 340px;
+    padding: 20px 16px;
   }
 `;
 
 const Bottom = styled.div`
   padding: 24px 32px;
   border-top: 1px solid var(--Gray-30, #edeef1);
+  @media (max-width: 530px) {
+    padding: 16px;
+  }
 `;
