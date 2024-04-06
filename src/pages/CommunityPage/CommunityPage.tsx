@@ -7,14 +7,14 @@ import { getCommunityFirstComponent, getMyCommunityStory } from "@/apis/Communit
 import { getChallengeCurrent } from "@/apis/mainPage";
 import { AgoraBox } from "@/components/CommunityPage/AgoraBox";
 import { CommunityBox } from "@/components/CommunityPage/CommunityBox";
-import { StoryBox } from "@/components/CommunityPage/StoryBox";
+// import { StoryBox } from "@/components/CommunityPage/StoryBox";
 import useAsyncWithLoading from "@/hooks/useAsyncWithLoading";
-import { ChallengeCurrentType, communityFirstComponentType, communityStoryProps } from "@/types";
+import { ChallengeCurrentType, communityFirstComponentType } from "@/types";
 
 export const CommunityPage = () => {
   const [ChallengeCurrent, setChallengeCurrent] = useState<ChallengeCurrentType>();
   const [CommunityFirstData, setCommunityFirstData] = useState<communityFirstComponentType>();
-  const [myCommunityStoryData, setMyCommunityStoryData] = useState<communityStoryProps>();
+  // const [myCommunityStoryData, setMyCommunityStoryData] = useState<communityStoryProps>();
   const executeAsyncTask = useAsyncWithLoading();
 
   const CommunityPageRendering = async () => {
@@ -30,7 +30,7 @@ export const CommunityPage = () => {
         ]);
         setChallengeCurrent(result[0]);
         setCommunityFirstData(result[1]);
-        setMyCommunityStoryData(result[2]);
+        // setMyCommunityStoryData(result[2]);
       } catch {
         throw new Error("shit");
       }
@@ -43,11 +43,11 @@ export const CommunityPage = () => {
 
   return (
     <Container>
-      <StoryBox
+      {/* <StoryBox
         ChallengeCurrent={ChallengeCurrent}
         CommunityFirstData={CommunityFirstData}
         myCommunityStoryData={myCommunityStoryData}
-      />
+      /> */}
       <AgoraBox
         ChallengeCurrent={ChallengeCurrent}
         CommunityFirstData={CommunityFirstData}

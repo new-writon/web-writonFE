@@ -74,6 +74,7 @@ export const MyPageMobile = () => {
 
 const Container = styled.div`
   background-color: #fff;
+  height: calc(var(--vh, 1vh) * 100);
   .ready {
     margin: 50px 0;
     padding-bottom: 50px;
