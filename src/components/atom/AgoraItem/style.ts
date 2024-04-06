@@ -17,6 +17,7 @@ export const Container = styled.div<{ $type: string }>`
   @media (max-width: 530px) {
     min-width: 202px;
     max-width: 202px;
+    max-height: 134px;
   }
   &:hover {
     background-color: var(--Gray-10, #fafafa);
@@ -101,6 +102,8 @@ export const ThrowingContainer = styled.div<{ $type: string }>`
   @media (max-width: 530px) {
     min-width: 202px;
     max-width: 202px;
+    max-height: 134px;
+    gap: ${(props) => (props.$type === "full" ? "0" : "12px")};
   }
   .topic-question {
     color: var(--Gray-60, #94989f);
