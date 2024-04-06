@@ -3,6 +3,8 @@ import axios, { AxiosRequestConfig, InternalAxiosRequestConfig, isAxiosError } f
 
 import { ErrorData } from "@/types/axios";
 
+import { postRefreshToken } from "./login";
+
 export const WRITON = axios.create({
   baseURL: import.meta.env.VITE_APP_SERVER_DOMAIN,
   headers: {
@@ -11,12 +13,60 @@ export const WRITON = axios.create({
   responseType: "json",
 });
 
+//request interceptor
 WRITON.interceptors.request.use(async (req: InternalAxiosRequestConfig) => {
   const accessToken = localStorage.getItem("accessToken") || sessionStorage.getItem("accessToken");
 
   if (req.headers && accessToken) req.headers.Authentication = `${accessToken}`;
   return req;
 });
+
+//response interceptor
+WRITON.interceptors.response.use(
+  (response) => {
+    return response;
+  },
+  async (error) => {
+    const {
+      config,
+      response: { status, data },
+    } = error;
+    if (status === 444) {
+      const originRequest = config;
+      //리프레시 토큰 api
+      try {
+        const response = await postRefreshToken();
+        localStorage.setItem("accessToken", response.accessToken);
+        localStorage.setItem("refreshToken", response.refreshToken);
+        originRequest.headers.Authentication = `${response.accessToken}`;
+        //진행중이던 요청 이어서하기
+        return axios(originRequest);
+      } catch (error) {
+        const err = error as ErrorData;
+        if (err.code === 401) {
+          alert("재로그인!");
+          localStorage.clear();
+          sessionStorage.clear();
+          window.location.replace("/login");
+        }
+      }
+    } else if (status === 401) {
+      alert("재로그인");
+      localStorage.clear();
+      sessionStorage.clear();
+      window.location.replace("/login");
+    } else if (status === 429) {
+      alert("너무 많은 요청을 하셨습니다. 로그아웃");
+      localStorage.clear();
+      sessionStorage.clear();
+      window.location.replace("/login");
+    } else {
+      console.log(data);
+      alert(data.message);
+    }
+  }
+);
+
 interface ApiResponse<T = any> {
   data: T;
   status: number;
