@@ -169,7 +169,7 @@ export const AgoraPage = () => {
         >
           <Top>
             <SmallTalkTitle
-              date={dateActive[dateLength] || "2024-01-02"}
+              date={dateActive[dateLength] || new Date().toDateString()}
               number={5}
             />
             <div className="small-talk-title">

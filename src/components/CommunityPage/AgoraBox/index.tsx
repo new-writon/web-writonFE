@@ -127,7 +127,7 @@ export const AgoraBox = ({
         </div>
         <div className="title-and-date">
           <SmallTalkTitle
-            date={dateActive[dateLength] || "2024-01-02"}
+            date={dateActive[dateLength] || new Date().toDateString()}
             number={agoraData.length}
           />
           <div className="change-date">
