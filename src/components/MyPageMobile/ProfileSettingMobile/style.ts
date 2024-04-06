@@ -1,7 +1,8 @@
 import styled from "styled-components";
 
 export const Container = styled.div`
-  height: calc(100vh - 60px);
+  height: calc(var(--vh, 1vh) * 100 - 60px);
+
   .title {
     color: #000;
     font-size: 1.125rem;

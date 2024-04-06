@@ -191,7 +191,7 @@ export const CommunityBox = () => {
         setDateLength(dateActive.length - 1);
         break;
     }
-    window.scrollTo({ top: 0 });
+    window.scrollTo({ top: 0, behavior: "smooth" });
     localStorage.setItem("date", dateActive[dateLength]);
   };
 

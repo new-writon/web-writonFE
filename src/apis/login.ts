@@ -1,6 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { challengeListProps } from "@/types";
-import { UserInfo, kakaoType } from "@/types/user";
+import { ErrorData } from "@/types/axios";
+import { TokenInfo, UserInfo, kakaoType } from "@/types/user";
 
 import { getData, postData } from ".";
 
@@ -26,6 +27,19 @@ export const postKakaoAuth = async (CODE: string) => {
       import.meta.env.VITE_APP_REST_API_KEY
     }&redirect_uri=${import.meta.env.VITE_APP_REDIRECT_URI}&code=${CODE}`,
     {}
+  );
+  return response.data;
+};
+
+export const postKakaoLogout = async (token: string) => {
+  const response = await postData(
+    `https://kapi.kakao.com/v1/user/logout`,
+    {},
+    {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    }
   );
   return response.data;
 };
@@ -78,4 +92,22 @@ export const postRegister = async (id: string, pw: string, email: string) => {
 export const getChallengingList = async () => {
   const response = await getData<challengeListProps[]>("/challenge/start");
   return response.data;
+};
+
+//토큰 관련
+export const postRefreshToken = async () => {
+  try {
+    const response = await postData<TokenInfo>(
+      "/auth/token-reissue",
+      {},
+      {
+        headers: {
+          refresh: localStorage.getItem("refreshToken") || sessionStorage.getItem("refreshToken"),
+        },
+      }
+    );
+    return response.data;
+  } catch (error) {
+    throw error as ErrorData;
+  }
 };

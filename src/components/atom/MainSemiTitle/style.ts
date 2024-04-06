@@ -15,6 +15,7 @@ export const Container = styled.div<{ $font: number }>`
     margin-left: 5px;
     font-size: 1.25rem;
   }
+  span,
   p {
     display: flex;
     font-size: ${(props) => `${props.$font}rem`};

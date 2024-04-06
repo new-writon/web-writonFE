@@ -9,7 +9,7 @@ import { TooltipNotification } from "@/components/atom/TooltipNotification";
 import { notificationDataType } from "@/types";
 
 export const NotificationPage = () => {
-  const [notificationData, setNotificationData] = useState<notificationDataType[]>([]);
+  const [notificationData, setNotificationData] = useState<notificationDataType[] | null>(null);
 
   const notificationRendering = async () => {
     try {
@@ -28,7 +28,7 @@ export const NotificationPage = () => {
   }, []);
   return (
     <>
-      {notificationData.length === 0 ? (
+      {notificationData === null ? (
         <Loading />
       ) : (
         <Container>
@@ -53,6 +53,7 @@ export const NotificationPage = () => {
 const Container = styled.div`
   width: 100%;
   height: 100vh;
+  height: calc(var(--vh, 1vh) * 100);
   background-color: #fff;
 `;
 

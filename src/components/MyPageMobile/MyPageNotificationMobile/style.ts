@@ -1,6 +1,8 @@
 import styled from "styled-components";
 
-export const Container = styled.div``;
+export const Container = styled.div`
+  height: calc(var(--vh, 1vh) * 100 - 60px);
+`;
 
 export const Top = styled.div`
   padding: 27px 20px 20px;

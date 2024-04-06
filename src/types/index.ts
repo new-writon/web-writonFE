@@ -261,3 +261,23 @@ export interface notificationDataType {
 export interface finishModalButtonProps extends ButtonProps {
   type: string;
 }
+
+export interface agoraDataType {
+  agoraId: number;
+  question: string;
+  participateCount: number;
+  nickname: string;
+  createdTime: string;
+  createdDate: string;
+  profile: string;
+  myAgoraSign: string;
+}
+
+export interface agoraCommentType {
+  agora_comment_id: number;
+  content: string;
+  nickname: string;
+  profile: string;
+  created_time: string;
+  myCommentSign: string;
+}

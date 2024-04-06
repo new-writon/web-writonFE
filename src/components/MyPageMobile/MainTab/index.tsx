@@ -2,6 +2,7 @@ import React from "react";
 
 import { useNavigate } from "react-router-dom";
 
+import profile from "@/assets/communityPage/profile.png";
 import frontArrow from "@/assets/mypage/backArrow.svg";
 import { myPageProps } from "@/types";
 
@@ -30,7 +31,7 @@ export const MainTab = ({
         <div className="topWrapper">
           <div className="profileImageCover">
             <img
-              src={myData?.userProfile}
+              src={myData?.userProfile || profile}
               alt="profile"
             />
           </div>

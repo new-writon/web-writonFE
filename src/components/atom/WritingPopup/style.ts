@@ -198,3 +198,126 @@ export const ContainerResponsive = styled.div`
     border-bottom: 1px solid var(--Gray-40, #d9d9d9);
   }
 `;
+
+export const AgoraContainer = styled.div`
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+  background: rgba(0, 0, 0, 0.6);
+  z-index: 9999999;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 0 21px;
+  font-size: 1rem;
+  font-weight: 600;
+  line-height: 150%; /* 24px */
+
+  .contentBox {
+    width: 300px;
+    display: inline-flex;
+    padding: 20px;
+    flex-direction: column;
+    gap: 8px;
+    border-radius: 16px;
+    background: #fff;
+    box-shadow: 0px 4px 20px 0px rgba(33, 33, 33, 0.2);
+  }
+
+  .popUpBtn {
+    display: flex;
+    justify-content: flex-end;
+    gap: 32px;
+  }
+
+  .close {
+    color: var(--Gray-80, #616161);
+    cursor: pointer;
+  }
+
+  .complete {
+    color: var(--purple-50, #6a63f5);
+    cursor: pointer;
+  }
+
+  .contentBox:has(textarea) {
+    padding: 20px;
+    gap: 0;
+  }
+  textarea {
+    min-width: 200px;
+    width: 100%;
+    max-height: 69px;
+    resize: none;
+    font-size: 1rem;
+    padding: 20px 22px;
+    line-height: 160%;
+    outline: none;
+    border: none;
+    overflow-y: hidden;
+    &::placeholder {
+      font-size: 1rem;
+      color: var(--Gray-60, #94989f);
+      text-align: center;
+      font-style: normal;
+      font-weight: 400;
+      line-height: 160%; /* 24px */
+    }
+    &:focus {
+      border: none;
+      &::placeholder {
+        opacity: 0;
+      }
+    }
+    /* @media (max-width: 530px) {
+      height: 30px;
+    } */
+  }
+  .line {
+    width: 100%;
+    height: 1px;
+    background-color: var(--Gray-30, #eee);
+    margin: 16px 0;
+  }
+
+  .tooltipMessage {
+    max-width: 245px;
+    position: absolute;
+    top: -45px;
+    left: 0;
+    right: 0;
+    margin: 0 auto;
+    background-color: var(--Gray-20, #f5f5f5);
+    border: 1px solid var(--Gray-40, #d9d9d9);
+    border-radius: 10px;
+    padding: 5px 12px;
+    color: var(--Gray-80, #616161);
+    font-size: 0.7rem;
+    font-weight: 500;
+    line-height: 160%; /* 15.6px */
+    display: flex;
+    justify-content: center;
+    @media (max-width: 530px) {
+      font-size: 0.75rem;
+    }
+  }
+  .tooltipMessage::before {
+    content: "";
+    display: block;
+    width: 12px;
+    height: 12px;
+    transform: rotate(-45deg);
+    position: absolute;
+    bottom: -7px;
+    margin: auto;
+    left: 0;
+    right: 0;
+    background-color: var(--Gray-20, #f5f5f5);
+    border-bottom-left-radius: 3px;
+    border-left: 1px solid var(--Gray-40, #d9d9d9);
+    border-bottom: 1px solid var(--Gray-40, #d9d9d9);
+    background: linear-gradient(-135deg, transparent 8px, #f5f5f5 0);
+  }
+`;
