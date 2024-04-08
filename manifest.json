@@ -11,23 +11,18 @@
   "theme_color": "#ffffff",
   "icons": [
     {
-      "src": "/public/favicon.ico",
+      "src": "/public/writon.ico",
       "sizes": "64x64 32x32 24x24 16x16",
       "type": "image/x-icon"
     },
     {
-      "src": "/public/writon-rect.png",
+      "src": "/public/Icon_(192x192).png",
       "type": "image/png",
       "sizes": "192x192",
       "purpose": "maskable any"
     },
     {
-      "src": "/public/writon-192.png",
-      "type": "image/png",
-      "sizes": "192x192"
-    },
-    {
-      "src": "/public/writon-512.png",
+      "src": "/public/Icon_(512x512).png",
       "type": "image/png",
       "sizes": "512x512"
     }
