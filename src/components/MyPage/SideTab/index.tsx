@@ -2,6 +2,7 @@ import React from "react";
 
 import { useNavigate } from "react-router-dom";
 
+import profile from "@/assets/communityPage/profile.png";
 import activity from "@/assets/mypage/icon-myactivity.svg";
 import information from "@/assets/mypage/icon-personal.svg";
 import { myPageProps } from "@/types";
@@ -32,7 +33,7 @@ export const SideTab = ({
         <div className="topWrapper">
           <div className="profileImageCover">
             <img
-              src={myData?.userProfile}
+              src={myData?.userProfile || profile}
               alt="profile"
             />
           </div>
