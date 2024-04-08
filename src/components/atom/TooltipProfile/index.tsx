@@ -36,10 +36,9 @@ export const TooltipProfile = ({
       console.log(response);
       localStorage.clear();
       sessionStorage.clear();
-      navigate("/login");
-      window.location.reload();
+      window.location.replace("/login");
     } catch {
-      alert("로그아웃 불가");
+      window.location.replace("/login");
     }
   };
 
