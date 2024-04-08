@@ -105,7 +105,10 @@ export const FinishModal = () => {
             </div>
             <div
               className="close"
-              onClick={() => setFinishModal(false)}
+              onClick={() => {
+                setFinishModal(false);
+                document.body.style.overflowY = "scroll";
+              }}
             >
               닫기
             </div>
