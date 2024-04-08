@@ -74,6 +74,7 @@ const Login = () => {
         }
       } catch (err) {
         alert("아이디 및 비밀번호를 다시 입력해주세요"); // 모달창으로 변경하기
+        window.location.replace("/login");
         console.log(err);
       }
     });

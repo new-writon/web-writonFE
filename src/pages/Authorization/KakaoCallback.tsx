@@ -56,6 +56,7 @@ export const KakaoCallback = () => {
               navigate("/");
             } else {
               alert("초대장을 받고 들어와주세요!"); // 모달창으로 변경하기
+              window.location.replace("/login");
             }
           } catch {
             new Error("shit");
@@ -63,6 +64,7 @@ export const KakaoCallback = () => {
         }
       } catch (err) {
         alert("다시 로그인해주세요"); // 모달창으로 변경하기
+        window.location.replace("/login");
         console.log(err);
       }
     }
