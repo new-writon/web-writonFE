@@ -88,6 +88,7 @@ export const DetailPage = () => {
   return (
     <Inner>
       <Container
+        $width={width}
         id="DetailBox"
         onClick={() => {
           setDetailModal(false);
@@ -134,12 +135,13 @@ export const DetailPage = () => {
   );
 };
 
-const Container = styled.div`
+const Container = styled.div<{ $width: number }>`
   position: fixed;
   top: 0;
   left: 0;
-  height: 100vh;
-  height: calc(var(--vh, 1vh) * 100);
+  height: ${(props) => (props.$width <= 530 ? "calc(var(--vh, 1vh) * 100)" : "100vh")};
+  /* height: 100vh;
+  height: calc(var(--vh, 1vh) * 100); */
   width: 100%;
   background: rgba(0, 0, 0, 0.6);
   z-index: 9999999;

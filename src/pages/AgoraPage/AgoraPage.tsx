@@ -149,6 +149,7 @@ export const AgoraPage = () => {
   return (
     <Inner>
       <Container
+        $width={width}
         onClick={() => {
           setAgoraModalBox(false);
           if (width < 531) {
@@ -244,12 +245,11 @@ const slideOut = keyframes`
   }
 `;
 
-const Container = styled.div<{ $agoraModalBox: boolean }>`
+const Container = styled.div<{ $agoraModalBox: boolean; $width: number }>`
   position: fixed;
   top: 0;
   left: 0;
-  height: 100vh;
-  height: calc(var(--vh, 1vh) * 100);
+  height: ${(props) => (props.$width <= 530 ? "calc(var(--vh, 1vh) * 100)" : "100vh")};
   width: 100%;
   z-index: 9999999;
   display: flex;
