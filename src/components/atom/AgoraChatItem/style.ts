@@ -40,9 +40,7 @@ export const OtherContainer = styled.div<{ $type: string | undefined }>`
     padding: 13px 20px 11px;
     border-radius: 32px;
     background: ${(props) =>
-      props.$type === "topic"
-        ? "var(--brand-color-blue-50-main, #6272ff)"
-        : " var(--Gray-30, #EDEEF1)"};
+      props.$type === "topic" ? "var(--Main-50, #6272ff)" : " var(--Gray-30, #EDEEF1)"};
     color: ${(props) =>
       props.$type === "topic" ? "var(--White, #fff)" : " var(--Gray-100, #1b1d1f)"};
     font-size: 0.875rem;
@@ -93,7 +91,7 @@ export const MyContainer = styled.div`
     width: 100%;
     padding: 13px 20px 11px;
     border-radius: 32px;
-    background: var(--Brand-Color_Blue-10, #eff1ff);
+    background: var(--Main-10, #eff1ff);
     color: var(--Gray-100, #1b1d1f);
     font-size: 0.875rem;
     font-style: normal;

@@ -27,9 +27,9 @@ export const BasicInput = styled.input<InputProps>`
       props.placeholder === "비밀번호를 입력해주세요."
         ? props.type === "password" && !props.errorLine
           ? "1px solid var(--Error_50,#dc362e)"
-          : "1px solid var(--Main_Blue, #135ff3)"
-        : "1px solid var(--purple-50, #135ff3)"};
-    //border: 1px solid var(--Main_Blue, #135ff3);
+          : "1px solid var(--Main-60, #5161ed)"
+        : "1px solid var(--Main-50, #6272ff)"};
+    //border: 1px solid var(--Main-60, #5161ed);
   }
 
   //
@@ -80,9 +80,9 @@ export const MyPageInput = styled.input<InputProps>`
       props.placeholder === "비밀번호를 입력해주세요."
         ? props.type === "password" && !props.errorLine
           ? "1px solid var(--Error_50,#dc362e)"
-          : "1px solid var(--Main_Blue, #135ff3)"
-        : "1px solid var(--purple-50, #6A63F5)"};
-    //border: 1px solid var(--Main_Blue, #135ff3);
+          : "1px solid var(--Main-60, #5161ed)"
+        : "1px solid var(--Main-50, #6272ff)"};
+    //border: 1px solid var(--Main-60, #5161ed);
   }
 
   //

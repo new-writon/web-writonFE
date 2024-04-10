@@ -28,8 +28,8 @@ export const Container = styled.div`
     padding: 9px 12px 7px;
     align-items: center;
     border-radius: 10px;
-    background: var(--Purple-10, #f0efff);
-    color: var(--purple-50, #6a63f5);
+    background: var(--Main-10, #eff1ff);
+    color: var(--Main-50, #6272ff);
     font-size: 0.875rem;
     font-weight: 600;
     line-height: 160%; /* 22.4px */

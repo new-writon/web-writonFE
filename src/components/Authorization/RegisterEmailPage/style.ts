@@ -49,7 +49,7 @@ export const RegisterBox = styled.div`
     color: var(--Error_50, #dc362e);
   }
   .success {
-    color: var(--Main_Blue, #135ff3);
+    color: var(--Main-60, #5161ed);
   }
 
   .parityCheck {
@@ -132,7 +132,7 @@ export const EmailCodeBox = styled.div`
     top: 50%;
     transform: translate(0, -50%);
     right: 70px;
-    color: var(--Main_Blue, #135ff3);
+    color: var(--Main-60, #5161ed);
     font-size: 0.875rem;
   }
 
@@ -192,7 +192,7 @@ export const RequestBtn = styled.button`
   display: flex;
   justify-content: center;
   align-items: center;
-  color: ${(props) => (!props.disabled ? "var(--Main_Blue, #135ff3)" : "var(--Gray-60, #94989f)")};
+  color: ${(props) => (!props.disabled ? "var(--Main-60, #5161ed)" : "var(--Gray-60, #94989f)")};
   background-color: ${(props) =>
     !props.disabled ? "var(--blue, #eaf5ff)" : "var(---Gray-30, #edeef1)"};
   font-weight: 600;
@@ -204,7 +204,7 @@ export const EmailCodeCheckBtn = styled.div<{ emailcodeCheck: boolean }>`
   box-sizing: border-box;
   border-radius: 5px;
   background-color: ${(props) =>
-    props.emailcodeCheck ? "var(--Gray-30, #edeef1)" : "   var(--Main_Blue, #135ff3)"};
+    props.emailcodeCheck ? "var(--Gray-30, #edeef1)" : "   var(--Main-60, #5161ed)"};
   color: ${(props) => (props.emailcodeCheck ? "var(--Gray-60, #94989f)" : "   var(--White, #fff)")};
   width: 42px;
   height: 28px;

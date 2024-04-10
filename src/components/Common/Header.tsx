@@ -399,7 +399,7 @@ const HeaderMiddle = styled.div`
     cursor: pointer;
   }
   .tab.select {
-    border-bottom: 3px solid var(--purple-50, #6a63f5);
+    border-bottom: 3px solid var(--Main-50, #6272ff);
     color: var(--Gray-100, #1b1d1f);
   }
   .tab.false {
@@ -434,7 +434,7 @@ const HeaderMiddleResponsive = styled.div`
     cursor: pointer;
   }
   .tab.select {
-    border-bottom: 3px solid var(--purple-50, #6a63f5);
+    border-bottom: 3px solid var(--Main-50, #6272ff);
     color: var(--Gray-100, #1b1d1f);
   }
   .tab.false {
@@ -464,13 +464,13 @@ const HeaderRight = styled.div`
     min-height: 40px;
   }
   .writingBtn:hover {
-    background-color: var(--purple-50, #6a63f5);
+    background-color: var(--Main-50, #6272ff);
   }
   .writingBtn:hover p {
     color: var(--White);
   }
   p {
-    color: var(--purple-50, #6a63f5);
+    color: var(--Main-50, #6272ff);
     font-weight: 500;
     text-align: center;
     margin: auto 0;
@@ -508,7 +508,7 @@ const HeaderRight = styled.div`
     color: var(--White, #fff);
     border-radius: 50%;
     padding: 0 4px;
-    background-color: var(--purple-50, #6a63f5);
+    background-color: var(--Main-50, #6272ff);
     display: flex;
     align-items: center;
     justify-content: center;

@@ -85,7 +85,7 @@ export const IntroducePopup = styled.div<{ $xValue: number }>`
   .userAddInfo .job,
   .userAddInfo .company {
     display: flex;
-    color: var(--purple-50, #6a63f5) !important;
+    color: var(--Main-50, #6272ff) !important;
     font-size: 0.75rem;
     font-weight: 500;
     gap: 6px;

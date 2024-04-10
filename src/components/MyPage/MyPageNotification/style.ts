@@ -38,7 +38,7 @@ export const Top = styled.div`
     background: var(--Gray-10, #fcfcfc);
   }
   .listmain p {
-    color: var(--purple-50, #6a63f5);
+    color: var(--Main-50, #6272ff);
     text-align: center;
     font-size: 0.875rem;
     font-weight: 600;
@@ -136,6 +136,6 @@ export const CommentPagination = styled.div`
     background: var(--Gray-20, #f8f8fa);
   }
   .page.active {
-    color: var(--purple-50, #6a63f5);
+    color: var(--Main-50, #6272ff);
   }
 `;

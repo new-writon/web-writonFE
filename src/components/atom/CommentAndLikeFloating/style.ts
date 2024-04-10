@@ -48,7 +48,7 @@ export const Container = styled.div`
 
   .round.hover,
   .round.click {
-    background-color: var(--purple-50, #6a63f5);
+    background-color: var(--Main-50, #6272ff);
   }
 
   .hover .num,

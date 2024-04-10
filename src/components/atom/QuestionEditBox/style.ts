@@ -26,7 +26,7 @@ export const Container = styled.div`
     box-sizing: border-box;
     resize: none;
     font-size: 1rem;
-    caret-color: #6a63f5;
+    caret-color: var(--Main-50, #6272ff);
     color: var(--Gray-100, #1b1d1f);
     line-height: 24px;
     &::placeholder {
@@ -47,7 +47,7 @@ export const ToggleBtnBox = styled.div<{ $toggleSwitchOn: boolean }>`
   align-items: center;
   gap: 6px;
   color: ${(props) =>
-    props.$toggleSwitchOn ? "var(--purple-50, #6A63F5)" : "var(--Gray-60, #94989f)"};
+    props.$toggleSwitchOn ? "var(--Main-50, #6272ff)" : "var(--Gray-60, #94989f)"};
   font-size: 0.75rem;
   font-weight: 500;
   line-height: 15px;
@@ -76,8 +76,8 @@ export const ToggleBtnBox = styled.div<{ $toggleSwitchOn: boolean }>`
   }
 
   .toggleSwitch.active {
-    background: #8e89ff;
-    border: 1px solid #6a63f5;
+    background: var(--Main-40, #8592ff);
+    border: 1px solid var(--Main-50, #6272ff);
   }
 
   .toggleSwitch.active .toggleButton {

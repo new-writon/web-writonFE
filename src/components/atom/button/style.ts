@@ -28,7 +28,7 @@ export const BlueBtn = styled.button<ButtonProps>`
   border-radius: 5px;
   border: none;
 
-  background-color: var(--Main_Blue, #135ff3);
+  background-color: var(--Main-60, #5161ed);
   color: var(--White, #fff);
   font-size: var(--text_b1);
   font-weight: 600;
@@ -44,7 +44,7 @@ export const FloatingWriteBtn = styled.button<ButtonProps>`
   padding: 20px 26px 16px 28px;
   gap: 5px;
   border-radius: 80px;
-  background: var(--purple-50, #6a63f5);
+  background: var(--Main-50, #6272ff);
   box-shadow: 0px 5px 20px 0px rgba(106, 99, 245, 0.3);
   color: var(--White, #fff);
   font-size: 16px;
@@ -74,14 +74,14 @@ export const WritingSubmitBtn = styled.div<{ $disabled: boolean }>`
   align-items: center;
   border-radius: 12px;
   background: ${(props) =>
-    props.$disabled ? "var(--purple-50, #6A63F5)" : "var(--Gray-40, #d2d5db)"};
+    props.$disabled ? "var(--Main-50, #6272ff)" : "var(--Gray-40, #d2d5db)"};
   color: ${(props) => (props.$disabled ? " var(--White, #FFF);" : "var(--Gray-70, #73777e)")};
   font-size: 1.125rem;
   font-weight: 600;
   line-height: 15px;
   cursor: pointer;
   &:hover {
-    background: ${(props) => props.$disabled && "var(--purple-60, #524DD4)"};
+    background: ${(props) => props.$disabled && "var(--Main-60, #5161ed)"};
   }
   img {
     margin-left: 4px;
@@ -96,9 +96,9 @@ export const KeywordBtn = styled.div<{ $select: boolean }>`
   border-radius: 15px;
   cursor: pointer;
   border: ${(props) =>
-    props.$select ? "1px solid var(--purple-50, #6a63f5)" : "1px solid var(--Gray-50, #b1b4bc)"};
+    props.$select ? "1px solid var(--Main-50, #6272ff)" : "1px solid var(--Gray-50, #b1b4bc)"};
   line-height: 11px;
-  color: ${(props) => (props.$select ? " var(--purple-50, #6a63f5)" : "")};
+  color: ${(props) => (props.$select ? " var(--Main-50, #6272ff)" : "")};
   text-align: center;
   font-size: 0.875rem;
   @media (max-width: 530px) {
@@ -113,7 +113,7 @@ export const AddQuestionBtn = styled.div`
   align-items: center;
   border-radius: 50px;
   background: var(--White, #fff);
-  color: var(--purple-50, #6a63f5);
+  color: var(--Main-50, #6272ff);
   font-size: 0.875rem;
   font-weight: 600;
   line-height: 160%; /* 22.4px */
@@ -132,7 +132,7 @@ export const OnboardingBtn = styled.div<{ $ButtonOn: boolean }>`
   align-items: center;
   border-radius: 12px;
   background: ${(props) =>
-    props.$ButtonOn ? "var(--purple-50, #6A63F5)" : "var(--Gray-40, #d2d5db)"};
+    props.$ButtonOn ? "var(--Main-50, #6272ff)" : "var(--Gray-40, #d2d5db)"};
   color: ${(props) => (props.$ButtonOn ? "var(--White, #FFF)" : "var(--Gray-70, #73777e)")};
   font-size: 1.125rem;
   font-weight: 600;
@@ -143,7 +143,7 @@ export const OnboardingBtn = styled.div<{ $ButtonOn: boolean }>`
 export const FinishModalBtn = styled.div<{ $type: string }>`
   width: fit-content;
   padding: ${(props) => (props.$type === "next" ? "18px 121px" : "18px 89px")};
-  background-color: var(--purple-50);
+  background-color: var(--Main-50, #6272ff);
   border-radius: 12px;
   color: var(--White, #fff);
   cursor: pointer;
@@ -172,7 +172,7 @@ export const CurrrentChallengeBtn = styled.div`
     line-height: 160%; /* 14.4px */
   }
   .viewPage {
-    color: var(--purple-50, #6a63f5);
+    color: var(--Main-50, #6272ff);
     font-size: 0.875rem;
     font-weight: 600;
     line-height: 160%; /* 14.4px */
@@ -195,15 +195,13 @@ export const PublicBtn = styled.div<{ $secret: boolean; $state: string }>`
   padding: 5px 8px;
   border-radius: 40px;
   border: ${(props) =>
-    !props.$secret
-      ? " 1px solid var(--purple-50, #6A63F5)"
-      : " 1px solid var(--Gray-40, #d2d5db);"};
+    !props.$secret ? " 1px solid var(--Main-50, #6272ff)" : " 1px solid var(--Gray-40, #d2d5db);"};
 
   background: transparent;
   cursor: ${(props) =>
     props.$state === "edit" || props.$state === "editWrite" ? "pointer" : "auto"};
   p {
-    color: ${(props) => (!props.$secret ? "var(--purple-50, #6A63F5)" : "var(--Gray-60, #94989f)")};
+    color: ${(props) => (!props.$secret ? "var(--Main-50, #6272ff)" : "var(--Gray-60, #94989f)")};
     font-size: 0.75rem;
     margin-top: 3px;
   }

@@ -106,7 +106,7 @@ export const Middle = styled.div`
   .userAddInfo .job,
   .userAddInfo .company {
     display: flex;
-    color: var(--purple-50, #6a63f5) !important;
+    color: var(--Main-50, #6272ff) !important;
     font-size: 0.875rem;
     font-weight: 600;
     gap: 6px;

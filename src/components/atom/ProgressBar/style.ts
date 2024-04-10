@@ -9,7 +9,7 @@ export const Container = styled.div<{ $value: number }>`
     display: block;
     width: 18px;
     height: 18px;
-    border: 4px solid var(--Purple-30, #aeabff);
+    border: 4px solid var(--Main-30, #a8b1ff);
     border-radius: 100%;
     opacity: 0.5;
     z-index: 1;

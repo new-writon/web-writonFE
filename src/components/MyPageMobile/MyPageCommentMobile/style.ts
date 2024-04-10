@@ -25,7 +25,7 @@ export const Top = styled.div`
     background: var(--Gray-10, #fcfcfc);
   }
   .listmain p {
-    color: var(--purple-50, #6a63f5);
+    color: var(--Main-50, #6272ff);
     text-align: center;
     font-size: 0.875rem;
     font-weight: 600;

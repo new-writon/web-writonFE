@@ -53,7 +53,7 @@ export const Container = styled.div`
   .addQuestionBox::-webkit-scrollbar-thumb {
     width: 2px;
     height: 2px; /* 스크롤바의 길이 */
-    background: #8e89ff; /* 스크롤바의 색상 */
+    background: var(--Main-40, #8592ff); /* 스크롤바의 색상 */
   }
 
   .addQuestionBox::-webkit-scrollbar-track {

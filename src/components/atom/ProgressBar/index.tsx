@@ -71,7 +71,7 @@ export const ProgressBar = ({ value, startDate, endDate }: ProgressBarProps) => 
         height={11}
         width={width - 50} //60 + 50
         transition={{ easing: "easeInOut" }}
-        progressColor="linear-gradient(90deg, #D5ABFF 0%, #6A63F5 100%)"
+        progressColor="linear-gradient(90deg,var(--ProgressBar-first,#5C76FF)  0%, var(--ProgressBar-second,#8482FF) 100%)"
       />
     </Container>
   );

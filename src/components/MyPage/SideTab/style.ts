@@ -85,8 +85,8 @@ export const Bottom = styled.div`
     background: var(--Gray-10, #fcfcfc);
   }
   .active {
-    background: var(--Purple-0, #f8f8ff);
-    color: var(--purple-50, #6a63f5);
+    background: var(--Main-0, #f5f7ff);
+    color: var(--Main-50, #6272ff);
     font-weight: 600;
     cursor: auto;
   }

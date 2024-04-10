@@ -54,7 +54,7 @@ export const EtcBox = styled.div`
     gap: 14px;
 
     .sign-up {
-      color: var(--Main_Blue, #135ff3);
+      color: var(--Main-60, #5161ed);
       cursor: pointer;
       text-decoration-line: underline;
     }

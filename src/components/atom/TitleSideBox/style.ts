@@ -2,8 +2,8 @@ import styled from "styled-components";
 
 export const Container = styled.div<{ $type: string }>`
   border-radius: 6px;
-  background: var(--Purple-0, #f8f8ff);
-  color: var(--Main_Purple, #6a63f5);
+  background: var(--Main-0, #f5f7ff);
+  color: var(--Main-50, #6272ff);
   text-align: center;
   font-size: 0.875rem;
   font-weight: 500;

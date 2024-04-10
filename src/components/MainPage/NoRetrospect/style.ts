@@ -30,7 +30,7 @@ export const Container = styled.div`
     display: flex;
     padding: 7px 15px 7px 16px;
     border-radius: 10px;
-    background-color: var(--purple-50, #6a63f5);
+    background-color: var(--Main-50, #6272ff);
     justify-content: center;
     align-items: center;
     gap: 7.5px;

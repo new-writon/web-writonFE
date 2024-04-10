@@ -58,7 +58,7 @@ export const Container = styled.div<{ $today: boolean }>`
     height: inherit;
     border-radius: 10px;
     padding: 8px 12px;
-    color: var(--purple-50, #6a63f5);
+    color: var(--Main-50, #6272ff);
     font-size: 0.875rem;
     font-weight: 600;
     line-height: 160%; /* 22.4px */
@@ -68,16 +68,16 @@ export const Container = styled.div<{ $today: boolean }>`
     top: 0;
     cursor: pointer;
     background-color: ${(props) =>
-      props.$today ? "var(--Purple-10, #f0efff)" : " var(--Gray-30, #EDEEF1)"};
-    color: ${(props) => (props.$today ? "var(--purple-50, #6a63f5)" : " var(--Gray-60, #94989F)")};
+      props.$today ? "var(--Main-10, #eff1ff)" : " var(--Gray-30, #EDEEF1)"};
+    color: ${(props) => (props.$today ? "var(--Main-50, #6272ff)" : " var(--Gray-60, #94989F)")};
     pointer-events: ${(props) => (props.$today ? "auto" : "none")};
   }
   button.abled:hover {
-    background: var(--Purple-60, #524dd4);
+    background: var(--Main-60, #5161ed);
     color: var(--White);
   }
   button.abled {
-    background: var(--purple-50, #6a63f5);
+    background: var(--Main-50, #6272ff);
     color: var(--White);
   }
 `;

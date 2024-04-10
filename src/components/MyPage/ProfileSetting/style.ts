@@ -67,7 +67,7 @@ export const Top = styled.div`
     cursor: pointer;
   }
   .editBtn.notactive {
-    background: var(--purple-50, #6a63f5);
+    background: var(--Main-50, #6272ff);
     color: var(--White, #fff);
   }
   .editBtn.active {
@@ -102,7 +102,7 @@ export const ChallengeSetting = styled.div`
     box-sizing: border-box;
     resize: none;
     font-size: 1rem;
-    caret-color: #6a63f5;
+    caret-color: var(--Main-50, #6272ff);
     color: var(--Gray-100, #1b1d1f);
     line-height: 24px;
     overflow-y: hidden;
@@ -129,7 +129,7 @@ export const EditBox = styled.div`
     color: var(--Error_50, #dc362e);
   }
   .success {
-    color: var(--purple-50, #6a63f5);
+    color: var(--Main-50, #6272ff);
   }
   .dupliBtn {
     color: var(--Gray-60, #94989f);
@@ -194,11 +194,11 @@ export const EditButton = styled.div`
     cursor: pointer;
   }
   .editCloseBtn {
-    background: var(--Purple-10, #f0efff);
-    color: var(--purple-50, #6a63f5);
+    background: var(--Main-10, #eff1ff);
+    color: var(--Main-50, #6272ff);
   }
   .editCompleteBtn {
-    background: var(--purple-50, #6a63f5);
+    background: var(--Main-50, #6272ff);
     color: var(--White, #fff);
   }
 `;
@@ -214,10 +214,10 @@ export const AccountButton = styled.div`
   right: -80px;
   top: 0;
   cursor: pointer;
-  background: var(--Purple-10, #f0efff);
-  color: var(--purple-50, #6a63f5);
+  background: var(--Main-10, #eff1ff);
+  color: var(--Main-50, #6272ff);
   &:hover {
-    background: var(--purple-50, #6a63f5);
+    background: var(--Main-50, #6272ff);
     color: var(--White, #fff);
   }
 `;

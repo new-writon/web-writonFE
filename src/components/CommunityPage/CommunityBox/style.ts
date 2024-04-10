@@ -64,10 +64,10 @@ export const CommunityHeader = styled.div`
     display: flex;
   }
   .categoriesMobileActvie {
-    border: 1px solid var(--purple-50, #6a63f5);
-    background: var(--Purple-0, #f8f8ff);
+    border: 1px solid var(--Main-50, #6272ff);
+    background: var(--Main-0, #f5f7ff);
     p {
-      color: var(--purple-50, #6a63f5);
+      color: var(--Main-50, #6272ff);
     }
   }
 

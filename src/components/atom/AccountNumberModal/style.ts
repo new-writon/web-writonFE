@@ -59,11 +59,11 @@ export const EditButton = styled.div`
     cursor: pointer;
   }
   .editCloseBtn {
-    background: var(--Purple-10, #f0efff);
-    color: var(--purple-50, #6a63f5);
+    background: var(--Main-10, #eff1ff);
+    color: var(--Main-50, #6272ff);
   }
   .editCompleteBtn {
-    background: var(--purple-50, #6a63f5);
+    background: var(--Main-50, #6272ff);
     color: var(--White, #fff);
   }
   @media (max-width: 530px) {

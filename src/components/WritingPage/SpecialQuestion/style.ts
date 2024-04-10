@@ -40,7 +40,7 @@ export const Container = styled.div`
       box-sizing: border-box;
       resize: none;
       font-size: 1rem;
-      caret-color: #6a63f5;
+      caret-color: var(--Main-50, #6272ff);
       color: var(--Gray-100, #1b1d1f);
       line-height: 24px;
       &::placeholder {

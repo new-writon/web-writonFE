@@ -57,15 +57,14 @@ export const BottomBox = styled.div<{ $fold: boolean; $isClick: boolean }>`
     align-items: center;
   }
   .etcBox div:nth-child(1) {
-    background: var(--Purple-10, #f0efff);
+    background: var(--Main-10, #eff1ff);
     padding: 6px 6px 4px;
   }
   .etcBox .addBtn {
     display: ${(props) => (props.$isClick ? "flex" : "none")};
     align-items: center;
     p {
-      color: ${(props) =>
-        props.$isClick ? "var(--Gray-60, #94989f)" : "var(--purple-50, #6a63f5)"};
+      color: ${(props) => (props.$isClick ? "var(--Gray-60, #94989f)" : "var(--Main-50, #6272ff)")};
       font-size: 0.875rem;
       font-weight: 600;
       line-height: 120%; /* 16.8px */

@@ -110,7 +110,7 @@ export const Container = styled.div`
   }
   .purple {
     display: inline;
-    color: var(--purple-50, #6a63f5);
+    color: var(--Main-50, #6272ff);
     font-weight: 700;
   }
   .highlight {

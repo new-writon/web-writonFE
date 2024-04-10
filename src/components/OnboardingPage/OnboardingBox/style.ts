@@ -56,7 +56,7 @@ export const OnboardBox = styled.div`
     color: var(--Error_50, #dc362e);
   }
   .success {
-    color: var(--Main_Blue, #135ff3);
+    color: var(--Main-60, #5161ed);
   }
   .dupliBtn {
     color: var(--Gray-60, #94989f);
@@ -122,7 +122,7 @@ export const JobIntroBox = styled.div`
     box-sizing: border-box;
     resize: none;
     font-size: 1rem;
-    caret-color: #6a63f5;
+    caret-color: var(--Main-50, #6272ff);
     color: var(--Gray-100, #1b1d1f);
     line-height: 24px;
     overflow-y: hidden;

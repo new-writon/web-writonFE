@@ -55,7 +55,7 @@ export const Container = styled.div`
     cursor: pointer;
   }
   .complete {
-    color: var(--purple-50, #6a63f5);
+    color: var(--Main-50, #6272ff);
     cursor: pointer;
   }
 `;
@@ -115,7 +115,7 @@ export const ContainerResponsive = styled.div`
     cursor: pointer;
   }
   .complete {
-    color: var(--purple-50, #6a63f5);
+    color: var(--Main-50, #6272ff);
     cursor: pointer;
   }
 
@@ -238,7 +238,7 @@ export const AgoraContainer = styled.div`
   }
 
   .complete {
-    color: var(--purple-50, #6a63f5);
+    color: var(--Main-50, #6272ff);
     cursor: pointer;
   }
 

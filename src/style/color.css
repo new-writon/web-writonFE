@@ -21,19 +21,22 @@
   --Main-80: #283399;
   --Main-90: #1a2477;
   --Main-100: #0f1655;
+  --ProgressBar-first: #5c76ff;
+  --ProgressBar-second: #8482ff;
 
+  --Purple-0: #f8f8ff;
   --Main_Purple_10: #f0efff;
-  --purple-50: #6a63f5;
-  --Purple-60: #524dd4;
   --Purple-20: #cfcdff;
   --Purple-30: #aeabff;
-  --Purple-0: #f8f8ff;
-
-  --Main_Blue: #5161ed;
-  --Sub_Purple: #75f;
-
-  --brand-color-blue-50-main: #6272ff;
-  --Brand-Color_Blue-10: #eff1ff;
+  --Purple-40: #8e89ff;
+  --purple-50: #6a63f5;
+  --Purple-60: #524dd4;
+  --Purple-70: #3e39b2;
+  --Purple-80: #2d2890;
+  --Purple-90: #1e1a6e;
+  --Purple-100: #120f4c;
+  /* --ProgressBar-first: #d5abff;
+  --ProgressBar-second: #6a63f5; */
 
   --White: #fff;
   --Dark: #272727;

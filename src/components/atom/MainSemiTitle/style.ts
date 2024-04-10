@@ -11,7 +11,7 @@ export const Container = styled.div<{ $font: number }>`
     font-size: 1.125rem;
   } */
   .number {
-    color: var(--purple-50);
+    color: var(--Main-50, #6272ff);
     margin-left: 5px;
     font-size: 1.25rem;
   }

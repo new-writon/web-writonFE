@@ -4,8 +4,8 @@ export const Container = styled.div`
   width: fit-content;
   padding: 12px 16px 10px;
   border-radius: 10px;
-  border: 1px solid var(--Purple-20, #cfcdff);
-  background-color: var(--Purple-0, #f8f8ff);
+  border: 1px solid var(--Main-20, #ccd1ff);
+  background-color: var(--Main-0, #f5f7ff);
   display: flex;
   gap: 12px;
   line-height: 1.35rem;
@@ -25,7 +25,7 @@ export const Container = styled.div`
   }
   .labelContent {
     display: flex;
-    color: var(--Purple-60, #524dd4);
+    color: var(--Main-60, #5161ed);
     font-weight: 600;
     font-size: 1.125rem;
   }

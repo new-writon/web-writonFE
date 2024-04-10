@@ -57,9 +57,9 @@ export const Container = styled.div<{ $type: string | undefined }>`
   button {
     height: inherit;
     border-radius: 10px;
-    background: var(--Purple-10, #f0efff);
+    background: var(--Main-10, #eff1ff);
     padding: 8px 12px;
-    color: var(--purple-50, #6a63f5);
+    color: var(--Main-50, #6272ff);
     font-size: 0.875rem;
     font-weight: 600;
     line-height: 160%; /* 22.4px */
@@ -70,11 +70,11 @@ export const Container = styled.div<{ $type: string | undefined }>`
     cursor: pointer;
   }
   button.abled:hover {
-    background: var(--Purple-60, #524dd4);
+    background: var(--Main-60, #5161ed);
     color: var(--White);
   }
   button.abled {
-    background: var(--purple-50, #6a63f5);
+    background: var(--Main-50, #6272ff);
     color: var(--White);
   }
 `;
