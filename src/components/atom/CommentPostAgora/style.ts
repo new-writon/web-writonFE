@@ -13,7 +13,7 @@ export const Container = styled.div<{ $today: boolean }>`
     display: flex;
     justify-content: center;
     align-items: center;
-    border: 1px solid var(--Gray-30, #eee);
+    border: 1px solid var(--Gray-30, #edeef1);
     background-origin: border-box;
     cursor: pointer;
   }
@@ -31,7 +31,7 @@ export const Container = styled.div<{ $today: boolean }>`
     border-radius: 10px;
     border: 1px solid var(--Gray-30, #edeef1);
     background-color: ${(props) =>
-      props.$today ? "var(--Base-White, #fff)" : " var(--Gray-20, #F8F8FA)"};
+      props.$today ? "var(--White, #fff)" : " var(--Gray-20, #F8F8FA)"};
     pointer-events: ${(props) => (props.$today ? "auto" : "none")};
     padding: 8px 12px;
     box-sizing: border-box;
@@ -47,7 +47,7 @@ export const Container = styled.div<{ $today: boolean }>`
       color: var(--Gray-60, #94989f);
     }
     &:focus {
-      border: 1px solid var(--Gray-30, #eee);
+      border: 1px solid var(--Gray-30, #edeef1);
       &::placeholder {
         opacity: 0;
       }

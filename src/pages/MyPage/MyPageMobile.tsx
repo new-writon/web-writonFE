@@ -73,14 +73,14 @@ export const MyPageMobile = () => {
 };
 
 const Container = styled.div`
-  background-color: #fff;
+  background-color: var(--White, #fff);
   height: calc(var(--vh, 1vh) * 100);
   .ready {
     margin: 50px 0;
     padding-bottom: 50px;
     display: flex;
     justify-content: center;
-    color: var(--Gray-100, #212121);
+    color: var(--Gray-100, #1b1d1f);
     text-align: center;
     font-size: 1rem;
     font-weight: 600;
@@ -97,7 +97,7 @@ const MyPageMobileHeader = styled.div`
     cursor: pointer;
   }
   p {
-    color: var(--Gray-100, #212121);
+    color: var(--Gray-100, #1b1d1f);
     text-align: center;
     font-size: 1rem;
     font-weight: 600;

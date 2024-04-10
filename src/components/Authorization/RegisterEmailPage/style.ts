@@ -25,7 +25,7 @@ export const RegisterBox = styled.div`
   color: var(--Gray7_600, #757575);
   .codeContainer {
     width: 100%;
-    background-color: var(--Gray2_100, #f5f5f5);
+    background-color: var(--Gray-20, #f8f8fa);
     margin-top: 20px;
     display: block;
     transition: 3s;
@@ -34,7 +34,7 @@ export const RegisterBox = styled.div`
     display: none;
   }
   .title {
-    color: var(--Gray10_900, #212121);
+    color: var(--Gray-100, #1b1d1f);
     font-size: 0.875rem;
     font-weight: 600;
     line-height: 160%;
@@ -146,7 +146,7 @@ export const EmailCodeBox = styled.div`
     .caption2 {
       margin-left: 6px;
       text-decoration: underline;
-      color: var(--Gray9_800, #424242);
+      color: var(--Gray-90, #2c2f32);
       cursor: pointer;
     }
   }
@@ -188,13 +188,13 @@ export const RequestBtn = styled.button`
   width: 370px;
   height: 56px;
   border-radius: 5px;
-  background-color: var(--Gray3_200, #eeeeee);
+  background-color: var(--Gray-30, #edeef1);
   display: flex;
   justify-content: center;
   align-items: center;
-  color: ${(props) => (!props.disabled ? "var(--Main_Blue, #135ff3)" : "var(--Gray6_500,#959595)")};
+  color: ${(props) => (!props.disabled ? "var(--Main_Blue, #135ff3)" : "var(--Gray-60, #94989f)")};
   background-color: ${(props) =>
-    !props.disabled ? "var(--blue, #eaf5ff)" : "var(--Gray3_200,#eeeeee)"};
+    !props.disabled ? "var(--blue, #eaf5ff)" : "var(---Gray-30, #edeef1)"};
   font-weight: 600;
   font-size: 1.125rem;
 `;
@@ -204,9 +204,8 @@ export const EmailCodeCheckBtn = styled.div<{ emailcodeCheck: boolean }>`
   box-sizing: border-box;
   border-radius: 5px;
   background-color: ${(props) =>
-    props.emailcodeCheck ? "var(--Gray3_200, #eee)" : "   var(--Main_Blue, #135ff3)"};
-  color: ${(props) =>
-    props.emailcodeCheck ? "var(--Gray6_500, #959595)" : "   var(--White, #fff)"};
+    props.emailcodeCheck ? "var(--Gray-30, #edeef1)" : "   var(--Main_Blue, #135ff3)"};
+  color: ${(props) => (props.emailcodeCheck ? "var(--Gray-60, #94989f)" : "   var(--White, #fff)")};
   width: 42px;
   height: 28px;
   position: absolute;
@@ -222,9 +221,9 @@ export const RegisterBtn = styled.button`
   border: 0;
   padding: 0;
   border-radius: 5px;
-  color: ${(props) => (!props.disabled ? "var(--White, #fff)" : "var(--Gray6_500,#959595)")};
+  color: ${(props) => (!props.disabled ? "var(--White, #fff)" : "var(--Gray-60, #94989f)")};
   background-color: ${(props) =>
-    !props.disabled ? "var(--Main_Blue,#135ff3)" : "var(--Gray3_200,#eeeeee)"};
+    !props.disabled ? "var(--Main_Blue,#135ff3)" : "var(--Gray-30, #edeef1)"};
 
   height: 56px;
   width: 100%;
@@ -243,7 +242,7 @@ export const SpaceToLogin = styled.div`
   .caption2 {
     margin-left: 10px;
     text-decoration: underline;
-    color: var(--Gray9_800, #424242);
+    color: var(--Gray-90, #2c2f32);
     cursor: pointer;
   }
 `;

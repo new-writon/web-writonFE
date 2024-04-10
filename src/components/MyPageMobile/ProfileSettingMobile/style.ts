@@ -18,7 +18,7 @@ export const Container = styled.div`
     align-items: center;
   }
   .editTitle {
-    color: var(--Gray-60, #959595);
+    color: var(--Gray-60, #94989f);
     font-size: 0.875rem;
     font-weight: 600;
     line-height: 160%; /* 22.4px */
@@ -27,12 +27,12 @@ export const Container = styled.div`
   }
   .editText {
     gap: 10px;
-    color: var(--Gray-100, #212121);
+    color: var(--Gray-100, #1b1d1f);
     font-size: 0.875rem;
     font-weight: 600;
   }
   .editText.account {
-    color: var(--Gray-60, #959595);
+    color: var(--Gray-60, #94989f);
     position: relative;
   }
   .companyedit {
@@ -43,7 +43,7 @@ export const Container = styled.div`
   }
   .companyedit .text {
     margin-top: 3px;
-    color: var(--Gray-100, #212121);
+    color: var(--Gray-100, #1b1d1f);
     font-size: 0.875rem;
     font-weight: 600;
   }
@@ -54,14 +54,14 @@ export const Container = styled.div`
     gap: 8px;
   }
   .editEmail {
-    color: var(--Gray-60, #959595);
+    color: var(--Gray-60, #94989f);
   }
   .line {
     width: 90%;
     height: 1px;
     margin: 60px auto 16px;
     padding: 0 20px;
-    background: var(--Gray-30, #eee);
+    background: var(--Gray-30, #edeef1);
   }
   .editBtnWrapper {
     padding: 0 20px;
@@ -105,11 +105,11 @@ export const AccountButton = styled.div`
 `;
 
 export const BasicSetting = styled.div`
-  background: #fff;
+  background: var(--White, #fff);
 `;
 
 export const ChallengeSetting = styled.div`
-  background: #fff;
+  background: var(--White, #fff);
   .jobField {
     max-width: 480px;
     .editJob {
@@ -125,7 +125,7 @@ export const ChallengeSetting = styled.div`
     width: 100%;
     height: 104px;
     border-radius: 8px;
-    border: 1px solid var(--Gray-40, #d9d9d9);
+    border: 1px solid var(--Gray-40, #d2d5db);
     background: var(--White, #ffff);
     outline: none;
     padding: 16px;
@@ -133,11 +133,11 @@ export const ChallengeSetting = styled.div`
     resize: none;
     font-size: 1rem;
     caret-color: #6a63f5;
-    color: var(--Gray-100, #212121);
+    color: var(--Gray-100, #1b1d1f);
     line-height: 24px;
     overflow-y: hidden;
     &::placeholder {
-      color: var(--Gray-60, #959595);
+      color: var(--Gray-60, #94989f);
       font-size: 1rem;
       line-height: 150%; /* 24px */
       white-space: pre-wrap;
@@ -161,10 +161,10 @@ export const EditBox = styled.div`
     color: var(--purple-50, #6a63f5);
   }
   .dupliBtn {
-    color: var(--Gray-60, #959595);
+    color: var(--Gray-60, #94989f);
   }
   .title {
-    color: var(--Gray10_900, #212121);
+    color: var(--Gray-100, #1b1d1f);
     font-size: 0.875rem;
     font-weight: 600;
     line-height: 160%;
@@ -187,11 +187,11 @@ export const EditBox = styled.div`
     position: absolute;
     right: 0;
     font-size: 0.75rem;
-    color: var(--Gray-60, #959595);
+    color: var(--Gray-60, #94989f);
   }
   input {
     border-radius: 8px;
-    border: 1px solid var(--Gray-40, #d9d9d9);
+    border: 1px solid var(--Gray-40, #d2d5db);
     background: var(--White, #ffff);
   }
 `;
@@ -210,7 +210,7 @@ export const DuplicateBtn = styled.button`
 `;
 
 export const EditButton = styled.div`
-  background-color: #fff;
+  background-color: var(--White, #fff);
   padding: 40px 20px 40px;
   width: 100%;
   display: flex;

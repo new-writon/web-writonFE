@@ -19,7 +19,7 @@ export const PreviewBody = styled.div`
     -webkit-box-orient: vertical;
     margin-bottom: 1.25rem;
   }
-  color: var(--Gray-90, #424242);
+  color: var(--Gray-90, #2c2f32);
   font-size: 0.875rem;
   line-height: 160%;
   .question {
@@ -33,6 +33,6 @@ export const PreviewBody = styled.div`
 export const PreviewInfo = styled.div`
   display: flex;
   justify-content: space-between;
-  border-top: 1px solid #eee;
+  border-top: 1px solid var(--Gray-30, #edeef1);
   padding-top: 16px;
 `;

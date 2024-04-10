@@ -14,7 +14,7 @@ export const OtherContainer = styled.div<{ $type: string | undefined }>`
     display: flex;
     justify-content: center;
     align-items: center;
-    border: 1px solid var(--Gray-30, #eee);
+    border: 1px solid var(--Gray-30, #edeef1);
     background-origin: border-box;
     cursor: pointer;
   }
@@ -44,7 +44,7 @@ export const OtherContainer = styled.div<{ $type: string | undefined }>`
         ? "var(--brand-color-blue-50-main, #6272ff)"
         : " var(--Gray-30, #EDEEF1)"};
     color: ${(props) =>
-      props.$type === "topic" ? "var(--White, #fff)" : " var(--Gray-100, #212121)"};
+      props.$type === "topic" ? "var(--White, #fff)" : " var(--Gray-100, #1b1d1f)"};
     font-size: 0.875rem;
     font-style: normal;
     font-weight: 400;
@@ -94,7 +94,7 @@ export const MyContainer = styled.div`
     padding: 13px 20px 11px;
     border-radius: 32px;
     background: var(--Brand-Color_Blue-10, #eff1ff);
-    color: var(--Gray-100, #212121);
+    color: var(--Gray-100, #1b1d1f);
     font-size: 0.875rem;
     font-style: normal;
     font-weight: 400;

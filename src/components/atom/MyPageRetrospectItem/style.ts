@@ -5,7 +5,7 @@ export const Container = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  border-top: 1px solid var(--Gray-30, #eee);
+  border-top: 1px solid var(--Gray-30, #edeef1);
   padding: 15px 0;
   cursor: pointer;
   &:hover {
@@ -25,7 +25,7 @@ export const Container = styled.div`
   }
   .text {
     width: 405px;
-    color: var(--Gray-60, #959595);
+    color: var(--Gray-60, #94989f);
     text-overflow: ellipsis;
     font-size: 0.875rem;
     font-weight: 500;
@@ -40,11 +40,11 @@ export const ContainerMobile = styled.div`
   display: flex;
   flex-direction: column;
   gap: 4px;
-  border-top: 1px solid var(--Gray-30, #eee);
+  border-top: 1px solid var(--Gray-30, #edeef1);
   padding: 16px 20px;
   cursor: pointer;
   &:hover {
-    background: var(--Gray-20, #f5f5f5);
+    background: var(--Gray-20, #f8f8fa);
   }
   .commentAndLike {
     transform: scale(0.8);
@@ -66,7 +66,7 @@ export const ContainerMobile = styled.div`
   }
   .text {
     width: 100%;
-    color: var(--Gray-60, #959595);
+    color: var(--Gray-60, #94989f);
     text-overflow: ellipsis;
     font-size: 0.875rem;
     font-weight: 500;

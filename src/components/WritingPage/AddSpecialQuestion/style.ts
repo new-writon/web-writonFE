@@ -13,7 +13,7 @@ export const Container = styled.div`
   }
   .title {
     padding-bottom: 15px;
-    border-bottom: 1px solid #eee;
+    border-bottom: 1px solid var(--Gray-30, #edeef1);
     display: flex;
     gap: 6px;
     img {
@@ -36,7 +36,7 @@ export const Container = styled.div`
     }
   }
   .keywordBox .keywordTitle {
-    color: var(--Gray-80, #616161);
+    color: var(--Gray-80, #464c52);
     font-size: 0.875rem;
     font-weight: 600;
     line-height: 120%;
@@ -59,12 +59,12 @@ export const Container = styled.div`
     overflow-y: scroll;
     height: calc(100% - 180px);
     scrollbar-width: thin;
-    scrollbar-color: #d9d9d9 #fff; /* 검은색 Thumb 와 흰색 Track */
+    scrollbar-color: #d2d5db #fff; /* 검은색 Thumb 와 흰색 Track */
   }
   .addQuestionBoxTitle {
     padding: 0 20px;
     display: flex;
-    color: var(--Gray-100, #212121);
+    color: var(--Gray-100, #1b1d1f);
     font-size: 0.875rem;
     font-weight: 600;
     line-height: 120%; /* 16.8px */

@@ -393,20 +393,20 @@ const HeaderMiddle = styled.div`
     align-items: center;
     box-sizing: border-box;
     padding-top: 3px;
-    color: var(--Gray-70, #757575);
+    color: var(--Gray-70, #73777e);
     font-size: 1.125rem;
     font-weight: 600;
     cursor: pointer;
   }
   .tab.select {
     border-bottom: 3px solid var(--purple-50, #6a63f5);
-    color: var(--Gray10_900, #212121);
+    color: var(--Gray-100, #1b1d1f);
   }
   .tab.false {
     padding-top: 0;
   }
   .tab:hover {
-    color: var(--Gray10_900, #212121);
+    color: var(--Gray-100, #1b1d1f);
   }
   @media (max-width: 530px) {
     display: none;
@@ -428,20 +428,20 @@ const HeaderMiddleResponsive = styled.div`
     align-items: center;
     box-sizing: border-box;
     padding-top: 3px;
-    color: var(--Gray-70, #757575);
+    color: var(--Gray-70, #73777e);
     font-weight: 600;
     font-size: 1.125rem;
     cursor: pointer;
   }
   .tab.select {
     border-bottom: 3px solid var(--purple-50, #6a63f5);
-    color: var(--Gray10_900, #212121);
+    color: var(--Gray-100, #1b1d1f);
   }
   .tab.false {
     padding-top: 0;
   }
   .tab:hover {
-    color: var(--Gray10_900, #212121);
+    color: var(--Gray-100, #1b1d1f);
   }
   @media (min-width: 531px) {
     display: none;
@@ -456,7 +456,7 @@ const HeaderRight = styled.div`
     display: flex;
     padding: 7px 15px 7px 16px;
     border-radius: 10px;
-    background-color: var(--Main_Purple_10, #f0efff);
+    background-color: var(--Main-0, #f5f7ff);
     justify-content: center;
     align-items: center;
     gap: 7.5px;
@@ -505,7 +505,7 @@ const HeaderRight = styled.div`
     top: 4px;
     right: 4px;
     font-size: 0.75rem;
-    color: #fff;
+    color: var(--White, #fff);
     border-radius: 50%;
     padding: 0 4px;
     background-color: var(--purple-50, #6a63f5);
@@ -528,7 +528,7 @@ const HeaderRight = styled.div`
     display: flex;
     justify-content: center;
     align-items: center;
-    border: 1px solid var(--Gray-30, #eee);
+    border: 1px solid var(--Gray-30, #edeef1);
     background-origin: border-box;
     cursor: pointer;
   }

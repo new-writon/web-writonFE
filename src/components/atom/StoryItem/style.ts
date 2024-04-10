@@ -9,7 +9,7 @@ export const Container = styled.div<{ $someone: string; $message: string | null 
   align-items: center;
   font-size: var(--text_cap1);
   line-height: 130%;
-  color: var(--Gray-100, #212121);
+  color: var(--Gray-100, #1b1d1f);
   position: relative;
   justify-content: flex-end;
   .profileBox {
@@ -28,9 +28,9 @@ export const Container = styled.div<{ $someone: string; $message: string | null 
     margin-bottom: 12px;
     z-index: 1;
     height: 42px;
-    color: ${(props) => (props.$someone === "me" ? " var(--White)" : " var(--Gray-100, #212121)")};
+    color: ${(props) => (props.$someone === "me" ? " var(--White)" : " var(--Gray-100, #1b1d1f)")};
     background-color: ${(props) =>
-      props.$someone === "me" ? "var(--Gray-70, #757575)" : "var(--Gray-20, #f5f5f5)"};
+      props.$someone === "me" ? "var(--Gray-70, #73777e)" : "var(--Gray-20, #f8f8fa)"};
     opacity: ${(props) => (props.$someone === "me" ? 1 : props.$message !== null ? 1 : 0)};
     cursor: pointer;
     text-align: center;
@@ -48,18 +48,18 @@ export const Container = styled.div<{ $someone: string; $message: string | null 
     left: 0;
     right: 0;
     background-color: ${(props) =>
-      props.$someone === "me" ? "var(--Gray-70, #757575)" : "var(--Gray-20, #f5f5f5)"};
+      props.$someone === "me" ? "var(--Gray-70, #73777e)" : "var(--Gray-20, #f8f8fa)"};
     border-bottom-left-radius: 3px;
     z-index: -1;
   }
   @media (max-width: 530px) {
     .storyMessage::before {
-      background-color: #fff;
+      background-color: var(--White, #fff);
     }
     .storyMessage {
-      background-color: #fff;
+      background-color: var(--White, #fff);
       font-size: 10px;
-      color: var(--Gray-90, #424242);
+      color: var(--Gray-90, #2c2f32);
       justify-content: flex-start;
       padding: 10px;
       white-space: ${(props) => (props.$message !== null ? "pre-wrap" : "wrap")};
@@ -78,9 +78,9 @@ export const Container = styled.div<{ $someone: string; $message: string | null 
     justify-content: center;
     align-items: center;
     margin-bottom: 10px;
-    background-color: #fff;
+    background-color: var(--White, #fff);
     border: ${(props) =>
-      props.$someone === "me" ? "3px solid transparent" : "1px solid var(--Gray-30, #eee)"};
+      props.$someone === "me" ? "3px solid transparent" : "1px solid var(--Gray-30, #edeef1)"};
     background: ${(props) =>
       props.$someone === "me" && "linear-gradient(0deg,#D5ABFF 0%, #6A63F5 100%)"};
     background: ${(props) =>
@@ -97,6 +97,6 @@ export const Container = styled.div<{ $someone: string; $message: string | null 
     object-fit: cover;
   }
   .company {
-    color: var(--Gray-70, #757575);
+    color: var(--Gray-70, #73777e);
   }
 `;

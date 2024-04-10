@@ -13,6 +13,6 @@ export const OnboardingPage = () => {
 };
 
 const Container = styled.div`
-  background-color: var(--Gray2_100, #f5f5f5);
+  background-color: var(--Gray-20, #f8f8fa);
   padding-bottom: 176px;
 `;

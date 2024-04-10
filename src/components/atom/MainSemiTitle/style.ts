@@ -1,7 +1,7 @@
 import styled from "styled-components";
 
 export const Container = styled.div<{ $font: number }>`
-  color: var(--Gray-100, #212121);
+  color: var(--Gray-100, #1b1d1f);
   font-size: ${(props) => `${props.$font}rem`};
   font-weight: 700;
   margin: auto 0;

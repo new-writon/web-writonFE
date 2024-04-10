@@ -27,12 +27,12 @@ export const Container = styled.div<{ $weekFold: boolean }>`
   }
   .topBar .topBarRight {
     display: flex;
-    color: var(--Gray-70, #757575);
+    color: var(--Gray-70, #73777e);
     font-size: 0.875rem;
     font-weight: 500;
     padding: 14px 16px 12px;
     border-radius: 10px;
-    border: 1px solid var(--Gray-40, #d9d9d9);
+    border: 1px solid var(--Gray-40, #d2d5db);
     cursor: pointer;
     img {
       margin-left: 9px;

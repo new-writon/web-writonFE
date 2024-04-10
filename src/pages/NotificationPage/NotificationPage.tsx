@@ -54,7 +54,7 @@ const Container = styled.div`
   width: 100%;
   height: 100vh;
   height: calc(var(--vh, 1vh) * 100);
-  background-color: #fff;
+  background-color: var(--White, #fff);
 `;
 
 const Header = styled.div`
@@ -63,7 +63,7 @@ const Header = styled.div`
   align-items: center;
   justify-content: center;
   position: relative;
-  color: var(--Gray-100, #212121);
+  color: var(--Gray-100, #1b1d1f);
 
   font-size: 1rem;
   font-style: normal;

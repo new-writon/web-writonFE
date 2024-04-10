@@ -34,7 +34,7 @@ const Container = styled.div`
   width: 40vw;
   min-width: 350px;
   height: 100%;
-  background-color: #ffffff;
+  background-color: var(--White, #fff);
   margin: 0 auto;
   position: relative;
   overflow-y: hidden;
@@ -71,6 +71,6 @@ const Container = styled.div`
     white-space: pre-wrap;
     word-break: break-word;
     overflow-wrap: break-word;
-    color: #272727;
+    color: var(--Dark, #272727);
   }
 `;

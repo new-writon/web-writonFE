@@ -37,7 +37,7 @@ export const Container = styled.div<{ $value: number }>`
     top: -42px;
     width: fit-content;
     padding: 8.5px 14px;
-    background-color: var(--Gray-20, #f5f5f5);
+    background-color: var(--Gray-20, #f8f8fa);
     height: 30px;
     border-radius: 50px;
     display: flex;
@@ -45,7 +45,7 @@ export const Container = styled.div<{ $value: number }>`
     align-items: center;
   }
   .message p {
-    color: #616161;
+    color: var(--Gray-80, #464c52);
     text-align: center;
     font-size: 0.875rem;
     font-weight: 500;
@@ -65,7 +65,7 @@ export const Container = styled.div<{ $value: number }>`
       (props.$value > 0 && props.$value < 16) || props.$value > 84 ? "0" : "0 auto"};
     border-radius: 3px;
     overflow: hidden;
-    background-color: var(--Gray-20, #f5f5f5);
+    background-color: var(--Gray-20, #f8f8fa);
   }
 
   .date {
@@ -73,19 +73,19 @@ export const Container = styled.div<{ $value: number }>`
     left: ${(props) =>
       props.$value > 99 ? `calc(${props.$value}% - 60px)` : `calc(${props.$value}% - 29px)`};
     bottom: -23px;
-    color: var(--Gray-80, #616161);
+    color: var(--Gray-80, #464c52);
     display: flex;
   }
   .date p {
     margin-left: 3px;
-    color: var(--Gray-50, #bdbdbd);
+    color: var(--Gray-50, #b1b4bc);
   }
   .endDate {
     display: ${(props) => (props.$value > 92 ? "none" : "block")};
     position: absolute;
     right: 10px;
     bottom: -23px;
-    color: var(--Gray-50, #bdbdbd);
+    color: var(--Gray-50, #b1b4bc);
   }
   .flag {
     position: absolute;

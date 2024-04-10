@@ -15,7 +15,7 @@ export const InputBox = styled.div`
 `;
 
 export const OrLine = styled.div`
-  color: var(--Gray5_400, #bdbdbd);
+  color: var(--Gray-50, #b1b4bc);
   text-align: center;
   font-size: 0.75rem;
   display: flex;
@@ -28,7 +28,7 @@ export const OrLine = styled.div`
     display: block;
     width: 45%;
     height: 1px;
-    background-color: #d9d9d9;
+    background-color: var(--Gray-40, #d2d5db);
   }
 `;
 export const EtcBox = styled.div`
@@ -48,7 +48,7 @@ export const EtcBox = styled.div`
   }
   .notUser {
     display: flex;
-    color: var(--Gray5_400, #bdbdbd);
+    color: var(--Gray-50, #b1b4bc);
     text-align: center;
 
     gap: 14px;

@@ -13,7 +13,7 @@ export const Container = styled.div<{ $type: string | undefined }>`
     display: flex;
     justify-content: center;
     align-items: center;
-    border: 1px solid var(--Gray-30, #eee);
+    border: 1px solid var(--Gray-30, #edeef1);
     background-origin: border-box;
     cursor: pointer;
   }
@@ -31,9 +31,9 @@ export const Container = styled.div<{ $type: string | undefined }>`
     height: 38px;
     line-height: 160%;
     border-radius: 10px;
-    background: var(--Gray-20, #f5f5f5);
+    background: var(--Gray-20, #f8f8fa);
     outline: none;
-    border: 1px solid var(--Gray-30, #eee);
+    border: 1px solid var(--Gray-30, #edeef1);
     padding: 8px 10px;
     box-sizing: border-box;
     resize: none;
@@ -44,10 +44,10 @@ export const Container = styled.div<{ $type: string | undefined }>`
     &::placeholder {
       line-height: 160%;
       font-size: 0.875rem;
-      color: var(--Gray-70, #757575);
+      color: var(--Gray-70, #73777e);
     }
     &:focus {
-      border: 1px solid var(--Gray-30, #eee);
+      border: 1px solid var(--Gray-30, #edeef1);
       &::placeholder {
         opacity: 0;
       }

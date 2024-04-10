@@ -1,7 +1,7 @@
 import styled from "styled-components";
 
 export const Container = styled.div`
-  background-color: #fff;
+  background-color: var(--White, #fff);
   width: 805px;
   border-radius: 16px;
   margin-bottom: 300px;
@@ -21,7 +21,7 @@ export const Container = styled.div`
     align-items: center;
   }
   .editTitle {
-    color: var(--Gray-60, #959595);
+    color: var(--Gray-60, #94989f);
     font-size: 0.875rem;
     font-weight: 600;
     line-height: 160%; /* 22.4px */
@@ -32,13 +32,13 @@ export const Container = styled.div`
     padding: 15px;
     gap: 10px;
     border-radius: 8px;
-    background: var(--Gray-10, #fafafa);
-    color: var(--Gray-100, #212121);
+    background: var(--Gray-10, #fcfcfc);
+    color: var(--Gray-100, #1b1d1f);
     font-size: 0.875rem;
     font-weight: 600;
   }
   .editText.account {
-    color: var(--Gray-60, #959595);
+    color: var(--Gray-60, #94989f);
     position: relative;
   }
   .editJob {
@@ -46,7 +46,7 @@ export const Container = styled.div`
     display: flex;
   }
   .editEmail {
-    color: var(--Gray-50, #bdbdbd);
+    color: var(--Gray-50, #b1b4bc);
   }
 `;
 
@@ -71,8 +71,8 @@ export const Top = styled.div`
     color: var(--White, #fff);
   }
   .editBtn.active {
-    background: var(--Gray-30, #eee);
-    color: var(--Gray-60, #959595);
+    background: var(--Gray-30, #edeef1);
+    color: var(--Gray-60, #94989f);
   }
 `;
 
@@ -95,7 +95,7 @@ export const ChallengeSetting = styled.div`
     width: 100%;
     height: 104px;
     border-radius: 8px;
-    border: 1px solid var(--Gray-40, #d9d9d9);
+    border: 1px solid var(--Gray-40, #d2d5db);
     background: var(--White, #ffff);
     outline: none;
     padding: 16px;
@@ -103,11 +103,11 @@ export const ChallengeSetting = styled.div`
     resize: none;
     font-size: 1rem;
     caret-color: #6a63f5;
-    color: var(--Gray-100, #212121);
+    color: var(--Gray-100, #1b1d1f);
     line-height: 24px;
     overflow-y: hidden;
     &::placeholder {
-      color: var(--Gray-60, #959595);
+      color: var(--Gray-60, #94989f);
       font-size: 1rem;
       line-height: 150%; /* 24px */
       white-space: pre-wrap;
@@ -132,10 +132,10 @@ export const EditBox = styled.div`
     color: var(--purple-50, #6a63f5);
   }
   .dupliBtn {
-    color: var(--Gray-60, #959595);
+    color: var(--Gray-60, #94989f);
   }
   .title {
-    color: var(--Gray10_900, #212121);
+    color: var(--Gray-100, #1b1d1f);
     font-size: 0.875rem;
     font-weight: 600;
     line-height: 160%;
@@ -158,11 +158,11 @@ export const EditBox = styled.div`
     position: absolute;
     right: 0;
     font-size: 0.75rem;
-    color: var(--Gray-60, #959595);
+    color: var(--Gray-60, #94989f);
   }
   input {
     border-radius: 8px;
-    border: 1px solid var(--Gray-40, #d9d9d9);
+    border: 1px solid var(--Gray-40, #d2d5db);
     background: var(--White, #ffff);
   }
 `;

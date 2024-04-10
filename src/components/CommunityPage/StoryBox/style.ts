@@ -47,7 +47,7 @@ export const IntroducePopup = styled.div<{ $xValue: number }>`
     margin: 0 auto;
   }
   z-index: 99999;
-  border: 1px solid var(--Gray-40);
+  border: 1px solid var(--Gray-40, #d2d5db);
   will-change: filter;
   filter: drop-shadow(0px 4px 20px rgba(33, 33, 33, 0.2));
   &::before {
@@ -64,8 +64,8 @@ export const IntroducePopup = styled.div<{ $xValue: number }>`
     background: var(--White, #fff);
     border-top-left-radius: 3px;
     z-index: -1;
-    border-left: 1px solid var(--Gray-40);
-    border-top: 1px solid var(--Gray-40);
+    border-left: 1px solid var(--Gray-40, #d2d5db);
+    border-top: 1px solid var(--Gray-40, #d2d5db);
   }
   .name {
     display: flex;
@@ -98,13 +98,13 @@ export const IntroducePopup = styled.div<{ $xValue: number }>`
     display: block;
     width: 1px;
     height: 10px;
-    background-color: #d9d9d9;
+    background-color: var(--Gray-40, #d2d5db);
     margin-bottom: 2px;
   }
   .oneline {
     margin-top: 12px;
     padding-top: 8px;
-    border-top: 1px solid var(--Gray-30);
+    border-top: 1px solid var(--Gray-30, #edeef1);
     font-size: 0.875rem;
     font-weight: 400;
     line-height: 120%;

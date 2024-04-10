@@ -80,7 +80,7 @@ const Container = styled.div`
   }
   .ready {
     width: 100%;
-    color: var(--Gray-80, #616161);
+    color: var(--Gray-80, #464c52);
     font-size: 1.15rem;
     font-weight: 600;
     display: flex;

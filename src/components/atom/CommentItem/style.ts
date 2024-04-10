@@ -18,7 +18,7 @@ export const Container = styled.div`
     padding: 16px 0;
     font-size: 0.875rem;
     font-weight: 400;
-    color: var(--Gray-100, #212121);
+    color: var(--Gray-100, #1b1d1f);
     white-space: pre-wrap;
     line-height: 150%;
   }
@@ -35,7 +35,7 @@ export const Container = styled.div`
   }
 
   .reply div {
-    color: var(--Gray-60, #959595);
+    color: var(--Gray-60, #94989f);
     display: flex;
     gap: 8px;
     cursor: pointer;
@@ -46,7 +46,7 @@ export const Container = styled.div`
     display: block;
     width: 1px;
     height: 10px;
-    background-color: #d9d9d9;
+    background-color: var(--Gray-40, #d2d5db);
     margin-bottom: 2px;
   }
 

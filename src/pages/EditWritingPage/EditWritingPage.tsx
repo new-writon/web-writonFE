@@ -62,7 +62,7 @@ export const EditWritingPage = () => {
 };
 
 const Container = styled.div`
-  background: var(--Gray2_100, #f5f5f5);
+  background: var(--Gray-20, #f8f8fa);
   padding-top: 30px;
   padding-bottom: 66px;
   position: relative;

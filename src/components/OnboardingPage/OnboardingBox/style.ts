@@ -6,7 +6,7 @@ export const Container = styled.div`
   background-color: var(--White);
   margin: 37px auto 0;
   border-radius: 16px;
-  background: #fff;
+  background: var(--White, #fff);
   box-shadow: 0px 14px 20px 0px rgba(33, 33, 33, 0.05);
   padding: 50px 170px 100px;
   @media (max-width: 710px) {
@@ -34,13 +34,13 @@ export const Title = styled.div`
     height: 42px;
   }
   .semiTitle {
-    color: var(--Gray-70, #757575);
+    color: var(--Gray-70, #73777e);
     font-size: 1rem;
     font-weight: 600;
     line-height: 150%; /* 24px */
   }
   .secondTitle {
-    color: var(--Gray-100, #212121);
+    color: var(--Gray-100, #1b1d1f);
     text-align: center;
     font-size: 1.5rem;
     font-weight: 600;
@@ -59,16 +59,16 @@ export const OnboardBox = styled.div`
     color: var(--Main_Blue, #135ff3);
   }
   .dupliBtn {
-    color: var(--Gray-60, #959595);
+    color: var(--Gray-60, #94989f);
   }
   .title {
-    color: var(--Gray10_900, #212121);
+    color: var(--Gray-100, #1b1d1f);
     font-size: 0.875rem;
     font-weight: 600;
     line-height: 160%;
   }
   .semiTitle {
-    color: var(--Gray-70, #757575);
+    color: var(--Gray-70, #73777e);
     font-size: 0.75rem;
     font-weight: 500;
     line-height: 130%; /* 15.6px */
@@ -88,8 +88,8 @@ export const OnboardBox = styled.div`
   }
   input {
     border-radius: 8px;
-    border: 1px solid var(--Gray-40, #d9d9d9);
-    background: var(--Gray-10, #fafafa);
+    border: 1px solid var(--Gray-40, #d2d5db);
+    background: var(--Gray-10, #fcfcfc);
   }
 `;
 
@@ -115,19 +115,19 @@ export const JobIntroBox = styled.div`
     width: 100%;
     height: 104px;
     border-radius: 8px;
-    border: 1px solid var(--Gray-40, #d9d9d9);
-    background: var(--Gray-10, #fafafa);
+    border: 1px solid var(--Gray-40, #d2d5db);
+    background: var(--Gray-10, #fcfcfc);
     outline: none;
     padding: 16px;
     box-sizing: border-box;
     resize: none;
     font-size: 1rem;
     caret-color: #6a63f5;
-    color: var(--Gray-100, #212121);
+    color: var(--Gray-100, #1b1d1f);
     line-height: 24px;
     overflow-y: hidden;
     &::placeholder {
-      color: var(--Gray-60, #959595);
+      color: var(--Gray-60, #94989f);
       font-size: 1rem;
       line-height: 150%; /* 24px */
       white-space: pre-wrap;

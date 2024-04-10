@@ -27,7 +27,7 @@ export const Container = styled.div`
     position: relative;
   }
   .change-date .today {
-    color: var(--Gray-80, #616161);
+    color: var(--Gray-80, #464c52);
     font-size: 0.875rem;
     font-style: normal;
     font-weight: 500;
@@ -35,11 +35,11 @@ export const Container = styled.div`
     cursor: pointer;
     padding: 10px;
     border-radius: 6px;
-    border: 1px solid var(--Gray-40, #d9d9d9);
+    border: 1px solid var(--Gray-40, #d2d5db);
     height: 30px;
   }
   .change-date .today:hover {
-    background: var(--Gray-10, #fafafa);
+    background: var(--Gray-10, #fcfcfc);
   }
   .change-date .previous {
     cursor: pointer;

@@ -12,7 +12,7 @@ export const Container = styled.div`
     display: flex;
     justify-content: center;
     align-items: center;
-    border: 1px solid var(--Gray-30, #eee);
+    border: 1px solid var(--Gray-30, #edeef1);
     background-origin: border-box;
     cursor: pointer;
   }
@@ -44,12 +44,12 @@ export const Container = styled.div`
     display: block;
     width: 1px;
     height: 10px;
-    background-color: #d9d9d9;
+    background-color: var(--Gray-40, #d2d5db);
     margin-bottom: 2px;
   }
   .user .top .company,
   .user .date {
-    color: var(--Gray-60, #959595);
+    color: var(--Gray-60, #94989f);
     font-size: 0.875rem;
     font-weight: 600;
     line-height: 120%;

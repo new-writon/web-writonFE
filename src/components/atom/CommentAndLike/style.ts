@@ -10,7 +10,7 @@ export const Item = styled.div`
   align-items: center;
   gap: 2px;
   .number {
-    color: var(--Gray-80, #616161);
+    color: var(--Gray-80, #464c52);
     font-size: 0.875rem;
     font-weight: 500;
     line-height: 120%;

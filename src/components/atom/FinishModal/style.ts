@@ -19,7 +19,7 @@ export const Container = styled.div`
   .finishWrapper {
     min-width: 520px;
     border-radius: 16px;
-    background: #fff;
+    background: var(--White, #fff);
     height: 600px;
     display: flex;
     flex-direction: column;
@@ -29,7 +29,7 @@ export const Container = styled.div`
   }
 
   .finishBox {
-    background: #fff;
+    background: var(--White, #fff);
     backface-visibility: hidden;
     transition: 0.8s;
     display: flex;
@@ -72,7 +72,7 @@ export const Container = styled.div`
   }
 
   .title {
-    color: var(--Gray-100, #212121);
+    color: var(--Gray-100, #1b1d1f);
     font-size: 1.5rem;
     font-weight: 700;
     line-height: 132%;
@@ -86,7 +86,7 @@ export const Container = styled.div`
 
   .text.first {
     margin: 14px 0 30px;
-    color: var(--Gray-80, #616161);
+    color: var(--Gray-80, #464c52);
     text-align: center;
     line-height: 160%;
   }
@@ -97,13 +97,13 @@ export const Container = styled.div`
     margin: 14px 0 56px;
   }
   .texts .text {
-    color: var(--Gray-80, #616161);
+    color: var(--Gray-80, #464c52);
     text-align: center;
     line-height: 160%;
   }
   .etcText {
     margin-bottom: 30px;
-    color: var(--Gray-60, #959595);
+    color: var(--Gray-60, #94989f);
     text-align: center;
     font-size: 0.75rem;
     line-height: 130%;
@@ -116,7 +116,7 @@ export const Container = styled.div`
   .highlight {
     display: inline;
     font-weight: 700;
-    color: var(--Gray-80, #616161);
+    color: var(--Gray-80, #464c52);
   }
 
   .topBtns {
@@ -125,7 +125,7 @@ export const Container = styled.div`
     justify-content: space-between;
     align-items: center;
     div {
-      color: var(--Gray-70, #757575);
+      color: var(--Gray-70, #73777e);
       display: flex;
       cursor: pointer;
     }

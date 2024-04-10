@@ -10,7 +10,7 @@ export const Container = styled.div`
   gap: 12px;
   line-height: 1.35rem;
   .labelTitle {
-    color: var(--Gray-100, #212121);
+    color: var(--Gray-100, #1b1d1f);
     font-size: 0.875rem;
     font-weight: 600;
     display: flex;
@@ -21,7 +21,7 @@ export const Container = styled.div`
     display: block;
     width: 1px;
     height: 16px;
-    background: #d9d9d9;
+    background: var(--Gray-40, #d2d5db);
   }
   .labelContent {
     display: flex;
@@ -31,20 +31,20 @@ export const Container = styled.div`
   }
   .labelContent p {
     margin-left: 5px;
-    color: var(--Gray-50, #bdbdbd);
+    color: var(--Gray-50, #b1b4bc);
   }
   .question {
     display: none;
   }
   @media (max-width: 530px) {
     display: block;
-    border: 1px solid var(--Gray-30, #eee);
+    border: 1px solid var(--Gray-30, #edeef1);
     background: var(--White, #fff);
 
     .labelTitle {
       width: fit-content;
       margin: 0 auto 5px;
-      color: var(--Gray-70, #757575);
+      color: var(--Gray-70, #73777e);
       font-weight: 500;
       gap: 3px;
     }

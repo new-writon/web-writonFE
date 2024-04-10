@@ -17,7 +17,7 @@ export const Container = styled.div`
     align-items: center;
   }
   .editTitle {
-    color: var(--Gray-60, #959595);
+    color: var(--Gray-60, #94989f);
     font-size: 0.875rem;
     font-weight: 600;
     line-height: 160%; /* 22.4px */

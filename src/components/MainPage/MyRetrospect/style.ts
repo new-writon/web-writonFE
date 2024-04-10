@@ -9,7 +9,7 @@ export const Container = styled.div`
     gap: 6px;
   }
   .RetrospectTitle .quantity {
-    color: var(--Gray-60, #959595);
+    color: var(--Gray-60, #94989f);
     font-size: 1.25rem;
     font-weight: 700;
     line-height: 22px;
@@ -56,7 +56,7 @@ export const RetroSpectBoxResponsive = styled.div`
 
 export const ArrowButton = styled.div`
   border-radius: 100%;
-  border: 1px solid var(--Gray-30);
+  border: 1px solid var(--Gray-30, #edeef1);
   position: absolute;
   background-color: var(--White);
   padding: 20px 18px 16px;

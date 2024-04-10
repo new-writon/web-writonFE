@@ -6,7 +6,7 @@ export const Container = styled.div<{ $type: string }>`
   min-height: 134px;
   border-radius: 12px;
   border: 1px solid var(--Gray-30, #edeef1);
-  background: var(--Base-White, #fff);
+  background: var(--White, #fff);
   box-shadow: 0px 14px 20px 0px rgba(33, 33, 33, 0.05);
   padding: 20px;
   display: flex;
@@ -20,7 +20,7 @@ export const Container = styled.div<{ $type: string }>`
     max-height: 134px;
   }
   &:hover {
-    background-color: var(--Gray-10, #fafafa);
+    background-color: var(--Gray-10, #fcfcfc);
   }
   .question {
     min-height: 44px;
@@ -94,7 +94,7 @@ export const ThrowingContainer = styled.div<{ $type: string }>`
   min-height: 134px;
   border-radius: 12px;
   border: 1px solid var(--Gray-30, #edeef1);
-  background: var(--Base-White, #fff);
+  background: var(--White, #fff);
   padding: 20px;
   display: flex;
   flex-direction: column;

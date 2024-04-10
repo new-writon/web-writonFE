@@ -8,7 +8,7 @@ export const BasicInput = styled.input<InputProps>`
   /* width: 370px; */
   height: 56px;
   border-radius: 5px;
-  border: 1px solid var(--Gray4_300, #d9d9d9);
+  border: 1px solid var(--Gray-40, #d2d5db);
   outline: none;
   border: ${(props) =>
     props.placeholder === "아이디를 입력해주세요." && props.errorLine
@@ -33,14 +33,14 @@ export const BasicInput = styled.input<InputProps>`
   }
 
   //
-  color: var(--Gray10_900, #212121);
+  color: var(--Gray-100, #1b1d1f);
   padding-left: 16px;
   font-size: var(--text_b2);
   /* padding-right: 80px; */
   font-weight: 500;
 
   &::placeholder {
-    color: var(--Gray-60, #959595);
+    color: var(--Gray-60, #94989f);
     font-size: 1rem;
     font-style: normal;
     font-weight: 500;
@@ -61,7 +61,7 @@ export const MyPageInput = styled.input<InputProps>`
   /* width: 370px; */
   height: 40px;
   border-radius: 5px;
-  border: 1px solid var(--Gray4_300, #d9d9d9);
+  border: 1px solid var(--Gray-40, #d2d5db);
   outline: none;
   border: ${(props) =>
     props.placeholder === "아이디를 입력해주세요." && props.errorLine
@@ -86,7 +86,7 @@ export const MyPageInput = styled.input<InputProps>`
   }
 
   //
-  color: var(--Gray10_900, #212121);
+  color: var(--Gray-100, #1b1d1f);
   padding-left: 15px;
   font-size: 0.875rem;
   /* padding-right: 80px; */

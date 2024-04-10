@@ -13,7 +13,7 @@ export const Container = styled.div<{ $tooltipOn: boolean }>`
   }
   p {
     padding-top: 2px;
-    color: var(--Gray-60, #959595);
+    color: var(--Gray-60, #94989f);
     font-size: 0.875rem;
     font-weight: 500;
     line-height: 12px;

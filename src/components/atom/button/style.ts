@@ -29,7 +29,7 @@ export const BlueBtn = styled.button<ButtonProps>`
   border: none;
 
   background-color: var(--Main_Blue, #135ff3);
-  color: #fff;
+  color: var(--White, #fff);
   font-size: var(--text_b1);
   font-weight: 600;
 `;
@@ -46,7 +46,7 @@ export const FloatingWriteBtn = styled.button<ButtonProps>`
   border-radius: 80px;
   background: var(--purple-50, #6a63f5);
   box-shadow: 0px 5px 20px 0px rgba(106, 99, 245, 0.3);
-  color: #fff;
+  color: var(--White, #fff);
   font-size: 16px;
   font-weight: 600;
   img {
@@ -74,8 +74,8 @@ export const WritingSubmitBtn = styled.div<{ $disabled: boolean }>`
   align-items: center;
   border-radius: 12px;
   background: ${(props) =>
-    props.$disabled ? "var(--purple-50, #6A63F5)" : "var(--Gray-40, #d9d9d9)"};
-  color: ${(props) => (props.$disabled ? " var(--White, #FFF);" : "var(--Gray-70, #757575)")};
+    props.$disabled ? "var(--purple-50, #6A63F5)" : "var(--Gray-40, #d2d5db)"};
+  color: ${(props) => (props.$disabled ? " var(--White, #FFF);" : "var(--Gray-70, #73777e)")};
   font-size: 1.125rem;
   font-weight: 600;
   line-height: 15px;
@@ -96,7 +96,7 @@ export const KeywordBtn = styled.div<{ $select: boolean }>`
   border-radius: 15px;
   cursor: pointer;
   border: ${(props) =>
-    props.$select ? "1px solid var(--purple-50, #6a63f5)" : "1px solid var(--Gray-50, #BDBDBD)"};
+    props.$select ? "1px solid var(--purple-50, #6a63f5)" : "1px solid var(--Gray-50, #b1b4bc)"};
   line-height: 11px;
   color: ${(props) => (props.$select ? " var(--purple-50, #6a63f5)" : "")};
   text-align: center;
@@ -112,7 +112,7 @@ export const AddQuestionBtn = styled.div`
   padding: 5px 6px 3px 16px;
   align-items: center;
   border-radius: 50px;
-  background: #fff;
+  background: var(--White, #fff);
   color: var(--purple-50, #6a63f5);
   font-size: 0.875rem;
   font-weight: 600;
@@ -132,8 +132,8 @@ export const OnboardingBtn = styled.div<{ $ButtonOn: boolean }>`
   align-items: center;
   border-radius: 12px;
   background: ${(props) =>
-    props.$ButtonOn ? "var(--purple-50, #6A63F5)" : "var(--Gray-40, #d9d9d9)"};
-  color: ${(props) => (props.$ButtonOn ? "var(--White, #FFF)" : "var(--Gray-70, #757575)")};
+    props.$ButtonOn ? "var(--purple-50, #6A63F5)" : "var(--Gray-40, #d2d5db)"};
+  color: ${(props) => (props.$ButtonOn ? "var(--White, #FFF)" : "var(--Gray-70, #73777e)")};
   font-size: 1.125rem;
   font-weight: 600;
   line-height: 130%; /* 23.4px */
@@ -145,7 +145,7 @@ export const FinishModalBtn = styled.div<{ $type: string }>`
   padding: ${(props) => (props.$type === "next" ? "18px 121px" : "18px 89px")};
   background-color: var(--purple-50);
   border-radius: 12px;
-  color: #fff;
+  color: var(--White, #fff);
   cursor: pointer;
   font-weight: 600;
   @media (max-width: 530px) {
@@ -161,12 +161,12 @@ export const CurrrentChallengeBtn = styled.div`
   padding: 8px 10px;
   display: flex;
   justify-content: space-between;
-  color: var(--Gray-100, #212121);
+  color: var(--Gray-100, #1b1d1f);
   font-size: 0.875rem;
   line-height: 160%; /* 22.4px */
 
   .currentPage {
-    color: var(--Gray-60, #959595);
+    color: var(--Gray-60, #94989f);
     font-size: 0.875rem;
     font-weight: 600;
     line-height: 160%; /* 14.4px */
@@ -181,7 +181,7 @@ export const CurrrentChallengeBtn = styled.div`
   &:has(.viewPage):hover {
     cursor: pointer;
     border-radius: 7px;
-    background: var(--Gray-20, #f5f5f5);
+    background: var(--Gray-20, #f8f8fa);
   }
 `;
 
@@ -197,13 +197,13 @@ export const PublicBtn = styled.div<{ $secret: boolean; $state: string }>`
   border: ${(props) =>
     !props.$secret
       ? " 1px solid var(--purple-50, #6A63F5)"
-      : " 1px solid var(--Gray-40, #d9d9d9);"};
+      : " 1px solid var(--Gray-40, #d2d5db);"};
 
   background: transparent;
   cursor: ${(props) =>
     props.$state === "edit" || props.$state === "editWrite" ? "pointer" : "auto"};
   p {
-    color: ${(props) => (!props.$secret ? "var(--purple-50, #6A63F5)" : "var(--Gray-60, #959595)")};
+    color: ${(props) => (!props.$secret ? "var(--purple-50, #6A63F5)" : "var(--Gray-60, #94989f)")};
     font-size: 0.75rem;
     margin-top: 3px;
   }
@@ -214,6 +214,6 @@ export const PublicBtn = styled.div<{ $secret: boolean; $state: string }>`
   right: ${(props) => (props.$state === "editWrite" ? "0" : "16px")};
   &:hover {
     background: ${(props) =>
-      props.$state === "edit" || props.$state === "editWrite" ? "var(--Gray-20, #f5f5f5)" : ""};
+      props.$state === "edit" || props.$state === "editWrite" ? "var(--Gray-20, #f8f8fa)" : ""};
   }
 `;

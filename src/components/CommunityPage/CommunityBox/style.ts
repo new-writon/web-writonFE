@@ -6,7 +6,7 @@ export const Container = styled.div`
     margin-top: 80px;
   }
   @media (max-width: 530px) {
-    background-color: var(--Gray-20, #f5f5f5);
+    background-color: var(--Gray-20, #f8f8fa);
   }
 `;
 
@@ -18,8 +18,8 @@ export const CommunityHeader = styled.div`
   position: sticky;
   top: 71px;
   z-index: 9999;
-  border-bottom: 1px solid var(--Gray-30);
-  background-color: var(--Gray-20, #f5f5f5);
+  border-bottom: 1px solid var(--Gray-30, #edeef1);
+  background-color: var(--Gray-20, #f8f8fa);
   @media (min-width: 691px) {
     padding-left: 26px;
   }
@@ -51,11 +51,11 @@ export const CommunityHeader = styled.div`
     cursor: pointer;
     padding: 10px;
     border-radius: 6px;
-    border: 1px solid var(--Gray-40, #d9d9d9);
+    border: 1px solid var(--Gray-40, #d2d5db);
     height: 30px;
   }
   .categoriesMobile p {
-    color: var(--Gray-80, #616161);
+    color: var(--Gray-80, #464c52);
     font-size: 14px;
     font-style: normal;
     font-weight: 500;
@@ -94,7 +94,7 @@ export const CommunityHeader = styled.div`
     margin: 0 4px;
     width: 1px;
     height: 24px;
-    background: var(--Gray-40, #d9d9d9);
+    background: var(--Gray-40, #d2d5db);
   }
 
   .changeDate {
@@ -105,7 +105,7 @@ export const CommunityHeader = styled.div`
   }
   .changeDate .calendar {
     border-radius: 6px;
-    border: 1px solid var(--Gray-40, #d9d9d9);
+    border: 1px solid var(--Gray-40, #d2d5db);
     padding: 3px 8px 3px 6px;
     display: flex;
     align-items: center;
@@ -113,13 +113,13 @@ export const CommunityHeader = styled.div`
     cursor: pointer;
   }
   .changeDate .calendar:hover {
-    background: var(--Gray-30, #eee);
+    background: var(--Gray-30, #edeef1);
   }
   .changeDate .calendar img[alt="v"] {
     margin-top: 2px;
   }
   .changeDate .today {
-    color: var(--Gray-80, #616161);
+    color: var(--Gray-80, #464c52);
     font-size: 0.875rem;
     font-style: normal;
     font-weight: 500;
@@ -127,11 +127,11 @@ export const CommunityHeader = styled.div`
     cursor: pointer;
     padding: 10px;
     border-radius: 6px;
-    border: 1px solid var(--Gray-40, #d9d9d9);
+    border: 1px solid var(--Gray-40, #d2d5db);
     height: 30px;
   }
   .changeDate .today:hover {
-    background: var(--Gray-10, #fafafa);
+    background: var(--Gray-10, #fcfcfc);
   }
   .changeDate .previous {
     cursor: pointer;
@@ -153,7 +153,7 @@ export const CommunityHeader = styled.div`
     max-width: 100%;
     box-shadow: 0px 16px 50px 0px rgba(33, 33, 33, 0.25);
     border-radius: 16px;
-    background: #fff;
+    background: var(--White, #fff);
     font-family: "Pretendard Variable", sans-serif;
     line-height: 1rem;
     border: none;
@@ -165,20 +165,20 @@ export const CommunityHeader = styled.div`
     margin: 10px 0;
   }
   .react-calendar__navigation button:disabled {
-    background-color: #fff;
+    background-color: var(--White, #fff);
   }
   .react-calendar abbr {
     text-decoration-line: blink;
   }
   .react-calendar__tile--now {
-    background: #fff;
+    background: var(--White, #fff);
   }
   .react-calendar__tile:disabled {
-    background-color: #fff;
-    color: #bdbdbd;
+    background-color: var(--White, #fff);
+    color: var(--Gray-50, #b1b4bc);
   }
   .react-calendar__tile:disabled abbr {
-    color: #bdbdbd;
+    color: var(--Gray-50, #b1b4bc);
   }
   .react-calendar button:enabled {
     width: fit-content;
@@ -187,21 +187,21 @@ export const CommunityHeader = styled.div`
   }
   .react-calendar__tile--active {
     background-color: #000;
-    color: #fff;
+    color: var(--White, #fff);
   }
   .react-calendar__tile--active abbr {
-    color: #fff;
+    color: var(--White, #fff);
   }
   .react-calendar__tile:enabled:hover {
-    background-color: #fafafa;
+    background-color: var(--Gray-10, #fcfcfc);
   }
   .react-calendar__tile:enabled:focus {
-    background-color: #eeeeee;
+    background-color: var(--Gray-30, #edeef1);
   }
   .react-calendar__tile--active:enabled:hover,
   .react-calendar__tile--active:enabled:focus {
     background-color: #000;
-    color: #fff;
+    color: var(--White, #fff);
   }
 
   .react-calendar__navigation__label {

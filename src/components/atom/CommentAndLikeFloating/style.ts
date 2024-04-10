@@ -33,13 +33,13 @@ export const Container = styled.div`
   }
   .round .num {
     padding-top: 4px;
-    color: var(--Gray-100, #212121);
+    color: var(--Gray-100, #1b1d1f);
     font-size: 0.875rem;
     font-weight: 600;
     line-height: 160%; /* 22.4px */
   }
   .ment {
-    color: #fff;
+    color: var(--White, #fff);
     font-size: 0.875rem;
     font-weight: 600;
     line-height: 120%; /* 16.8px */

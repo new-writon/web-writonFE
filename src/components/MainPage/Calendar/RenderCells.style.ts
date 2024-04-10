@@ -7,7 +7,7 @@ export const Container = styled.div`
   }
   .cell {
     width: 100%;
-    border-top: 1px solid var(--Gray-30);
+    border-top: 1px solid var(--Gray-30, #edeef1);
   }
   .cell.valid.weekend,
   .cell.selected.weekend,

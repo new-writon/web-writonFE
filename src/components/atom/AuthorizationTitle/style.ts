@@ -13,7 +13,7 @@ export const AuthTitle = styled.div`
     cursor: pointer;
   }
   p {
-    color: var(--Gray10_900, #212121);
+    color: var(--Gray-100, #1b1d1f);
     font-size: 2rem;
     font-weight: 600;
     line-height: 2rem;
