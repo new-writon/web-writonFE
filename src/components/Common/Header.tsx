@@ -275,7 +275,7 @@ const Header = () => {
               src={notificationIcon}
               alt="A"
             />
-            {notificationNumber !== 0 && (
+            {notificationNumber > 0 && (
               <div className={`notification-number ${notificationNumber > 9 && "ten-number"}`}>
                 {notificationNumber}
               </div>
