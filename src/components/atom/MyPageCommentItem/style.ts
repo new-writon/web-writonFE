@@ -5,7 +5,7 @@ export const Container = styled.div`
   display: flex;
   flex-direction: column;
   gap: 12px;
-  border-top: 1px solid var(--Gray-30, #eee);
+  border-top: 1px solid var(--Gray-30, #edeef1);
   padding: 16px 0 20px;
   cursor: pointer;
   &:hover {
@@ -21,13 +21,13 @@ export const Top = styled.div`
   align-items: center;
   justify-content: space-between;
   .date {
-    color: var(--Gray-60, #959595);
+    color: var(--Gray-60, #94989f);
     font-size: 0.75rem;
     line-height: 130%; /* 15.6px */
   }
   .text {
     max-width: 560px;
-    color: var(--Gray-100, #212121);
+    color: var(--Gray-100, #1b1d1f);
     text-overflow: ellipsis;
     white-space: nowrap;
     overflow: hidden;
@@ -48,7 +48,7 @@ export const Bottom = styled.div`
   }
   .writing .title,
   .userName .title {
-    color: var(--Gray-60, #959595);
+    color: var(--Gray-60, #94989f);
     font-size: 0.75rem;
     display: flex;
     gap: 6px;
@@ -57,12 +57,12 @@ export const Bottom = styled.div`
     content: "";
     width: 1px;
     height: 15px;
-    background: var(--Gray-30, #eee);
+    background: var(--Gray-30, #edeef1);
     display: block;
   }
   .writing .sentence,
   .userName .sentence {
-    color: var(--Gray-80, #616161);
+    color: var(--Gray-80, #464c52);
     font-size: 0.75rem;
   }
 `;
@@ -72,16 +72,16 @@ export const ContainerMobile = styled.div`
   display: flex;
   flex-direction: column;
   gap: 4px;
-  border-top: 1px solid var(--Gray-30, #eee);
+  border-top: 1px solid var(--Gray-30, #edeef1);
   padding: 16px 20px;
   cursor: pointer;
   &:hover {
-    background: var(--Gray-20, #f5f5f5);
+    background: var(--Gray-20, #f8f8fa);
   }
 
   .text {
     width: 100%;
-    color: var(--Gray-100, #212121);
+    color: var(--Gray-100, #1b1d1f);
     font-size: 14px;
     line-height: 160%; /* 22.4px */
     white-space: nowrap;
@@ -90,7 +90,7 @@ export const ContainerMobile = styled.div`
   }
 
   .date {
-    color: var(--Gray-60, #959595);
+    color: var(--Gray-60, #94989f);
     font-size: 0.75rem;
     line-height: 150%; /* 18px */
   }
@@ -106,7 +106,7 @@ export const ContainerMobile = styled.div`
     }
     .writing .title,
     .userName .title {
-      color: var(--Gray-60, #959595);
+      color: var(--Gray-60, #94989f);
       font-size: 0.75rem;
       display: flex;
       align-items: center;
@@ -116,12 +116,12 @@ export const ContainerMobile = styled.div`
       content: "";
       width: 1px;
       height: 15px;
-      background: var(--Gray-30, #eee);
+      background: var(--Gray-30, #edeef1);
       display: block;
     }
     .writing .sentence,
     .userName .sentence {
-      color: var(--Gray-80, #616161);
+      color: var(--Gray-80, #464c52);
       font-size: 0.75rem;
     }
   }

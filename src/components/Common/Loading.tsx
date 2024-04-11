@@ -40,6 +40,6 @@ const LoadingBox = styled.div`
   right: 0;
   margin: 45px auto 0;
   z-index: 9;
-  color: #ffff;
+  color: var(--White, #fff);
   //background: rgba(21, 21, 21, 0.7);
 `;

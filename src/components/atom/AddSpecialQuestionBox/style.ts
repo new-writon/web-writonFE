@@ -6,13 +6,13 @@ export const Container = styled.div<{ $isHover: boolean; $isClick: boolean }>`
   flex-direction: column;
   gap: 4px;
   border-radius: 12px;
-  border: 1px solid var(--Gray-30, #eee);
+  border: 1px solid var(--Gray-30, #edeef1);
   background: ${(props) =>
     props.$isClick
-      ? " var(--Gray-20, #F5F5F5)"
+      ? " var(--Gray-20, #f8f8fa)"
       : props.$isHover
-        ? " var(--Gray-20, #F5F5F5)"
-        : "var(--Gray-10, #fafafa)"};
+        ? " var(--Gray-20, #f8f8fa)"
+        : "var(--Gray-10, #fcfcfc)"};
   .topBox {
     display: flex;
     align-items: center;
@@ -21,7 +21,7 @@ export const Container = styled.div<{ $isHover: boolean; $isClick: boolean }>`
   }
 
   .topBox .text {
-    color: var(--Gray-60, #959595);
+    color: var(--Gray-60, #94989f);
     font-size: 0.75rem;
     font-weight: 600;
     line-height: 24px;
@@ -29,7 +29,7 @@ export const Container = styled.div<{ $isHover: boolean; $isClick: boolean }>`
   @media (max-width: 530px) {
     width: 290px;
     min-width: 290px;
-    background: ${(props) => (props.$isClick ? " var(--Gray-10, #Fafafa)" : "var(--White, #fff)")};
+    background: ${(props) => (props.$isClick ? " var(--Gray-10, #fcfcfc)" : "var(--White, #fff)")};
     img {
       display: none;
     }
@@ -42,7 +42,7 @@ export const BottomBox = styled.div<{ $fold: boolean; $isClick: boolean }>`
   gap: 8px;
   cursor: pointer;
   .question {
-    color: var(--Gray-100, #212121);
+    color: var(--Gray-100, #1b1d1f);
     font-size: 0.875rem;
     line-height: 160%;
     overflow: hidden;
@@ -57,15 +57,14 @@ export const BottomBox = styled.div<{ $fold: boolean; $isClick: boolean }>`
     align-items: center;
   }
   .etcBox div:nth-child(1) {
-    background: var(--Purple-10, #f0efff);
+    background: var(--Main-10, #eff1ff);
     padding: 6px 6px 4px;
   }
   .etcBox .addBtn {
     display: ${(props) => (props.$isClick ? "flex" : "none")};
     align-items: center;
     p {
-      color: ${(props) =>
-        props.$isClick ? "var(--Gray-60, #959595)" : "var(--purple-50, #6a63f5)"};
+      color: ${(props) => (props.$isClick ? "var(--Gray-60, #94989f)" : "var(--Main-50, #6272ff)")};
       font-size: 0.875rem;
       font-weight: 600;
       line-height: 120%; /* 16.8px */

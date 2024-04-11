@@ -33,20 +33,20 @@ export const Container = styled.div`
       width: 100%;
       height: 189px;
       border-radius: 10px;
-      border: 1px solid var(--Gray-30, #eee);
-      background-color: var(--Gray-20, #f5f5f5);
+      border: 1px solid var(--Gray-30, #edeef1);
+      background-color: var(--Gray-20, #f8f8fa);
       outline: none;
       padding: 20px;
       box-sizing: border-box;
       resize: none;
       font-size: 1rem;
-      caret-color: #6a63f5;
-      color: var(--Gray-100, #212121);
+      caret-color: var(--Main-50, #6272ff);
+      color: var(--Gray-100, #1b1d1f);
       line-height: 24px;
       &::placeholder {
         line-height: 24px;
         font-size: 1rem;
-        color: var(--Gray-60, #eee);
+        color: var(--Gray-30, #edeef1);
       }
       &:focus {
         &::placeholder {

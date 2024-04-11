@@ -29,7 +29,7 @@ export const GlobalStyle = createGlobalStyle`
 	padding: 0;
 	margin: 0;
 	font-family: 'Pretendard Variable', sans-serif;
-	color: var(--Dark);
+	color: var(--Dark,#272727);
 
 }
 
@@ -67,8 +67,8 @@ footer, header, hgroup, menu, nav, section {
 }
 body {
 	line-height: 1;
-	/* background-color: #fff; */
-  background: var(--Gray2_100, #f5f5f5);
+	/* background-color: var(--White, #fff); */
+  background: var(--Gray-20, #f8f8fa);
 //드래그 방지
 	/* -webkit-user-select:none;
   -moz-user-select:none;
@@ -120,7 +120,7 @@ export const Inner = styled.div`
     top: 0;
     z-index: 999999;
     background-color: var(--White);
-    border-bottom: 1px solid var(--Gray-30);
+    border-bottom: 1px solid var(--Gray-30, #edeef1);
   }
   @media (min-width: 531px) {
     .mobileCountingLabelBox {
@@ -156,7 +156,7 @@ export const Inner = styled.div`
     &:has(.changeDate) {
       // 모바일 커뮤니티 아래
       max-width: 100vw;
-      background-color: var(--Gray-20, #f5f5f5);
+      background-color: var(--Gray-20, #f8f8fa);
     }
     &:has(.weekCalendar) {
       max-width: none;
@@ -167,7 +167,7 @@ export const Inner = styled.div`
     }
     &:has(.DetailBox) {
       max-width: 100vw;
-      background-color: #fff;
+      background-color: var(--White, #fff);
     }
   }
 `;

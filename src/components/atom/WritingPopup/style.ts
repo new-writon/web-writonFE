@@ -7,7 +7,7 @@ export const Container = styled.div`
   flex-direction: column;
   gap: 8px;
   border-radius: 16px;
-  background: #fff;
+  background: var(--White, #fff);
   box-shadow: 0px 16px 50px 0px rgba(33, 33, 33, 0.25);
   z-index: 1;
   position: absolute;
@@ -33,10 +33,10 @@ export const Container = styled.div`
   }
 
   .popUpTitle {
-    color: var(--Gray-100, #212121);
+    color: var(--Gray-100, #1b1d1f);
   }
   .popUpmessage {
-    color: var(--Gray-80, #616161);
+    color: var(--Gray-80, #464c52);
     font-size: 0.875rem;
     font-weight: 400;
     line-height: 160%; /* 22.4px */
@@ -51,11 +51,11 @@ export const Container = styled.div`
     cursor: pointer;
   }
   .close {
-    color: var(--Gray-80, #616161);
+    color: var(--Gray-80, #464c52);
     cursor: pointer;
   }
   .complete {
-    color: var(--purple-50, #6a63f5);
+    color: var(--Main-50, #6272ff);
     cursor: pointer;
   }
 `;
@@ -82,20 +82,20 @@ export const ContainerResponsive = styled.div`
     flex-direction: column;
     gap: 8px;
     border-radius: 16px;
-    background: #fff;
+    background: var(--White, #fff);
     box-shadow: 0px 4px 20px 0px rgba(33, 33, 33, 0.2);
   }
   .popUpTitle {
-    color: var(--Gray-100, #212121);
+    color: var(--Gray-100, #1b1d1f);
   }
   .popUpSemiTitle {
     font-weight: 600;
-    color: var(--Gray-80, #616161);
+    color: var(--Gray-80, #464c52);
     font-size: 0.875rem;
     line-height: 180%;
   }
   .popUpmessage {
-    color: var(--Gray-80, #616161);
+    color: var(--Gray-80, #464c52);
     font-size: 0.875rem;
     font-weight: 400;
     line-height: 160%; /* 22.4px */
@@ -107,7 +107,7 @@ export const ContainerResponsive = styled.div`
   }
 
   .close {
-    color: var(--Gray-80, #616161);
+    color: var(--Gray-80, #464c52);
     cursor: pointer;
   }
   .delete {
@@ -115,7 +115,7 @@ export const ContainerResponsive = styled.div`
     cursor: pointer;
   }
   .complete {
-    color: var(--purple-50, #6a63f5);
+    color: var(--Main-50, #6272ff);
     cursor: pointer;
   }
 
@@ -137,7 +137,7 @@ export const ContainerResponsive = styled.div`
     &::placeholder {
       line-height: 160%;
       font-size: 1rem;
-      color: var(--Gray-70, #757575);
+      color: var(--Gray-70, #73777e);
     }
     &:focus {
       border: none;
@@ -152,12 +152,12 @@ export const ContainerResponsive = styled.div`
   .line {
     width: 100%;
     height: 1px;
-    background-color: var(--Gray-30, #eee);
+    background-color: var(--Gray-30, #edeef1);
     margin: 16px 0;
   }
   .numCheck {
     font-size: 0.75rem;
-    color: var(--Gray-60, #959595);
+    color: var(--Gray-60, #94989f);
     margin: 0 auto;
   }
 
@@ -167,11 +167,11 @@ export const ContainerResponsive = styled.div`
     left: 0;
     right: 0;
     margin: 0 auto;
-    background-color: var(--Gray-20, #f5f5f5);
-    border: 1px solid var(--Gray-40, #d9d9d9);
+    background-color: var(--Gray-20, #f8f8fa);
+    border: 1px solid var(--Gray-40, #d2d5db);
     border-radius: 10px;
     padding: 10px 12px;
-    color: var(--Gray-80, #616161);
+    color: var(--Gray-80, #464c52);
     font-size: 0.7rem;
     font-weight: 500;
     line-height: 160%; /* 15.6px */
@@ -192,10 +192,10 @@ export const ContainerResponsive = styled.div`
     margin: auto;
     left: 0;
     right: 0;
-    background-color: var(--Gray-20, #f5f5f5);
+    background-color: var(--Gray-20, #f8f8fa);
     border-bottom-left-radius: 3px;
-    border-left: 1px solid var(--Gray-40, #d9d9d9);
-    border-bottom: 1px solid var(--Gray-40, #d9d9d9);
+    border-left: 1px solid var(--Gray-40, #d2d5db);
+    border-bottom: 1px solid var(--Gray-40, #d2d5db);
   }
 `;
 
@@ -222,7 +222,7 @@ export const AgoraContainer = styled.div`
     flex-direction: column;
     gap: 8px;
     border-radius: 16px;
-    background: #fff;
+    background: var(--White, #fff);
     box-shadow: 0px 4px 20px 0px rgba(33, 33, 33, 0.2);
   }
 
@@ -233,12 +233,12 @@ export const AgoraContainer = styled.div`
   }
 
   .close {
-    color: var(--Gray-80, #616161);
+    color: var(--Gray-80, #464c52);
     cursor: pointer;
   }
 
   .complete {
-    color: var(--purple-50, #6a63f5);
+    color: var(--Main-50, #6272ff);
     cursor: pointer;
   }
 
@@ -278,7 +278,7 @@ export const AgoraContainer = styled.div`
   .line {
     width: 100%;
     height: 1px;
-    background-color: var(--Gray-30, #eee);
+    background-color: var(--Gray-30, #edeef1);
     margin: 16px 0;
   }
 
@@ -289,11 +289,11 @@ export const AgoraContainer = styled.div`
     left: 0;
     right: 0;
     margin: 0 auto;
-    background-color: var(--Gray-20, #f5f5f5);
-    border: 1px solid var(--Gray-40, #d9d9d9);
+    background-color: var(--Gray-20, #f8f8fa);
+    border: 1px solid var(--Gray-40, #d2d5db);
     border-radius: 10px;
     padding: 5px 12px;
-    color: var(--Gray-80, #616161);
+    color: var(--Gray-80, #464c52);
     font-size: 0.7rem;
     font-weight: 500;
     line-height: 160%; /* 15.6px */
@@ -314,10 +314,10 @@ export const AgoraContainer = styled.div`
     margin: auto;
     left: 0;
     right: 0;
-    background-color: var(--Gray-20, #f5f5f5);
+    background-color: var(--Gray-20, #f8f8fa);
     border-bottom-left-radius: 3px;
-    border-left: 1px solid var(--Gray-40, #d9d9d9);
-    border-bottom: 1px solid var(--Gray-40, #d9d9d9);
-    background: linear-gradient(-135deg, transparent 8px, #f5f5f5 0);
+    border-left: 1px solid var(--Gray-40, #d2d5db);
+    border-bottom: 1px solid var(--Gray-40, #d2d5db);
+    background: linear-gradient(-135deg, transparent 8px, #f8f8fa 0);
   }
 `;

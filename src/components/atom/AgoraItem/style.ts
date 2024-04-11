@@ -6,7 +6,7 @@ export const Container = styled.div<{ $type: string }>`
   min-height: 134px;
   border-radius: 12px;
   border: 1px solid var(--Gray-30, #edeef1);
-  background: var(--Base-White, #fff);
+  background: var(--White, #fff);
   box-shadow: 0px 14px 20px 0px rgba(33, 33, 33, 0.05);
   padding: 20px;
   display: flex;
@@ -20,7 +20,7 @@ export const Container = styled.div<{ $type: string }>`
     max-height: 134px;
   }
   &:hover {
-    background-color: var(--Gray-10, #fafafa);
+    background-color: var(--Gray-10, #fcfcfc);
   }
   .question {
     min-height: 44px;
@@ -72,13 +72,13 @@ export const Container = styled.div<{ $type: string }>`
       props.$type === "1"
         ? "var(--Gray-30, #EDEEF1)"
         : props.$type === "답변 달기"
-          ? "var(--Purple-10, #f0efff)"
+          ? "var(--Main-10, #eff1ff)"
           : "var(--Gray-30, #EDEEF1)"};
     color: ${(props) =>
       props.$type === "1"
         ? "var(--Gray-60, #94989F)"
         : props.$type === "답변 달기"
-          ? "var(--purple-50, #6a63f5)"
+          ? "var(--Main-50, #6272ff)"
           : "var(--Gray-60, #94989F)"};
     font-size: 0.875rem;
     font-style: normal;
@@ -94,7 +94,7 @@ export const ThrowingContainer = styled.div<{ $type: string }>`
   min-height: 134px;
   border-radius: 12px;
   border: 1px solid var(--Gray-30, #edeef1);
-  background: var(--Base-White, #fff);
+  background: var(--White, #fff);
   padding: 20px;
   display: flex;
   flex-direction: column;
@@ -119,9 +119,9 @@ export const ThrowingContainer = styled.div<{ $type: string }>`
     width: fit-content;
     border-radius: 10px;
     background: ${(props) =>
-      props.$type === "empty" ? "var(--Purple-10, #f0efff)" : "var(--Gray-30, #EDEEF1)"};
+      props.$type === "empty" ? "var(--Main-10, #eff1ff)" : "var(--Gray-30, #EDEEF1)"};
     color: ${(props) =>
-      props.$type === "empty" ? " var(--purple-50, #6a63f5);" : "var(--Gray-60, #94989F)"};
+      props.$type === "empty" ? " var(--Main-50, #6272ff);" : "var(--Gray-60, #94989F)"};
     pointer-events: ${(props) => props.$type === "full" && "none"};
     padding: 9px 12px 7px;
     font-size: 0.875rem;

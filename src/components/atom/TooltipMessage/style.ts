@@ -6,7 +6,7 @@ export const Container = styled.div<{ $direction: string; $page: string }>`
   border-radius: 10px;
   background-color: var(--Gray-20);
   position: relative;
-  border: 1px solid var(--Gray-40);
+  border: 1px solid var(--Gray-40, #d2d5db);
   display: flex;
   gap: 10px;
   max-width: 100%;
@@ -36,8 +36,8 @@ export const Container = styled.div<{ $direction: string; $page: string }>`
       props.$direction === "left" ? "" : props.$direction === "right" ? "-9px" : "0"};
     background-color: var(--Gray-20);
     border-bottom-left-radius: 3px;
-    border-left: 1px solid var(--Gray-40);
-    border-bottom: 1px solid var(--Gray-40);
+    border-left: 1px solid var(--Gray-40, #d2d5db);
+    border-bottom: 1px solid var(--Gray-40, #d2d5db);
   }
   img {
     width: 24px;
@@ -45,7 +45,7 @@ export const Container = styled.div<{ $direction: string; $page: string }>`
     cursor: pointer;
   }
   .messageBox {
-    color: var(--Gray-80, #616161);
+    color: var(--Gray-80, #464c52);
     font-size: 0.875rem;
     font-weight: 500;
     line-height: 160%;
@@ -61,7 +61,7 @@ export const Container = styled.div<{ $direction: string; $page: string }>`
     height: 4px;
     border-radius: 100%;
     margin: 0 10px;
-    background-color: var(--Gray-80, #616161);
+    background-color: var(--Gray-80, #464c52);
   }
 
   @media (max-width: 890px) {

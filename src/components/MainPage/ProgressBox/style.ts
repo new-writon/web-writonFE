@@ -42,8 +42,8 @@ export const CountingLabelContainer = styled.div`
     }
     padding: 13px 16px 7px;
     border-radius: 10px;
-    background: var(--Gray-20, #f5f5f5);
-    color: var(--Gray-80, #616161);
+    background: var(--Gray-20, #f8f8fa);
+    color: var(--Gray-80, #464c52);
     font-size: 0.875rem;
     font-weight: 500;
     position: relative;
@@ -61,7 +61,7 @@ export const CountingLabelContainer = styled.div`
     margin: auto 0;
     border-radius: 3px;
     overflow: hidden;
-    background-color: var(--Gray-20, #f5f5f5);
+    background-color: var(--Gray-20, #f8f8fa);
   }
   .priceCondition {
     position: absolute;

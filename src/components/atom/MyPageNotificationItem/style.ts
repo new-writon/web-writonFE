@@ -5,7 +5,7 @@ export const Container = styled.div<{ $click: boolean }>`
   max-height: 85px;
   display: flex;
   gap: 10px;
-  border-top: 1px solid var(--Gray-30, #eee);
+  border-top: 1px solid var(--Gray-30, #edeef1);
   padding: 16px 0 20px;
   cursor: pointer;
   background-color: ${(props) => props.$click && "#FCFCFC"};
@@ -35,12 +35,12 @@ export const Second = styled.div`
     font-weight: 500;
   }
   .title .data {
-    color: var(--Gray-100, #212121);
+    color: var(--Gray-100, #1b1d1f);
     line-height: 160%;
     font-weight: 600;
   }
   .comment-text {
-    color: var(--Gray-60, #959595);
+    color: var(--Gray-60, #94989f);
     font-size: 0.75rem;
     line-height: 130%; /* 15.6px */
     overflow-x: hidden;
@@ -52,7 +52,7 @@ export const Second = styled.div`
 `;
 export const Third = styled.div`
   .date {
-    color: var(--Gray-60, #959595);
+    color: var(--Gray-60, #94989f);
     font-size: 0.75rem;
     line-height: 130%; /* 15.6px */
   }
@@ -63,7 +63,7 @@ export const ContainerMobile = styled.div<{ $click: boolean }>`
   display: flex;
   align-items: center;
   gap: 10px;
-  border-top: 1px solid var(--Gray-30, #eee);
+  border-top: 1px solid var(--Gray-30, #edeef1);
   padding: 16px 20px;
   cursor: pointer;
   background-color: ${(props) => props.$click && "#FCFCFC"};
@@ -73,7 +73,7 @@ export const ContainerMobile = styled.div<{ $click: boolean }>`
     opacity: ${(props) => props.$click && "0.4"};
   }
   &:hover {
-    background: var(--Gray-20, #f5f5f5);
+    background: var(--Gray-20, #f8f8fa);
   }
   .second {
     gap: 4px;
@@ -87,12 +87,12 @@ export const ContainerMobile = styled.div<{ $click: boolean }>`
       font-weight: 500;
     }
     .title .data {
-      color: var(--Gray-100, #212121);
+      color: var(--Gray-100, #1b1d1f);
       line-height: 130%; /* 15.6px */
       font-weight: 600;
     }
     .comment-text {
-      color: var(--Gray-60, #959595);
+      color: var(--Gray-60, #94989f);
       font-size: 0.75rem;
       line-height: 130%; /* 15.6px */
       overflow-x: hidden;
@@ -102,7 +102,7 @@ export const ContainerMobile = styled.div<{ $click: boolean }>`
       -webkit-line-clamp: 1;
     }
     .date {
-      color: var(--Gray-60, #959595);
+      color: var(--Gray-60, #94989f);
       font-size: 0.75rem;
       line-height: 130%; /* 15.6px */
     }

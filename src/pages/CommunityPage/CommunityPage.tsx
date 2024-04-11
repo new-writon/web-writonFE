@@ -57,7 +57,7 @@ export const CommunityPage = () => {
   );
 };
 const Container = styled.div`
-  background: var(--Gray2_100, #f5f5f5);
+  background: var(--Gray-20, #f8f8fa);
   padding-top: 23px;
   padding-bottom: 230px;
   position: relative;

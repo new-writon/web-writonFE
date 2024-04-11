@@ -7,7 +7,7 @@ export const Container = styled.div`
   }
   .cell {
     width: 100%;
-    border-top: 1px solid var(--Gray-30);
+    border-top: 1px solid var(--Gray-30, #edeef1);
   }
   .cell.valid.weekend,
   .cell.selected.weekend,
@@ -63,7 +63,7 @@ export const Container = styled.div`
     display: block;
     width: 24px;
     height: 24px;
-    background-color: var(--purple-50, #6a63f5);
+    background-color: var(--Main-50, #6272ff);
     position: absolute;
     top: 3px;
     left: 0;
@@ -115,7 +115,7 @@ export const Container = styled.div`
       background-color: transparent;
     }
     .cell.selected .innerday .text {
-      color: var(--purple-50);
+      color: var(--Main-50, #6272ff);
       z-index: 1;
     }
   }

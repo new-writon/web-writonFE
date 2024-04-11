@@ -10,7 +10,7 @@ export const Container = styled.div`
   border-radius: 16px;
   border: 1px solid var(--Gray-30, #edeef1);
   border-bottom: none;
-  background: #fff;
+  background: var(--White, #fff);
   padding: 20px;
   /* Dropshadow/popup */
   box-shadow: 0px 16px 50px 0px rgba(33, 33, 33, 0.25);
@@ -90,7 +90,7 @@ export const ItemContainer = styled.div<{ $click: boolean }>`
     opacity: ${(props) => props.$click && "0.4"};
   }
   &:hover {
-    background: var(--Gray-20, #f5f5f5);
+    background: var(--Gray-20, #f8f8fa);
   }
   .second {
     gap: 4px;
@@ -105,13 +105,13 @@ export const ItemContainer = styled.div<{ $click: boolean }>`
       align-items: center;
     }
     .notification-title .data {
-      color: var(--Gray-100, #212121);
+      color: var(--Gray-100, #1b1d1f);
       line-height: 130%; /* 15.6px */
       font-weight: 600;
     }
 
     .date {
-      color: var(--Gray-60, #959595);
+      color: var(--Gray-60, #94989f);
       font-size: 0.75rem;
       line-height: 130%; /* 15.6px */
     }

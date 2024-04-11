@@ -171,7 +171,7 @@ const Container = styled.div<{ $width: number }>`
     display: flex;
     justify-content: space-between;
     padding-bottom: 40px;
-    border-bottom: 1px solid #d9d9d9;
+    border-bottom: 1px solid var(--Gray-40, #d2d5db);
   }
 
   @media (max-width: 530px) {

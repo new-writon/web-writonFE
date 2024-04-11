@@ -19,20 +19,20 @@ export const Container = styled.div`
     width: 100%;
     height: 189px;
     border-radius: 10px;
-    border: 1px solid var(--Gray-30, #eee);
-    background-color: var(--Gray-20, #f5f5f5);
+    border: 1px solid var(--Gray-30, #edeef1);
+    background-color: var(--Gray-20, #f8f8fa);
     outline: none;
     padding: 20px;
     box-sizing: border-box;
     resize: none;
     font-size: 1rem;
-    caret-color: #6a63f5;
-    color: var(--Gray-100, #212121);
+    caret-color: var(--Main-50, #6272ff);
+    color: var(--Gray-100, #1b1d1f);
     line-height: 24px;
     &::placeholder {
       line-height: 24px;
       font-size: 1rem;
-      color: var(--Gray-60, #eee);
+      color: var(--Gray-30, #edeef1);
     }
     &:focus {
       &::placeholder {
@@ -47,7 +47,7 @@ export const ToggleBtnBox = styled.div<{ $toggleSwitchOn: boolean }>`
   align-items: center;
   gap: 6px;
   color: ${(props) =>
-    props.$toggleSwitchOn ? "var(--purple-50, #6A63F5)" : "var(--Gray-60, #959595)"};
+    props.$toggleSwitchOn ? "var(--Main-50, #6272ff)" : "var(--Gray-60, #94989f)"};
   font-size: 0.75rem;
   font-weight: 500;
   line-height: 15px;
@@ -59,9 +59,9 @@ export const ToggleBtnBox = styled.div<{ $toggleSwitchOn: boolean }>`
     display: block;
     position: relative;
     border-radius: 100px;
-    background-color: #d9d9d9;
+    background-color: var(--Gray-40, #d2d5db);
     cursor: pointer;
-    border: 1px solid #bdbdbd;
+    border: 1px solid var(--Gray-50, #b1b4bc);
   }
 
   .toggleSwitch .toggleButton {
@@ -72,17 +72,17 @@ export const ToggleBtnBox = styled.div<{ $toggleSwitchOn: boolean }>`
     left: 2px;
     transform: translateY(-50%);
     border-radius: 100%;
-    background: #fff;
+    background: var(--White, #fff);
   }
 
   .toggleSwitch.active {
-    background: #8e89ff;
-    border: 1px solid #6a63f5;
+    background: var(--Main-40, #8592ff);
+    border: 1px solid var(--Main-50, #6272ff);
   }
 
   .toggleSwitch.active .toggleButton {
     left: calc(100% - 16px);
-    background: #fff !important;
+    background: var(--White, #fff) !important;
   }
 
   .toggleSwitch,

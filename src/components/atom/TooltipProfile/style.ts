@@ -19,8 +19,8 @@ export const Container = styled.div<{ $headerTooltip: boolean; $TooltipMobile: b
   top: 71px;
   right: 0;
   border-radius: 16px;
-  border: 1px solid var(--Gray-30, #eee);
-  background: #fff;
+  border: 1px solid var(--Gray-30, #edeef1);
+  background: var(--White, #fff);
   box-shadow: 0px 16px 50px 0px rgba(33, 33, 33, 0.25);
   padding: 26px 16px;
   z-index: 99999;
@@ -47,11 +47,11 @@ export const Container = styled.div<{ $headerTooltip: boolean; $TooltipMobile: b
   .line {
     height: 1px;
     width: calc(100% - 20px);
-    background-color: #eee;
+    background-color: var(--Gray-30, #edeef1);
     margin: 0 auto;
   }
   .logout {
-    color: var(--Gray-60, #959595);
+    color: var(--Gray-60, #94989f);
     font-size: 0.875rem;
     font-weight: 600;
     line-height: 160%; /* 22.4px */
@@ -75,7 +75,7 @@ export const Header = styled.div`
     display: flex;
     justify-content: center;
     align-items: center;
-    border: 1px solid var(--Gray-30, #eee);
+    border: 1px solid var(--Gray-30, #edeef1);
     background-origin: border-box;
     cursor: pointer;
   }
@@ -85,13 +85,13 @@ export const Header = styled.div`
     object-fit: cover;
   }
   .nickname {
-    color: var(--Gray-100, #212121);
+    color: var(--Gray-100, #1b1d1f);
     font-size: 1rem;
     font-weight: 600;
     line-height: 150%; /* 24px */
   }
   .email {
-    color: var(--Gray-60, #959595);
+    color: var(--Gray-60, #94989f);
     font-size: 0.875rem;
     line-height: 160%; /* 22.4px */
   }
@@ -106,7 +106,7 @@ export const Middle = styled.div`
   .userAddInfo .job,
   .userAddInfo .company {
     display: flex;
-    color: var(--purple-50, #6a63f5) !important;
+    color: var(--Main-50, #6272ff) !important;
     font-size: 0.875rem;
     font-weight: 600;
     gap: 6px;
@@ -121,7 +121,7 @@ export const Middle = styled.div`
     display: block;
     width: 1px;
     height: 10px;
-    background-color: #d9d9d9;
+    background-color: var(--Gray-40, #d2d5db);
   }
   .oneline {
     margin-top: 4px;
@@ -139,7 +139,7 @@ export const Bottom = styled.div`
   gap: 20px;
   .currentChallengeTitle,
   .pastChallengeTitle {
-    color: var(--Gray-60, #959595);
+    color: var(--Gray-60, #94989f);
     font-size: 0.75rem;
     font-weight: 600;
     line-height: 120%; /* 14.4px */
@@ -151,13 +151,13 @@ export const Bottom = styled.div`
 export const MypageBtn = styled.div`
   width: 100%;
   border-radius: 10px;
-  border: 1px solid var(--Gray-40, #d9d9d9);
-  background: #fff;
+  border: 1px solid var(--Gray-40, #d2d5db);
+  background: var(--White, #fff);
   display: flex;
   justify-content: center;
   align-items: center;
   padding: 8px 0 4px;
-  color: var(--Gray-80, #616161);
+  color: var(--Gray-80, #464c52);
   text-align: center;
   font-size: 0.875rem;
   line-height: 120%; /* 16.8px */

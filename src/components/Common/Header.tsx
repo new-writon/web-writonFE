@@ -15,9 +15,11 @@ import {
 } from "@/apis/notification";
 import profile from "@/assets/communityPage/profile.png";
 import notificationIcon from "@/assets/header/icon-notification.svg";
-import pencil_color from "@/assets/header/pencil_color.svg";
+import pencil_color_blue from "@/assets/header/pencil_color_blue.svg";
+import pencil_color_purple from "@/assets/header/pencil_color_purple.svg";
 import pencil_white from "@/assets/header/pencil_white.svg";
 import letsintern from "@/assets/logo/letsintern.png";
+import writon_icon from "@/assets/logo/logo-writon-roundbox.svg";
 import writon from "@/assets/logo/writon_long.svg";
 import {
   addSpecialQuestionArrayState,
@@ -32,7 +34,7 @@ import { communityStoryProps, challengeListProps, notificationDataType } from "@
 import { TooltipNotification } from "../atom/TooltipNotification";
 import { TooltipProfile } from "../atom/TooltipProfile";
 
-const ICON = [letsintern, writon];
+const ICON = [localStorage.getItem("challengeId") !== "1" ? letsintern : writon_icon, writon];
 const Tabs = ["내 챌린지", "커뮤니티"];
 
 const Header = () => {
@@ -253,7 +255,13 @@ const Header = () => {
             <p>회고 작성하기</p>
             <p className="responsive">작성</p>
             <img
-              src={isHover ? pencil_white : pencil_color}
+              src={
+                isHover
+                  ? pencil_white
+                  : localStorage.getItem("challengeId") !== "1"
+                    ? pencil_color_purple
+                    : pencil_color_blue
+              }
               alt="pen"
             />
           </div>
@@ -393,20 +401,20 @@ const HeaderMiddle = styled.div`
     align-items: center;
     box-sizing: border-box;
     padding-top: 3px;
-    color: var(--Gray-70, #757575);
+    color: var(--Gray-70, #73777e);
     font-size: 1.125rem;
     font-weight: 600;
     cursor: pointer;
   }
   .tab.select {
-    border-bottom: 3px solid var(--purple-50, #6a63f5);
-    color: var(--Gray10_900, #212121);
+    border-bottom: 3px solid var(--Main-50, #6272ff);
+    color: var(--Gray-100, #1b1d1f);
   }
   .tab.false {
     padding-top: 0;
   }
   .tab:hover {
-    color: var(--Gray10_900, #212121);
+    color: var(--Gray-100, #1b1d1f);
   }
   @media (max-width: 530px) {
     display: none;
@@ -428,20 +436,20 @@ const HeaderMiddleResponsive = styled.div`
     align-items: center;
     box-sizing: border-box;
     padding-top: 3px;
-    color: var(--Gray-70, #757575);
+    color: var(--Gray-70, #73777e);
     font-weight: 600;
     font-size: 1.125rem;
     cursor: pointer;
   }
   .tab.select {
-    border-bottom: 3px solid var(--purple-50, #6a63f5);
-    color: var(--Gray10_900, #212121);
+    border-bottom: 3px solid var(--Main-50, #6272ff);
+    color: var(--Gray-100, #1b1d1f);
   }
   .tab.false {
     padding-top: 0;
   }
   .tab:hover {
-    color: var(--Gray10_900, #212121);
+    color: var(--Gray-100, #1b1d1f);
   }
   @media (min-width: 531px) {
     display: none;
@@ -456,7 +464,7 @@ const HeaderRight = styled.div`
     display: flex;
     padding: 7px 15px 7px 16px;
     border-radius: 10px;
-    background-color: var(--Main_Purple_10, #f0efff);
+    background-color: var(--Main-0, #f5f7ff);
     justify-content: center;
     align-items: center;
     gap: 7.5px;
@@ -464,13 +472,13 @@ const HeaderRight = styled.div`
     min-height: 40px;
   }
   .writingBtn:hover {
-    background-color: var(--purple-50, #6a63f5);
+    background-color: var(--Main-50, #6272ff);
   }
   .writingBtn:hover p {
     color: var(--White);
   }
   p {
-    color: var(--purple-50, #6a63f5);
+    color: var(--Main-50, #6272ff);
     font-weight: 500;
     text-align: center;
     margin: auto 0;
@@ -505,10 +513,10 @@ const HeaderRight = styled.div`
     top: 4px;
     right: 4px;
     font-size: 0.75rem;
-    color: #fff;
+    color: var(--White, #fff);
     border-radius: 50%;
     padding: 0 4px;
-    background-color: var(--purple-50, #6a63f5);
+    background-color: var(--Main-50, #6272ff);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -528,7 +536,7 @@ const HeaderRight = styled.div`
     display: flex;
     justify-content: center;
     align-items: center;
-    border: 1px solid var(--Gray-30, #eee);
+    border: 1px solid var(--Gray-30, #edeef1);
     background-origin: border-box;
     cursor: pointer;
   }

@@ -10,7 +10,7 @@ export const Container = styled.div`
   }
 
   .noRetrospectItemBox .title {
-    color: var(--Gray-80, #616161);
+    color: var(--Gray-80, #464c52);
     font-size: 1.125rem;
     font-weight: 600;
     line-height: 130%; /* 23.4px */
@@ -18,7 +18,7 @@ export const Container = styled.div`
     margin: 20px 0 8px;
   }
   .noRetrospectItemBox .semiTitle {
-    color: var(--Gray-60, #959595);
+    color: var(--Gray-60, #94989f);
     font-size: 1rem;
     line-height: 130%; /* 24px */
     text-align: center;
@@ -30,7 +30,7 @@ export const Container = styled.div`
     display: flex;
     padding: 7px 15px 7px 16px;
     border-radius: 10px;
-    background-color: var(--purple-50, #6a63f5);
+    background-color: var(--Main-50, #6272ff);
     justify-content: center;
     align-items: center;
     gap: 7.5px;

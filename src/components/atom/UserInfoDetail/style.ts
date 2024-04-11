@@ -12,7 +12,7 @@ export const Container = styled.div`
     display: flex;
     justify-content: center;
     align-items: center;
-    border: 1px solid var(--Gray-30, #eee);
+    border: 1px solid var(--Gray-30, #edeef1);
     background-origin: border-box;
     cursor: pointer;
   }
@@ -26,7 +26,7 @@ export const Container = styled.div`
     line-height: 120%; /* 16.8px */
   }
   .user .name {
-    color: var(--Gray-100, #212121);
+    color: var(--Gray-100, #1b1d1f);
     font-size: 0.875rem;
     font-weight: 600;
     line-height: 120%; /* 16.8px */
@@ -37,14 +37,14 @@ export const Container = styled.div`
     align-items: center;
   }
   .user .bottom div {
-    color: var(--Gray-70, #757575);
-    color: var(--Gray-70, #757575);
+    color: var(--Gray-70, #73777e);
+    color: var(--Gray-70, #73777e);
     font-size: 0.75rem;
     font-weight: 600;
     line-height: 130%; /* 16.8px */
   }
   .user .bottom .date {
-    color: var(--Gray-50, #bdbdbd);
+    color: var(--Gray-50, #b1b4bc);
     font-size: 0.75rem;
     font-weight: 500;
     line-height: 130%;
@@ -63,7 +63,7 @@ export const Container = styled.div`
     display: block;
     width: 1px;
     height: 10px;
-    background-color: #d9d9d9;
+    background-color: var(--Gray-40, #d2d5db);
     margin-bottom: 2px;
   }
 `;

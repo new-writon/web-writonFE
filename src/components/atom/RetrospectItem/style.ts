@@ -23,14 +23,14 @@ export const Container = styled.div`
 `;
 
 export const Title = styled.div`
-  color: var(--Gray-100, #212121);
+  color: var(--Gray-100, #1b1d1f);
   font-size: 1rem;
   font-weight: 600;
   line-height: 24px;
   display: flex;
   align-items: center;
   gap: 8px;
-  border-bottom: 1px solid var(--Gray-30);
+  border-bottom: 1px solid var(--Gray-30, #edeef1);
   padding-bottom: 11px;
   .mainTitle {
     padding-top: 4px;
@@ -56,11 +56,11 @@ export const PreviewBody = styled.div`
     -webkit-box-orient: vertical;
   }
   .question {
-    color: var(--Gray-70, #757575);
+    color: var(--Gray-70, #73777e);
     font-weight: 600;
   }
   .content {
-    color: var(--Gray-70, #757575);
+    color: var(--Gray-70, #73777e);
     font-weight: 400;
     white-space: pre-wrap;
   }

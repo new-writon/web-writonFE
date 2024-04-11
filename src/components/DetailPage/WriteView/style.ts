@@ -1,17 +1,17 @@
 import styled from "styled-components";
 
 export const Container = styled.div`
-  color: var(--Gray-100, #212121);
+  color: var(--Gray-100, #1b1d1f);
 
   .top {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    color: var(--Gray-80, #616161);
+    color: var(--Gray-80, #464c52);
     font-size: 0.875rem;
     font-weight: 600;
     padding-bottom: 20px;
-    border-bottom: 1px solid #eee;
+    border-bottom: 1px solid var(--Gray-30, #edeef1);
   }
   .top .option {
     cursor: pointer;
@@ -26,10 +26,10 @@ export const Container = styled.div`
     gap: 85px;
     padding: 8px 16px;
     border-radius: 6px;
-    background: #fff;
+    background: var(--White, #fff);
     box-shadow: 0px 4px 16px 0px rgba(33, 33, 33, 0.24);
     p {
-      color: var(--Gray-80, #616161);
+      color: var(--Gray-80, #464c52);
       font-size: 0.875rem;
       line-height: 120%; /* 16.8px */
       margin-top: 3px;

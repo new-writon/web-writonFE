@@ -15,22 +15,55 @@ import { useNavigate } from "react-router-dom";
 
 import goldBadgeRound from "@/assets/mainPage/goldBadge-round.svg";
 import goldBadge from "@/assets/mainPage/goldBadge.svg";
-import preBtn_round from "@/assets/mainPage/preBtn-round.svg";
+import preBtn_round_blue from "@/assets/mainPage/preBtn-round_blue.svg";
+import preBtn_round_purple from "@/assets/mainPage/preBtn-round_purple.svg";
 import silverBadgeRound from "@/assets/mainPage/silverBadge-round.svg";
 import silverBadge from "@/assets/mainPage/silverBadge.svg";
-import todayBtn from "@/assets/mainPage/todayBtn-round.svg";
-import writeActive from "@/assets/mainPage/writeActive.svg";
-import writeClick from "@/assets/mainPage/writeActiveClick.svg";
-import writeNotSpecified from "@/assets/mainPage/writeActiveClick.svg";
-import writeActiveHover from "@/assets/mainPage/writeActiveHover.svg";
-import writePre from "@/assets/mainPage/writePre.svg";
-import writeING_round from "@/assets/writingPage/writingING-round.svg";
-import writeING from "@/assets/writingPage/writingING.svg";
-import writeINGtoday_round from "@/assets/writingPage/writingINGToday-round.svg";
-import writeINGtoday from "@/assets/writingPage/writingINGtoday.svg";
+import todayBtn_blue from "@/assets/mainPage/todayBtn-round_blue.svg";
+import todayBtn_purple from "@/assets/mainPage/todayBtn-round_purple.svg";
+import writeNotSpecified_blue from "@/assets/mainPage/writeActiveClick_blue.svg";
+import writeClick_blue from "@/assets/mainPage/writeActiveClick_blue.svg";
+import writeNotSpecified_purple from "@/assets/mainPage/writeActiveClick_purple.svg";
+import writeClick_purple from "@/assets/mainPage/writeActiveClick_purple.svg";
+import writeActiveHover_blue from "@/assets/mainPage/writeActiveHover_blue.svg";
+import writeActiveHover_purple from "@/assets/mainPage/writeActiveHover_purple.svg";
+import writeActive_blue from "@/assets/mainPage/writeActive_blue.svg";
+import writeActive_purple from "@/assets/mainPage/writeActive_purple.svg";
+import writePre_blue from "@/assets/mainPage/writePre_blue.svg";
+import writePre_purple from "@/assets/mainPage/writePre_purple.svg";
+import writeING_round_blue from "@/assets/writingPage/writingING-round_blue.svg";
+import writeING_round_purple from "@/assets/writingPage/writingING-round_purple.svg";
+import writeINGtoday_round_blue from "@/assets/writingPage/writingINGToday-round_blue.svg";
+import writeINGtoday_round_purple from "@/assets/writingPage/writingINGToday-round_purple.svg";
+import writeING_blue from "@/assets/writingPage/writingING_blue.svg";
+import writeING_purple from "@/assets/writingPage/writingING_purple.svg";
+import writeINGtoday_blue from "@/assets/writingPage/writingINGtoday_blue.svg";
+import writeINGtoday_purple from "@/assets/writingPage/writingINGtoday_purple.svg";
 import { CalendarRecordCurrentType } from "@/types";
 
 import { Container } from "./RenderCells.style";
+
+const writeButtons = {
+  writeNotSpecified:
+    localStorage.getItem("challengeId") !== "1" ? writeNotSpecified_purple : writeNotSpecified_blue,
+  writeActiveHover:
+    localStorage.getItem("challengeId") !== "1" ? writeActiveHover_purple : writeActiveHover_blue,
+  writeActive: localStorage.getItem("challengeId") !== "1" ? writeActive_purple : writeActive_blue,
+  writeClick: localStorage.getItem("challengeId") !== "1" ? writeClick_purple : writeClick_blue,
+  writePre: localStorage.getItem("challengeId") !== "1" ? writePre_purple : writePre_blue,
+  preBtn_round:
+    localStorage.getItem("challengeId") !== "1" ? preBtn_round_purple : preBtn_round_blue,
+  todayBtn: localStorage.getItem("challengeId") !== "1" ? todayBtn_purple : todayBtn_blue,
+  writeING_round:
+    localStorage.getItem("challengeId") !== "1" ? writeING_round_purple : writeING_round_blue,
+  writeINGtoday_round:
+    localStorage.getItem("challengeId") !== "1"
+      ? writeINGtoday_round_purple
+      : writeINGtoday_round_blue,
+  writeING: localStorage.getItem("challengeId") !== "1" ? writeING_purple : writeING_blue,
+  writeINGtoday:
+    localStorage.getItem("challengeId") !== "1" ? writeINGtoday_purple : writeINGtoday_blue,
+};
 
 export const RenderCell = ({
   pageDay,
@@ -109,13 +142,13 @@ export const RenderCell = ({
     }
   };
   const SelectBadge = (day: Date) => {
-    let BadgeColor = writeNotSpecified;
+    let BadgeColor = writeButtons.writeNotSpecified;
     //badge 선택 함수
     CalendarData.map((item) => {
       if (isSameDay(day, item.date)) {
         switch (item.badge) {
           case "lightPurple":
-            BadgeColor = writePre;
+            BadgeColor = writeButtons.writePre;
             break;
           case "Gold":
             BadgeColor = goldBadge;
@@ -124,7 +157,7 @@ export const RenderCell = ({
             BadgeColor = silverBadge;
             break;
           case "Purple":
-            BadgeColor = writeActive;
+            BadgeColor = writeButtons.writeActive;
             break;
         }
       }
@@ -163,13 +196,15 @@ export const RenderCell = ({
         >
           <div
             className={`innerday ${
-              SelectBadge(day) === writeActive || SelectBadge(day) === writePre
+              SelectBadge(day) === writeButtons.writeActive ||
+              SelectBadge(day) === writeButtons.writePre
                 ? "Active"
                 : "notActive"
             }`} // 반응형을 위한 코드
             onClick={() =>
               responsiveClickEvent(
-                SelectBadge(clickDay) === writeActive || SelectBadge(clickDay) === writePre
+                SelectBadge(clickDay) === writeButtons.writeActive ||
+                  SelectBadge(clickDay) === writeButtons.writePre
                   ? true
                   : false,
                 format(clickDay, "yyyy-MM-dd")
@@ -185,28 +220,28 @@ export const RenderCell = ({
               ) : (
                 <img
                   className={
-                    SelectBadge(day) === writeActive
+                    SelectBadge(day) === writeButtons.writeActive
                       ? "writeActive"
-                      : SelectBadge(day) === writePre
+                      : SelectBadge(day) === writeButtons.writePre
                         ? "writePre"
-                        : SelectBadge(day) === writeNotSpecified
+                        : SelectBadge(day) === writeButtons.writeNotSpecified
                           ? "writeNotSpecified"
                           : ""
                   }
                   src={
                     //모바일
                     isSameDay(pageDay || "", day) && isSameDay(pageDay || "", today)
-                      ? writeINGtoday_round
+                      ? writeButtons.writeINGtoday_round
                       : isSameDay(pageDay || "", day)
-                        ? writeING_round
-                        : SelectBadge(day) === writeActive
-                          ? todayBtn
+                        ? writeButtons.writeING_round
+                        : SelectBadge(day) === writeButtons.writeActive
+                          ? writeButtons.todayBtn
                           : SelectBadge(day) === goldBadge
                             ? goldBadgeRound
                             : SelectBadge(day) === silverBadge
                               ? silverBadgeRound
-                              : SelectBadge(day) === writePre
-                                ? preBtn_round
+                              : SelectBadge(day) === writeButtons.writePre
+                                ? writeButtons.preBtn_round
                                 : ""
                   }
                   alt="반응형 뱃지"
@@ -228,7 +263,8 @@ export const RenderCell = ({
                 onMouseDown={() => mouseEvent(isSameDay(clickDay, today), "mouseDown", "")}
                 onClick={() =>
                   mouseEvent(
-                    SelectBadge(clickDay) === writeActive || SelectBadge(clickDay) === writePre
+                    SelectBadge(clickDay) === writeButtons.writeActive ||
+                      SelectBadge(clickDay) === writeButtons.writePre
                       ? true
                       : false,
                     "mouseClick",
@@ -236,25 +272,25 @@ export const RenderCell = ({
                   )
                 }
                 className={
-                  SelectBadge(day) === writeActive
+                  SelectBadge(day) === writeButtons.writeActive
                     ? "writeActive"
-                    : SelectBadge(day) === writePre
+                    : SelectBadge(day) === writeButtons.writePre
                       ? "writePre"
-                      : SelectBadge(day) === writeNotSpecified
+                      : SelectBadge(day) === writeButtons.writeNotSpecified
                         ? "writeNotSpecified"
                         : ""
                 }
                 src={
                   isSameDay(pageDay || "", day) && isSameDay(pageDay || "", today)
-                    ? writeINGtoday
+                    ? writeButtons.writeINGtoday
                     : isSameDay(pageDay || "", day)
-                      ? writeING
-                      : SelectBadge(day) === writeActive
+                      ? writeButtons.writeING
+                      : SelectBadge(day) === writeButtons.writeActive
                         ? mouseClick
-                          ? writeClick
+                          ? writeButtons.writeClick
                           : isHover
-                            ? writeActiveHover
-                            : writeActive
+                            ? writeButtons.writeActiveHover
+                            : writeButtons.writeActive
                         : SelectBadge(day) // 여기서 부터 로직 작성, 오늘이 아닌데, 어떤 값이 false면 그 write사진 writePre로 변경  Status, todayStatus값으로 구분 f,f면 아에 안쓴거(오늘날짜, 아닌날짜 구분까지 플러스하기), t,f면 실버색깔, t,t 금색깔
                 }
                 alt="성공"

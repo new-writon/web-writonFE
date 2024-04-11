@@ -143,13 +143,13 @@ const StyledSlider = styled(Slider)`
   }
   .slick-dots li button:hover:before,
   .slick-dots li button:focus:before {
-    color: var(--purple-50, #6a63f5) !important;
+    color: var(--Main-50, #6272ff) !important;
   }
   .slick-dots li button:before {
     font-size: 11px !important;
   }
   .slick-dots li.slick-active button:before {
-    color: var(--purple-50, #6a63f5) !important;
+    color: var(--Main-50, #6272ff) !important;
     opacity: 1 !important;
   }
 

@@ -274,7 +274,7 @@ const Container = styled.div<{ $agoraModalBox: boolean; $width: number }>`
     right: 32px;
     border-radius: 50%;
     border: 1px solid var(--Gray-30, #edeef1);
-    background: #fff;
+    background: var(--White, #fff);
     box-sizing: border-box;
     box-shadow: 0px 4px 30px 0px rgba(33, 33, 33, 0.05);
     width: 40px;
@@ -323,7 +323,7 @@ const Top = styled.div`
     align-items: center;
   }
   .small-talk-title .topic {
-    color: var(--Gray-100, #212121);
+    color: var(--Gray-100, #1b1d1f);
     font-size: 1rem;
     font-style: normal;
     font-weight: 600;

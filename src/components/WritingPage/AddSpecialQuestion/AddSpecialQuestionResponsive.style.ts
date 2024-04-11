@@ -22,7 +22,7 @@ export const Container = styled.div`
     margin-bottom: 16px;
   }
   .keywordBox .keywordTitle {
-    color: var(--Gray-80, #616161);
+    color: var(--Gray-80, #464c52);
     font-size: 0.875rem;
     font-weight: 600;
     line-height: 120%;
@@ -53,10 +53,10 @@ export const Container = styled.div`
   .addQuestionBox::-webkit-scrollbar-thumb {
     width: 2px;
     height: 2px; /* 스크롤바의 길이 */
-    background: #8e89ff; /* 스크롤바의 색상 */
+    background: var(--Main-40, #8592ff); /* 스크롤바의 색상 */
   }
 
   .addQuestionBox::-webkit-scrollbar-track {
-    background: #d9d9d9; /*스크롤바 뒷 배경 색상*/
+    background: var(--Gray-40, #d2d5db); /*스크롤바 뒷 배경 색상*/
   }
 `;
