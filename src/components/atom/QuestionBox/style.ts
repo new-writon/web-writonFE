@@ -32,7 +32,7 @@ export const Container = styled.div`
     &::placeholder {
       line-height: 24px;
       font-size: 1rem;
-      color: var(--Gray-30, #edeef1);
+      color: var(--Gray-60, #94989f);
     }
     &:focus {
       &::placeholder {
