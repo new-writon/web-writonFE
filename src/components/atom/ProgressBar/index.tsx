@@ -2,7 +2,8 @@ import { useEffect, useState } from "react";
 
 import { AnimatedLineProgressBar } from "@frogress/line";
 
-import flag from "@/assets/mainPage/icon-flag.svg";
+import flag_blue from "@/assets/mainPage/icon-flag_blue.svg";
+import flag_purple from "@/assets/mainPage/icon-flag_purple.svg";
 
 import { Container } from "./style";
 
@@ -61,7 +62,7 @@ export const ProgressBar = ({ value, startDate, endDate }: ProgressBarProps) => 
       )}
       <div className="endDate">{endDate}일</div>
       <img
-        src={flag}
+        src={localStorage.getItem("challengeId") !== "1" ? flag_purple : flag_blue}
         alt="깃발"
         className="flag"
       />

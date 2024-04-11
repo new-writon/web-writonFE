@@ -18,6 +18,8 @@ const App = () => {
       document.documentElement.style.setProperty("--Main-80", "#2d2890");
       document.documentElement.style.setProperty("--Main-90", "#1e1a6e");
       document.documentElement.style.setProperty("--Main-100", "#120f4c");
+      document.documentElement.style.setProperty("--ProgressBar-first", "#d5abff");
+      document.documentElement.style.setProperty("--ProgressBar-second", "#6a63f5");
     }
   };
 

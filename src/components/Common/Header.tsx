@@ -15,9 +15,11 @@ import {
 } from "@/apis/notification";
 import profile from "@/assets/communityPage/profile.png";
 import notificationIcon from "@/assets/header/icon-notification.svg";
-import pencil_color from "@/assets/header/pencil_color.svg";
+import pencil_color_blue from "@/assets/header/pencil_color_blue.svg";
+import pencil_color_purple from "@/assets/header/pencil_color_purple.svg";
 import pencil_white from "@/assets/header/pencil_white.svg";
 import letsintern from "@/assets/logo/letsintern.png";
+import writon_icon from "@/assets/logo/logo-writon-roundbox.svg";
 import writon from "@/assets/logo/writon_long.svg";
 import {
   addSpecialQuestionArrayState,
@@ -32,7 +34,7 @@ import { communityStoryProps, challengeListProps, notificationDataType } from "@
 import { TooltipNotification } from "../atom/TooltipNotification";
 import { TooltipProfile } from "../atom/TooltipProfile";
 
-const ICON = [letsintern, writon];
+const ICON = [localStorage.getItem("challengeId") !== "1" ? letsintern : writon_icon, writon];
 const Tabs = ["내 챌린지", "커뮤니티"];
 
 const Header = () => {
@@ -253,7 +255,13 @@ const Header = () => {
             <p>회고 작성하기</p>
             <p className="responsive">작성</p>
             <img
-              src={isHover ? pencil_white : pencil_color}
+              src={
+                isHover
+                  ? pencil_white
+                  : localStorage.getItem("challengeId") !== "1"
+                    ? pencil_color_purple
+                    : pencil_color_blue
+              }
               alt="pen"
             />
           </div>
