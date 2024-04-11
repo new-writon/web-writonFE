@@ -69,13 +69,15 @@ export const FloatingWriteBtn = styled.button<ButtonProps>`
 
 export const WritingSubmitBtn = styled.div<{ $disabled: boolean }>`
   display: flex;
-  padding: 16px 0px 17px 0px;
+  padding: 18px 0px 14px 0px;
+  box-sizing: border-box;
+  max-height: 56px;
   justify-content: center;
   align-items: center;
   border-radius: 12px;
   background: ${(props) =>
-    props.$disabled ? "var(--Main-50, #6272ff)" : "var(--Gray-40, #d2d5db)"};
-  color: ${(props) => (props.$disabled ? " var(--White, #FFF);" : "var(--Gray-70, #73777e)")};
+    props.$disabled ? "var(--Main-50, #6272ff)" : "var(--Gray-30, #edeef1)"};
+  color: ${(props) => (props.$disabled ? " var(--White, #FFF);" : "var( --Gray-60, #94989f)")};
   font-size: 1.125rem;
   font-weight: 600;
   line-height: 15px;
@@ -85,6 +87,7 @@ export const WritingSubmitBtn = styled.div<{ $disabled: boolean }>`
   }
   img {
     margin-left: 4px;
+    padding-bottom: 3px;
   }
 `;
 
