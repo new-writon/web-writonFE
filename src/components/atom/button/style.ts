@@ -28,7 +28,7 @@ export const BlueBtn = styled.button<ButtonProps>`
   border-radius: 5px;
   border: none;
 
-  background-color: var(--Main-60, #5161ed);
+  background-color: var(--Main-50, #6272ff);
   color: var(--White, #fff);
   font-size: var(--text_b1);
   font-weight: 600;

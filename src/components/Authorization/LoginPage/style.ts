@@ -15,7 +15,7 @@ export const InputBox = styled.div`
 `;
 
 export const OrLine = styled.div`
-  color: var(--Gray-50, #b1b4bc);
+  color: var(--Main-50, #6272ff);
   text-align: center;
   font-size: 0.75rem;
   display: flex;
@@ -54,7 +54,7 @@ export const EtcBox = styled.div`
     gap: 14px;
 
     .sign-up {
-      color: var(--Main-60, #5161ed);
+      color: var(--Main-50, #5161ed);
       cursor: pointer;
       text-decoration-line: underline;
     }
