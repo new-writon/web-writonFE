@@ -15,14 +15,14 @@ export const CommentAndLike = ({
     <Container className="commentAndLike">
       <Item>
         <img
-          src={localStorage.getItem("challengeId") !== "1" ? Comment_purple : Comment_blue}
+          src={localStorage.getItem("organization") === "렛츠인턴" ? Comment_purple : Comment_blue}
           alt="댓글"
         />
         <div className="number">{commentCount}</div>
       </Item>
       <Item>
         <img
-          src={localStorage.getItem("challengeId") !== "1" ? like_purple : like_blue}
+          src={localStorage.getItem("organization") === "렛츠인턴" ? like_purple : like_blue}
           alt="좋아요"
         />
         <div className="number">{likeCount}</div>

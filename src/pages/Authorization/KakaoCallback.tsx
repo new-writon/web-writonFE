@@ -30,11 +30,10 @@ export const KakaoCallback = () => {
             navigate("/");
           } else {
             try {
-              const data = await postChallengeStart(
+              await postChallengeStart(
                 localStorage.getItem("organization") || "null",
                 localStorage.getItem("challengeId") || "1"
               );
-              console.log(data);
               localStorage.setItem("accessToken", res.accessToken);
               localStorage.setItem("refreshToken", res.refreshToken);
               navigate("/");

@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect, useState } from "react";
 
 import { getMyPageRetrospectItem } from "@/apis/MyPage";
@@ -6,6 +7,7 @@ import downArrow from "@/assets/mainPage/downArrow.svg";
 import topArrow from "@/assets/mainPage/topArrow.svg";
 import { NoRetrospect } from "@/components/MainPage/NoRetrospect";
 import { MyPageRetrospectItemMobile } from "@/components/atom/MyPageRetrospectItem";
+import useAsyncWithLoading from "@/hooks/useAsyncWithLoading";
 import { challengeListProps, communityContentProps } from "@/types";
 
 import { Container, RetroSpectList, Top } from "./style";
@@ -16,6 +18,7 @@ export const MyPageRetrospectMobile = () => {
   const [listOn, setListOn] = useState<boolean>(false);
   const [viewState, setViewState] = useState<string>("new");
   const [RetrospectData, setRetrospectData] = useState<communityContentProps[][]>([]);
+  const executeAsyncTask = useAsyncWithLoading();
 
   const ChangeChallenge = async (item: challengeListProps) => {
     try {
@@ -42,24 +45,30 @@ export const MyPageRetrospectMobile = () => {
   };
 
   const RetrospectRendering = async () => {
-    try {
-      const list = await getChallengingList();
-      setChallengeList(list);
-      setSelectChallenge(`${list[0].organization} ${list[0].challenge} 챌린지`);
+    executeAsyncTask(async () => {
       try {
-        const data = await getMyPageRetrospectItem(
-          list[0].organization,
-          list[0].challenge_id.toString()
+        const list = await getChallengingList();
+        setChallengeList(
+          list.filter((item) => item.organization === localStorage.getItem("organization"))
         );
-        setRetrospectData(data.reverse());
+        const activeList = list.filter(
+          (item) => item.challenge_id.toString() === localStorage.getItem("challengeId")
+        );
+        setSelectChallenge(`${activeList[0].organization} ${activeList[0].challenge} 챌린지`);
+        try {
+          const data = await getMyPageRetrospectItem(
+            activeList[0].organization,
+            activeList[0].challenge_id.toString()
+          );
+          setRetrospectData(data.reverse());
+        } catch {
+          new Error("shit");
+        }
       } catch {
         new Error("shit");
       }
-    } catch {
-      new Error("shit");
-    }
+    });
   };
-
   useEffect(() => {
     RetrospectRendering();
   }, []);

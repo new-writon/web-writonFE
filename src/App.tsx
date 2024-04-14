@@ -6,7 +6,7 @@ import Router from "./router";
 import { GlobalStyle } from "./style/global";
 const App = () => {
   const initialRenderingColor = async () => {
-    if (localStorage.getItem("challengeId") !== "1") {
+    if (localStorage.getItem("organization") === "렛츠인턴") {
       document.documentElement.style.setProperty("--Main-0", "#f8f8ff");
       document.documentElement.style.setProperty("--Main-10", "#f0efff");
       document.documentElement.style.setProperty("--Main-20", "#cfcdff");

@@ -10,13 +10,13 @@ export const Container = styled.div`
 export const DuplicateBtn = styled.button`
   border: 0;
   background-color: transparent;
-  font-size: 1rem;
+  font-size: 1rem !important;
   padding: 0;
   position: absolute;
   top: 50%;
   transform: translate(0, -50%);
   right: 20px;
-  color: var(--Shadow_Blue, #135ff3);
+  color: var(--Main-60, #5161ed);
   cursor: pointer;
 `;
 export const RegisterBox = styled.div`
@@ -194,7 +194,7 @@ export const RequestBtn = styled.button`
   align-items: center;
   color: ${(props) => (!props.disabled ? "var(--Main-60, #5161ed)" : "var(--Gray-60, #94989f)")};
   background-color: ${(props) =>
-    !props.disabled ? "var(--blue, #eaf5ff)" : "var(---Gray-30, #edeef1)"};
+    !props.disabled ? "var(--Main-10, #eff1ff)" : "var(---Gray-30, #edeef1)"};
   font-weight: 600;
   font-size: 1.125rem;
 `;
@@ -223,7 +223,7 @@ export const RegisterBtn = styled.button`
   border-radius: 5px;
   color: ${(props) => (!props.disabled ? "var(--White, #fff)" : "var(--Gray-60, #94989f)")};
   background-color: ${(props) =>
-    !props.disabled ? "var(--Main_Blue,#135ff3)" : "var(--Gray-30, #edeef1)"};
+    !props.disabled ? "var(--Main-60, #5161ed)" : "var(--Gray-30, #edeef1)"};
 
   height: 56px;
   width: 100%;

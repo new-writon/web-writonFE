@@ -53,11 +53,10 @@ export const ProfileSetting = ({ myData }: { myData: myPageProps | undefined }) 
   };
   const DuplicateCheck = async () => {
     try {
-      const response = await getDuplicateNickname(
+      await getDuplicateNickname(
         localStorage.getItem("organization") || "letsintern",
         ProfileData.nickname
       );
-      console.log(response);
       setDuplicate(true);
       setDuplicateShow(true); // 일단 버튼을 누르면 hide 클래스 제거
     } catch (err) {
@@ -111,8 +110,7 @@ export const ProfileSetting = ({ myData }: { myData: myPageProps | undefined }) 
   const EditComplete = async () => {
     // 수정 api 발송 ProfileData
     try {
-      const response = await putMyPageData(localStorage.getItem("organization") || "", ProfileData);
-      console.log(response);
+      await putMyPageData(localStorage.getItem("organization") || "", ProfileData);
       setEditActive(false);
       window.location.reload();
       window.scrollTo({ top: 0 });

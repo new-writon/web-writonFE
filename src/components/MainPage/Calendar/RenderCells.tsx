@@ -45,24 +45,32 @@ import { Container } from "./RenderCells.style";
 
 const writeButtons = {
   writeNotSpecified:
-    localStorage.getItem("challengeId") !== "1" ? writeNotSpecified_purple : writeNotSpecified_blue,
+    localStorage.getItem("organization") === "렛츠인턴"
+      ? writeNotSpecified_purple
+      : writeNotSpecified_blue,
   writeActiveHover:
-    localStorage.getItem("challengeId") !== "1" ? writeActiveHover_purple : writeActiveHover_blue,
-  writeActive: localStorage.getItem("challengeId") !== "1" ? writeActive_purple : writeActive_blue,
-  writeClick: localStorage.getItem("challengeId") !== "1" ? writeClick_purple : writeClick_blue,
-  writePre: localStorage.getItem("challengeId") !== "1" ? writePre_purple : writePre_blue,
+    localStorage.getItem("organization") === "렛츠인턴"
+      ? writeActiveHover_purple
+      : writeActiveHover_blue,
+  writeActive:
+    localStorage.getItem("organization") === "렛츠인턴" ? writeActive_purple : writeActive_blue,
+  writeClick:
+    localStorage.getItem("organization") === "렛츠인턴" ? writeClick_purple : writeClick_blue,
+  writePre: localStorage.getItem("organization") === "렛츠인턴" ? writePre_purple : writePre_blue,
   preBtn_round:
-    localStorage.getItem("challengeId") !== "1" ? preBtn_round_purple : preBtn_round_blue,
-  todayBtn: localStorage.getItem("challengeId") !== "1" ? todayBtn_purple : todayBtn_blue,
+    localStorage.getItem("organization") === "렛츠인턴" ? preBtn_round_purple : preBtn_round_blue,
+  todayBtn: localStorage.getItem("organization") === "렛츠인턴" ? todayBtn_purple : todayBtn_blue,
   writeING_round:
-    localStorage.getItem("challengeId") !== "1" ? writeING_round_purple : writeING_round_blue,
+    localStorage.getItem("organization") === "렛츠인턴"
+      ? writeING_round_purple
+      : writeING_round_blue,
   writeINGtoday_round:
-    localStorage.getItem("challengeId") !== "1"
+    localStorage.getItem("organization") === "렛츠인턴"
       ? writeINGtoday_round_purple
       : writeINGtoday_round_blue,
-  writeING: localStorage.getItem("challengeId") !== "1" ? writeING_purple : writeING_blue,
+  writeING: localStorage.getItem("organization") === "렛츠인턴" ? writeING_purple : writeING_blue,
   writeINGtoday:
-    localStorage.getItem("challengeId") !== "1" ? writeINGtoday_purple : writeINGtoday_blue,
+    localStorage.getItem("organization") === "렛츠인턴" ? writeINGtoday_purple : writeINGtoday_blue,
 };
 
 export const RenderCell = ({

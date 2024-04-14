@@ -51,11 +51,10 @@ export const ProfileSettingMobile = ({ myData }: { myData: myPageProps | undefin
   };
   const DuplicateCheck = async () => {
     try {
-      const response = await getDuplicateNickname(
+      await getDuplicateNickname(
         localStorage.getItem("organization") || "letsintern",
         ProfileData.nickname
       );
-      console.log(response);
       setDuplicate(true);
       setDuplicateShow(true); // 일단 버튼을 누르면 hide 클래스 제거
     } catch (err) {

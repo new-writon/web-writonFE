@@ -41,11 +41,10 @@ const Login = () => {
             navigate("/");
           } else {
             try {
-              const res = await postChallengeStart(
+              await postChallengeStart(
                 localStorage.getItem("organization") || "null",
                 localStorage.getItem("challengeId") || "1"
               );
-              console.log(res);
               localStorage.setItem("accessToken", response.accessToken);
               localStorage.setItem("refreshToken", response.refreshToken);
               navigate("/");

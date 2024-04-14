@@ -21,6 +21,7 @@ import pencil_white from "@/assets/header/pencil_white.svg";
 import letsintern from "@/assets/logo/letsintern.png";
 import writon_icon from "@/assets/logo/logo-writon-roundbox.svg";
 import writon from "@/assets/logo/writon_long.svg";
+import useAsyncWithLoading from "@/hooks/useAsyncWithLoading";
 import {
   addSpecialQuestionArrayState,
   addSpecialQuestionState,
@@ -31,10 +32,14 @@ import {
 import { Inner } from "@/style/global";
 import { communityStoryProps, challengeListProps, notificationDataType } from "@/types";
 
+import { ChangeOrganization } from "../atom/ChangeOrganization";
 import { TooltipNotification } from "../atom/TooltipNotification";
 import { TooltipProfile } from "../atom/TooltipProfile";
 
-const ICON = [localStorage.getItem("challengeId") !== "1" ? letsintern : writon_icon, writon];
+const ICON = [
+  localStorage.getItem("organization") === "렛츠인턴" ? letsintern : writon_icon,
+  writon,
+];
 const Tabs = ["내 챌린지", "커뮤니티"];
 
 const Header = () => {
@@ -54,13 +59,15 @@ const Header = () => {
 
   const [notificationTooltip, setNotificationTooltip] = useState<boolean>(false);
   const [notificationNumber, setNotificationNumber] = useRecoilState(notficationNumberState);
-
+  const [organizationToggle, setOrganizationToggle] = useState<boolean>(false);
   const setCommunity = useSetRecoilState(communityState);
 
+  const organizationToggleRef = useRef<HTMLDivElement>(null);
   const profileTooltipRef = useRef<HTMLDivElement>(null);
   const profileTooltipOnRef = useRef<HTMLDivElement>(null);
   const notificationTooltipRef = useRef<HTMLDivElement>(null);
   const notificationTooltipOnRef = useRef<HTMLDivElement>(null);
+  const executeAsyncTask = useAsyncWithLoading();
 
   const today = format(new Date(), "yyyy-MM-dd");
   const resetState = useRecoilCallback(({ reset }) => () => {
@@ -113,7 +120,7 @@ const Header = () => {
 
   const updateNotificationCount = async () => {
     try {
-      patchNotificationCount(
+      await patchNotificationCount(
         localStorage.getItem("organization") as string,
         localStorage.getItem("challengeId") as string,
         notificationData.length
@@ -143,45 +150,64 @@ const Header = () => {
       ) {
         setNotificationTooltip(false);
       }
+      if (
+        organizationToggleRef.current &&
+        !organizationToggleRef.current.contains(e.target as Node)
+      ) {
+        setOrganizationToggle(false);
+      }
     };
     window.addEventListener("mousedown", handleClick);
     return () => window.removeEventListener("mousedown", handleClick);
-  }, [profileTooltipRef, profileTooltipOnRef, notificationTooltipRef, notificationTooltipOnRef]);
+  }, [
+    profileTooltipRef,
+    profileTooltipOnRef,
+    notificationTooltipRef,
+    notificationTooltipOnRef,
+    organizationToggleRef,
+  ]);
 
   const headerRendering = async () => {
-    try {
-      const data = await Promise.all([
-        getMyCommunityStory(localStorage.getItem("challengeId") || ""),
-        getChallengingList(),
-      ]);
-      if (data[0]?.profile !== null) {
-        setProfileImage(data[0]?.profile);
+    executeAsyncTask(async () => {
+      try {
+        const data = await Promise.all([
+          getMyCommunityStory(localStorage.getItem("challengeId") || ""),
+          getChallengingList(),
+        ]);
+        if (data[0]?.profile !== null) {
+          setProfileImage(data[0]?.profile);
+        }
+        setUserProfile(data[0]);
+        const activeList = data[1].filter(
+          (item) => item.organization === localStorage.getItem("organization")
+        );
+        setChallengeList(activeList);
+        notificationRendering();
+      } catch {
+        throw new Error("shit");
       }
-      setUserProfile(data[0]);
-      setChallengeList(data[1]);
-      notificationRendering();
-    } catch {
-      throw new Error("shit");
-    }
+    });
   };
 
   const notificationRendering = async () => {
-    try {
-      const data = await Promise.all([
-        getNotificationData(
-          localStorage.getItem("organization") as string,
-          localStorage.getItem("challengeId") as string
-        ),
-        getNotificationCount(
-          localStorage.getItem("organization") as string,
-          localStorage.getItem("challengeId") as string
-        ),
-      ]);
-      setNotificationData(data[0]);
-      setNotificationNumber(data[0].length - data[1].checkCount);
-    } catch {
-      throw new Error("shit");
-    }
+    executeAsyncTask(async () => {
+      try {
+        const data = await Promise.all([
+          getNotificationData(
+            localStorage.getItem("organization") as string,
+            localStorage.getItem("challengeId") as string
+          ),
+          getNotificationCount(
+            localStorage.getItem("organization") as string,
+            localStorage.getItem("challengeId") as string
+          ),
+        ]);
+        setNotificationData(data[0]);
+        setNotificationNumber(data[0].length - data[1].checkCount);
+      } catch {
+        throw new Error("shit");
+      }
+    });
   };
 
   useEffect(() => {
@@ -222,12 +248,17 @@ const Header = () => {
                 src={logo}
                 alt={`${logo}`}
                 onClick={() => {
-                  navigate("/");
-                  resetState();
+                  if (logo === writon) {
+                    navigate("/");
+                    resetState();
+                  } else {
+                    setOrganizationToggle(!organizationToggle);
+                  }
                 }}
               />
             </React.Fragment>
           ))}
+          {organizationToggle && <ChangeOrganization />}
         </HeaderLeft>
         <HeaderMiddle>
           {Tabs.map((tab, idx) => (
@@ -258,7 +289,7 @@ const Header = () => {
               src={
                 isHover
                   ? pencil_white
-                  : localStorage.getItem("challengeId") !== "1"
+                  : localStorage.getItem("organization") === "렛츠인턴"
                     ? pencil_color_purple
                     : pencil_color_blue
               }
@@ -363,6 +394,7 @@ const Container = styled.div`
 `;
 
 const HeaderLeft = styled.div`
+  position: relative;
   display: flex;
   align-items: center;
   gap: 17px;

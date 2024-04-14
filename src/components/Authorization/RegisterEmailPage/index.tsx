@@ -90,8 +90,7 @@ const RegisterEmail = () => {
   };
   const DuplicateCheck = async () => {
     try {
-      const response = await getDuplicateId(userId);
-      console.log(response);
+      await getDuplicateId(userId);
       setDuplicate(true);
       setDuplicateShow(true); // 일단 버튼을 누르면 hide 클래스 제거
     } catch (err) {
@@ -191,7 +190,6 @@ const RegisterEmail = () => {
         }
       }
     } catch {
-      alert("중복된 이메일입니다.");
       setLoading(false);
       setEmail("");
     }
@@ -211,8 +209,7 @@ const RegisterEmail = () => {
 
   const EmailCodeCheck = async () => {
     try {
-      const response = await postEmailCode(email, emailCode);
-      console.log(response);
+      await postEmailCode(email, emailCode);
       // 성공
       setEmailcodeCheck(true);
       setEmailcodeCheckShow(true); // 일단 버튼을 누르면 hide 클래스 제거 -> 시간 멈추기 기능넣어여함.
@@ -224,17 +221,18 @@ const RegisterEmail = () => {
     }
   };
 
-  const ResendEmailCode = () => {
+  const ResendEmailCode = async () => {
     setLoading(true);
-    postEmail(email)
-      .then((res) => {
-        setEmailCode(""); //재전송 api
-        setEmailError(false);
-        setTimeLeft(MINUTES_IN_MS); // 시간 초기화
-        setLoading(false);
-        console.log(res);
-      })
-      .catch((err) => console.log(err));
+    try {
+      await postEmail(email);
+      setEmailCode(""); //재전송 api
+      setEmailError(false);
+      setTimeLeft(MINUTES_IN_MS); // 시간 초기화
+      setLoading(false);
+    } catch (err) {
+      setLoading(false);
+      console.log(err);
+    }
   };
 
   //이용 약관 동의 함수
@@ -259,8 +257,7 @@ const RegisterEmail = () => {
   const RegisterOk = async () => {
     executeAsyncTask(async () => {
       try {
-        const response = await postRegister(userId, password2, email);
-        console.log(response);
+        await postRegister(userId, password2, email);
         alert("회원가입 완료!");
         navigate("/login");
       } catch {

@@ -23,11 +23,10 @@ export const FinishModal = () => {
 
   const reviewForm = async (reviewUrl: string | null | undefined) => {
     try {
-      const response = await putFinishModal(
+      await putFinishModal(
         localStorage.getItem("organization") || "",
         localStorage.getItem("challengeId") || "1"
       );
-      console.log(response);
       window.open(reviewUrl || "http://www.writon.co.kr");
       setFinishModal(false);
       document.body.style.overflowY = "scroll";

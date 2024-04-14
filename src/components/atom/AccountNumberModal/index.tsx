@@ -41,8 +41,7 @@ export const AccountNumberModal = () => {
 
   const AccountEditComplete = async () => {
     try {
-      const response = await patchAccountNumberData(accountNumberData);
-      console.log(response);
+      await patchAccountNumberData(accountNumberData);
       setAccountNumberModal(false);
       document.body.style.overflowY = "scroll";
     } catch {

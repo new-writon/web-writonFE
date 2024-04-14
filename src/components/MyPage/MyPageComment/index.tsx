@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect, useState } from "react";
 
 import { getMyPageCommentItem } from "@/apis/MyPage";
@@ -6,6 +7,7 @@ import downArrow from "@/assets/mainPage/downArrow.svg";
 import topArrow from "@/assets/mainPage/topArrow.svg";
 import { NoRetrospect } from "@/components/MainPage/NoRetrospect";
 import { MyPageCommentItem } from "@/components/atom/MyPageCommentItem";
+import useAsyncWithLoading from "@/hooks/useAsyncWithLoading";
 import { challengeListProps, myPageCommentType } from "@/types";
 
 import { CommentList, CommentPagination, Container, Top } from "./style";
@@ -17,6 +19,7 @@ export const MyPageComment = () => {
   const [viewState, setViewState] = useState<string>("new");
   const [CommentData, setCommentData] = useState<myPageCommentType[]>([]);
   const [activePage, setActivePage] = useState<number>(1); // 나중에 쿼리스트링으로 바꿔여함.
+  const executeAsyncTask = useAsyncWithLoading();
 
   const ChangeChallenge = async (item: challengeListProps) => {
     try {
@@ -43,22 +46,29 @@ export const MyPageComment = () => {
   };
 
   const CommentRendering = async () => {
-    try {
-      const list = await getChallengingList();
-      setChallengeList(list);
-      setSelectChallenge(`${list[0].organization} ${list[0].challenge} 챌린지`);
+    executeAsyncTask(async () => {
       try {
-        const data = await getMyPageCommentItem(
-          list[0].organization,
-          list[0].challenge_id.toString()
+        const list = await getChallengingList();
+        setChallengeList(
+          list.filter((item) => item.organization === localStorage.getItem("organization"))
         );
-        setCommentData(data);
+        const activeList = list.filter(
+          (item) => item.challenge_id.toString() === localStorage.getItem("challengeId")
+        );
+        setSelectChallenge(`${activeList[0].organization} ${activeList[0].challenge} 챌린지`);
+        try {
+          const data = await getMyPageCommentItem(
+            activeList[0].organization,
+            activeList[0].challenge_id.toString()
+          );
+          setCommentData(data);
+        } catch {
+          new Error("shit");
+        }
       } catch {
         new Error("shit");
       }
-    } catch {
-      new Error("shit");
-    }
+    });
   };
 
   useEffect(() => {

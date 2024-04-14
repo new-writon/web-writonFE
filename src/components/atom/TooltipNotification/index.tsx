@@ -158,15 +158,13 @@ export const TooltipNotificationItem = ({ data }: { data: notificationDataType }
       setClick(true);
       if (type === "like") {
         try {
-          const res = await patchNotificationLike(Id);
-          console.log(res);
+          await patchNotificationLike(Id);
         } catch {
           new Error("shit");
         }
       } else if (type === "comment") {
         try {
-          const res = await patchNotificationComment(Id);
-          console.log(res);
+          await patchNotificationComment(Id);
         } catch {
           new Error("shit");
         }
@@ -185,15 +183,13 @@ export const TooltipNotificationItem = ({ data }: { data: notificationDataType }
         document.body.style.overflowY = "hidden";
         if (type === "like") {
           try {
-            const res = await patchNotificationLike(Id);
-            console.log(res);
+            await patchNotificationLike(Id);
           } catch {
             new Error("shit");
           }
         } else if (type === "comment") {
           try {
-            const res = await patchNotificationComment(Id);
-            console.log(res);
+            await patchNotificationComment(Id);
           } catch {
             new Error("shit");
           }

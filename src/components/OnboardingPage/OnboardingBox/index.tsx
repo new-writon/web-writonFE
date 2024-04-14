@@ -8,6 +8,7 @@ import {
   postOnboardingComplete,
 } from "@/apis/OnboardingPage";
 import letsintern from "@/assets/logo/letsintern.png";
+import writon_icon from "@/assets/logo/logo-writon-roundbox.svg";
 import { DuplicateBtn } from "@/components/Authorization/RegisterEmailPage/style";
 import { KeywordButton, OnboardingButton, PublicButton } from "@/components/atom/button";
 import { Input } from "@/components/atom/input/index";
@@ -45,7 +46,7 @@ export const OnboardingBox = () => {
     hireDate: "",
     company: "",
     companyPublic: true,
-    organization: localStorage.getItem("organization") || "letsintern",
+    organization: localStorage.getItem("organization") as string,
   });
   const [ButtonOn, setButtonOn] = useState<boolean>(false);
   const textareaRef = useRef<HTMLTextAreaElement | null>(null);
@@ -122,11 +123,10 @@ export const OnboardingBox = () => {
 
   const DuplicateCheck = async () => {
     try {
-      const response = await getDuplicateNickname(
-        localStorage.getItem("organization") || "letsintern",
+      await getDuplicateNickname(
+        localStorage.getItem("organization") as string,
         onBoardingData.nickname
       );
-      console.log(response);
       setDuplicate(true);
       setDuplicateShow(true); // 일단 버튼을 누르면 hide 클래스 제거
     } catch (err) {
@@ -141,14 +141,12 @@ export const OnboardingBox = () => {
     executeAsyncTask(async () => {
       if (ButtonOn) {
         try {
-          const data = await postOnboardingComplete(onBoardingData);
-          console.log(data);
+          await postOnboardingComplete(onBoardingData);
           try {
-            const response = await postChallengeStart(
-              localStorage.getItem("organization") || "Letsintern",
-              localStorage.getItem("challengeId") || "1"
+            await postChallengeStart(
+              localStorage.getItem("organization") as string,
+              localStorage.getItem("challengeId") as string
             );
-            console.log(response);
             localStorage.setItem("accessToken", sessionStorage.getItem("accessToken") || "");
             localStorage.setItem("refreshToken", sessionStorage.getItem("refreshToken") || "");
             navigate("/");
@@ -187,10 +185,15 @@ export const OnboardingBox = () => {
       <Title>
         <div className="firstTitle">
           <img
-            src={letsintern}
+            src={localStorage.getItem("organization") !== "렛츠인턴" ? writon_icon : letsintern}
             alt="letsintern"
           />
-          <div className="semiTitle">렛츠인턴 2월 TIL 챌린지</div>
+          <div className="semiTitle">
+            {localStorage.getItem("organization") !== "렛츠인턴"
+              ? "라이톤의 회고 "
+              : "렛츠인턴 TIL "}
+            챌린지
+          </div>
         </div>
         <div className="secondTitle">
           챌린지 시작 전,
@@ -232,7 +235,7 @@ export const OnboardingBox = () => {
         </NicknameBox>
         <JobBox>
           <p className="title">직무 선택</p>
-          <p className="semiTitle">현재 인턴 중인 직무를 선택해주세요.</p>
+          <p className="semiTitle">현재 근무 중인 직무를 선택해주세요.</p>
           <div className="jobCategory">
             {JobCategory.map((item, idx) => (
               <React.Fragment key={idx}>
