@@ -1,11 +1,12 @@
 import React from "react";
 
-import letsintern from "@/assets/logo/letsintern.png";
+// import letsintern from "@/assets/logo/letsintern.png";
+import writon_icon from "@/assets/logo/logo-writon-roundbox.svg";
 import writon from "@/assets/logo/writon_long.svg";
 
 import { Container } from "./style";
 
-const ICON = [letsintern, writon];
+const ICON = [writon_icon, writon];
 
 export const OnboardingHeader = () => {
   return (
