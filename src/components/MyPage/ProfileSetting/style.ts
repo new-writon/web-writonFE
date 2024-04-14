@@ -6,7 +6,6 @@ export const Container = styled.div`
   border-radius: 16px;
   margin-bottom: 300px;
   padding: 50px 50px 80px 60px;
-  max-height: 730px;
   .title {
     color: #000;
     font-size: 1.125rem;
@@ -176,7 +175,7 @@ export const DuplicateBtn = styled.button`
   top: 50%;
   transform: translate(0, -50%);
   right: 16px;
-  color: var(--Shadow_Blue, #135ff3);
+  color: var(--Main-50, #6272ff);
   cursor: pointer;
 `;
 
