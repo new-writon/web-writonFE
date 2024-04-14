@@ -11,19 +11,19 @@
   "theme_color": "#ffffff",
   "icons": [
     {
-      "src": "/public/writon.ico",
+      "src": "/writon.ico",
       "sizes": "144x144 64x64 32x32 24x24 16x16",
       "type": "image/x-icon",
       "purpose": "any"
     },
     {
-      "src": "/public/Icon_(192x192).png",
+      "src": "/Icon_(192x192).png",
       "type": "image/png",
       "sizes": "192x192",
       "purpose": "maskable any"
     },
     {
-      "src": "/public/Icon_(512x512).png",
+      "src": "/Icon_(512x512).png",
       "type": "image/png",
       "sizes": "512x512",
       "purpose": "any"
