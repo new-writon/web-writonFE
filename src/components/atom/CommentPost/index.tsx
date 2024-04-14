@@ -84,7 +84,7 @@ export const CommentPost = ({
       try {
         const response = await postCommentWrite(
           userTemplateId,
-          localStorage.getItem("organization") || "letsintern",
+          localStorage.getItem("organization") as string,
           text,
           commentGroup
         );

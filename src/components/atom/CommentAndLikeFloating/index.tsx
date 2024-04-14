@@ -33,12 +33,12 @@ export const CommnetAndLikeFloating = ({
   const LikeFunc = async () => {
     if (!IsClick) {
       // 클릭 아직 안했을 때 좋아요수 변경 +1
-      await postLike(userTemplateId, localStorage.getItem("organization") || "letsintern");
+      await postLike(userTemplateId, localStorage.getItem("organization") as string);
       setLikeCount((Number(likeCount) + 1).toString());
       setIsCick(true);
       setIsHover(true);
     } else {
-      await postLikeDelete(userTemplateId, localStorage.getItem("organization") || "letsintern");
+      await postLikeDelete(userTemplateId, localStorage.getItem("organization") as string);
       setLikeCount((Number(likeCount) - 1).toString());
       setIsCick(false);
       setIsHover(false);
