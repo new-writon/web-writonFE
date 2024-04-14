@@ -54,11 +54,7 @@ export const EditWritingBox = () => {
       );
 
       try {
-        const response = await patchEditWritingSubmit(
-          postEditWritingData[0].userTempleteId,
-          postSubmitArray
-        );
-        console.log(response);
+        await patchEditWritingSubmit(postEditWritingData[0].userTempleteId, postSubmitArray);
         navigate("/");
       } catch {
         new Error("shit");

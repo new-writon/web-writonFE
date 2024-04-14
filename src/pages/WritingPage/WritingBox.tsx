@@ -47,13 +47,12 @@ export const WritingBox = () => {
   const submitWrite = async () => {
     executeAsyncTask(async () => {
       try {
-        const response = await postwritingSubmit(
+        await postwritingSubmit(
           localStorage.getItem("organization") || "",
           localStorage.getItem("challengeId") || "1",
           date || "",
           postWritingData
         );
-        console.log(response);
         navigate("/");
       } catch {
         new Error("shit");

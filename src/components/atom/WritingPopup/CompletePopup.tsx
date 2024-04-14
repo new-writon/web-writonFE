@@ -45,13 +45,12 @@ export const CompletePopupResponsive = () => {
   const executeAsyncTask = useAsyncWithLoading();
   const submitWrite = async () => {
     executeAsyncTask(async () => {
-      const response = await postwritingSubmit(
+      await postwritingSubmit(
         localStorage.getItem("organization") || "",
         localStorage.getItem("challengeId") || "1",
         DateResponsive || "",
         postWritingData
       );
-      console.log(response);
       navigate("/");
       setModal({ ...modal, completeModal: false });
       document.body.style.overflowY = "auto";
@@ -99,11 +98,7 @@ export const CompleteEditPopupResponsive = () => {
       );
 
       try {
-        const response = await patchEditWritingSubmit(
-          postEditWritingData[0].userTempleteId,
-          postSubmitArray
-        );
-        console.log(response);
+        await patchEditWritingSubmit(postEditWritingData[0].userTempleteId, postSubmitArray);
         navigate(`/detail/${postEditWritingData[0].userTempleteId}`);
         setModal({ ...modal, completeEditModal: false });
         document.body.style.overflowY = "auto";

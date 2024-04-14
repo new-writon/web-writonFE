@@ -17,7 +17,6 @@ export const TooltipProfile = ({
   userProfile,
   setHeaderTooltip,
   setTooltipMobile,
-
   ChallengeList,
 }: {
   headerTooltip: boolean;
@@ -32,8 +31,7 @@ export const TooltipProfile = ({
 
   const Logout = async () => {
     try {
-      const response = await deleteLogout();
-      console.log(response);
+      await deleteLogout();
       localStorage.clear();
       sessionStorage.clear();
       window.location.replace("/login");

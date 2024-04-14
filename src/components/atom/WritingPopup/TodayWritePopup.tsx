@@ -52,12 +52,11 @@ export const TodayWritePopup = () => {
   const completeTodayWrite = async () => {
     executeAsyncTask(async () => {
       try {
-        const response = postMyCommunityStoryComment(
+        await postMyCommunityStoryComment(
           localStorage.getItem("organization") || "",
           Number(localStorage.getItem("challengeId") || "1"),
           text
         );
-        console.log(response);
         setTodayWrite(text);
         setModal({ ...modal, todayWriteModal: false });
       } catch {

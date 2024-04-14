@@ -21,8 +21,7 @@ export const getCheckToday = async (organization: string, challengeId: number) =
 
 export const dateCheck = async (navigate: (arg0: string) => void, today: string) => {
   try {
-    const response = await getCheckDate(Number(localStorage.getItem("challengeId") || "1"), today);
-    console.log(response);
+    await getCheckDate(Number(localStorage.getItem("challengeId") || "1"), today);
     try {
       const res = await getCheckToday(
         localStorage.getItem("organization") || "",
@@ -37,7 +36,6 @@ export const dateCheck = async (navigate: (arg0: string) => void, today: string)
       console.log(err);
     }
   } catch (err) {
-    alert("오늘은 챌린지 쓰는 날이 아니에요!");
     new Error("shit");
   }
 };
