@@ -62,7 +62,7 @@ export const ProgressBar = ({ value, startDate, endDate }: ProgressBarProps) => 
       )}
       <div className="endDate">{endDate}일</div>
       <img
-        src={localStorage.getItem("challengeId") !== "1" ? flag_purple : flag_blue}
+        src={localStorage.getItem("organization") === "렛츠인턴" ? flag_purple : flag_blue}
         alt="깃발"
         className="flag"
       />
