@@ -54,7 +54,7 @@ const MainPage = () => {
 
         setChallengeCurrent(result[0]);
         setCalendarData(result[1]);
-        setRetrospectData(result[2]);
+        setRetrospectData(result[2].reverse());
         // 챌린지 마지막 프로세스 모달창 띄우기
         try {
           const { review } = await getFinishModal(
@@ -86,7 +86,7 @@ const MainPage = () => {
     <Container>
       <ProgressBox ChallengeCurrent={ChallengeCurrent} />
       <Calendar CalendarData={CalendarData.length === 0 ? mainCalendarDummyData : CalendarData} />
-      <MyRetrospect RetrospectData={RetrospectData.reverse()} />
+      <MyRetrospect RetrospectData={RetrospectData} />
       <FloatingWriteButton onClick={spaceToWritingPage}>
         {/*모바일 일 때만 보인다/ */}
         회고 작성하기
