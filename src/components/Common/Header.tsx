@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { RefObject, useEffect, useRef, useState } from "react";
 
 import { format } from "date-fns";
 import { useNavigate } from "react-router-dom";
@@ -60,8 +60,11 @@ const Header = () => {
   const [notificationTooltip, setNotificationTooltip] = useState<boolean>(false);
   const [notificationNumber, setNotificationNumber] = useRecoilState(notficationNumberState);
   const [organizationToggle, setOrganizationToggle] = useState<boolean>(false);
+  const [organizationList, setOriganizationList] = useState<challengeListProps[]>([]);
+
   const setCommunity = useSetRecoilState(communityState);
 
+  const organizationToggleOnRef = useRef<HTMLDivElement>(null);
   const organizationToggleRef = useRef<HTMLDivElement>(null);
   const profileTooltipRef = useRef<HTMLDivElement>(null);
   const profileTooltipOnRef = useRef<HTMLDivElement>(null);
@@ -152,7 +155,9 @@ const Header = () => {
       }
       if (
         organizationToggleRef.current &&
-        !organizationToggleRef.current.contains(e.target as Node)
+        !organizationToggleRef.current.contains(e.target as Node) &&
+        organizationToggleOnRef.current &&
+        !organizationToggleOnRef.current.contains(e.target as Node)
       ) {
         setOrganizationToggle(false);
       }
@@ -165,6 +170,7 @@ const Header = () => {
     notificationTooltipRef,
     notificationTooltipOnRef,
     organizationToggleRef,
+    organizationToggleOnRef,
   ]);
 
   const headerRendering = async () => {
@@ -182,6 +188,13 @@ const Header = () => {
           (item) => item.organization === localStorage.getItem("organization")
         );
         setChallengeList(activeList);
+
+        const changeData = data[1].reduce(
+          (acc: challengeListProps[], cur: challengeListProps) =>
+            acc.some((item) => item.organization === cur.organization) ? acc : [...acc, cur],
+          []
+        );
+        setOriganizationList(changeData);
         notificationRendering();
       } catch {
         throw new Error("shit");
@@ -190,24 +203,22 @@ const Header = () => {
   };
 
   const notificationRendering = async () => {
-    executeAsyncTask(async () => {
-      try {
-        const data = await Promise.all([
-          getNotificationData(
-            localStorage.getItem("organization") as string,
-            localStorage.getItem("challengeId") as string
-          ),
-          getNotificationCount(
-            localStorage.getItem("organization") as string,
-            localStorage.getItem("challengeId") as string
-          ),
-        ]);
-        setNotificationData(data[0]);
-        setNotificationNumber(data[0].length - data[1].checkCount);
-      } catch {
-        throw new Error("shit");
-      }
-    });
+    try {
+      const data = await Promise.all([
+        getNotificationData(
+          localStorage.getItem("organization") as string,
+          localStorage.getItem("challengeId") as string
+        ),
+        getNotificationCount(
+          localStorage.getItem("organization") as string,
+          localStorage.getItem("challengeId") as string
+        ),
+      ]);
+      setNotificationData(data[0]);
+      setNotificationNumber(data[0].length - data[1].checkCount);
+    } catch {
+      throw new Error("shit");
+    }
   };
 
   useEffect(() => {
@@ -247,6 +258,11 @@ const Header = () => {
               <img
                 src={logo}
                 alt={`${logo}`}
+                ref={
+                  logo !== "writon"
+                    ? (organizationToggleOnRef as RefObject<HTMLImageElement>)
+                    : null
+                }
                 onClick={() => {
                   if (logo === writon) {
                     navigate("/");
@@ -258,7 +274,12 @@ const Header = () => {
               />
             </React.Fragment>
           ))}
-          {organizationToggle && <ChangeOrganization />}
+          {organizationToggle && (
+            <ChangeOrganization
+              ref={organizationToggleRef}
+              organizationList={organizationList}
+            />
+          )}
         </HeaderLeft>
         <HeaderMiddle>
           {Tabs.map((tab, idx) => (
