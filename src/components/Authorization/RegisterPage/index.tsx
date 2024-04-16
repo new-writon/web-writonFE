@@ -21,7 +21,7 @@ const Register = () => {
       <RegisterBtns>
         <BlueButton onClick={() => navigate("/registeremail")}>이메일로 회원가입하기</BlueButton>
         <OrLine>또는</OrLine>
-        <KakaoButton onClick={KakaoLogin}>카카오로 로그인</KakaoButton>
+        <KakaoButton onClick={KakaoLogin}>카카오 로그인</KakaoButton>
       </RegisterBtns>
       <EtcBox>
         <div className="notUser">
