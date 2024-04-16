@@ -6,6 +6,28 @@ export const KakaoBtn = styled.button<ButtonProps>`
   cursor: pointer;
   box-sizing: border-box;
   display: flex;
+  align-items: center;
+  width: 100%;
+  height: 56px;
+  border-radius: 5px;
+  background-color: #ffe812;
+  border: none;
+  font-size: var(--text_b1);
+  font-weight: 600;
+  padding-left: 55px;
+  .container {
+    width: fit-content;
+    display: flex;
+    gap: 50px;
+  }
+  span {
+    padding-top: 3px;
+  }
+`;
+export const KakaoContainer = styled.button<ButtonProps>`
+  cursor: pointer;
+  box-sizing: border-box;
+  display: flex;
   justify-content: center;
   align-items: center;
   width: 100%;

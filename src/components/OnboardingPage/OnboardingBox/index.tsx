@@ -7,6 +7,7 @@ import {
   postChallengeStart,
   postOnboardingComplete,
 } from "@/apis/OnboardingPage";
+import kakao_icon from "@/assets/logo/kakao-icon.svg";
 import letsintern from "@/assets/logo/letsintern.png";
 import writon_icon from "@/assets/logo/logo-writon-roundbox.svg";
 import { DuplicateBtn } from "@/components/Authorization/RegisterEmailPage/style";
@@ -185,7 +186,13 @@ export const OnboardingBox = () => {
       <Title>
         <div className="firstTitle">
           <img
-            src={localStorage.getItem("organization") !== "렛츠인턴" ? writon_icon : letsintern}
+            src={
+              localStorage.getItem("organization") === "렛츠인턴"
+                ? letsintern
+                : localStorage.getItem("organization") === "카카오"
+                  ? kakao_icon
+                  : writon_icon
+            }
             alt="letsintern"
           />
           <div className="semiTitle">

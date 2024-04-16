@@ -18,6 +18,7 @@ import notificationIcon from "@/assets/header/icon-notification.svg";
 import pencil_color_blue from "@/assets/header/pencil_color_blue.svg";
 import pencil_color_purple from "@/assets/header/pencil_color_purple.svg";
 import pencil_white from "@/assets/header/pencil_white.svg";
+import kakao_icon from "@/assets/logo/kakao-icon.svg";
 import letsintern from "@/assets/logo/letsintern.png";
 import writon_icon from "@/assets/logo/logo-writon-roundbox.svg";
 import writon from "@/assets/logo/writon_long.svg";
@@ -37,9 +38,14 @@ import { TooltipNotification } from "../atom/TooltipNotification";
 import { TooltipProfile } from "../atom/TooltipProfile";
 
 const ICON = [
-  localStorage.getItem("organization") === "렛츠인턴" ? letsintern : writon_icon,
+  localStorage.getItem("organization") === "렛츠인턴"
+    ? letsintern
+    : localStorage.getItem("organization") === "카카오"
+      ? kakao_icon
+      : writon_icon,
   writon,
 ];
+
 const Tabs = ["내 챌린지", "커뮤니티"];
 
 const Header = () => {

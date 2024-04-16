@@ -1,5 +1,6 @@
 import React, { RefObject, forwardRef } from "react";
 
+import kakao_icon from "@/assets/logo/kakao-icon.svg";
 import letsintern from "@/assets/logo/letsintern.png";
 import writon_icon from "@/assets/logo/logo-writon-roundbox.svg";
 import { challengeListProps } from "@/types";
@@ -31,7 +32,13 @@ export const ChangeOrganization = forwardRef<HTMLDivElement, ChangeOrganizationP
                 }`}
               >
                 <img
-                  src={item.organization === "렛츠인턴" ? letsintern : writon_icon}
+                  src={
+                    item.organization === "렛츠인턴"
+                      ? letsintern
+                      : item.organization === "카카오"
+                        ? kakao_icon
+                        : writon_icon
+                  }
                   alt="W"
                 />
                 <span>{item.organization} 챌린지</span>

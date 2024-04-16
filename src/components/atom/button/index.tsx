@@ -26,13 +26,13 @@ import {
 export const KakaoButton = ({ children, onClick }: ButtonProps) => {
   return (
     <KakaoBtn onClick={onClick}>
-      <p>
+      <div className="container">
         <img
           src={kakao}
           alt="Kakao"
         />
-      </p>
-      {children}
+        <span>{children}</span>
+      </div>
     </KakaoBtn>
   );
 };
