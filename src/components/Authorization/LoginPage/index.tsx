@@ -108,7 +108,7 @@ const Login = () => {
       </InputBox>
       <BlueButton onClick={LocalLogin}>로그인</BlueButton>
       <OrLine>또는</OrLine>
-      <KakaoButton onClick={KakaoLogin}>카카오로 로그인</KakaoButton>
+      <KakaoButton onClick={KakaoLogin}>카카오 로그인</KakaoButton>
       <EtcBox>
         <div className="findProp">
           <p className="notActive">아이디 찾기</p>

@@ -14,14 +14,14 @@ export const KakaoBtn = styled.button<ButtonProps>`
   border: none;
   font-size: var(--text_b1);
   font-weight: 600;
-  padding-left: 55px;
+  justify-content: center;
   .container {
     width: fit-content;
     display: flex;
-    gap: 50px;
+    gap: 10px;
   }
   span {
-    padding-top: 3px;
+    padding-top: 5px;
   }
 `;
 export const KakaoContainer = styled.button<ButtonProps>`
