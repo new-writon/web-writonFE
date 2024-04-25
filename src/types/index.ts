@@ -281,3 +281,10 @@ export interface agoraCommentType {
   created_time: string;
   myCommentSign: string;
 }
+export interface satisfactionQuestionType {
+  satisfaction_id: number;
+  type: string;
+  question: string;
+  score?: number;
+  hoverItem?: number;
+}
