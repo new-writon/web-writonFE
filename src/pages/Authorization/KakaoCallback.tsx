@@ -62,7 +62,7 @@ export const KakaoCallback = () => {
           }
         }
       } catch (err) {
-        alert("다시 로그인해주세요"); // 모달창으로 변경하기
+        alert("3분 뒤, 다시 로그인해주세요"); // 모달창으로 변경하기
         window.location.replace("/login");
         console.log(err);
       }
