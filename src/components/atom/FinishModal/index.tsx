@@ -1,15 +1,23 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { useEffect, useState } from "react";
 
+import { format } from "date-fns";
 import { useSetRecoilState } from "recoil";
 
-import { getFinishModalData, putFinishModal } from "@/apis/FinishModal";
+import {
+  getFinishModalData,
+  getReEngagementData,
+  getSatisfactionData,
+  patchReEngagementData,
+  postSatisfactionObjectiveData,
+  putFinishModal,
+} from "@/apis/FinishModal";
 import finishFirst from "@/assets/finishModal/finishFirst.svg";
 import finishSecond from "@/assets/finishModal/finishSecond.svg";
 import arrow from "@/assets/finishModal/leftArrow.svg";
 import useAsyncWithLoading from "@/hooks/useAsyncWithLoading";
 import { finishModalState } from "@/recoil/atoms";
-import { finishModalType } from "@/types";
+import { finishModalType, satisfactionQuestionType } from "@/types";
 
 import { FinishModalButton } from "../button";
 
@@ -17,19 +25,49 @@ import { Container } from "./style";
 
 export const FinishModal = () => {
   const [step, setStep] = useState<string>("");
+  const [satisfactionQuestion, setSatisfactionQuestion] = useState<satisfactionQuestionType[]>();
   const [modalData, setModalData] = useState<finishModalType>();
+  const [reEngagement, setReEngagement] = useState<number>(0);
+  const [reEngagementCheck, setReEngagementCheck] = useState<{ hoverItem: number; score: number }>({
+    hoverItem: 2,
+    score: 2,
+  });
   const setFinishModal = useSetRecoilState(finishModalState);
   const executeAsyncTask = useAsyncWithLoading();
 
-  const reviewForm = async (reviewUrl: string | null | undefined) => {
+  const reviewForm = async () => {
+    const simplifiedData = satisfactionQuestion?.map(({ satisfaction_id, score }) => ({
+      satisfactionId: satisfaction_id,
+      score,
+    }));
+    if (simplifiedData?.some((item) => item.score === 0) || reEngagementCheck.score === 2) {
+      alert("설문조사를 다 해주세요!");
+      return;
+    }
     try {
-      await putFinishModal(
-        localStorage.getItem("organization") || "",
-        localStorage.getItem("challengeId") || "1"
-      );
-      window.open(reviewUrl || "http://www.writon.co.kr");
-      setFinishModal(false);
-      document.body.style.overflowY = "scroll";
+      await Promise.all([
+        postSatisfactionObjectiveData(
+          localStorage.getItem("organization") || "",
+          localStorage.getItem("challengeId") || "1",
+          simplifiedData
+        ),
+        patchReEngagementData(
+          localStorage.getItem("organization") || "",
+          localStorage.getItem("challengeId") || "1",
+          reEngagementCheck.score === 1 ? true : false
+        ),
+      ]);
+      try {
+        await putFinishModal(
+          localStorage.getItem("organization") || "",
+          localStorage.getItem("challengeId") || "1"
+        );
+        // window.open(reviewUrl || "http://www.writon.co.kr");
+        setFinishModal(false);
+        document.body.style.overflowY = "scroll";
+      } catch {
+        throw new Error("shit");
+      }
     } catch {
       throw new Error("shit");
     }
@@ -38,11 +76,24 @@ export const FinishModal = () => {
   const FinishModalRendering = async () => {
     executeAsyncTask(async () => {
       try {
-        const data = await getFinishModalData(
-          localStorage.getItem("organization") || "",
-          localStorage.getItem("challengeId") || "1"
-        );
-        setModalData(data);
+        const data = await Promise.all([
+          getFinishModalData(
+            localStorage.getItem("organization") as string,
+            localStorage.getItem("challengeId") as string
+          ),
+          getSatisfactionData(localStorage.getItem("challengeId") as string),
+          getReEngagementData(localStorage.getItem("challengeId") as string),
+        ]);
+        setModalData(data[0]);
+        const updatedSatisfaction = data[1]
+          .filter((item) => item.type === "객관식")
+          .map((item) => ({
+            ...item,
+            hoverItem: 0,
+            score: 0,
+          }));
+        setSatisfactionQuestion(updatedSatisfaction);
+        setReEngagement(data[2].restart);
       } catch {
         throw new Error("shit");
       }
@@ -54,10 +105,24 @@ export const FinishModal = () => {
     FinishModalRendering();
   }, []);
 
+  // const FinishModalRendering = useCallback(async () => {
+  //   try {
+  //     const data = await getFinishModalData(organization, challengeId);
+  //     setModalData(data);
+  //   } catch {
+  //     throw new Error("shit");
+  //   }
+  // }, [organization, challengeId]);
+
+  // useEffect(() => {
+  //   document.body.style.overflowY = "hidden";
+  //   FinishModalRendering();
+  // }, [FinishModalRendering]);
+
   return (
     <Container>
       <div className="finishWrapper">
-        <div className={`${step === "next" && "next"} finishBox front`}>
+        <div className={`${step} finishBox first-page`}>
           <div className="challengeName">
             {modalData?.organization} {modalData?.challenge} 챌린지
           </div>
@@ -90,11 +155,47 @@ export const FinishModal = () => {
             다음
           </FinishModalButton>
         </div>
-        <div className={`${step === "next" && "next"} finishBox back`}>
+        <div className={`${step} finishBox second-page`}>
           <div className="topBtns">
             <div
               className="previous"
               onClick={() => setStep("")}
+            >
+              <img
+                src={arrow}
+                alt="<"
+              />
+              이전
+            </div>
+          </div>
+          <div className="title second">
+            챌린지 어떠셨나요?
+            <br />
+            다음달도 함께 회고하러가요
+          </div>
+          <img
+            src={finishSecond}
+            alt="finish"
+          />
+          <div className="texts">
+            <div className="text">지금 바로 다음 달 챌린지를 신청할 수 있어요!</div>
+            <div className="text">
+              객관식 두 문항으로 구성된 <br /> 챌린지 만족도 조사도 함께 진행되며,
+              <br /> 예상 소요시간은 <div className="purple">30초</div>에요.
+            </div>
+          </div>
+          <FinishModalButton
+            onClick={() => setStep("end")}
+            type="finish"
+          >
+            다음 달 회고 챌린지 신청하기
+          </FinishModalButton>
+        </div>
+        <div className={`${step} finishBox third-page`}>
+          <div className="topBtns">
+            <div
+              className="previous"
+              onClick={() => setStep("next")}
             >
               <img
                 src={arrow}
@@ -112,36 +213,126 @@ export const FinishModal = () => {
               닫기
             </div>
           </div>
-          <div className="title second">
-            챌린지 어떠셨나요?
-            <br />
-            다음달도 함께 회고하러가요
-          </div>
-          <img
-            src={finishSecond}
-            alt="finish"
-          />
-          <div className="texts">
-            <div className="text">
-              지금 바로 다음 달 챌린지를 신청할 수 있어요!
-              {/* <div className="highlight">챌린지 만족도 조사</div>는 구글 폼으로 진행되며,
-              <br />
-              예상 소요 시간은 <div className="purple">5분</div>이에요. */}
-            </div>
-            <div className="text">
-              객관식 두 문항으로 구성된 <br /> 챌린지 만족도 조사도 함께 진행되며,
-              <br /> 예상 소요시간은 <div className="purple">30초</div>에요.
-              {/* 라이톤에서 성실하게 챌린지에 참여해주신
-              <br />
-              {modalData?.nickname}님의 소중한 의견을 반영해
-              <br />더 나은 라이톤 서비스를 만들어 갈게요. */}
-            </div>
+          <div className="question-box">
+            {satisfactionQuestion?.map((satisfaction, idx) => (
+              <div className="choice-question">
+                <span className="question-title">
+                  {idx + 1}. {satisfaction.question}
+                </span>
+                <form className="form">
+                  <span>매우 불만족</span>
+                  <div className="radio-buttons">
+                    {[1, 2, 3, 4, 5].map((item, idx) => (
+                      <div
+                        className="radio-button"
+                        key={idx + 1}
+                      >
+                        <span>{item}</span>
+                        <div className="circle-box">
+                          <div
+                            className={
+                              satisfaction.score === item
+                                ? ""
+                                : satisfaction.hoverItem === item
+                                  ? "circle-wrapper"
+                                  : ""
+                            }
+                          ></div>
+                          <div
+                            onMouseOver={() => {
+                              const updatedSatisfactionQuestion = satisfactionQuestion.map((s) =>
+                                s === satisfaction ? { ...s, hoverItem: item } : s
+                              );
+                              setSatisfactionQuestion(updatedSatisfactionQuestion);
+                            }}
+                            onMouseOut={() => {
+                              const updatedSatisfactionQuestion = satisfactionQuestion.map((s) =>
+                                s === satisfaction ? { ...s, hoverItem: 0 } : s
+                              );
+                              setSatisfactionQuestion(updatedSatisfactionQuestion);
+                            }}
+                            onClick={() => {
+                              const updatedSatisfactionQuestion = satisfactionQuestion.map((s) =>
+                                s === satisfaction ? { ...s, score: item } : s
+                              );
+                              setSatisfactionQuestion(updatedSatisfactionQuestion);
+                            }}
+                            className={`circle ${satisfaction.score === item && "active"}`}
+                          ></div>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                  <span>매우 만족</span>
+                </form>
+              </div>
+            ))}
+            {reEngagement !== 0 && (
+              <div className="YesOrNo-question">
+                <span className="question-title">
+                  3. {Number(modalData?.challenge.match(/\d+/)?.[0] || format(new Date(), "M")) + 1}
+                  월 TIL 챌린지 참여 신청
+                </span>
+                <form className="form">
+                  <div className="radio-buttons">
+                    <div className="radio-button">
+                      <div className="circle-box">
+                        <div
+                          className={
+                            reEngagementCheck.score === 1
+                              ? ""
+                              : reEngagementCheck.hoverItem === 1
+                                ? "circle-wrapper"
+                                : ""
+                          }
+                        ></div>
+                        <div
+                          onMouseOver={() => {
+                            setReEngagementCheck({ ...reEngagementCheck, hoverItem: 1 });
+                          }}
+                          onMouseOut={() => {
+                            setReEngagementCheck({ ...reEngagementCheck, hoverItem: 2 });
+                          }}
+                          onClick={() => setReEngagementCheck({ ...reEngagementCheck, score: 1 })}
+                          className={`circle ${reEngagementCheck.score === 1 && "active"}`}
+                        ></div>
+                      </div>
+                      <span>예, 신청합니다</span>
+                    </div>
+                    <div className="radio-button">
+                      <div className="circle-box">
+                        <div
+                          className={
+                            reEngagementCheck.score === 0
+                              ? ""
+                              : reEngagementCheck.hoverItem === 0
+                                ? "circle-wrapper"
+                                : ""
+                          }
+                        ></div>
+                        <div
+                          onMouseOver={() => {
+                            setReEngagementCheck({ ...reEngagementCheck, hoverItem: 0 });
+                          }}
+                          onMouseOut={() => {
+                            setReEngagementCheck({ ...reEngagementCheck, hoverItem: 2 });
+                          }}
+                          onClick={() => setReEngagementCheck({ ...reEngagementCheck, score: 0 })}
+                          className={`circle ${reEngagementCheck.score === 0 && "active"}`}
+                        ></div>
+                      </div>
+                      <span>아니오</span>
+                    </div>
+                  </div>
+                </form>
+              </div>
+            )}
           </div>
           <FinishModalButton
-            onClick={() => reviewForm(modalData?.reviewUrl)}
-            type="finish"
+            onClick={reviewForm}
+            type="end"
           >
-            다음 달 회고 챌린지 신청하기
+            제출하기
           </FinishModalButton>
         </div>
       </div>
