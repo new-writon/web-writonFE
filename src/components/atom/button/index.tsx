@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 
+import leftArrow from "@/assets/finishModal/Icon-arrow.svg";
 import pencil_white from "@/assets/header/pencil_white.svg";
 import kakao from "@/assets/logo/kakao.svg";
 import publicIMG from "@/assets/mypage/public.svg";
@@ -22,7 +23,6 @@ import {
   PublicBtn,
   WritingSubmitBtn,
 } from "./style";
-
 export const KakaoButton = ({ children, onClick }: ButtonProps) => {
   return (
     <KakaoBtn onClick={onClick}>
@@ -155,7 +155,13 @@ export const FinishModalButton = ({ children, onClick, type }: finishModalButton
       onClick={onClick}
       $type={type}
     >
-      {children}
+      <span>{children}</span>
+      {type === "next" && (
+        <img
+          src={leftArrow}
+          alt="->"
+        />
+      )}
     </FinishModalBtn>
   );
 };

@@ -3,7 +3,7 @@ import { MouseEvent, useEffect, useState } from "react";
 
 import { useParams } from "react-router-dom";
 import { useRecoilState, useSetRecoilState } from "recoil";
-import styled from "styled-components";
+import styled, { keyframes } from "styled-components";
 
 import { getComment, getTemplete } from "@/apis/DetailPage";
 import { getMyPageData } from "@/apis/MyPage";
@@ -135,6 +135,18 @@ export const DetailPage = () => {
   );
 };
 
+const fadeIn = keyframes`
+from {
+  opacity: 0;
+  transform:scale(0.5);
+}
+to {
+  opacity: 1;
+  transform:scale(1);
+
+}
+`;
+
 const Container = styled.div<{ $width: number }>`
   position: fixed;
   top: 0;
@@ -165,7 +177,9 @@ const Container = styled.div<{ $width: number }>`
     }
 
     position: relative;
+    animation: ${fadeIn} 400ms;
   }
+
   .WriterUser {
     margin-top: 60px;
     display: flex;

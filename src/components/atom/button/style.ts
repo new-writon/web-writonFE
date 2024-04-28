@@ -167,12 +167,27 @@ export const OnboardingBtn = styled.div<{ $ButtonOn: boolean }>`
 
 export const FinishModalBtn = styled.div<{ $type: string }>`
   width: fit-content;
-  padding: ${(props) => (props.$type === "next" ? "18px 121px" : "18px 89px")};
+  padding: ${(props) =>
+    props.$type === "next" ? "18px 121px" : props.$type === "finish" ? "18px 89px" : "20px 121px"};
   background-color: var(--Main-50, #6272ff);
   border-radius: 12px;
-  color: var(--White, #fff);
   cursor: pointer;
-  font-weight: 600;
+  display: flex;
+  gap: 4px;
+  align-items: center;
+  span {
+    color: var(--White, #fff);
+    font-weight: 600;
+    padding-top: 2px;
+  }
+  img {
+    position: absolute;
+    right: 0;
+    left: 65px;
+    margin: auto;
+    top: 0;
+    bottom: 2px;
+  }
   @media (max-width: 530px) {
     width: 283px;
     display: flex;
