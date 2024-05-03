@@ -4,7 +4,7 @@ export const Container = styled.div<{ $value: number }>`
   position: relative;
   font-size: 0.75rem;
   font-weight: 500;
-  margin: 64px 0 34px;
+  margin: 64px 0 40px;
   .round {
     display: block;
     width: 18px;
@@ -93,6 +93,8 @@ export const Container = styled.div<{ $value: number }>`
     top: -47px;
   }
   @media (max-width: 530px) {
+    margin: 64px 0 34px;
+
     .message,
     .message .arrow {
       background-color: var(--White);
