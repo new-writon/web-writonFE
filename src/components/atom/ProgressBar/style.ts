@@ -4,7 +4,7 @@ export const Container = styled.div<{ $value: number }>`
   position: relative;
   font-size: 0.75rem;
   font-weight: 500;
-  margin: 64px 0 40px;
+  margin: 64px 0 34px;
   .round {
     display: block;
     width: 18px;
@@ -31,7 +31,7 @@ export const Container = styled.div<{ $value: number }>`
         ? `calc(${props.$value}% - 25px)`
         : props.$value > 99
           ? `calc(${props.$value}% - 155px)`
-          : props.$value > 84
+          : props.$value > 80
             ? `calc(${props.$value}% - 165px)`
             : `calc(${props.$value}% - 97px)`};
     top: -42px;

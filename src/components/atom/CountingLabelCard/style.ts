@@ -23,13 +23,21 @@ export const Container = styled.div`
     height: 16px;
     background: var(--Gray-40, #d2d5db);
   }
+  .line {
+    display: none;
+    width: 1px;
+    height: 100%;
+    max-height: 16px;
+    background: var(--Gray-40, #d2d5db);
+  }
   .labelContent {
     display: flex;
     color: var(--Main-60, #5161ed);
     font-weight: 600;
     font-size: 1.125rem;
   }
-  .labelContent p {
+
+  .labelContent span {
     margin-left: 5px;
     color: var(--Gray-50, #b1b4bc);
   }
@@ -37,23 +45,31 @@ export const Container = styled.div`
     display: none;
   }
   @media (max-width: 530px) {
-    display: block;
+    align-items: center;
+    padding: 10px 20px;
+    gap: 20px;
+    min-height: 44px;
     border: 1px solid var(--Gray-30, #edeef1);
     background: var(--White, #fff);
 
     .labelTitle {
       width: fit-content;
-      margin: 0 auto 5px;
       color: var(--Gray-70, #73777e);
       font-weight: 500;
       gap: 3px;
+      max-height: 16px;
     }
     .labelTitle::after {
       display: none;
     }
     .labelContent {
       width: fit-content;
-      margin: 0 auto 5px;
+      align-items: baseline;
+      font-size: 1rem;
+      max-height: 16px;
+    }
+    .labelContent span {
+      font-size: 0.875rem;
     }
     .question {
       display: block;
@@ -61,6 +77,9 @@ export const Container = styled.div`
       height: fit-content;
       margin-top: 1.45px;
       cursor: pointer;
+    }
+    .line {
+      display: block;
     }
   }
 `;

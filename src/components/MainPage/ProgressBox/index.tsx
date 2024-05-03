@@ -4,7 +4,7 @@ import { CountingLabelCard } from "@/components/atom/CountingLabelCard";
 import { MainSemiTitle } from "@/components/atom/MainSemiTitle";
 import { ProgressBar } from "@/components/atom/ProgressBar";
 import { TitleSideBox } from "@/components/atom/TitleSideBox";
-import { TooltipButton } from "@/components/atom/TooltipButton";
+// import { TooltipButton } from "@/components/atom/TooltipButton";
 import { TooltipMessageRefund } from "@/components/atom/TooltipMessage";
 import { Inner } from "@/style/global";
 import { ChallengeCurrentType } from "@/types";
@@ -67,17 +67,17 @@ export const ProgressBox = ({
                 defaultContent={`${ChallengeCurrent?.challengeOverlapCount}일`}
                 onClick={() => {}}
               />
-              <CountingLabelCard
+              {/* <CountingLabelCard
                 title={"환급 가능 보증금"}
                 currentContent={`${ChallengeCurrent?.overlapDeposit.toLocaleString()}원`}
                 defaultContent={`${ChallengeCurrent?.challengeDeposit.toLocaleString()}원`}
                 tooltipOn={tooltipOn}
                 onClick={() => {}}
-              />
+              /> */}
               {/* <div className="priceMessage">
         회고 {20 - 15}일 더 작성하면, 보증급 전액 환급 가능해요.
       </div> */}
-              <div className="priceCondition">
+              {/* <div className="priceCondition">
                 <TooltipButton
                   tooltipOn={tooltipOn}
                   onClick={() => setTooltopOn(!tooltipOn)}
@@ -94,7 +94,7 @@ export const ProgressBox = ({
                     />
                   </div>
                 )}
-              </div>
+              </div> */}
             </CountingLabelContainer>
           </div>
         </Container>
@@ -108,12 +108,12 @@ export const ProgressBox = ({
               defaultContent={`${ChallengeCurrent?.challengeOverlapCount}일`}
               onClick={() => {}}
             />
-            <CountingLabelCard
+            {/* <CountingLabelCard
               title={"환급 가능 보증금"}
               currentContent={`${ChallengeCurrent?.overlapDeposit.toLocaleString()}원`}
               defaultContent={`${ChallengeCurrent?.challengeDeposit.toLocaleString()}원`}
               onClick={() => setTooltopOn(!tooltipOn)}
-            />
+            /> */}
             {tooltipOn && (
               <div className="tooltipBox">
                 <TooltipMessageRefund

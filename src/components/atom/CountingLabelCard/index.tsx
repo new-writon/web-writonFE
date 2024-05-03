@@ -29,9 +29,10 @@ export const CountingLabelCard = ({
           />
         )}
       </div>
+      <div className="line"></div>
       <div className="labelContent">
         {currentContent}
-        <p>/{defaultContent}</p>
+        <span>/ {defaultContent}</span>
       </div>
     </Container>
   );

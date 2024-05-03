@@ -78,7 +78,8 @@ export const CountingLabelContainer = styled.div`
     flex-direction: row;
     width: 100%;
     .cardWrapper:nth-child(1) {
-      width: 40%;
+      /* width: 40%; */
+      display: flex;
     }
     .cardWrapper:nth-child(2) {
       width: 60%;
