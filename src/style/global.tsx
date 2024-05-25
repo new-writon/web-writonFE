@@ -4,11 +4,56 @@ import "@/style/color.css";
 export const GlobalStyle = createGlobalStyle`
 
 @font-face {
-	font-family: 'Pretendard Variable';
-	font-weight: 100 800;
-	font-style: normal;
-	font-display: swap;
-	src: local('Pretendard Variable'), url('./font/PretendardVariable.woff2') format('font-woff2-variations');
+	font-family: 'Pretendard';
+	src: url(../fonts/Pretendard-Regular.otf);
+}
+
+@font-face {
+	font-family: 'Pretendard';
+	font-weight: 100;
+	src: url(../fonts/Pretendard-Thin.otf);
+}
+
+@font-face {
+	font-family: 'Pretendard';
+	font-weight: 200;
+	src: url(../fonts/Pretendard-ExtraLight.otf);
+}
+
+@font-face {
+	font-family: 'Pretendard';
+	font-weight: 300;
+	src: url(../fonts/Pretendard-Light.otf);
+}
+
+@font-face {
+	font-family: 'Pretendard';
+	font-weight: 500;
+	src: url(../fonts/Pretendard-Medium.otf);
+}
+
+@font-face {
+	font-family: 'Pretendard';
+	font-weight: 600;
+	src: url(../fonts/Pretendard-SemiBold.otf);
+}
+
+@font-face {
+	font-family: 'Pretendard';
+	font-weight: 700;
+	src: url(../fonts/Pretendard-Bold.otf);
+}
+
+@font-face {
+	font-family: 'Pretendard';
+	font-weight: 800;
+	src: url(../fonts/Pretendard-ExtraBold.otf);
+}
+
+@font-face {
+	font-family: 'Pretendard';
+	font-weight: 900;
+	src: url(../fonts/Pretendard-Black.otf);
 }
 
 @font-face {
@@ -28,7 +73,7 @@ export const GlobalStyle = createGlobalStyle`
 	box-sizing: border-box;
 	padding: 0;
 	margin: 0;
-	font-family: 'Pretendard Variable', sans-serif;
+	font-family: 'Pretendard', sans-serif;
 	color: var(--Dark,#272727);
 
 }
