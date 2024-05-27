@@ -1,61 +1,89 @@
 import styled, { createGlobalStyle } from "styled-components";
 import "@/style/font.css";
 import "@/style/color.css";
+
+import FontPretendardBlack from "./fonts/Pretendard-Black.woff2";
+import FontPretendardBold from "./fonts/Pretendard-Bold.woff2";
+import FontPretendardExtraBold from "./fonts/Pretendard-ExtraBold.woff2";
+import FontPretendardExtraLight from "./fonts/Pretendard-ExtraLight.woff2";
+import FontPretendardLight from "./fonts/Pretendard-Light.woff2";
+import FontPretendardMedium from "./fonts/Pretendard-Medium.woff2";
+import FontPretendardRegular from "./fonts/Pretendard-Regular.woff2";
+import FontPretendardSemiBold from "./fonts/Pretendard-SemiBold.woff2";
+import FontPretendardThin from "./fonts/Pretendard-Thin.woff2";
+
 export const GlobalStyle = createGlobalStyle`
-
 @font-face {
-	font-family: 'Pretendard';
-	src: url(../fonts/Pretendard-Regular.otf);
+  font-family: 'Pretendard';
+  font-weight: 100;
+  font-style: normal;
+  src: url('${FontPretendardThin}') format('woff2');
+  font-display: block;
 }
 
 @font-face {
-	font-family: 'Pretendard';
-	font-weight: 100;
-	src: url(../fonts/Pretendard-Thin.otf);
+  font-family: 'Pretendard';
+  font-weight: 200;
+  font-style: normal;
+  src: url('${FontPretendardExtraLight}') format('woff2');
+  font-display: block;
 }
 
 @font-face {
-	font-family: 'Pretendard';
-	font-weight: 200;
-	src: url(../fonts/Pretendard-ExtraLight.otf);
+  font-family: 'Pretendard';
+  font-weight: 300;
+  font-style: normal;
+  src: url('${FontPretendardLight}') format('woff2');
+  font-display: block;
 }
 
 @font-face {
-	font-family: 'Pretendard';
-	font-weight: 300;
-	src: url(../fonts/Pretendard-Light.otf);
+  font-family: 'Pretendard';
+  font-weight: 400;
+  font-style: normal;
+  src: url('${FontPretendardRegular}') format('woff2');
+  font-display: block;
 }
 
 @font-face {
-	font-family: 'Pretendard';
-	font-weight: 500;
-	src: url(../fonts/Pretendard-Medium.otf);
+  font-family: 'Pretendard';
+  font-weight: 500;
+  font-style: normal;
+  src: url('${FontPretendardMedium}') format('woff2');
+  font-display: block;
 }
 
 @font-face {
-	font-family: 'Pretendard';
-	font-weight: 600;
-	src: url(../fonts/Pretendard-SemiBold.otf);
+  font-family: 'Pretendard';
+  font-weight: 600;
+  font-style: normal;
+  src: url('${FontPretendardSemiBold}') format('woff2');
+  font-display: block;
 }
 
 @font-face {
-	font-family: 'Pretendard';
-	font-weight: 700;
-	src: url(../fonts/Pretendard-Bold.otf);
+  font-family: 'Pretendard';
+  font-weight: 700;
+  font-style: normal;
+  src: url('${FontPretendardBold}') format('woff2');
+  font-display: block;
 }
 
 @font-face {
-	font-family: 'Pretendard';
-	font-weight: 800;
-	src: url(../fonts/Pretendard-ExtraBold.otf);
+  font-family: 'Pretendard';
+  font-weight: 800;
+  font-style: normal;
+  src: url('${FontPretendardExtraBold}') format('woff2');
+  font-display: block;
 }
 
 @font-face {
-	font-family: 'Pretendard';
-	font-weight: 900;
-	src: url(../fonts/Pretendard-Black.otf);
+  font-family: 'Pretendard';
+  font-weight: 900;
+  font-style: normal;
+  src: url('${FontPretendardBlack}') format('woff2');
+  font-display: block;
 }
-
 @font-face {
     font-family: 'Happiness-Sans-Bold';
     src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2205@1.0/Happiness-Sans-Bold.woff2') format('woff2');
