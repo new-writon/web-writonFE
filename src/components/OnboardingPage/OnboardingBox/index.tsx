@@ -26,7 +26,7 @@ import {
   Title,
 } from "./style";
 
-const JobCategory = ["기획", "운영", "개발", "마케팅", "홍보", "디자인"];
+const JobCategory = ["기획", "운영", "개발", "마케팅", "디자인", "기타"];
 interface onBoardingDataProps {
   nickname: string;
   job: string;
@@ -118,8 +118,32 @@ export const OnboardingBox = () => {
       formattedDate = formattedDate.substring(0, 10);
     }
     if (formattedDate.length < 11) {
+      console.log(formattedDate);
       setOnBoardingData({ ...onBoardingData, hireDate: formattedDate });
     }
+  };
+
+  const isValidDate = (dateString: string) => {
+    const regex = /^\d{4}-\d{2}-\d{2}$/;
+    if (!regex.test(dateString)) {
+      return false;
+    }
+
+    // Date 객체로 변환
+    const date = new Date(dateString);
+
+    // 날짜 객체가 유효한지 확인
+    if (isNaN(date.getTime())) {
+      return false;
+    }
+
+    // 날짜 문자열과 비교
+    const [year, month, day] = dateString.split("-").map(Number);
+    if (date.getFullYear() !== year || date.getMonth() + 1 !== month || date.getDate() !== day) {
+      return false;
+    }
+
+    return true;
   };
 
   const DuplicateCheck = async () => {
@@ -139,6 +163,14 @@ export const OnboardingBox = () => {
   };
 
   const OnboardingComplete = async () => {
+    if (!isValidDate(onBoardingData.hireDate)) {
+      alert("날짜가 정확하지 않습니다!");
+      return;
+    }
+    if (!duplicate) {
+      alert("닉네임 중복확인을 체크해주세요!");
+      return;
+    }
     executeAsyncTask(async () => {
       if (ButtonOn) {
         try {
@@ -241,8 +273,16 @@ export const OnboardingBox = () => {
           </div>
         </NicknameBox>
         <JobBox>
-          <p className="title">직무 선택</p>
-          <p className="semiTitle">현재 근무 중인 직무를 선택해주세요.</p>
+          <p className="title">
+            {localStorage.getItem("organization") !== "렛츠인턴" ? "포지션" : "직무"} 선택
+          </p>
+          <p className="semiTitle">
+            {" "}
+            {localStorage.getItem("organization") !== "렛츠인턴"
+              ? "현재 포지션을"
+              : "현재 근무 중인 직무를"}{" "}
+            선택해주세요.
+          </p>
           <div className="jobCategory">
             {JobCategory.map((item, idx) => (
               <React.Fragment key={idx}>
@@ -257,12 +297,16 @@ export const OnboardingBox = () => {
           </div>
         </JobBox>
         <JobIntroBox>
-          <p className="title">직무에 대한 한 줄 소개</p>
+          <p className="title">
+            {" "}
+            {localStorage.getItem("organization") !== "렛츠인턴" ? "포지션" : "직무"}에 대한 한 줄
+            소개
+          </p>
           <textarea
             ref={textareaRef}
             value={onBoardingData.jobIntroduce}
             onChange={(e) => handleJobIntroduceChange(e)}
-            placeholder="어떤 일을 하나요? 간단하게 소개해주세요. ex) 부트캠프 division의 UX/UI 디자인 시스템 구축 업무 어시스트"
+            placeholder={`어떤 일을 하나요? 간단하게 소개해주세요.\nex) 부트캠프 division의 UX/UI 디자인 시스템 구축 업무 어시스트`}
           />
           <div className="parityCheck">
             <div></div>
@@ -271,7 +315,10 @@ export const OnboardingBox = () => {
         </JobIntroBox>
         <CompanyBox>
           <div className="topTitle">
-            <p className="title">회사명</p>
+            <p className="title">
+              {" "}
+              {localStorage.getItem("organization") !== "렛츠인턴" ? "팀명" : "회사명"}
+            </p>
             <PublicButton
               onClick={onVisibility}
               secret={onBoardingData.companyPublic}
@@ -282,7 +329,11 @@ export const OnboardingBox = () => {
             type="text"
             value={onBoardingData.company}
             onChange={handleCompanyChange}
-            placeholder="근무중인 회사 이름을 입력해주세요."
+            placeholder={
+              localStorage.getItem("organization") !== "렛츠인턴"
+                ? " 함께 하고 있는 팀 이름을 알려주세요. ex) 없음"
+                : "근무중인 회사 이름을 입력해주세요."
+            }
           />
           <div className="parityCheck">
             <div></div>
@@ -290,7 +341,9 @@ export const OnboardingBox = () => {
           </div>
         </CompanyBox>
         <JoinDateBox>
-          <p className="title">입사 날짜</p>
+          <p className="title">
+            {localStorage.getItem("organization") !== "렛츠인턴" ? "합류 날짜" : "입사 날짜"}
+          </p>
           <p className="semiTitle">YYYYMMDD의 형식을 맞춰서 작성해주세요.</p>
           <Input
             type="text"

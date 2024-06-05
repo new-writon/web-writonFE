@@ -105,6 +105,7 @@ export const JobBox = styled.div`
     display: flex;
     gap: 8px;
     margin-top: 16px;
+    flex-wrap: wrap;
   }
 `;
 
