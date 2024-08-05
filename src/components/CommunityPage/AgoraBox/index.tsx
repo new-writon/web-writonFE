@@ -59,7 +59,6 @@ export const AgoraBox = ({
     executeAsyncTask(async () => {
       try {
         const result = await getAgoraData(
-          localStorage.getItem("organization") as string,
           localStorage.getItem("challengeId") || "1",
           dateActive[dateLength]
         );
@@ -79,7 +78,6 @@ export const AgoraBox = ({
         setDateLength(dateArray.length - 1);
         try {
           const result = await getAgoraData(
-            localStorage.getItem("organization") as string,
             localStorage.getItem("challengeId") || "1",
             dateArray[dateArray.length - 1]
           );

@@ -31,7 +31,7 @@ export const CommentItem = ({
           nickname: data?.nickname,
           job: data?.job,
           company: data?.company,
-          created_at: data?.created_at,
+          createdAt: data?.createdAt,
         }}
       />
       <div className="comment-text">{data?.content}</div>
@@ -57,7 +57,7 @@ export const CommentItem = ({
         {replyWriteOn && (
           <CommentPost
             userTemplateId={userTemplateId}
-            commentGroup={Number(data?.comment_id)} //commnet_id
+            commentGroup={Number(data?.commentId)} //commnet_id
             replyArray={replyArray}
             setReplyArray={setReplyArray}
             type="reply"
@@ -75,7 +75,7 @@ export const CommentItem = ({
                       nickname: item.nickname,
                       job: item.job,
                       company: item.company,
-                      created_at: item.created_at,
+                      createdAt: item.createdAt,
                     }}
                   />
                   <div className="comment-text">{item?.content}</div>

@@ -17,7 +17,7 @@ import { CommentState, DetailDataState, DetailModalState, LikeState } from "@/re
 import { Inner } from "@/style/global";
 
 export const DetailPage = () => {
-  const { templeteId } = useParams();
+  const { templateId } = useParams();
   const type = new URL(window.location.href).searchParams.get("type");
   const [width, setWidth] = useState<number>(window.innerWidth);
   const [detailData, setDetailData] = useRecoilState(DetailDataState);
@@ -40,10 +40,10 @@ export const DetailPage = () => {
           const data = await Promise.all([
             getTemplete(
               localStorage.getItem("organization") || "",
-              Number(templeteId),
+              Number(templateId),
               type === "my" ? false : true
             ),
-            getComment(Number(templeteId)),
+            getComment(Number(templateId), localStorage.getItem("organization") || ""),
             getMyPageData(localStorage.getItem("organization") as string),
           ]);
           setDetailData(data[0]);
@@ -56,7 +56,7 @@ export const DetailPage = () => {
       } else {
         try {
           const data = await Promise.all([
-            getComment(detailData[0]?.user_templete_id),
+            getComment(detailData[0]?.userTemplateId, localStorage.getItem("organization") || ""),
             getMyPageData(localStorage.getItem("organization") as string),
           ]);
           setCommentList(data[0]);
@@ -110,7 +110,7 @@ export const DetailPage = () => {
                 nickname: detailData[0]?.nickname,
                 job: detailData[0]?.job,
                 company: detailData[0]?.company,
-                created_at: detailData[0]?.created_at,
+                createdAt: detailData[0]?.createdAt,
               }}
             />
             <CommentAndLike
@@ -121,10 +121,10 @@ export const DetailPage = () => {
           <CommentBox
             commentList={commentList}
             commentCount={detailData[0]?.commentCount}
-            userTemplateId={detailData[0]?.user_templete_id} //
+            userTemplateId={detailData[0]?.userTemplateId} //
           />
           <CommnetAndLikeFloating
-            userTemplateId={detailData[0]?.user_templete_id}
+            userTemplateId={detailData[0]?.userTemplateId}
             myLikeSign={detailData[0]?.myLikeSign}
             commentCount={detailData[0]?.commentCount}
             likeCount={likeCount}

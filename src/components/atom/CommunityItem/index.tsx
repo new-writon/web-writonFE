@@ -19,7 +19,7 @@ export const CommunityItem = ({ data }: { data: communityContentProps[] }) => {
   const navigate = useNavigate();
   const spaceToDetail = () => {
     if (width <= 530) {
-      navigate(`/detail/${data[0].user_templete_id}`);
+      navigate(`/detail/${data[0].userTemplateId}`);
       // setDetailData(data);
       // setLikeCount(data[0]?.likeCount);
     } else {
@@ -58,7 +58,7 @@ export const CommunityItem = ({ data }: { data: communityContentProps[] }) => {
             job: data[0]?.job,
             company: data[0]?.company,
             profile: data[0]?.profile,
-            date: data[0]?.created_at,
+            date: data[0]?.createdAt,
           }}
         ></UserInfo>
         <CommentAndLike

@@ -133,7 +133,7 @@ export interface postWritingDataType {
 export interface postEditWritingDataType extends postWritingDataType {
   question: string;
   category: string;
-  userTempleteId: number;
+  userTemplateId: number;
 }
 
 export interface communityFirstComponentType {
@@ -147,7 +147,7 @@ export interface communityStoryProps {
   job: string;
   job_introduce: string;
   nickname: string;
-  company_public: number;
+  companyPublic: number;
   company: string | null;
   cheering_phrase: string | null;
   cheering_phrase_date: string;
@@ -160,19 +160,19 @@ export interface communitySecondCoponentType {
 }
 
 export interface communityContentProps {
-  question_id: number;
-  user_templete_id: number;
-  question_content_id: number;
+  questionId: number;
+  userTemplateId: number;
+  questionContentId: number;
   content: string;
   category: string;
   question: string;
-  created_at: string;
+  createdAt: string;
   job: string;
   company: string | null;
-  company_public: number;
+  companyPublic: number;
   nickname: string;
   profile: string;
-  affiliation_id: string | null;
+  affiliationId: string | null;
   likeCount: string;
   commentCount: string;
   myLikeSign: string;
@@ -182,15 +182,15 @@ export interface communityContentProps {
 export interface commentProps {
   job: string;
   company: string | null;
-  company_public: number;
+  companyPublic: number;
   profile: string;
-  comment_id: number | string;
+  commentId: number | string;
   nickname: string;
-  user_templete_id: number;
+  userTemplateId: number;
   content: string;
-  created_at: string;
+  createdAt: string;
   myCommentSign: number;
-  comment_group: string | number;
+  commentGroup: string | number;
   reply: commentProps[];
 }
 
@@ -247,12 +247,12 @@ export interface myPageCommentType {
   userTemplateId: number;
 }
 export interface notificationDataType {
-  LikeId?: number;
+  likeId?: number;
   commentId?: number;
   content: string;
   createdAt: string;
   sign: number;
-  userTempleteId: number;
+  userTemplateId: number;
   templateName: string;
   nickname: string;
   type: string;

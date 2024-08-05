@@ -1,7 +1,7 @@
 import { useNavigate } from "react-router-dom";
 import { useRecoilState, useRecoilValue } from "recoil";
 
-import { patchEditWritingSubmit } from "@/apis/\bEditWritingPage";
+import { patchEditWritingSubmit } from "@/apis/EditWritingPage";
 import { postwritingSubmit } from "@/apis/WritingPage";
 import useAsyncWithLoading from "@/hooks/useAsyncWithLoading";
 import {
@@ -94,12 +94,12 @@ export const CompleteEditPopupResponsive = () => {
     executeAsyncTask(async () => {
       const postSubmitArray = postEditWritingData.map(
         // eslint-disable-next-line @typescript-eslint/no-unused-vars
-        ({ question, category, userTempleteId, ...rest }) => rest
+        ({ question, category, userTemplateId, ...rest }) => rest
       );
 
       try {
-        await patchEditWritingSubmit(postEditWritingData[0].userTempleteId, postSubmitArray);
-        navigate(`/detail/${postEditWritingData[0].userTempleteId}`);
+        await patchEditWritingSubmit(postEditWritingData[0].userTemplateId, postSubmitArray);
+        navigate(`/detail/${postEditWritingData[0].userTemplateId}`);
         setModal({ ...modal, completeEditModal: false });
         document.body.style.overflowY = "auto";
       } catch {

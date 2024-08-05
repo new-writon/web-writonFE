@@ -41,7 +41,7 @@ export const CommentBox = ({
           {commentList?.map((item, idx) => (
             <div
               key={idx}
-              id={item.comment_id.toString()}
+              id={item.commentId.toString()}
             >
               <CommentItem
                 userTemplateId={userTemplateId}

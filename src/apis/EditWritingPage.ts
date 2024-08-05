@@ -7,7 +7,7 @@ export const patchEditWritingSubmit = async (
   userTemplateId: number,
   templateContent: postWritingDataType[]
 ) => {
-  const response = await putData("/user/my-posting", {
+  const response = await putData("/template/root/update", {
     userTemplateId,
     templateContent,
   });

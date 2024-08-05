@@ -32,6 +32,7 @@ const Login = () => {
           localStorage.getItem("organization") || "null",
           Number(localStorage.getItem("challengeId")) || 1
         );
+        console.log("result", response);
         sessionStorage.setItem("accessToken", response.accessToken);
         sessionStorage.setItem("refreshToken", response.refreshToken);
         if (response.affiliatedConfirmation === true) {
@@ -72,8 +73,8 @@ const Login = () => {
           }
         }
       } catch (err) {
-        alert("아이디 및 비밀번호를 다시 입력해주세요"); // 모달창으로 변경하기
-        window.location.replace("/login");
+        // alert("아이디 및 비밀번호를 다시 입력해주세요"); // 모달창으로 변경하기
+        // window.location.replace("/login");
         console.log(err);
       }
     });

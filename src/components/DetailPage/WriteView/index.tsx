@@ -34,25 +34,25 @@ export const WriteView = ({
     setDetailModal(false);
     document.body.style.overflowY = "scroll";
     setIsClickArray(
-      detailData.filter((item) => item.category === "스페셜 질문").map((obj) => obj.question_id)
+      detailData.filter((item) => item.category === "스페셜 질문").map((obj) => obj.questionId)
     );
     setPostEditWritingData(
       detailData.map((obj) => ({
-        userTempleteId: obj.user_templete_id,
+        userTemplateId: obj.userTemplateId,
         category: obj.category,
         question: obj.question,
-        question_id: obj.question_id,
+        question_id: obj.questionId,
         content: obj.content,
         visibility: obj.visibility === 1 ? true : false, // 예시로 true로 설정했지만 필요에 따라 다른 값으로 설정 가능
       }))
     );
-    navigate(`/editwriting/${format(detailData[0]?.created_at, "yyyy-MM-dd")}`);
+    navigate(`/editwriting/${format(detailData[0]?.createdAt, "yyyy-MM-dd")}`);
   };
 
   return (
     <Container>
       <div className="top">
-        <div className="date">{format(detailData[0]?.created_at, "M월 d일 회고")}</div>
+        <div className="date">{format(detailData[0]?.createdAt, "M월 d일 회고")}</div>
         {nickName === detailData[0].nickname && (
           <div
             className="option"

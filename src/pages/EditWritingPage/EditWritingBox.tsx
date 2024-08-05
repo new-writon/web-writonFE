@@ -5,7 +5,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import { useRecoilState, useRecoilValue, useSetRecoilState } from "recoil";
 import styled from "styled-components";
 
-import { patchEditWritingSubmit } from "@/apis/\bEditWritingPage";
+import { patchEditWritingSubmit } from "@/apis/EditWritingPage";
 import { AddSpecialQuestion } from "@/components/WritingPage/AddSpecialQuestion";
 import AddSpecialQuestionResponsive from "@/components/WritingPage/AddSpecialQuestion/AddSpecialQuestionResponsive";
 import { BasicEditQuestion } from "@/components/WritingPage/BasicEditQuestion";
@@ -50,11 +50,11 @@ export const EditWritingBox = () => {
     executeAsyncTask(async () => {
       const postSubmitArray = postEditWritingData.map(
         // eslint-disable-next-line @typescript-eslint/no-unused-vars
-        ({ question, category, userTempleteId, ...rest }) => rest
+        ({ question, category, userTemplateId, ...rest }) => rest
       );
 
       try {
-        await patchEditWritingSubmit(postEditWritingData[0].userTempleteId, postSubmitArray);
+        await patchEditWritingSubmit(postEditWritingData[0].userTemplateId, postSubmitArray);
         navigate("/");
       } catch {
         new Error("shit");

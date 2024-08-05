@@ -24,7 +24,7 @@ export const MyPageRetrospectItem = ({ data }: { data: communityContentProps[] }
 
   return (
     <Container onClick={spaceToDetail}>
-      <div className="date"> {format(data[0]?.created_at, "yyyy.MM.dd (EEE)", { locale: ko })}</div>
+      <div className="date"> {format(data[0]?.createdAt, "yyyy.MM.dd (EEE)", { locale: ko })}</div>
       <div className="text">{data[0]?.content}</div>
       <CommentAndLike
         commentCount={data[0]?.commentCount}
@@ -38,15 +38,13 @@ export const MyPageRetrospectItemMobile = ({ data }: { data: communityContentPro
   const navigate = useNavigate();
 
   const spaceToDetail = () => {
-    navigate(`/detail/${data[0].user_templete_id}?type=my`);
+    navigate(`/detail/${data[0].userTemplateId}?type=my`);
   };
 
   return (
     <ContainerMobile onClick={spaceToDetail}>
       <div className="top">
-        <div className="date">
-          {format(data[0]?.created_at, "yyyy.MM.dd (EEE)", { locale: ko })}
-        </div>
+        <div className="date">{format(data[0]?.createdAt, "yyyy.MM.dd (EEE)", { locale: ko })}</div>
         <CommentAndLike
           commentCount={data[0]?.commentCount}
           likeCount={data[0]?.likeCount}

@@ -59,12 +59,12 @@ export const postKakaoLogin = async (token: string, organization: string, challe
 
 //회원가입
 export const getDuplicateId = async (userId: string) => {
-  const response = await getData(`/user/identifier/check?identifier=${userId}`);
+  const response = await getData(`/auth/check/identifier?identifier=${userId}`);
   return response.data;
 };
 
 export const getDuplicateEmail = async (email: string) => {
-  const response = await getData(`/user/email/check?email=${email}`);
+  const response = await getData(`/auth/check/email?email=${email}`);
   return response;
 };
 export const postEmail = async (email: string) => {
@@ -90,7 +90,8 @@ export const postRegister = async (id: string, pw: string, email: string) => {
 };
 
 export const getChallengingList = async () => {
-  const response = await getData<challengeListProps[]>("/challenge/start");
+  const response = await getData<challengeListProps[]>("/user/challenge");
+
   return response.data;
 };
 

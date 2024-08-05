@@ -65,7 +65,7 @@ export const AddSpecialQuestionBox = ({ data }: { data: SpecialQuestionType }) =
             visibility: true,
             question: question,
             category: "스페셜 질문",
-            userTempleteId: 0,
+            userTemplateId: 0,
           },
         ]);
       }

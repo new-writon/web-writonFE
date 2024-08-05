@@ -17,56 +17,9 @@ export const WRITON = axios.create({
 WRITON.interceptors.request.use(async (req: InternalAxiosRequestConfig) => {
   const accessToken = localStorage.getItem("accessToken") || sessionStorage.getItem("accessToken");
 
-  if (req.headers && accessToken) req.headers.Authentication = `${accessToken}`;
+  if (req.headers && accessToken) req.headers.Authorization = `${accessToken}`;
   return req;
 });
-
-// //response interceptor
-// WRITON.interceptors.response.use(
-//   (response) => {
-//     return response;
-//   },
-//   async (error) => {
-//     const {
-//       config,
-//       response: { status, data },
-//     } = error;
-//     if (status === 444) {
-//       const originRequest = config;
-//       //리프레시 토큰 api
-//       try {
-//         const response = await postRefreshToken();
-//         localStorage.setItem("accessToken", response.accessToken);
-//         localStorage.setItem("refreshToken", response.refreshToken);
-//         originRequest.headers.Authentication = `${response.accessToken}`;
-//         alert("재발급");
-//         //진행중이던 요청 이어서하기
-//         return axios(originRequest);
-//       } catch (error) {
-//         const err = error as ErrorData;
-//         if (err.code === 401) {
-//           alert("재로그인!");
-//           localStorage.clear();
-//           sessionStorage.clear();
-//           window.location.replace("/login");
-//         }
-//       }
-//     } else if (status === 401) {
-//       alert("재로그인 동시접속");
-//       localStorage.clear();
-//       sessionStorage.clear();
-//       window.location.replace("/login");
-//     } else if (status === 429) {
-//       alert("너무 많은 요청을 하셨습니다. 로그아웃");
-//       localStorage.clear();
-//       sessionStorage.clear();
-//       window.location.replace("/login");
-//     } else {
-//       console.log(data);
-//       alert(data.message);
-//     }
-//   }
-// );
 
 let isRefreshing = false; // 리프레시 중 여부를 나타내는 플래그
 let failedRequestsQueue: (() => Promise<any>)[] = []; // 실패한 요청을 저장하는 큐
@@ -116,6 +69,9 @@ async function errorHandler(error: { message?: any; config?: any; response?: any
   } else if (status === 429) {
     // 요청이 너무 많은 경우
     alert("요청이 너무 많습니다. 잠시 후 다시 시도하세요.");
+  } else if (status === 700 || status === 600) {
+    // 요청이 너무 많은 경우
+    return;
   } else {
     // 그 외의 경우에는 에러 메시지를 알림창으로 표시
     alert(data.message);
@@ -125,7 +81,7 @@ async function errorHandler(error: { message?: any; config?: any; response?: any
 // 리스폰스 인터셉터
 WRITON.interceptors.response.use(
   (response) => {
-    return response;
+    return response.data;
   },
   async (error: any) => {
     return errorHandler(error);
@@ -148,6 +104,16 @@ export const getData = async <T>(
 ): Promise<ApiResponse<T>> => {
   try {
     const response = await WRITON.get(url, config);
+    // const res = await axios.get(
+    //   `http://52.78.105.220:3001/api/user/challenge/present-situation/렛츠인턴/1`,
+    //   {
+    //     headers: {
+    //       Authorization: `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjo5LCJyb2xlIjoidXNlciIsImlhdCI6MTcyMjE4MjE5MSwiZXhwIjoxNzI0Nzc0MTkxfQ.6hcU7qH8zn1tkcDwd8vNFHwyvLnWkOfulg-EpcwBOz8`,
+    //     },
+    //   }
+    // );
+    // console.log(res);
+
     return response;
   } catch (error) {
     if (isAxiosError(error) && error.response) {
@@ -167,6 +133,8 @@ export const postData = async <T>(
 ): Promise<ApiResponse<T>> => {
   try {
     const response = await WRITON.post(url, data, config);
+    console.log(response);
+
     return response;
   } catch (error) {
     if (isAxiosError(error) && error.response) {
@@ -186,7 +154,7 @@ export const putData = async <T>(
 ): Promise<ApiResponse<T>> => {
   try {
     const response = await WRITON.put(url, data, config);
-    return response;
+    return response.data;
   } catch (error) {
     if (isAxiosError(error) && error.response) {
       throw error.response.data as ErrorData;
@@ -205,7 +173,7 @@ export const patchData = async <T>(
 ): Promise<ApiResponse<T>> => {
   try {
     const response = await WRITON.patch(url, data, config);
-    return response;
+    return response.data;
   } catch (error) {
     if (isAxiosError(error) && error.response) {
       throw error.response.data as ErrorData;
@@ -223,7 +191,7 @@ export const deleteData = async <T>(
 ): Promise<ApiResponse<T>> => {
   try {
     const response = await WRITON.delete(url, config);
-    return response;
+    return response.data;
   } catch (error) {
     if (isAxiosError(error) && error.response) {
       throw error.response.data as ErrorData;
