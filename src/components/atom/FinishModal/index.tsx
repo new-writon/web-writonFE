@@ -57,17 +57,14 @@ export const FinishModal = () => {
           reEngagementCheck.score === 1 ? true : false
         ),
       ]);
-      try {
-        await putFinishModal(
-          localStorage.getItem("organization") || "",
-          localStorage.getItem("challengeId") || "1"
-        );
-        // window.open(reviewUrl || "http://www.writon.co.kr");
-        setFinishModal(false);
-        document.body.style.overflowY = "scroll";
-      } catch {
-        throw new Error("shit");
-      }
+
+      await putFinishModal(
+        localStorage.getItem("organization") || "",
+        localStorage.getItem("challengeId") || "1"
+      );
+      // window.open(reviewUrl || "http://www.writon.co.kr");
+      setFinishModal(false);
+      document.body.style.overflowY = "scroll";
     } catch {
       throw new Error("shit");
     }

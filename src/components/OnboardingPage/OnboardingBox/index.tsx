@@ -118,7 +118,6 @@ export const OnboardingBox = () => {
       formattedDate = formattedDate.substring(0, 10);
     }
     if (formattedDate.length < 11) {
-      console.log(formattedDate);
       setOnBoardingData({ ...onBoardingData, hireDate: formattedDate });
     }
   };

@@ -108,8 +108,7 @@ export const ProfileSettingMobile = ({ myData }: { myData: myPageProps | undefin
   const EditComplete = async () => {
     // 수정 api 발송 ProfileData
     try {
-      const response = await putMyPageData(localStorage.getItem("organization") || "", ProfileData);
-      console.log(response);
+      await putMyPageData(localStorage.getItem("organization") || "", ProfileData);
       setEditActive(false);
       window.location.reload();
       window.scrollTo({ top: 0 });

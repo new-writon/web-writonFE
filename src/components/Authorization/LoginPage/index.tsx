@@ -32,7 +32,6 @@ const Login = () => {
           localStorage.getItem("organization") || "null",
           Number(localStorage.getItem("challengeId")) || 1
         );
-        console.log("result", response);
         sessionStorage.setItem("accessToken", response.accessToken);
         sessionStorage.setItem("refreshToken", response.refreshToken);
         if (response.affiliatedConfirmation === true) {

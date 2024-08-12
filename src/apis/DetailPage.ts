@@ -12,7 +12,7 @@ export const getComment = async (userTemplateId: number, organization: string) =
 };
 //좋아요
 export const postLike = async (userTemplateId: number, organization: string) => {
-  const response = await putData("/template/like", {
+  const response = await postData("/template/like", {
     userTemplateId,
     organization,
   });
@@ -21,7 +21,7 @@ export const postLike = async (userTemplateId: number, organization: string) => 
 
 //좋아요 취소
 export const postLikeDelete = async (userTemplateId: number, organization: string) => {
-  const response = await postData("/template/like", {
+  const response = await putData("/template/like", {
     userTemplateId,
     organization,
   });

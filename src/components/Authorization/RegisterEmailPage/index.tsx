@@ -176,17 +176,14 @@ const RegisterEmail = () => {
     setLoading(true);
     try {
       const res = await getDuplicateEmail(email);
-      if (res.status === 200) {
+      if (JSON.stringify(res) === "{}") {
         try {
-          const response = await postEmail(email);
-          if (response.status === 200) {
-            setEmailCodeShow(true);
-            setEmailError(false);
-            setLoading(false);
-          }
+          await postEmail(email);
+          setEmailCodeShow(true);
+          setEmailError(false);
+          setLoading(false);
         } catch (err) {
           console.log(err);
-          throw new Error("shit");
         }
       }
     } catch {

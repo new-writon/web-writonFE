@@ -80,13 +80,13 @@ const router = () => {
             element={<CommunityPage />}
           />
           <Route
-            path="/detail/:templeteId"
+            path="/detail/:templateId"
             element={<DetailPage />}
           />
 
           {/* 알림창에서 디테일 들어가기 (모바일) */}
           <Route
-            path="/notificationMobile/detail/:templeteId"
+            path="/notificationMobile/detail/:templateId"
             element={<DetailPage />}
           />
           <Route

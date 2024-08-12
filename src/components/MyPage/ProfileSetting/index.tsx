@@ -25,7 +25,6 @@ import {
 const JobCategory = ["기획", "운영", "개발", "마케팅", "홍보", "디자인"];
 
 export const ProfileSetting = ({ myData }: { myData: myPageProps | undefined }) => {
-  console.log(myData);
   const [editActive, setEditActive] = useState<boolean>(false);
   const [ProfileData, setProfileData] = useState<myProfileEditProps>({
     nickname: "",
