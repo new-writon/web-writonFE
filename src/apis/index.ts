@@ -24,11 +24,20 @@ WRITON.interceptors.request.use(async (req: InternalAxiosRequestConfig) => {
 let isRefreshing = false; // 리프레시 중 여부를 나타내는 플래그
 let failedRequestsQueue: (() => Promise<any>)[] = []; // 실패한 요청을 저장하는 큐
 
+// Custom event or callback to trigger state update
+const notifyError = (message: string) => {
+  const event = new CustomEvent("api-error", { detail: message });
+  window.dispatchEvent(event);
+};
+
 // 에러 핸들링 함수
-async function errorHandler(error: { message?: any; config?: any; response?: any }) {
+async function errorHandler(error: { config?: any; response?: any }) {
   const {
     config,
-    response: { status, data },
+    response: {
+      status,
+      data: { message },
+    },
   } = error;
 
   if (status === 444) {
@@ -63,18 +72,26 @@ async function errorHandler(error: { message?: any; config?: any; response?: any
     }
   } else if (status === 401) {
     // 로그인이 필요한 경우
-    alert("재로그인이 필요합니다.");
+    notifyError(message.message || message);
     // 로그인 페이지로 리다이렉트
     window.location.replace("/login");
   } else if (status === 429) {
     // 요청이 너무 많은 경우
-    alert("요청이 너무 많습니다. 잠시 후 다시 시도하세요.");
-  } else if (status === 700 || status === 600) {
-    // 요청이 너무 많은 경우
+    notifyError(message.message || message);
+  } else if (
+    status === 700 ||
+    status === 701 ||
+    status === 702 ||
+    status === 600 ||
+    status === 602 ||
+    status === 900 ||
+    status === 500
+  ) {
+    // 안에 데이터가 내부적으로 없는 경우
     return;
   } else {
     // 그 외의 경우에는 에러 메시지를 알림창으로 표시
-    alert(data.message);
+    notifyError(message.message || message);
   }
 }
 
@@ -89,6 +106,7 @@ WRITON.interceptors.response.use(
 );
 
 interface ApiResponse<T = any> {
+  access_token?: string;
   data: T;
   status: number;
   statusText: string;
@@ -104,16 +122,6 @@ export const getData = async <T>(
 ): Promise<ApiResponse<T>> => {
   try {
     const response = await WRITON.get(url, config);
-    // const res = await axios.get(
-    //   `http://52.78.105.220:3001/api/user/challenge/present-situation/렛츠인턴/1`,
-    //   {
-    //     headers: {
-    //       Authorization: `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjo5LCJyb2xlIjoidXNlciIsImlhdCI6MTcyMjE4MjE5MSwiZXhwIjoxNzI0Nzc0MTkxfQ.6hcU7qH8zn1tkcDwd8vNFHwyvLnWkOfulg-EpcwBOz8`,
-    //     },
-    //   }
-    // );
-    // console.log(res);
-
     return response;
   } catch (error) {
     if (isAxiosError(error) && error.response) {
@@ -133,8 +141,6 @@ export const postData = async <T>(
 ): Promise<ApiResponse<T>> => {
   try {
     const response = await WRITON.post(url, data, config);
-    console.log(response);
-
     return response;
   } catch (error) {
     if (isAxiosError(error) && error.response) {
@@ -154,7 +160,7 @@ export const putData = async <T>(
 ): Promise<ApiResponse<T>> => {
   try {
     const response = await WRITON.put(url, data, config);
-    return response.data;
+    return response;
   } catch (error) {
     if (isAxiosError(error) && error.response) {
       throw error.response.data as ErrorData;
@@ -173,7 +179,7 @@ export const patchData = async <T>(
 ): Promise<ApiResponse<T>> => {
   try {
     const response = await WRITON.patch(url, data, config);
-    return response.data;
+    return response;
   } catch (error) {
     if (isAxiosError(error) && error.response) {
       throw error.response.data as ErrorData;
@@ -191,7 +197,7 @@ export const deleteData = async <T>(
 ): Promise<ApiResponse<T>> => {
   try {
     const response = await WRITON.delete(url, config);
-    return response.data;
+    return response;
   } catch (error) {
     if (isAxiosError(error) && error.response) {
       throw error.response.data as ErrorData;
