@@ -5,7 +5,7 @@ import { getData, postData } from ".";
 // 글쓰기 페이지 베이직 질문 조희
 export const getBasicQuestion = async (challengeId: string) => {
   const response = await getData<BasicQuestionType[]>(
-    `/challenge/write/${challengeId}/basic-question`
+    `/challenge/question/${challengeId}/basic-question`
   );
   return response.data;
 };
@@ -13,7 +13,7 @@ export const getBasicQuestion = async (challengeId: string) => {
 // 글쓰기 페이지 스페셜 질문 조희
 export const getSpecialQuestion = async (challengeId: string) => {
   const response = await getData<SpecialQuestionType[]>(
-    `/challenge/write/${challengeId}/special-question`
+    `/challenge/question/${challengeId}/special-question`
   );
   return response.data;
 };
@@ -25,7 +25,7 @@ export const postwritingSubmit = async (
   date: string,
   templateContent: postWritingDataType[]
 ) => {
-  const response = await postData("challenge/write", {
+  const response = await postData("/template/root/write", {
     organization,
     challengeId,
     date,

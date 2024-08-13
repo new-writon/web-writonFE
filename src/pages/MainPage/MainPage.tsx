@@ -36,44 +36,37 @@ const MainPage = () => {
 
   const mainPageRendering = async () => {
     executeAsyncTask(async () => {
-      try {
-        const result = await Promise.all([
-          getChallengeCurrent(
-            localStorage.getItem("organization") as string,
-            localStorage.getItem("challengeId") || "1"
-          ),
-          getCalendarRecordCurrent(
-            localStorage.getItem("organization") || "",
-            localStorage.getItem("challengeId") || "1"
-          ),
-          getRetrospectCurrent(
-            localStorage.getItem("organization") || "",
-            localStorage.getItem("challengeId") || "1"
-          ),
-        ]);
+      const result = await Promise.all([
+        getChallengeCurrent(
+          localStorage.getItem("organization") as string,
+          localStorage.getItem("challengeId") || "1"
+        ),
+        getCalendarRecordCurrent(
+          localStorage.getItem("organization") || "",
+          localStorage.getItem("challengeId") || "1"
+        ),
+        getRetrospectCurrent(
+          localStorage.getItem("organization") || "",
+          localStorage.getItem("challengeId") || "1"
+        ),
+      ]);
+      setChallengeCurrent(result[0]);
+      setCalendarData(result[1]);
+      setRetrospectData(result[2].reverse());
 
-        setChallengeCurrent(result[0]);
-        setCalendarData(result[1]);
-        setRetrospectData(result[2].reverse());
-        // 챌린지 마지막 프로세스 모달창 띄우기
-        try {
-          const { review } = await getFinishModal(
-            localStorage.getItem("organization") || "",
-            localStorage.getItem("challengeId") || "1"
-          );
-          if (!review) {
-            if (
-              (result[0].overlapPeriod === 0 && result[1][result[1].length - 1].badge === "Gold") ||
-              result[0].overlapPeriod <= -1
-            ) {
-              setFinishModal(true);
-            }
-          }
-        } catch {
-          throw new Error("shit");
+      // 챌린지 마지막 프로세스 모달창 띄우기
+
+      const { review } = await getFinishModal(
+        localStorage.getItem("organization") || "",
+        localStorage.getItem("challengeId") || "1"
+      );
+      if (!review) {
+        if (
+          (result[0].overlapPeriod === 0 && result[1][result[1].length - 1].badge === "Gold") ||
+          result[0].overlapPeriod <= -1
+        ) {
+          setFinishModal(true);
         }
-      } catch {
-        throw new Error("shit");
       }
     });
   };
@@ -85,7 +78,7 @@ const MainPage = () => {
   return (
     <Container>
       <ProgressBox ChallengeCurrent={ChallengeCurrent} />
-      <Calendar CalendarData={CalendarData.length === 0 ? mainCalendarDummyData : CalendarData} />
+      <Calendar CalendarData={CalendarData?.length === 0 ? mainCalendarDummyData : CalendarData} />
       <MyRetrospect RetrospectData={RetrospectData} />
       <FloatingWriteButton onClick={spaceToWritingPage}>
         {/*모바일 일 때만 보인다/ */}

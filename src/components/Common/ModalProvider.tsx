@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 
-import { useRecoilValue } from "recoil";
+import { useRecoilState, useRecoilValue } from "recoil";
 import styled from "styled-components";
 
 import { AgoraPage } from "@/pages/AgoraPage/AgoraPage";
@@ -12,9 +12,11 @@ import {
   modalBackgroundState,
   accountNumberState,
   agoraModalState,
+  errorState,
 } from "@/recoil/atoms";
 
 import { AccountNumberModal } from "../atom/AccountNumberModal";
+import { ErrorModal } from "../atom/ErrorModal";
 import { FinishModal } from "../atom/FinishModal";
 import {
   CompleteEditPopupResponsive,
@@ -38,8 +40,30 @@ export const ModalProvider = () => {
     const vh = window.innerHeight * 0.01;
     document.documentElement.style.setProperty("--vh", `${vh}px`);
   }, []);
+
+  const [errorMessage, setErrorMessage] = useRecoilState(errorState);
+
+  useEffect(() => {
+    const handleError = (event: CustomEvent) => {
+      // 만약 errorMessage가 객체라면 JSON.stringify를 사용하여 문자열로 변환
+      setErrorMessage(event.detail);
+    };
+
+    window.addEventListener("api-error", handleError as EventListener);
+
+    return () => {
+      window.removeEventListener("api-error", handleError as EventListener);
+    };
+  }, [setErrorMessage]);
   return (
     <>
+      {errorMessage && (
+        <ErrorModal
+          errorMessage={
+            typeof errorMessage === "object" ? JSON.stringify(errorMessage, null, 2) : errorMessage
+          }
+        />
+      )}
       {modal.todayWriteModal && <TodayWritePopup />}
       {modal.contentModal && <ContentPopupResponsive />}
       {modal.deleteModal && <DeletePopupResponsive />}

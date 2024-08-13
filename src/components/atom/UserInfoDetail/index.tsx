@@ -9,7 +9,7 @@ interface userInfoDetailProps {
   nickname: string;
   job: string;
   company: string | null;
-  created_at: string;
+  createdAt: string;
 }
 
 export const UserInfoDetail = ({ data }: { data: userInfoDetailProps }) => {
@@ -28,7 +28,7 @@ export const UserInfoDetail = ({ data }: { data: userInfoDetailProps }) => {
         <div className="bottom">
           <div className="job">{data?.job}</div>
           <div className={`company ${data?.company === null && "none"}`}>{data?.company}</div>
-          <div className="date">{format(data?.created_at, "M월 d일")}</div>
+          <div className="date">{format(data?.createdAt, "M월 d일")}</div>
           {/* 해당 날짜 데이터 받아서 formating 시키기 */}
         </div>
       </div>

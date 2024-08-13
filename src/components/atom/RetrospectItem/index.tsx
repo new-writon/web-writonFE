@@ -22,7 +22,7 @@ export const RetrospectItem = ({ data }: { data: communityContentProps[] }) => {
 
   const spaceToDetail = () => {
     if (width <= 530) {
-      navigate(`/detail/${data[0].user_templete_id}?type=my`);
+      navigate(`/detail/${data[0].userTemplateId}?type=my`);
       // setDetailData(data);
       // setLikeCount(data[0]?.likeCount);
     } else {
@@ -45,7 +45,7 @@ export const RetrospectItem = ({ data }: { data: communityContentProps[] }) => {
     <Container onClick={spaceToDetail}>
       <Title>
         <div className="mainTitle">
-          {format(data[0]?.created_at, "M월 d일 EEE요일", { locale: ko })}
+          {format(data[0]?.createdAt, "M월 d일 EEE요일", { locale: ko })}
         </div>
         {arr.length > 0 && <TitleSideBox type="special">스페셜 질문</TitleSideBox>}
       </Title>

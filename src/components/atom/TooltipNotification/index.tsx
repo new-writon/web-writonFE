@@ -154,7 +154,7 @@ export const TooltipNotificationItem = ({ data }: { data: notificationDataType }
 
   const spaceToDetail = async (type: string, Id: number) => {
     if (width < 531) {
-      navigate(`/detail/${data?.userTempleteId}`);
+      navigate(`/detail/${data?.userTemplateId}`);
       setClick(true);
       if (type === "like") {
         try {
@@ -173,7 +173,7 @@ export const TooltipNotificationItem = ({ data }: { data: notificationDataType }
       try {
         const response = await getTemplete(
           localStorage.getItem("organization") || "",
-          Number(data?.userTempleteId),
+          Number(data?.userTemplateId),
           true
         );
         setDetailData(response);
@@ -201,7 +201,7 @@ export const TooltipNotificationItem = ({ data }: { data: notificationDataType }
   };
   return (
     <ItemContainer
-      onClick={() => spaceToDetail(data?.type, data?.commentId || data?.LikeId || 0)}
+      onClick={() => spaceToDetail(data?.type, data?.commentId || data?.likeId || 0)}
       $click={data?.sign === 1 ? true : data?.sign === 0 && click === true ? true : false}
     >
       <div className="first">

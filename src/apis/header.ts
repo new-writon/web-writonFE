@@ -2,7 +2,7 @@ import { deleteData, getData } from ".";
 
 //header 버튼 클릭시, 오늘 쓰는 날짜인지 체크
 export const getCheckDate = async (challengeId: number, date: string) => {
-  const response = await getData(`/challenge/record/${challengeId}/${date}
+  const response = await getData(`/challenge/information/${challengeId}/${date}
   `);
   return response.data;
 };
@@ -14,7 +14,7 @@ interface checkTodayProps {
 //header 버튼 클릭시, 오늘 얘가 썼는지 안썼는지 체크
 export const getCheckToday = async (organization: string, challengeId: number) => {
   const response =
-    await getData<checkTodayProps>(`/challenge/record/${organization}/${challengeId}/daily-reflection
+    await getData<checkTodayProps>(`/user/challenge/${organization}/${challengeId}/daily-reflection
   `);
   return response.data;
 };

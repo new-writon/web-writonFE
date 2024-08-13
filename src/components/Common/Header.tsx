@@ -223,7 +223,10 @@ const Header = () => {
       setNotificationData(data[0]);
       setNotificationNumber(data[0].length - data[1].checkCount);
     } catch {
-      throw new Error("shit");
+      setNotificationData([]);
+      setNotificationNumber(0);
+
+      // throw new Error("shit");
     }
   };
 

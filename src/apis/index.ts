@@ -17,65 +17,27 @@ export const WRITON = axios.create({
 WRITON.interceptors.request.use(async (req: InternalAxiosRequestConfig) => {
   const accessToken = localStorage.getItem("accessToken") || sessionStorage.getItem("accessToken");
 
-  if (req.headers && accessToken) req.headers.Authentication = `${accessToken}`;
+  if (req.headers && accessToken) req.headers.Authorization = `${accessToken}`;
   return req;
 });
-
-// //response interceptor
-// WRITON.interceptors.response.use(
-//   (response) => {
-//     return response;
-//   },
-//   async (error) => {
-//     const {
-//       config,
-//       response: { status, data },
-//     } = error;
-//     if (status === 444) {
-//       const originRequest = config;
-//       //리프레시 토큰 api
-//       try {
-//         const response = await postRefreshToken();
-//         localStorage.setItem("accessToken", response.accessToken);
-//         localStorage.setItem("refreshToken", response.refreshToken);
-//         originRequest.headers.Authentication = `${response.accessToken}`;
-//         alert("재발급");
-//         //진행중이던 요청 이어서하기
-//         return axios(originRequest);
-//       } catch (error) {
-//         const err = error as ErrorData;
-//         if (err.code === 401) {
-//           alert("재로그인!");
-//           localStorage.clear();
-//           sessionStorage.clear();
-//           window.location.replace("/login");
-//         }
-//       }
-//     } else if (status === 401) {
-//       alert("재로그인 동시접속");
-//       localStorage.clear();
-//       sessionStorage.clear();
-//       window.location.replace("/login");
-//     } else if (status === 429) {
-//       alert("너무 많은 요청을 하셨습니다. 로그아웃");
-//       localStorage.clear();
-//       sessionStorage.clear();
-//       window.location.replace("/login");
-//     } else {
-//       console.log(data);
-//       alert(data.message);
-//     }
-//   }
-// );
 
 let isRefreshing = false; // 리프레시 중 여부를 나타내는 플래그
 let failedRequestsQueue: (() => Promise<any>)[] = []; // 실패한 요청을 저장하는 큐
 
+// Custom event or callback to trigger state update
+const notifyError = (message: string) => {
+  const event = new CustomEvent("api-error", { detail: message });
+  window.dispatchEvent(event);
+};
+
 // 에러 핸들링 함수
-async function errorHandler(error: { message?: any; config?: any; response?: any }) {
+async function errorHandler(error: { config?: any; response?: any }) {
   const {
     config,
-    response: { status, data },
+    response: {
+      status,
+      data: { message },
+    },
   } = error;
 
   if (status === 444) {
@@ -110,22 +72,33 @@ async function errorHandler(error: { message?: any; config?: any; response?: any
     }
   } else if (status === 401) {
     // 로그인이 필요한 경우
-    alert("재로그인이 필요합니다.");
+    notifyError(message.message || message);
     // 로그인 페이지로 리다이렉트
     window.location.replace("/login");
   } else if (status === 429) {
     // 요청이 너무 많은 경우
-    alert("요청이 너무 많습니다. 잠시 후 다시 시도하세요.");
+    notifyError(message.message || message);
+  } else if (
+    status === 700 ||
+    status === 701 ||
+    status === 702 ||
+    status === 600 ||
+    status === 602 ||
+    status === 900 ||
+    status === 500
+  ) {
+    // 안에 데이터가 내부적으로 없는 경우
+    return;
   } else {
     // 그 외의 경우에는 에러 메시지를 알림창으로 표시
-    alert(data.message);
+    notifyError(message.message || message);
   }
 }
 
 // 리스폰스 인터셉터
 WRITON.interceptors.response.use(
   (response) => {
-    return response;
+    return response.data;
   },
   async (error: any) => {
     return errorHandler(error);
@@ -133,6 +106,7 @@ WRITON.interceptors.response.use(
 );
 
 interface ApiResponse<T = any> {
+  access_token?: string;
   data: T;
   status: number;
   statusText: string;

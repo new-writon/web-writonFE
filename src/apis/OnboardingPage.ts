@@ -2,7 +2,7 @@ import { getData, postData } from ".";
 
 //닉네임중복
 export const getDuplicateNickname = async (organization: string, NickName: string | undefined) => {
-  const response = await getData(`/challenge/start/check/${organization}?nickname=${NickName}`);
+  const response = await getData(`/auth/check/${organization}/nickname?nickname=${NickName}`);
   return response.data;
 };
 
@@ -16,12 +16,12 @@ interface onBoardingDataProps {
   organization: string;
 }
 export const postOnboardingComplete = async (onBoardingData: onBoardingDataProps) => {
-  const response = await postData("/challenge/start/enroll", onBoardingData);
+  const response = await postData("/user/affiliation/enter", onBoardingData);
   return response.data;
 };
 
 export const postChallengeStart = async (organization: string, challengeId: string) => {
-  const response = await postData("/challenge/start", { organization, challengeId });
+  const response = await postData("/user/challenge/start", { organization, challengeId });
   return response.data;
 };
 

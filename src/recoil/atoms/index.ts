@@ -218,3 +218,8 @@ export const dateAgoraLengthState = atom<number>({
   key: "dateAgoraLengthState",
   default: -1,
 });
+
+export const errorState = atom<string>({
+  key: "errorState",
+  default: "",
+});

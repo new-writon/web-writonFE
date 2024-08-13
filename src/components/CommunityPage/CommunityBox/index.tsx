@@ -78,9 +78,9 @@ export const CommunityBox = () => {
 
   useEffect(() => {
     if (categoriesArray.includes("전체")) {
-      setFilteredData(Array.from(CommunitySecondData.templateData).reverse()); // "전체"를 선택한 경우, 모든 데이터를 보여줍니다.
+      setFilteredData(Array.from(CommunitySecondData.templateData || []).reverse()); // "전체"를 선택한 경우, 모든 데이터를 보여줍니다.
     } else {
-      const filtered = Array.from(CommunitySecondData.templateData)
+      const filtered = Array.from(CommunitySecondData.templateData || [])
         .reverse()
         .filter((item) => categoriesArray.includes(item[0].job)); // 선택한 카테고리에 해당하는 데이터를 필터링합니다.
       setFilteredData(filtered);
@@ -98,7 +98,7 @@ export const CommunityBox = () => {
         localStorage.setItem("date", format(value, "yyyy-MM-dd"));
         setDateLength(dateActive.indexOf(format(value, "yyyy-MM-dd")));
         setCommunitySecondData(result);
-        const templateData = Array.from(result.templateData).reverse();
+        const templateData = Array.from(result.templateData || []).reverse();
 
         // 카테고리에 따른 글 필터링
         if (categoriesArray.includes("전체")) {
@@ -131,7 +131,8 @@ export const CommunityBox = () => {
             dateArray[dateArray.length - 1]
           );
           setCommunitySecondData(result);
-          const templateData = Array.from(result.templateData).reverse();
+          const templateData = Array.from(result.templateData || []).reverse();
+
           // 카테고리에 따른 글 필터링
           if (categoriesArray.includes("전체")) {
             setFilteredData(templateData); // "전체"를 선택한 경우, 모든 데이터를 보여줍니다.
@@ -157,7 +158,7 @@ export const CommunityBox = () => {
           dateActive[dateLength]
         );
         setCommunitySecondData(result);
-        const templateData = Array.from(result.templateData).reverse();
+        const templateData = Array.from(result.templateData || []).reverse();
         // 카테고리에 따른 글 필터링
         if (categoriesArray.includes("전체")) {
           setFilteredData(templateData); // "전체"를 선택한 경우, 모든 데이터를 보여줍니다.

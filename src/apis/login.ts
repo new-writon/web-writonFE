@@ -28,7 +28,7 @@ export const postKakaoAuth = async (CODE: string) => {
     }&redirect_uri=${import.meta.env.VITE_APP_REDIRECT_URI}&code=${CODE}`,
     {}
   );
-  return response.data;
+  return response;
 };
 
 export const postKakaoLogout = async (token: string) => {
@@ -44,13 +44,17 @@ export const postKakaoLogout = async (token: string) => {
   return response.data;
 };
 
-export const postKakaoLogin = async (token: string, organization: string, challengeId: number) => {
+export const postKakaoLogin = async (
+  token: string | undefined,
+  organization: string,
+  challengeId: number
+) => {
   const response = await postData<UserInfo>(
     "/auth/login/kakao",
     { organization: organization, challengeId: challengeId },
     {
       headers: {
-        Authentication: token,
+        Authorization: token,
       },
     }
   );
@@ -59,21 +63,21 @@ export const postKakaoLogin = async (token: string, organization: string, challe
 
 //회원가입
 export const getDuplicateId = async (userId: string) => {
-  const response = await getData(`/user/identifier/check?identifier=${userId}`);
+  const response = await getData(`/auth/check/identifier?identifier=${userId}`);
   return response.data;
 };
 
 export const getDuplicateEmail = async (email: string) => {
-  const response = await getData(`/user/email/check?email=${email}`);
+  const response = await getData(`/auth/check/email?email=${email}`);
   return response;
 };
 export const postEmail = async (email: string) => {
-  const response = await postData<{ code: number }>("/auth/generate/email-code", { email });
+  const response = await postData<{ code: number }>("/auth/verification/email-code", { email });
   return response;
 };
 
 export const postEmailCode = async (email: string, emailCode: string) => {
-  const response = await postData("/auth/verify/email-code", {
+  const response = await postData("/auth/verification/email-code/verify", {
     email: email,
     code: emailCode,
   });
@@ -81,7 +85,7 @@ export const postEmailCode = async (email: string, emailCode: string) => {
 };
 
 export const postRegister = async (id: string, pw: string, email: string) => {
-  const response = await postData("/auth/signup", {
+  const response = await postData("/auth/account/sign-up", {
     identifier: id,
     password: pw,
     email: email,
@@ -90,7 +94,8 @@ export const postRegister = async (id: string, pw: string, email: string) => {
 };
 
 export const getChallengingList = async () => {
-  const response = await getData<challengeListProps[]>("/challenge/start");
+  const response = await getData<challengeListProps[]>("/user/challenge");
+
   return response.data;
 };
 
@@ -98,7 +103,7 @@ export const getChallengingList = async () => {
 export const postRefreshToken = async () => {
   try {
     const response = await postData<TokenInfo>(
-      "/auth/token-reissue",
+      "/auth/verification/token-reissue",
       {},
       {
         headers: {

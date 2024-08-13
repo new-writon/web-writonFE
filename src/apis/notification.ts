@@ -6,7 +6,7 @@ import { getData, patchData } from ".";
 //내가 지금까지 확인한 알림 갯수
 export const getNotificationCount = async (organization: string, challengeId: string) => {
   const response = await getData<{ checkCount: number }>(
-    `/user/${organization}/${challengeId}/check-count`
+    `/user/challenge/${organization}/${challengeId}/check-count`
   );
   return response.data;
 };
@@ -17,7 +17,7 @@ export const patchNotificationCount = async (
   challengeId: string,
   checkCount: number
 ) => {
-  const response = await patchData(`/user/${organization}/${challengeId}/check-count`, {
+  const response = await patchData(`/user/challenge/${organization}/${challengeId}/check-count`, {
     checkCount: checkCount,
   });
   return response.data;
@@ -25,20 +25,20 @@ export const patchNotificationCount = async (
 
 // 내가 본 알림 중 좋아요 봤다는거 표시
 export const patchNotificationLike = async (likeId: number) => {
-  const response = await patchData("/user/check-like", { likeId: likeId });
+  const response = await patchData("/template/like/check", { likeId: likeId });
   return response.data;
 };
 
 // 내가 본 알림 중 댓글 봤다는거 표시
 export const patchNotificationComment = async (commentId: number) => {
-  const response = await patchData("/user/check-comment", { commentId: commentId });
+  const response = await patchData("/template/comment/check", { commentId: commentId });
   return response.data;
 };
 
 // 알림창에 좋아요 및 댓글들 조회 해오기
 export const getNotificationData = async (organization: string, challengeId: string) => {
   const response = await getData<notificationDataType[]>(
-    `/user/${organization}/${challengeId}/notify`
+    `/template/root/${organization}/${challengeId}/notify`
   );
   return response.data;
 };

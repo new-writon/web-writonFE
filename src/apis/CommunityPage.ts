@@ -12,7 +12,7 @@ import { getData, postData } from ".";
 // 커뮤니티 스토리
 export const getCommunityFirstComponent = async (challengeId: string) => {
   const response = await getData<communityFirstComponentType>(
-    `community/${challengeId}/participant-information`
+    `/user/cheering-phrase/${challengeId}/participant-information`
   );
   return response.data;
 };
@@ -20,7 +20,7 @@ export const getCommunityFirstComponent = async (challengeId: string) => {
 // 나의 스토리
 export const getMyCommunityStory = async (challengeId: string) => {
   const response = await getData<communityStoryProps>(
-    `community/${challengeId}/my-participant-information`
+    `/user/cheering-phrase/${challengeId}/my-information`
   );
   return response.data;
 };
@@ -31,7 +31,7 @@ export const postMyCommunityStoryComment = async (
   challengeId: number,
   content: string
 ) => {
-  const response = await postData(`community/cheering-phrase`, {
+  const response = await postData(`/user/cheering-phrase`, {
     organization,
     challengeId,
     content,
@@ -41,7 +41,7 @@ export const postMyCommunityStoryComment = async (
 
 // 커뮤니티 활성화 날짜 배열
 export const getCommunityDate = async (challengeId: string) => {
-  const response = await getData<string[]>(`community/${challengeId}/date`);
+  const response = await getData<string[]>(`/challenge/information/${challengeId}`);
   return response.data;
 };
 
@@ -52,7 +52,7 @@ export const getCommunityContentData = async (
   date: string
 ) => {
   const response = await getData<communitySecondCoponentType>(
-    `community/${challengeId}/template/${date}/${organization}`
+    `/template/root/${organization}/${challengeId}/date/${date}`
   );
   return response.data;
 };
@@ -60,16 +60,14 @@ export const getCommunityContentData = async (
 // 아고라
 
 // 날짜에 따른 아고라 조회 (배열)
-export const getAgoraData = async (organization: string, challengeId: string, date: string) => {
-  const response = await getData<agoraDataType[]>(
-    `community/agora/${organization}/${challengeId}/${date}`
-  );
+export const getAgoraData = async (challengeId: string, date: string) => {
+  const response = await getData<agoraDataType[]>(`/agora/${challengeId}/${date}`);
   return response.data;
 };
 
 // 해당 아고라 댓글들
 export const getAgoraChat = async (agoraId: number) => {
-  const response = await getData<agoraCommentType[]>(`community/agora/comment/${agoraId}`);
+  const response = await getData<agoraCommentType[]>(`agora/comment/read/${agoraId}`);
   return response.data;
 };
 
@@ -80,7 +78,7 @@ export const postAgoraTopic = async (
   agoraQuestion: string
 ) => {
   try {
-    const response = await postData(`community/agora`, {
+    const response = await postData(`/agora`, {
       organization,
       challengeId,
       agoraQuestion,
@@ -98,7 +96,7 @@ export const postAgoraComment = async (
   agoraId: number,
   agoraComment: string
 ) => {
-  const response = await postData(`community/agora/comment`, {
+  const response = await postData(`/agora/comment/write`, {
     organization: organization,
     agoraId: agoraId,
     agoraComment: agoraComment,

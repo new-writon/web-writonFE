@@ -34,7 +34,7 @@ export const Calendar = ({ CalendarData }: { CalendarData: CalendarRecordCurrent
             <MainSemiTitle font={1.25}>
               {finishDay
                 ? `${format(today, "M")}월 ${weekNumber}주차 도전중`
-                : `${format(CalendarData[CalendarData.length - 1].date, "M")}월 챌린지 종료`}
+                : `${format(CalendarData[CalendarData?.length - 1].date, "M")}월 챌린지 종료`}
             </MainSemiTitle>
             <TooltipButton
               tooltipOn={tooltipOn}

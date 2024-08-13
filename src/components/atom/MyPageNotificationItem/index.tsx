@@ -25,7 +25,7 @@ export const MyPageNotificationItem = ({ data }: { data: notificationDataType })
     try {
       const response = await getTemplete(
         localStorage.getItem("organization") || "",
-        Number(data?.userTempleteId),
+        Number(data?.userTemplateId),
         true
       );
       setDetailData(response);
@@ -52,7 +52,7 @@ export const MyPageNotificationItem = ({ data }: { data: notificationDataType })
   };
   return (
     <Container
-      onClick={() => spaceToDetail(data?.type, data?.commentId || data?.LikeId || 0)}
+      onClick={() => spaceToDetail(data?.type, data?.commentId || data?.likeId || 0)}
       $click={data?.sign === 1 ? true : data?.sign === 0 && click === true ? true : false}
     >
       <First>
@@ -83,7 +83,7 @@ export const MyPageNotificationItemMobile = ({ data }: { data: notificationDataT
   const [click, setClick] = useState<boolean>(false);
 
   const spaceToDetail = async (type: string, Id: number) => {
-    navigate(`/detail/${data?.userTempleteId}?type=my`);
+    navigate(`/detail/${data?.userTemplateId}?type=my`);
     setClick(true);
     if (type === "like") {
       try {
@@ -101,7 +101,7 @@ export const MyPageNotificationItemMobile = ({ data }: { data: notificationDataT
   };
   return (
     <ContainerMobile
-      onClick={() => spaceToDetail(data?.type, data?.commentId || data?.LikeId || 0)}
+      onClick={() => spaceToDetail(data?.type, data?.commentId || data?.likeId || 0)}
       $click={data?.sign === 1 ? true : data?.sign === 0 && click === true ? true : false}
     >
       <div className="first">

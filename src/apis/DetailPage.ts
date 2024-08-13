@@ -1,16 +1,18 @@
 import { commentProps, communityContentProps } from "@/types";
 
-import { getData, postData } from ".";
+import { getData, postData, putData } from ".";
 
 //탬플릿 댓글
-export const getComment = async (userTemplateId: number) => {
-  const response = await getData<commentProps[]>(`community/${userTemplateId}/comment`);
+export const getComment = async (userTemplateId: number, organization: string) => {
+  const response = await getData<
+    commentProps[]
+  >(`/template/comment/${organization}/userTemplateId/${userTemplateId}
+`);
   return response.data;
 };
-
 //좋아요
 export const postLike = async (userTemplateId: number, organization: string) => {
-  const response = await postData("community/like", {
+  const response = await postData("/template/like", {
     userTemplateId,
     organization,
   });
@@ -19,7 +21,7 @@ export const postLike = async (userTemplateId: number, organization: string) => 
 
 //좋아요 취소
 export const postLikeDelete = async (userTemplateId: number, organization: string) => {
-  const response = await postData("community/like/delete", {
+  const response = await putData("/template/like", {
     userTemplateId,
     organization,
   });
@@ -28,7 +30,7 @@ export const postLikeDelete = async (userTemplateId: number, organization: strin
 
 // 좋아요 갯수 조희
 export const getLikeCheck = async (userTemplateId: number) => {
-  const response = await getData(`community/like/${userTemplateId}`);
+  const response = await getData(`/template/like/${userTemplateId}`);
   return response.data;
 };
 
@@ -39,7 +41,7 @@ export const postCommentWrite = async (
   content: string,
   commentGroup: number
 ) => {
-  const response = await postData<{ comment_id: number }>("community/comment", {
+  const response = await postData<{ commentId: number }>("/template/comment", {
     userTemplateId,
     organization,
     content,
@@ -55,7 +57,7 @@ export const getTemplete = async (
   visibility: boolean
 ) => {
   const response = await getData<communityContentProps[]>(
-    `community/${organization}/${userTemplateId}/${visibility}`
+    `/template/root/${organization}/${userTemplateId}/visibility/${visibility}`
   );
   return response.data;
 };
