@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-import { format } from "date-fns";
+import { format, getMonth } from "date-fns";
 import { useParams } from "react-router-dom";
 
 import downArrow from "@/assets/mainPage/downArrow.svg";
@@ -68,6 +68,11 @@ export const WeekCalendar = ({ CalendarData }: { CalendarData: CalendarRecordCur
           <RenderCell
             pageDay={date}
             fold={weekFold}
+            today={
+              getMonth(CalendarData[CalendarData.length - 1].date) !== getMonth(new Date())
+                ? new Date(CalendarData[CalendarData.length - 1].date)
+                : new Date()
+            }
             CalendarData={CalendarData}
           />
         )}
