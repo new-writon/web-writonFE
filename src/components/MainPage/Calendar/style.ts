@@ -72,8 +72,12 @@ export const Container = styled.div`
       top: -175px;
       left: 40px;
     }
+    .topBar .calendar-operation {
+      display: flex;
+      gap: 8px;
+    }
   }
-  @media (max-width: 530px) {
+  @media (max-width: 575px) {
     & {
       will-change: filter;
       filter: drop-shadow(0px 14px 20px rgba(33, 33, 33, 0.05));
@@ -95,11 +99,17 @@ export const Container = styled.div`
       width: min-content;
     }
 
+    .topBar .calendar-operation {
+      display: flex;
+      gap: 8px;
+    }
+
     // 달력 버튼
     .topBar .topBarRight {
       border: none;
       padding: 0;
       padding-right: 10px;
+      align-items: center;
     }
     .topBar .topBarRight .calendarOpenBtn {
       display: none;
