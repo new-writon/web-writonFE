@@ -20,7 +20,7 @@ export default Loading;
 const LoadingWrapper = styled.div`
   width: 100vw;
   height: calc(var(--vh, 1vh) * 100);
-  background: rgba(21, 21, 21, 0.7);
+  background: rgba(21, 21, 21, 0);
   position: fixed;
   top: 0;
   left: 0;
