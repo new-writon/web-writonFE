@@ -1,10 +1,11 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 import { differenceInCalendarWeeks, format, getDay, getMonth, startOfMonth } from "date-fns";
 
 import downArrow from "@/assets/mainPage/downArrow.svg";
 import clalendarIcon from "@/assets/mainPage/icon-calendar.svg";
 import topArrow from "@/assets/mainPage/topArrow.svg";
+import { CalendarArrow } from "@/components/atom/CalendarArrow";
 import { MainSemiTitle } from "@/components/atom/MainSemiTitle";
 import { TooltipButton } from "@/components/atom/TooltipButton";
 import { TooltipMessage } from "@/components/atom/TooltipMessage";
@@ -16,6 +17,21 @@ import { RenderDays } from "./RenderDays";
 import { Container } from "./style";
 export const Calendar = ({ CalendarData }: { CalendarData: CalendarRecordCurrentType[] }) => {
   const today = new Date();
+
+  const [calendarToday, setCalendarToday] = useState<Date>(
+    getMonth(CalendarData[CalendarData.length - 1].date) !== getMonth(new Date())
+      ? new Date(CalendarData[CalendarData.length - 1].date)
+      : new Date() // 월이 바뀌면 챌린지 마지막날 유지
+  );
+  useEffect(() => {
+    const lastDate = CalendarData[CalendarData.length - 1].date;
+    if (getMonth(lastDate) !== getMonth(new Date())) {
+      setCalendarToday(new Date(lastDate));
+    } else {
+      setCalendarToday(new Date());
+    }
+  }, [CalendarData]);
+
   const monthStart = startOfMonth(today);
 
   const [fold, setFold] = useState<boolean>(false);
@@ -25,7 +41,6 @@ export const Calendar = ({ CalendarData }: { CalendarData: CalendarRecordCurrent
       ? differenceInCalendarWeeks(today, monthStart)
       : differenceInCalendarWeeks(today, monthStart) + 1;
   const finishDay = getMonth(CalendarData[CalendarData.length - 1].date) === getMonth(new Date());
-
   return (
     <Inner>
       <Container>
@@ -43,22 +58,29 @@ export const Calendar = ({ CalendarData }: { CalendarData: CalendarRecordCurrent
               챌린지 방법
             </TooltipButton>
           </div>
-          <div
-            className="topBarRight"
-            onClick={() => setFold(!fold)}
-          >
-            <div className="calendarOpenBtn">{fold ? "달력 접기" : "달력 펼치기"}</div>
-            <div className="calendarOpenBtnResponsive">
+          <div className="calendar-operation">
+            <CalendarArrow
+              defaultToday={CalendarData[CalendarData.length - 1].date}
+              calendarToday={calendarToday}
+              setCalendarToday={setCalendarToday}
+            />
+            <div
+              className="topBarRight"
+              onClick={() => setFold(!fold)}
+            >
+              <div className="calendarOpenBtn">{fold ? "달력 접기" : "달력 펼치기"}</div>
+              <div className="calendarOpenBtnResponsive">
+                <img
+                  src={clalendarIcon}
+                  alt="달력"
+                />
+              </div>
               <img
-                src={clalendarIcon}
-                alt="달력"
+                className={`${fold ? "topArrow" : "downArrow"}`}
+                src={fold ? topArrow : downArrow}
+                alt="V"
               />
             </div>
-            <img
-              className={`${fold ? "topArrow" : "downArrow"}`}
-              src={fold ? topArrow : downArrow}
-              alt="V"
-            />
           </div>
         </div>
         {tooltipOn && (
@@ -74,6 +96,7 @@ export const Calendar = ({ CalendarData }: { CalendarData: CalendarRecordCurrent
         <RenderCell
           pageDay=""
           fold={fold}
+          today={calendarToday}
           CalendarData={CalendarData}
         />
       </Container>

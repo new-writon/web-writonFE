@@ -32,6 +32,11 @@ export const Container = styled.div`
     left: 282px;
   }
 
+  .topBar .calendar-operation {
+    display: flex;
+    gap: 16px;
+  }
+
   .topBar .topBarRight {
     display: flex;
     color: var(--Gray-70, #73777e);
