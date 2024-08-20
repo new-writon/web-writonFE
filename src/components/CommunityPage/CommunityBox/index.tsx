@@ -2,8 +2,6 @@
 import React, { useEffect, useState } from "react";
 
 import { format } from "date-fns";
-import moment from "moment";
-import Calendar from "react-calendar";
 import { useRecoilState } from "recoil";
 import "react-calendar/dist/Calendar.css";
 
@@ -17,6 +15,7 @@ import topArrow from "@/assets/mainPage/topArrow.svg";
 import { NoRetrospect } from "@/components/MainPage/NoRetrospect";
 import { CommunityItem } from "@/components/atom/CommunityItem";
 import { MainSemiTitle } from "@/components/atom/MainSemiTitle";
+import { SubCalendar } from "@/components/atom/SubCalendar";
 import { TitleSideBox } from "@/components/atom/TitleSideBox";
 import { KeywordButton } from "@/components/atom/button";
 import useAsyncWithLoading from "@/hooks/useAsyncWithLoading";
@@ -89,28 +88,24 @@ export const CommunityBox = () => {
 
   const clickDay = (value: Date) => {
     executeAsyncTask(async () => {
-      try {
-        const result = await getCommunityContentData(
-          localStorage.getItem("organization") || "",
-          localStorage.getItem("challengeId") || "1",
-          format(value, "yyyy-MM-dd")
-        );
-        localStorage.setItem("date", format(value, "yyyy-MM-dd"));
-        setDateLength(dateActive.indexOf(format(value, "yyyy-MM-dd")));
-        setCommunitySecondData(result);
-        const templateData = Array.from(result.templateData || []).reverse();
+      const result = await getCommunityContentData(
+        localStorage.getItem("organization") || "",
+        localStorage.getItem("challengeId") || "1",
+        format(value, "yyyy-MM-dd")
+      );
+      localStorage.setItem("date", format(value, "yyyy-MM-dd"));
+      setDateLength(dateActive.indexOf(format(value, "yyyy-MM-dd")));
+      setCommunitySecondData(result);
+      const templateData = Array.from(result.templateData || []).reverse();
 
-        // 카테고리에 따른 글 필터링
-        if (categoriesArray.includes("전체")) {
-          setFilteredData(templateData); // "전체"를 선택한 경우, 모든 데이터를 보여줍니다.
-        } else {
-          const filtered = templateData.filter((item) => categoriesArray.includes(item[0].job)); // 선택한 카테고리에 해당하는 데이터를 필터링합니다.
-          setFilteredData(filtered);
-        }
-        setCalendarOn(false);
-      } catch {
-        throw new Error("shit");
+      // 카테고리에 따른 글 필터링
+      if (categoriesArray.includes("전체")) {
+        setFilteredData(templateData); // "전체"를 선택한 경우, 모든 데이터를 보여줍니다.
+      } else {
+        const filtered = templateData.filter((item) => categoriesArray.includes(item[0].job)); // 선택한 카테고리에 해당하는 데이터를 필터링합니다.
+        setFilteredData(filtered);
       }
+      setCalendarOn(false);
     });
   };
 
@@ -305,25 +300,12 @@ export const CommunityBox = () => {
             )}
             <div className="changeDate">
               {calendarOn && (
-                <Calendar
-                  locale="ko"
-                  formatDay={(_locale, date) => moment(date).format("D")}
-                  value={localStorage.getItem("date")}
-                  minDate={new Date(dateActive[0])}
-                  maxDate={new Date(dateActive[Number(localStorage.getItem("dateLastLength"))])}
-                  minDetail="month" // 상단 네비게이션에서 '월' 단위만 보이게 설정
-                  maxDetail="month" // 상단 네비게이션에서 '월' 단위만 보이게 설정
-                  onClickDay={clickDay}
-                  goToRangeStartOnSelect={true}
-                  tileDisabled={({ date }) => {
-                    // 비활성화할 날짜들을 포함하는 Set 객체 생성
-                    const disabledDates = new Set(
-                      dateActive.map((dateString) => new Date(dateString).toDateString())
-                    );
-                    // 현재 날짜가 비활성화할 날짜 목록에 포함되어 있는지 확인하여 반환
-                    return !disabledDates.has(date.toDateString());
-                  }}
-                />
+                <div className="react-calendar-container">
+                  <SubCalendar
+                    dateActive={dateActive}
+                    clickDay={clickDay}
+                  />
+                </div>
               )}
               <div
                 className="calendar"
@@ -350,7 +332,6 @@ export const CommunityBox = () => {
                 alt="<"
                 onClick={() => CommunitySpaceDate("previous")}
               />
-
               <img
                 className="next"
                 src={arrow}
