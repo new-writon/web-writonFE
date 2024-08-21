@@ -82,9 +82,9 @@ export const modalBackgroundState = atom<{
 });
 
 // 모달 전달 데이터
-export const modalContentState = atom<{ question_id: number; question: string; category: string }>({
+export const modalContentState = atom<{ questionId: number; question: string; category: string }>({
   key: "modalContentState",
-  default: { question_id: 0, question: "", category: "" },
+  default: { questionId: 0, question: "", category: "" },
 });
 
 export const deleteQuestionIdState = atom<number>({
@@ -193,14 +193,14 @@ export const agoraModalBoxState = atom<boolean>({
 export const agoraDataState = atom<agoraDataType>({
   key: "agoraDataState",
   default: {
-    agoraId: 0,
+    smallTalkId: 0,
     question: "",
     participateCount: 0,
     nickname: "",
     createdDate: "",
     createdTime: "",
     profile: "",
-    myAgoraSign: "",
+    mySmallTalkSign: "",
   },
 });
 

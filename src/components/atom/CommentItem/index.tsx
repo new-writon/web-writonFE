@@ -29,7 +29,7 @@ export const CommentItem = ({
         data={{
           profile: data?.profile,
           nickname: data?.nickname,
-          job: data?.job,
+          position: data?.position,
           company: data?.company,
           createdAt: data?.createdAt,
         }}
@@ -73,7 +73,7 @@ export const CommentItem = ({
                     data={{
                       profile: item.profile,
                       nickname: item.nickname,
-                      job: item.job,
+                      position: item.position,
                       company: item.company,
                       createdAt: item.createdAt,
                     }}

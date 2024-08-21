@@ -8,8 +8,8 @@ export const getDuplicateNickname = async (organization: string, NickName: strin
 
 interface onBoardingDataProps {
   nickname: string;
-  job: string;
-  jobIntroduce: string;
+  position: string;
+  positionIntroduce: string;
   hireDate: string;
   company: string;
   companyPublic: boolean;
@@ -24,12 +24,3 @@ export const postChallengeStart = async (organization: string, challengeId: stri
   const response = await postData("/user/challenge/start", { organization, challengeId });
   return response.data;
 };
-
-// {
-//   nickname,
-//   job,
-//   jobIntroduce,
-//   hireDate,
-//   company,
-//   companyPublic,
-// }

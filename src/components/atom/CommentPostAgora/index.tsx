@@ -14,14 +14,14 @@ import { Container } from "./style";
 export const CommentPostAgora = ({
   nickname,
   myProfile,
-  agoraId,
+  smallTalkId,
   chatData,
   setChatData,
   agoraDate,
 }: {
   nickname: string;
   myProfile: string;
-  agoraId: number;
+  smallTalkId: number;
   chatData: agoraCommentType[];
   setChatData: Dispatch<SetStateAction<agoraCommentType[]>>;
   agoraDate: string;
@@ -54,30 +54,30 @@ export const CommentPostAgora = ({
   const submitComment = async () => {
     executeAsyncTask(async () => {
       try {
-        await postAgoraComment(localStorage.getItem("organization") as string, agoraId, text);
+        await postAgoraComment(localStorage.getItem("organization") as string, smallTalkId, text);
         setChatData([
           ...chatData,
           {
-            agora_comment_id: 0,
+            smallTalkCommentId: 0,
             content: text,
             nickname: nickname,
             profile: myProfile,
-            created_time: format(new Date(), "HH:mm"),
+            createdTime: format(new Date(), "HH:mm"),
             myCommentSign: "1",
           },
         ]);
-        if (agoraData.myAgoraSign !== "1") {
+        if (agoraData.mySmallTalkSign !== "1") {
           const updatedAgoraData = agoraDataArray
             ?.map((item) => {
-              // agoraId가 일치하는 경우에만 number를 증가시킴
-              if (item.agoraId === agoraId) {
+              // smallTalkId가 일치하는 경우에만 number를 증가시킴
+              if (item.smallTalkId === smallTalkId) {
                 return {
                   ...item,
                   participateCount: item.participateCount + 1,
-                  myAgoraSign: "1",
+                  mySmallTalkSign: "1",
                 };
               }
-              // agoraId가 일치하지 않는 경우 기존 아이템 반환
+              // smallTalkId가 일치하지 않는 경우 기존 아이템 반환
               return item;
             })
             .filter((item): item is agoraDataType => !!item);

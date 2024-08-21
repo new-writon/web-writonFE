@@ -16,21 +16,21 @@ export const QuestionBox = ({ data, idx }: { data: BasicQuestionType; idx: numbe
   const [text, setText] = useState<string>("");
   const [postWritingData, setpostWritingData] = useRecoilState(postWritingDataState);
 
-  const onVisibility = (question_id: number) => {
+  const onVisibility = (questionId: number) => {
     setToggleSwitchOn(!toggleSwitchOn);
     setpostWritingData(
       //questionid 가 같은 곳에 visbility 집아넣는다.
       postWritingData?.map((item) =>
-        item.question_id === question_id ? { ...item, visibility: toggleSwitchOn } : item
+        item.questionId === questionId ? { ...item, visibility: toggleSwitchOn } : item
       )
     );
   };
-  const onChange = (e: React.ChangeEvent<HTMLTextAreaElement>, question_id: number) => {
+  const onChange = (e: React.ChangeEvent<HTMLTextAreaElement>, questionId: number) => {
     setText(e.currentTarget.value);
     //questionid 가 같은 곳에 content를 집아넣는다.
     setpostWritingData(
       postWritingData.map((item) =>
-        item.question_id === question_id ? { ...item, content: e.currentTarget.value } : item
+        item.questionId === questionId ? { ...item, content: e.currentTarget.value } : item
       )
     );
   };
@@ -44,7 +44,7 @@ export const QuestionBox = ({ data, idx }: { data: BasicQuestionType; idx: numbe
           </MainSemiTitle>
         </div>
         <PublicButton
-          onClick={() => onVisibility(data?.question_id)}
+          onClick={() => onVisibility(data?.questionId)}
           secret={!toggleSwitchOn}
           state="editWrite"
         />
@@ -52,7 +52,7 @@ export const QuestionBox = ({ data, idx }: { data: BasicQuestionType; idx: numbe
           {toggleSwitchOn ? "비공개" : "공개"}
           <label
             className={`toggleSwitch ${toggleSwitchOn && "active"}`}
-            onClick={() => onVisibility(data?.question_id)}
+            onClick={() => onVisibility(data?.questionId)}
           >
             <span className="toggleButton"></span>
           </label>
@@ -61,7 +61,7 @@ export const QuestionBox = ({ data, idx }: { data: BasicQuestionType; idx: numbe
       <textarea
         ref={textareaRef}
         value={text}
-        onChange={(e) => onChange(e, data?.question_id)}
+        onChange={(e) => onChange(e, data?.questionId)}
         placeholder="글을 입력해주세요."
       />
     </Container>

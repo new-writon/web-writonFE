@@ -35,32 +35,32 @@ export const AddSpecialQuestionBox = ({ data }: { data: SpecialQuestionType }) =
   const [modal, setModal] = useRecoilState(modalBackgroundState);
   const setModalContent = useSetRecoilState(modalContentState);
   // 스페셜 질문 추가 버튼 함수
-  const AddSpecialQuestionFunc = (question_id: number, question: string, category: string) => {
-    if (width <= 530 && !isClickArray.includes(question_id)) {
+  const AddSpecialQuestionFunc = (questionId: number, question: string, category: string) => {
+    if (width <= 530 && !isClickArray.includes(questionId)) {
       setModal({ ...modal, contentModal: true });
-      setModalContent({ question_id: question_id, question: question, category: category });
+      setModalContent({ questionId: questionId, question: question, category: category });
       //recoil로 전달
       document.body.style.overflowY = "hidden";
     } else {
       // 스페셜 질문 추가 버튼
-      if (!isClickArray.includes(question_id)) {
+      if (!isClickArray.includes(questionId)) {
         // isClickArray에 없을 경우만 추가함.
-        setIsClickArray([...isClickArray, question_id]);
+        setIsClickArray([...isClickArray, questionId]);
 
         setAddSpecialQuestionData([
           ...addSpecialQuestionData,
-          { question_id: question_id, question: question },
+          { questionId: questionId, question: question },
         ]);
         setpostWritingData([
           ...postWritingData,
-          { question_id: question_id, content: "", visibility: true },
+          { questionId: questionId, content: "", visibility: true },
         ]);
 
         // 원래 따로 파일 만들어야하는데, 그냥 edit데이터와 new데이터 새로 할당
         setpostEditWritingData([
           ...postEditWritingData,
           {
-            question_id: question_id,
+            questionId: questionId,
             content: "",
             visibility: true,
             question: question,
@@ -84,7 +84,7 @@ export const AddSpecialQuestionBox = ({ data }: { data: SpecialQuestionType }) =
   return (
     <Container
       $isHover={isHover}
-      $isClick={isClickArray.includes(data?.question_id)} //모달창 뛰우기
+      $isClick={isClickArray.includes(data?.questionId)} //모달창 뛰우기
     >
       <div
         className="topBox"
@@ -97,17 +97,17 @@ export const AddSpecialQuestionBox = ({ data }: { data: SpecialQuestionType }) =
         />
       </div>
       <BottomBox
-        $isClick={isClickArray.includes(data?.question_id)}
+        $isClick={isClickArray.includes(data?.questionId)}
         $fold={fold}
         onMouseOver={() => setIsHover(true)}
         onMouseOut={() => setIsHover(false)}
-        onClick={() => AddSpecialQuestionFunc(data?.question_id, data?.question, data?.category)}
+        onClick={() => AddSpecialQuestionFunc(data?.questionId, data?.question, data?.category)}
       >
         <div className="question">{data?.question}</div>
         <div className="etcBox">
           <TitleSideBox type="special">{data?.category}</TitleSideBox>
           <div className="addBtn">
-            {isClickArray.includes(data?.question_id) ? (
+            {isClickArray.includes(data?.questionId) ? (
               <p>추가됨</p>
             ) : (
               <>

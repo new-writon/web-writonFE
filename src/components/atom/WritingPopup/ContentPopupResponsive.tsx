@@ -20,16 +20,16 @@ const ContentPopupResponsive = () => {
   const [postWritingData, setpostWritingData] = useRecoilState(postWritingDataState);
 
   const modalClickFunc = () => {
-    if (!isClickArray.includes(modalContent.question_id)) {
+    if (!isClickArray.includes(modalContent.questionId)) {
       // isClickArray에 없을 경우만 추가함.
-      setIsClickArray([...isClickArray, modalContent.question_id]);
+      setIsClickArray([...isClickArray, modalContent.questionId]);
       setAddSpecialQuestionData([
         ...addSpecialQuestionData,
-        { question_id: modalContent.question_id, question: modalContent.question },
+        { questionId: modalContent.questionId, question: modalContent.question },
       ]);
       setpostWritingData([
         ...postWritingData,
-        { question_id: modalContent.question_id, content: "", visibility: true },
+        { questionId: modalContent.questionId, content: "", visibility: true },
       ]);
     }
     setModal({ ...modal, contentModal: false });

@@ -41,7 +41,7 @@ export const WriteView = ({
         userTemplateId: obj.userTemplateId,
         category: obj.category,
         question: obj.question,
-        question_id: obj.questionId,
+        questionId: obj.questionId,
         content: obj.content,
         visibility: obj.visibility === 1 ? true : false, // 예시로 true로 설정했지만 필요에 따라 다른 값으로 설정 가능
       }))

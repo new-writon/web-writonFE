@@ -22,7 +22,7 @@ export const MyPageCommentMobile = () => {
 
   const ChangeChallenge = async (item: challengeListProps) => {
     try {
-      const data = await getMyPageCommentItem(item.organization, item.challenge_id.toString());
+      const data = await getMyPageCommentItem(item.organization, item.challengeId.toString());
       if (viewState === "new") {
         setCommentData(data.reverse());
       } else if (viewState === "old") {
@@ -52,13 +52,13 @@ export const MyPageCommentMobile = () => {
           list.filter((item) => item.organization === localStorage.getItem("organization"))
         );
         const activeList = list.filter(
-          (item) => item.challenge_id.toString() === localStorage.getItem("challengeId")
+          (item) => item.challengeId.toString() === localStorage.getItem("challengeId")
         );
         setSelectChallenge(`${activeList[0].organization} ${activeList[0].challenge} 챌린지`);
         try {
           const data = await getMyPageCommentItem(
             activeList[0].organization,
-            activeList[0].challenge_id.toString()
+            activeList[0].challengeId.toString()
           );
           setCommentData(data);
         } catch {

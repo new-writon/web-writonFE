@@ -94,7 +94,7 @@ export const CommentPost = ({
             setCommentList([
               ...commentList,
               {
-                job: myData.job,
+                position: myData.position,
                 company: myData.company,
                 companyPublic: myData.companyPublic,
                 profile: myData.profile,
@@ -121,7 +121,7 @@ export const CommentPost = ({
               setReplyArray([
                 ...replyArray,
                 {
-                  job: myData.job,
+                  position: myData.position,
                   company: myData.company,
                   companyPublic: myData.companyPublic,
                   profile: myData.profile,

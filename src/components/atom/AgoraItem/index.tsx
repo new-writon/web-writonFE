@@ -46,7 +46,7 @@ export const AgoraItem = ({ data }: { data: agoraDataType }) => {
     <Container
       onClick={spaceAgoraBox}
       $type={
-        data?.myAgoraSign === "1"
+        data?.mySmallTalkSign === "1"
           ? "답변 완료"
           : isSameDay(data?.createdDate, new Date())
             ? "답변 달기"
@@ -65,7 +65,7 @@ export const AgoraItem = ({ data }: { data: agoraDataType }) => {
           </span>
         </div>
         <button className="comment">
-          {data?.myAgoraSign === "1"
+          {data?.mySmallTalkSign === "1"
             ? "답변 완료"
             : isSameDay(data?.createdDate, new Date())
               ? "답변 달기"

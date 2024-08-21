@@ -2,7 +2,7 @@ export const communityDummy = [
   {
     user: {
       name: "지지호",
-      job: "서비스기획",
+      position: "서비스기획",
       company: "카카오",
       profile: "임시",
       date: "2023",
@@ -30,7 +30,7 @@ export const communityDummy = [
   {
     user: {
       name: "지지호",
-      job: "서비스기획",
+      position: "서비스기획",
       company: "카카오",
       profile: "임시",
     },
@@ -57,7 +57,7 @@ export const communityDummy = [
   {
     user: {
       name: "지지호",
-      job: "서비스기획",
+      position: "서비스기획",
       company: "카카오",
       profile: "임시",
     },
@@ -84,7 +84,7 @@ export const communityDummy = [
   {
     user: {
       name: "지지호",
-      job: "서비스기획",
+      position: "서비스기획",
       company: "카카오",
     },
     comment: 99,
@@ -110,7 +110,7 @@ export const communityDummy = [
   {
     user: {
       name: "지지호",
-      job: "서비스기획",
+      position: "서비스기획",
       company: "카카오",
     },
     comment: 99,
@@ -136,7 +136,7 @@ export const communityDummy = [
   {
     user: {
       name: "지지호",
-      job: "서비스 기획",
+      position: "서비스 기획",
       company: "카카오",
     },
     comment: 99,
@@ -162,7 +162,7 @@ export const communityDummy = [
   {
     user: {
       name: "지지호",
-      job: "서비스기획",
+      position: "서비스기획",
       company: "카카오",
     },
     comment: 99,
@@ -188,7 +188,7 @@ export const communityDummy = [
   {
     user: {
       name: "지지호",
-      job: "서비스기획",
+      position: "서비스기획",
       company: "카카오",
     },
     comment: 99,
@@ -214,7 +214,7 @@ export const communityDummy = [
   {
     user: {
       name: "지지호",
-      job: "서비스기획",
+      position: "서비스기획",
       company: "카카오",
     },
     comment: 99,
@@ -240,7 +240,7 @@ export const communityDummy = [
   {
     user: {
       name: "지지호",
-      job: "서비스기획",
+      position: "서비스기획",
       company: "카카오",
     },
     comment: 99,
@@ -266,7 +266,7 @@ export const communityDummy = [
   {
     user: {
       name: "지지호",
-      job: "서비스기획",
+      position: "서비스기획",
       company: "카카오",
     },
     comment: 99,
@@ -292,7 +292,7 @@ export const communityDummy = [
   {
     user: {
       name: "지지호",
-      job: "서비스기획",
+      position: "서비스기획",
       company: "카카오",
     },
     comment: 99,
@@ -318,7 +318,7 @@ export const communityDummy = [
   {
     user: {
       name: "지지호",
-      job: "서비스기획",
+      position: "서비스기획",
       company: "카카오",
     },
     comment: 99,
@@ -344,7 +344,7 @@ export const communityDummy = [
   {
     user: {
       name: "지지호",
-      job: "서비스기획",
+      position: "서비스기획",
       company: "카카오",
     },
     comment: 99,
@@ -370,7 +370,7 @@ export const communityDummy = [
   {
     user: {
       name: "지지호",
-      job: "서비스기획",
+      position: "서비스기획",
       company: "카카오",
     },
     comment: 99,
@@ -396,7 +396,7 @@ export const communityDummy = [
   {
     user: {
       name: "지지호",
-      job: "서비스기획",
+      position: "서비스기획",
       company: "카카오",
     },
     comment: 99,
@@ -422,7 +422,7 @@ export const communityDummy = [
   {
     user: {
       name: "지지호",
-      job: "서비스기획",
+      position: "서비스기획",
       company: "카카오",
     },
     comment: 99,
@@ -448,7 +448,7 @@ export const communityDummy = [
   {
     user: {
       name: "지지호",
-      job: "서비스기획",
+      position: "서비스기획",
       company: "카카오",
     },
     comment: 99,
@@ -474,7 +474,7 @@ export const communityDummy = [
   {
     user: {
       name: "지지호",
-      job: "서비스기획",
+      position: "서비스기획",
       company: "카카오",
     },
     comment: 99,
@@ -500,7 +500,7 @@ export const communityDummy = [
   {
     user: {
       name: "지지호",
-      job: "서비스기획",
+      position: "서비스기획",
       company: "카카오",
     },
     comment: 99,
@@ -526,7 +526,7 @@ export const communityDummy = [
   {
     user: {
       name: "지지호",
-      job: "서비스기획",
+      position: "서비스기획",
       company: "카카오",
     },
     comment: 99,
@@ -552,7 +552,7 @@ export const communityDummy = [
   {
     user: {
       name: "지지호",
-      job: "서비스기획",
+      position: "서비스기획",
       company: "카카오",
     },
     comment: 99,
