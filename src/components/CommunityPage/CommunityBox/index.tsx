@@ -3,7 +3,6 @@ import React, { useEffect, useState } from "react";
 
 import { format } from "date-fns";
 import { useRecoilState } from "recoil";
-import "react-calendar/dist/Calendar.css";
 
 import { getCommunityContentData, getCommunityDate } from "@/apis/CommunityPage";
 import downArrowActive from "@/assets/communityPage/downArrowActive.svg";

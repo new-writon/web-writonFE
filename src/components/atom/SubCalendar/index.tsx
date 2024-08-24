@@ -1,22 +1,23 @@
 import moment from "moment";
 import Calendar from "react-calendar";
 import styled from "styled-components";
+import "react-calendar/dist/Calendar.css";
 
 export const SubCalendar = ({
   dateActive,
   clickDay,
 }: {
-  dateActive: string[];
-  clickDay: (value: Date) => void;
+  dateActive: string[]; //활성화할 날짜들 ["2024-08-02","2024-08-03","2024-08-04"]
+  clickDay: (value: Date) => void; //클릭한 날짜로 이벤트
 }) => {
   return (
     <Container>
       <Calendar
         locale="ko"
         formatDay={(_locale, date) => moment(date).format("D")}
-        value={localStorage.getItem("date")}
+        value={localStorage.getItem("date")} //저장된 날짜로 캘린더 시작 (현재 날짜 또는 커뮤니티 활성화 날짜)
         minDate={new Date(dateActive[0])} //활성화 시작 날짜
-        maxDate={new Date(dateActive[Number(localStorage.getItem("dateLastLength"))])} //활성화 끝나는 날짜
+        maxDate={new Date(dateActive[dateActive.length - 1])} //활성화 끝나는 날짜
         minDetail="month" // 상단 네비게이션에서 '월' 단위만 보이게 설정
         maxDetail="month" // 상단 네비게이션에서 '월' 단위만 보이게 설정
         onClickDay={clickDay}
