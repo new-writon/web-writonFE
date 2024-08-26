@@ -1,4 +1,4 @@
-import { CalendarRecordCurrentType, ChallengeCurrentType, communityContentProps } from "@/types";
+import { CalendarRecordCurrentType, ChallengeCurrentType, mainThirdCoponentType } from "@/types";
 
 import { getData } from ".";
 
@@ -20,7 +20,7 @@ export const getCalendarRecordCurrent = async (organization: string, challengeId
 
 //메인페이지 나의 회고 3번째 컴포넌트
 export const getRetrospectCurrent = async (organization: string, challengeId: string) => {
-  const response = await getData<communityContentProps[][]>(
+  const response = await getData<mainThirdCoponentType>(
     `/template/root/reminiscence/${organization}/${challengeId}`
   );
   return response.data;

@@ -159,6 +159,10 @@ export interface communitySecondCoponentType {
   templateData: communityContentProps[][];
 }
 
+export interface mainThirdCoponentType {
+  templateData: communityContentProps[][];
+}
+
 export interface communityContentProps {
   questionId: number;
   userTemplateId: number;
