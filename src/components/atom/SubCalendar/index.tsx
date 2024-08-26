@@ -50,6 +50,12 @@ const Container = styled.div`
     padding: 15px;
     box-sizing: border-box;
   }
+
+  .react-calendar button:enabled {
+    // 달력 원 크기
+    transform: scale(0.85);
+  }
+
   .react-calendar__navigation {
     display: flex;
     height: auto;
@@ -63,11 +69,16 @@ const Container = styled.div`
     text-decoration-line: blink;
   }
   .react-calendar__tile--now {
-    background: var(--White, #fff);
+    background: transparent;
   }
+  .react-calendar--selectRange .react-calendar__tile--now.react-calendar__tile--hover {
+    background: #e6e6e6 !important;
+  }
+
   .react-calendar__tile:disabled {
     background-color: var(--White, #fff);
     color: var(--Gray-50, #b1b4bc);
+    transform: scale(0.85);
   }
   .react-calendar__tile:disabled abbr {
     color: var(--Gray-50, #b1b4bc);
@@ -84,9 +95,9 @@ const Container = styled.div`
   .react-calendar__tile--active abbr {
     color: var(--White, #fff);
   }
-  .react-calendar__tile:enabled:hover {
+  /* .react-calendar__tile:enabled:hover {
     background-color: var(--Gray-10, #fcfcfc);
-  }
+  } */
   .react-calendar__tile:enabled:focus {
     background-color: var(--Gray-30, #edeef1);
   }
@@ -94,6 +105,16 @@ const Container = styled.div`
   .react-calendar__tile--active:enabled:focus {
     background-color: #000;
     color: var(--White, #fff);
+  }
+
+  .react-calendar__month-view__days__day--weekend {
+    // 주말 글씨 빨간색 없애기
+    color: #000000;
+  }
+  .react-calendar__month-view__days__day--neighboringMonth,
+  .react-calendar__decade-view__years__year--neighboringDecade,
+  .react-calendar__century-view__decades__decade--neighboringCentury {
+    color: #757575;
   }
 
   .react-calendar__navigation__label {
