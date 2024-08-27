@@ -148,13 +148,13 @@ export const StoryBox = ({
                   />
                 </div>
                 <div className="userAddInfo">
-                  <div className="job">{popUpdata?.job}</div>
+                  <div className="job">{popUpdata?.position}</div>
                   <div className={`company ${popUpdata?.company === null && "none"}`}>
                     {popUpdata?.company}
                   </div>
                 </div>
               </div>
-              <div className="oneline">{popUpdata?.job_introduce}</div>
+              <div className="oneline">{popUpdata?.positionIntroduce}</div>
             </IntroducePopup>
           )}
 
@@ -203,11 +203,11 @@ export const StoryBox = ({
                   />
                 </div>
                 <div className="userAddInfo">
-                  <div className="job">{popUpdata?.job}</div>
+                  <div className="job">{popUpdata?.position}</div>
                   <div className="company">{popUpdata?.company}</div>
                 </div>
               </div>
-              <div className="oneline">{popUpdata?.job_introduce}</div>
+              <div className="oneline">{popUpdata?.positionIntroduce}</div>
             </IntroducePopup>
           )}
         </div>

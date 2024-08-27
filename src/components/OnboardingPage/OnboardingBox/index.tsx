@@ -29,8 +29,8 @@ import {
 const JobCategory = ["기획", "운영", "개발", "마케팅", "디자인", "기타"];
 interface onBoardingDataProps {
   nickname: string;
-  job: string;
-  jobIntroduce: string;
+  position: string;
+  positionIntroduce: string;
   hireDate: string;
   company: string;
   companyPublic: boolean;
@@ -42,8 +42,8 @@ export const OnboardingBox = () => {
   const executeAsyncTask = useAsyncWithLoading();
   const [onBoardingData, setOnBoardingData] = useState<onBoardingDataProps>({
     nickname: "",
-    job: "",
-    jobIntroduce: "",
+    position: "",
+    positionIntroduce: "",
     hireDate: "",
     company: "",
     companyPublic: true,
@@ -53,7 +53,7 @@ export const OnboardingBox = () => {
   const textareaRef = useRef<HTMLTextAreaElement | null>(null);
 
   const [nicknameNum, setNicknameNum] = useState<number>(0);
-  const [jobIntroduceNum, setJobIntroduceNum] = useState<number>(0);
+  const [positionIntroduceNum, setPositionIntroduceNum] = useState<number>(0);
   const [companyNum, setCompanyNum] = useState<number>(0);
 
   const [duplicateShow, setDuplicateShow] = useState<boolean>(false);
@@ -73,15 +73,15 @@ export const OnboardingBox = () => {
     }
   };
 
-  const handleJobIntroduceChange = (e: ChangeEvent<HTMLTextAreaElement>) => {
+  const handlePositionIntroduceChange = (e: ChangeEvent<HTMLTextAreaElement>) => {
     const value = e.target.value;
 
     const validCharacters =
       value.match(/[ㄱ-ㅎ|ㅏ-ㅣ|가-힣a-zA-Z0-9\s!"#$%&'()*+,-./:;<=>?@[\\\]^_`{|}~]/g) || [];
 
     if (value.length < 51) {
-      setOnBoardingData({ ...onBoardingData, jobIntroduce: validCharacters.join("") }); // 추출된 문자를 다시 합침
-      setJobIntroduceNum(validCharacters.length);
+      setOnBoardingData({ ...onBoardingData, positionIntroduce: validCharacters.join("") }); // 추출된 문자를 다시 합침
+      setPositionIntroduceNum(validCharacters.length);
     }
   };
 
@@ -198,8 +198,8 @@ export const OnboardingBox = () => {
       duplicate &&
       onBoardingData.company &&
       onBoardingData.hireDate &&
-      onBoardingData.job &&
-      onBoardingData.jobIntroduce
+      onBoardingData.position &&
+      onBoardingData.positionIntroduce
     ) {
       setButtonOn(true);
     }
@@ -207,8 +207,8 @@ export const OnboardingBox = () => {
     duplicate,
     onBoardingData.company,
     onBoardingData.hireDate,
-    onBoardingData.job,
-    onBoardingData.jobIntroduce,
+    onBoardingData.position,
+    onBoardingData.positionIntroduce,
     onBoardingData.nickname,
   ]);
 
@@ -286,8 +286,8 @@ export const OnboardingBox = () => {
             {JobCategory.map((item, idx) => (
               <React.Fragment key={idx}>
                 <KeywordButton
-                  onClick={() => setOnBoardingData({ ...onBoardingData, job: item })}
-                  select={onBoardingData.job === item}
+                  onClick={() => setOnBoardingData({ ...onBoardingData, position: item })}
+                  select={onBoardingData.position === item}
                 >
                   {item}
                 </KeywordButton>
@@ -303,13 +303,13 @@ export const OnboardingBox = () => {
           </p>
           <textarea
             ref={textareaRef}
-            value={onBoardingData.jobIntroduce}
-            onChange={(e) => handleJobIntroduceChange(e)}
+            value={onBoardingData.positionIntroduce}
+            onChange={(e) => handlePositionIntroduceChange(e)}
             placeholder={`어떤 일을 하나요? 간단하게 소개해주세요.\nex) 부트캠프 division의 UX/UI 디자인 시스템 구축 업무 어시스트`}
           />
           <div className="parityCheck">
             <div></div>
-            <div className="numCheck">({jobIntroduceNum}/50)</div>
+            <div className="numCheck">({positionIntroduceNum}/50)</div>
           </div>
         </JobIntroBox>
         <CompanyBox>

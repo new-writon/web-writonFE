@@ -106,10 +106,10 @@ export const TooltipProfile = ({
         <div className="line"></div>
         <Middle>
           <div className="userAddInfo">
-            <div className="job">{userProfile?.job}</div>
+            <div className="job">{userProfile?.position}</div>
             <div className="company">{userProfile?.company || "비공개"}</div>
           </div>
-          <div className="oneline">{userProfile?.job_introduce}</div>
+          <div className="oneline">{userProfile?.positionIntroduce}</div>
         </Middle>
         <div className="line"></div>
         <Bottom>
@@ -118,8 +118,8 @@ export const TooltipProfile = ({
               <div className="currentChallengeTitle">참여중인 챌린지</div>
               {ChallengeList?.filter((data) => data.challengeFinishSign === "0").map((item) => (
                 <CurrrentChallengeButton
-                  challengeId={item.challenge_id.toString()}
-                  onClick={() => ChangeChallenge(item.challenge_id.toString())}
+                  challengeId={item.challengeId.toString()}
+                  onClick={() => ChangeChallenge(item.challengeId.toString())}
                 >
                   {item?.organization} {item?.challenge} 챌린지
                 </CurrrentChallengeButton>
@@ -131,8 +131,8 @@ export const TooltipProfile = ({
               <div className="pastChallengeTitle">지난 챌린지</div>
               {ChallengeList?.filter((data) => data.challengeFinishSign === "1").map((item) => (
                 <CurrrentChallengeButton
-                  challengeId={item.challenge_id.toString()}
-                  onClick={() => ChangeChallenge(item.challenge_id.toString())}
+                  challengeId={item.challengeId.toString()}
+                  onClick={() => ChangeChallenge(item.challengeId.toString())}
                 >
                   {item?.organization} {item?.challenge} 챌린지
                 </CurrrentChallengeButton>

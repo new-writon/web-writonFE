@@ -6,7 +6,7 @@ import { Container } from "./style";
 
 interface userProps {
   name: string;
-  job: string;
+  position: string;
   company: string | null;
   profile: string;
   date: string;
@@ -23,7 +23,7 @@ export const UserInfo = ({ data }: { data: userProps }) => {
       </div>
       <div className="user">
         <div className="top">
-          <div className="job">{data?.job}</div>
+          <div className="position">{data?.position}</div>
           <div className={`company ${data?.company === null && "hide"}`}>{data?.company}</div>
         </div>
         <div className="date">{format(data?.date, "M월 d일")}</div>{" "}

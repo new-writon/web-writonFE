@@ -108,7 +108,7 @@ export const DetailPage = () => {
               data={{
                 profile: detailData[0]?.profile,
                 nickname: detailData[0]?.nickname,
-                job: detailData[0]?.job,
+                position: detailData[0]?.position,
                 company: detailData[0]?.company,
                 createdAt: detailData[0]?.createdAt,
               }}

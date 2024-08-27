@@ -59,7 +59,7 @@ export interface StoryItemProps {
   name: string;
   message: string;
   profile: string;
-  job: string;
+  position: string;
   company: string;
   oneline: string;
 }
@@ -67,7 +67,7 @@ export interface StoryItemProps {
 export interface CommunityItemProps {
   user: {
     name: string;
-    job: string;
+    position: string;
     company: string;
     profile?: string;
     date?: string;
@@ -100,7 +100,7 @@ export interface CalendarRecordCurrentType {
 }
 
 export interface RetrospectCurrentType {
-  question_id: number;
+  questionId: number;
   user_templete_id: number;
   question_content_id: number;
   content: string;
@@ -110,23 +110,23 @@ export interface RetrospectCurrentType {
 }
 
 export interface BasicQuestionType {
-  question_id: number;
+  questionId: number;
   question: string;
 }
 
 export interface SpecialQuestionType {
-  question_id: number;
+  questionId: number;
   question: string;
   category: string;
 }
 
 export interface addSpecialQuestionArrayType {
-  question_id: number;
+  questionId: number;
   question: string;
 }
 
 export interface postWritingDataType {
-  question_id: number;
+  questionId: number;
   content: string;
   visibility: boolean;
 }
@@ -144,18 +144,22 @@ export interface communityFirstComponentType {
 
 export interface communityStoryProps {
   profile: string;
-  job: string;
-  job_introduce: string;
+  position: string;
+  positionIntroduce: string;
   nickname: string;
   companyPublic: number;
   company: string | null;
-  cheering_phrase: string | null;
-  cheering_phrase_date: string;
+  cheeringPhrase: string | null;
+  cheeringPhraseDate: string;
   email?: string;
 }
 
 export interface communitySecondCoponentType {
   challengeCompleteCount: number;
+  templateData: communityContentProps[][];
+}
+
+export interface mainThirdCoponentType {
   templateData: communityContentProps[][];
 }
 
@@ -167,7 +171,7 @@ export interface communityContentProps {
   category: string;
   question: string;
   createdAt: string;
-  job: string;
+  position: string;
   company: string | null;
   companyPublic: number;
   nickname: string;
@@ -180,7 +184,7 @@ export interface communityContentProps {
 }
 
 export interface commentProps {
-  job: string;
+  position: string;
   company: string | null;
   companyPublic: number;
   profile: string;
@@ -207,7 +211,7 @@ export interface finishModalType {
 
 export interface challengeListProps {
   organization: string;
-  challenge_id: number;
+  challengeId: number;
   challenge: string;
   challengeFinishSign: string;
 }
@@ -220,16 +224,16 @@ export interface myPageProps {
   nickname: string;
   hiredate: string;
   company: string;
-  job: string;
-  jobIntroduce: string;
+  position: string;
+  positionIntroduce: string;
   companyPublic: number;
 }
 export interface myProfileEditProps {
   nickname: string | undefined;
   hireDate: string;
   company: string | undefined;
-  job: string | undefined;
-  jobIntroduce: string | undefined;
+  position: string | undefined;
+  positionIntroduce: string | undefined;
   companyPublic: boolean;
 }
 
@@ -263,26 +267,26 @@ export interface finishModalButtonProps extends ButtonProps {
 }
 
 export interface agoraDataType {
-  agoraId: number;
+  smallTalkId: number;
   question: string;
   participateCount: number;
   nickname: string;
   createdTime: string;
   createdDate: string;
   profile: string;
-  myAgoraSign: string;
+  mySmallTalkSign: string;
 }
 
 export interface agoraCommentType {
-  agora_comment_id: number;
+  smallTalkCommentId: number;
   content: string;
   nickname: string;
   profile: string;
-  created_time: string;
+  createdTime: string;
   myCommentSign: string;
 }
 export interface satisfactionQuestionType {
-  satisfaction_id: number;
+  satisfactionId: number;
   type: string;
   question: string;
   score?: number;

@@ -28,9 +28,9 @@ export const AgoraPage = () => {
   const [agoraModalBox, setAgoraModalBox] = useRecoilState(agoraModalBoxState);
 
   const [chatBasicTopicData] = useState<agoraCommentType>({
-    agora_comment_id: agoraData?.agoraId,
+    smallTalkCommentId: agoraData?.smallTalkId,
     nickname: agoraData?.nickname,
-    created_time: agoraData?.createdTime,
+    createdTime: agoraData?.createdTime,
     profile: agoraData?.profile,
     content: agoraData?.question,
     myCommentSign: "0",
@@ -61,7 +61,7 @@ export const AgoraPage = () => {
     executeAsyncTask(async () => {
       try {
         const data = await Promise.all([
-          getAgoraChat(agoraData?.agoraId),
+          getAgoraChat(agoraData?.smallTalkId),
           getMyCommunityStory(localStorage.getItem("challengeId") || "1"),
         ]);
         setChatData(data[0]);
@@ -203,7 +203,7 @@ export const AgoraPage = () => {
             <CommentPostAgora
               nickname={nickname}
               myProfile={myProfile}
-              agoraId={agoraData?.agoraId}
+              smallTalkId={agoraData?.smallTalkId}
               chatData={chatData}
               setChatData={setChatData}
               agoraDate={agoraData?.createdDate}

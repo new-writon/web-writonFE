@@ -47,10 +47,10 @@ export const DeletePopupResponsive = () => {
 
   const deleteClickFunc = () => {
     setAddSpecialQuestionData(
-      addSpecialQuestionData.filter((question) => question.question_id !== deleteQuestionId) // 해당되는 id 값 배열에서 삭제
+      addSpecialQuestionData.filter((question) => question.questionId !== deleteQuestionId) // 해당되는 id 값 배열에서 삭제
     );
     setIsClickArray(isClickArray.filter((id) => id !== deleteQuestionId));
-    setpostWritingData(postWritingData.filter((item) => item.question_id !== deleteQuestionId));
+    setpostWritingData(postWritingData.filter((item) => item.questionId !== deleteQuestionId));
     setModal({ ...modal, deleteModal: false });
     document.body.style.overflowY = "auto";
   };

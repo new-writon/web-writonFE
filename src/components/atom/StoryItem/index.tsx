@@ -24,10 +24,10 @@ export const StoryItem = ({
   return (
     <Container
       $someone={someone}
-      $message={data?.cheering_phrase}
+      $message={data?.cheeringPhrase}
     >
       {someone === "me" ? (
-        data?.cheering_phrase === null ? (
+        data?.cheeringPhrase === null ? (
           <div
             className="storyMessage"
             onClick={TodayWrite === "" ? TodayWriteFunc : () => {}}
@@ -37,13 +37,13 @@ export const StoryItem = ({
         ) : (
           <div
             className="storyMessage"
-            dangerouslySetInnerHTML={{ __html: data?.cheering_phrase || "<div></div>" }}
+            dangerouslySetInnerHTML={{ __html: data?.cheeringPhrase || "<div></div>" }}
           ></div>
         )
       ) : (
         <div
           className="storyMessage"
-          dangerouslySetInnerHTML={{ __html: data?.cheering_phrase || "<div></div>" }}
+          dangerouslySetInnerHTML={{ __html: data?.cheeringPhrase || "<div></div>" }}
         ></div>
       )}
       <div className="profileBox">
@@ -56,7 +56,7 @@ export const StoryItem = ({
             alt="profile"
           />
         </div>
-        <div className="job">{data?.job}</div>
+        <div className="job">{data?.position}</div>
         <div className="company">{data?.company || "비공개"}</div>
       </div>
       {/* <div className="introducePopup">

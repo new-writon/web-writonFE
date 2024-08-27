@@ -193,6 +193,7 @@ const Header = () => {
         const activeList = data[1].filter(
           (item) => item.organization === localStorage.getItem("organization")
         );
+        console.log(activeList);
         setChallengeList(activeList);
 
         const changeData = data[1].reduce(

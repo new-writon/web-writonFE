@@ -62,7 +62,7 @@ const Login = () => {
               localStorage.setItem("accessToken", response.accessToken);
               localStorage.setItem("refreshToken", response.refreshToken);
               localStorage.setItem("organization", data[0]?.organization);
-              localStorage.setItem("challengeId", data[0]?.challenge_id.toString());
+              localStorage.setItem("challengeId", data[0]?.challengeId.toString());
               navigate("/");
             } else {
               alert("초대장을 받고 들어와주세요!"); // 모달창으로 변경하기

@@ -36,8 +36,8 @@ export const FinishModal = () => {
   const executeAsyncTask = useAsyncWithLoading();
 
   const reviewForm = async () => {
-    const simplifiedData = satisfactionQuestion?.map(({ satisfaction_id, score }) => ({
-      satisfactionId: satisfaction_id,
+    const simplifiedData = satisfactionQuestion?.map(({ satisfactionId, score }) => ({
+      satisfactionId: satisfactionId,
       score,
     }));
     if (simplifiedData?.some((item) => item.score === 0) || reEngagementCheck.score === 2) {

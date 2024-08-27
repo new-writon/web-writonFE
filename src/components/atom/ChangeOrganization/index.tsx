@@ -26,7 +26,7 @@ export const ChangeOrganization = forwardRef<HTMLDivElement, ChangeOrganizationP
           {organizationList?.map((item, idx) => (
             <React.Fragment key={idx}>
               <div
-                onClick={() => changeOrganization(item.organization, item.challenge_id)}
+                onClick={() => changeOrganization(item.organization, item.challengeId)}
                 className={`organization-item ${
                   localStorage.getItem("organization") === item.organization && "active"
                 }`}
