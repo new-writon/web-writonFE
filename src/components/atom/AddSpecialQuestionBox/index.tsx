@@ -35,10 +35,10 @@ export const AddSpecialQuestionBox = ({ data }: { data: SpecialQuestionType }) =
   const [modal, setModal] = useRecoilState(modalBackgroundState);
   const setModalContent = useSetRecoilState(modalContentState);
   // 스페셜 질문 추가 버튼 함수
-  const AddSpecialQuestionFunc = (questionId: number, question: string, category: string) => {
+  const AddSpecialQuestionFunc = (questionId: number, question: string, keword: string) => {
     if (width <= 530 && !isClickArray.includes(questionId)) {
       setModal({ ...modal, contentModal: true });
-      setModalContent({ questionId: questionId, question: question, category: category });
+      setModalContent({ questionId: questionId, question: question, keyword: keword });
       //recoil로 전달
       document.body.style.overflowY = "hidden";
     } else {
@@ -101,11 +101,11 @@ export const AddSpecialQuestionBox = ({ data }: { data: SpecialQuestionType }) =
         $fold={fold}
         onMouseOver={() => setIsHover(true)}
         onMouseOut={() => setIsHover(false)}
-        onClick={() => AddSpecialQuestionFunc(data?.questionId, data?.question, data?.category)}
+        onClick={() => AddSpecialQuestionFunc(data?.questionId, data?.question, data?.keyword)}
       >
         <div className="question">{data?.question}</div>
         <div className="etcBox">
-          <TitleSideBox type="special">{data?.category}</TitleSideBox>
+          <TitleSideBox type="special">{data?.keyword}</TitleSideBox>
           <div className="addBtn">
             {isClickArray.includes(data?.questionId) ? (
               <p>추가됨</p>

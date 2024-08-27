@@ -41,7 +41,7 @@ const ContentPopupResponsive = () => {
       <div className="contentBox">
         <div className="popUpTitle">이 질문을 추가할까요?</div>
         <div>
-          <div className="popUpSemiTitle">{modalContent?.category} 키워드 관련 스페셜 질문</div>
+          <div className="popUpSemiTitle">{modalContent?.keyword} 키워드 관련 스페셜 질문</div>
           <div className="popUpmessage">{modalContent?.question}</div>
         </div>
         <div className="popUpBtn">

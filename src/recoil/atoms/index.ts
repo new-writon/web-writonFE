@@ -82,9 +82,9 @@ export const modalBackgroundState = atom<{
 });
 
 // 모달 전달 데이터
-export const modalContentState = atom<{ questionId: number; question: string; category: string }>({
+export const modalContentState = atom<{ questionId: number; question: string; keyword: string }>({
   key: "modalContentState",
-  default: { questionId: 0, question: "", category: "" },
+  default: { questionId: 0, question: "", keyword: "" },
 });
 
 export const deleteQuestionIdState = atom<number>({

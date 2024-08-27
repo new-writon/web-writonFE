@@ -117,7 +117,7 @@ export interface BasicQuestionType {
 export interface SpecialQuestionType {
   questionId: number;
   question: string;
-  category: string;
+  keyword: string;
 }
 
 export interface addSpecialQuestionArrayType {
