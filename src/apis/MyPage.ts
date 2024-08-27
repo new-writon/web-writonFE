@@ -1,6 +1,6 @@
 import {
   accountNumberProps,
-  communityContentProps,
+  mainThirdCoponentType,
   myPageCommentType,
   myPageProps,
   myProfileEditProps,
@@ -28,7 +28,7 @@ export const patchAccountNumberData = async (accountNumberData: accountNumberPro
 
 //마이페이지 나의 회고 모아보기
 export const getMyPageRetrospectItem = async (organization: string, challengeId: string) => {
-  const response = await getData<communityContentProps[][]>(
+  const response = await getData<mainThirdCoponentType>(
     `/template/root/reminiscence/${organization}/${challengeId}`
   );
   return response.data;
