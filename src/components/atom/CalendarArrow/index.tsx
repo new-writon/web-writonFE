@@ -5,11 +5,13 @@ import arrow from "@/assets/communityPage/storyArrow.svg";
 import { Container } from "./style";
 
 export const CalendarArrow = ({
-  defaultToday,
+  firstDay,
+  lastDay,
   calendarToday,
   setCalendarToday,
 }: {
-  defaultToday: string | Date;
+  firstDay: string | Date;
+  lastDay: string | Date;
   calendarToday: Date;
   setCalendarToday: (calendarToday: Date) => void;
 }) => {
@@ -19,11 +21,15 @@ export const CalendarArrow = ({
         className="previous"
         src={arrow}
         alt="<"
-        onClick={() => setCalendarToday(addMonths(calendarToday, -1))}
+        onClick={
+          getMonth(firstDay) !== getMonth(calendarToday)
+            ? () => setCalendarToday(addMonths(calendarToday, -1))
+            : () => {}
+        }
       />
       <div
         className="today"
-        onClick={() => setCalendarToday(new Date(defaultToday))}
+        onClick={() => setCalendarToday(new Date(lastDay))}
       >
         오늘
       </div>
@@ -32,7 +38,7 @@ export const CalendarArrow = ({
         src={arrow}
         alt="<"
         onClick={
-          getMonth(defaultToday) !== getMonth(calendarToday)
+          getMonth(lastDay) !== getMonth(calendarToday)
             ? () => setCalendarToday(addMonths(calendarToday, 1))
             : () => {}
         }

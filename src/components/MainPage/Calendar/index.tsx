@@ -7,6 +7,7 @@ import clalendarIcon from "@/assets/mainPage/icon-calendar.svg";
 import topArrow from "@/assets/mainPage/topArrow.svg";
 import { CalendarArrow } from "@/components/atom/CalendarArrow";
 import { MainSemiTitle } from "@/components/atom/MainSemiTitle";
+import { MonthChip } from "@/components/atom/MonthChip";
 import { TooltipButton } from "@/components/atom/TooltipButton";
 import { TooltipMessage } from "@/components/atom/TooltipMessage";
 import { Inner } from "@/style/global";
@@ -48,9 +49,10 @@ export const Calendar = ({ CalendarData }: { CalendarData: CalendarRecordCurrent
           <div className="topBarLeft">
             <MainSemiTitle font={1.25}>
               {finishDay
-                ? `${format(today, "M")}월 ${weekNumber}주차 도전중`
-                : `${format(CalendarData[CalendarData?.length - 1].date, "M")}월 챌린지 종료`}
+                ? `${format(today, "M")}월 ${weekNumber}주차`
+                : `${getMonth(calendarToday) + 1}월`}
             </MainSemiTitle>
+            <MonthChip finishDay={finishDay} />
             <TooltipButton
               tooltipOn={tooltipOn}
               onClick={() => setTooltopOn(!tooltipOn)}
@@ -60,7 +62,8 @@ export const Calendar = ({ CalendarData }: { CalendarData: CalendarRecordCurrent
           </div>
           <div className="calendar-operation">
             <CalendarArrow
-              defaultToday={CalendarData[CalendarData.length - 1].date}
+              firstDay={CalendarData[0].date}
+              lastDay={CalendarData[CalendarData.length - 1].date}
               calendarToday={calendarToday}
               setCalendarToday={setCalendarToday}
             />
