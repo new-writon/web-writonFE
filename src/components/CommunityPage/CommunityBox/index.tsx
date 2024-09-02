@@ -87,15 +87,16 @@ export const CommunityBox = () => {
 
   const clickDay = (value: Date) => {
     executeAsyncTask(async () => {
-      const result = await getCommunityContentData(
-        localStorage.getItem("organization") || "",
-        localStorage.getItem("challengeId") || "1",
-        format(value, "yyyy-MM-dd")
-      );
-      localStorage.setItem("date", format(value, "yyyy-MM-dd"));
-      setDateLength(dateActive.indexOf(format(value, "yyyy-MM-dd")));
-      setCommunitySecondData(result);
-      const templateData = Array.from(result.templateData || []).reverse();
+      try {
+        const result = await getCommunityContentData(
+          localStorage.getItem("organization") || "",
+          localStorage.getItem("challengeId") || "1",
+          format(value, "yyyy-MM-dd")
+        );
+        localStorage.setItem("date", format(value, "yyyy-MM-dd"));
+        setDateLength(dateActive.indexOf(format(value, "yyyy-MM-dd")));
+        setCommunitySecondData(result);
+        const templateData = Array.from(result.templateData || []).reverse();
 
         // 카테고리에 따른 글 필터링
         if (categoriesArray.includes("전체")) {
@@ -109,9 +110,7 @@ export const CommunityBox = () => {
         setCalendarOn(false);
       } catch {
         throw new Error("shit");
-
       }
-      setCalendarOn(false);
     });
   };
 
