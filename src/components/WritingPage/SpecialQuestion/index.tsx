@@ -39,35 +39,35 @@ export const SpecialQuestion = ({
   const [modal, setModal] = useRecoilState(modalBackgroundState);
   const setDeleteQuestionId = useSetRecoilState(deleteQuestionIdState);
 
-  const onVisibility = (question_id: number) => {
+  const onVisibility = (questionId: number) => {
     setToggleSwitchOn(!toggleSwitchOn);
     setpostWritingData(
       //questionid 가 같은 곳에 visbility 집아넣는다.
       postWritingData?.map((item) =>
-        item.question_id === question_id ? { ...item, visibility: toggleSwitchOn } : item
+        item.questionId === questionId ? { ...item, visibility: toggleSwitchOn } : item
       )
     );
   };
-  const onChange = (e: React.ChangeEvent<HTMLTextAreaElement>, question_id: number) => {
+  const onChange = (e: React.ChangeEvent<HTMLTextAreaElement>, questionId: number) => {
     setText(e.currentTarget.value);
     setpostWritingData(
       postWritingData.map((item) =>
-        item.question_id === question_id ? { ...item, content: e.currentTarget.value } : item
+        item.questionId === questionId ? { ...item, content: e.currentTarget.value } : item
       )
     );
   };
-  const deleteQuestion = (question_id: number) => {
+  const deleteQuestion = (questionId: number) => {
     setAddSpecialQuestionData(
-      addSpecialQuestionData.filter((question) => question.question_id !== question_id) // 해당되는 id 값 배열에서 삭제
+      addSpecialQuestionData.filter((question) => question.questionId !== questionId) // 해당되는 id 값 배열에서 삭제
     );
-    setIsClickArray(isClickArray.filter((id) => id !== question_id));
-    setpostWritingData(postWritingData.filter((item) => item.question_id !== question_id));
+    setIsClickArray(isClickArray.filter((id) => id !== questionId));
+    setpostWritingData(postWritingData.filter((item) => item.questionId !== questionId));
     setpopUpOn(false);
   };
 
-  const popUpFunc = (question_id: number) => {
+  const popUpFunc = (questionId: number) => {
     if (width <= 530) {
-      setDeleteQuestionId(question_id);
+      setDeleteQuestionId(questionId);
       setModal({ ...modal, deleteModal: true });
       document.body.style.overflowY = "hidden";
     } else {
@@ -91,11 +91,11 @@ export const SpecialQuestion = ({
         <img
           src={close}
           alt="X"
-          onClick={() => popUpFunc(data?.question_id)}
+          onClick={() => popUpFunc(data?.questionId)}
         />
         {popUpOn && (
           <DeletePopup
-            onClick={() => deleteQuestion(data?.question_id)}
+            onClick={() => deleteQuestion(data?.questionId)}
             setpopUpOn={setpopUpOn}
           />
         )}
@@ -108,7 +108,7 @@ export const SpecialQuestion = ({
             </MainSemiTitle>
           </div>
           <PublicButton
-            onClick={() => onVisibility(data?.question_id)}
+            onClick={() => onVisibility(data?.questionId)}
             secret={!toggleSwitchOn}
             state="editWrite"
           />
@@ -116,7 +116,7 @@ export const SpecialQuestion = ({
             {toggleSwitchOn ? "비공개" : "공개"}
             <label
               className={`toggleSwitch ${toggleSwitchOn && "active"}`}
-              onClick={() => onVisibility(data?.question_id)}
+              onClick={() => onVisibility(data?.questionId)}
             >
               <span className="toggleButton"></span>
             </label>
@@ -125,7 +125,7 @@ export const SpecialQuestion = ({
         <textarea
           ref={textareaRef}
           value={text}
-          onChange={(e) => onChange(e, data?.question_id)}
+          onChange={(e) => onChange(e, data?.questionId)}
           placeholder="글을 입력해주세요."
         />
       </div>

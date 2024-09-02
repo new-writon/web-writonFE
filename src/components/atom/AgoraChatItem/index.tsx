@@ -16,7 +16,7 @@ export const AgoraChatOtherItem = ({ type, data }: { type?: string; data: agoraC
         <span className="nickname">{data?.nickname}</span>
         <div className="chat">{data?.content}</div>
       </div>
-      <div className="time">{data?.created_time}</div>
+      <div className="time">{data?.createdTime}</div>
     </OtherContainer>
   );
 };
@@ -24,7 +24,7 @@ export const AgoraChatOtherItem = ({ type, data }: { type?: string; data: agoraC
 export const AgoraChatMyItem = ({ data }: { data: agoraCommentType }) => {
   return (
     <MyContainer>
-      <div className="time">{data?.created_time}</div>
+      <div className="time">{data?.createdTime}</div>
       <div className="chat-box">
         <span className="nickname">{data?.nickname}</span>
         <div className="chat">{data?.content}</div>

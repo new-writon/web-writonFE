@@ -20,16 +20,16 @@ const ContentPopupResponsive = () => {
   const [postWritingData, setpostWritingData] = useRecoilState(postWritingDataState);
 
   const modalClickFunc = () => {
-    if (!isClickArray.includes(modalContent.question_id)) {
+    if (!isClickArray.includes(modalContent.questionId)) {
       // isClickArray에 없을 경우만 추가함.
-      setIsClickArray([...isClickArray, modalContent.question_id]);
+      setIsClickArray([...isClickArray, modalContent.questionId]);
       setAddSpecialQuestionData([
         ...addSpecialQuestionData,
-        { question_id: modalContent.question_id, question: modalContent.question },
+        { questionId: modalContent.questionId, question: modalContent.question },
       ]);
       setpostWritingData([
         ...postWritingData,
-        { question_id: modalContent.question_id, content: "", visibility: true },
+        { questionId: modalContent.questionId, content: "", visibility: true },
       ]);
     }
     setModal({ ...modal, contentModal: false });
@@ -41,7 +41,7 @@ const ContentPopupResponsive = () => {
       <div className="contentBox">
         <div className="popUpTitle">이 질문을 추가할까요?</div>
         <div>
-          <div className="popUpSemiTitle">{modalContent?.category} 키워드 관련 스페셜 질문</div>
+          <div className="popUpSemiTitle">{modalContent?.keyword} 키워드 관련 스페셜 질문</div>
           <div className="popUpmessage">{modalContent?.question}</div>
         </div>
         <div className="popUpBtn">

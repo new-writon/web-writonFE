@@ -26,8 +26,8 @@ export const ProfileSettingMobile = ({ myData }: { myData: myPageProps | undefin
   const [editActive, setEditActive] = useState<boolean>(false);
   const [ProfileData, setProfileData] = useState<myProfileEditProps>({
     nickname: "",
-    job: "",
-    jobIntroduce: "",
+    position: "",
+    positionIntroduce: "",
     hireDate: "",
     company: "",
     companyPublic: false,
@@ -94,14 +94,14 @@ export const ProfileSettingMobile = ({ myData }: { myData: myPageProps | undefin
       setProfileData({ ...ProfileData, hireDate: formattedDate });
     }
   };
-  const handleJobIntroduceChange = (e: ChangeEvent<HTMLTextAreaElement>) => {
+  const handlePositionIntroduceChange = (e: ChangeEvent<HTMLTextAreaElement>) => {
     const value = e.target.value;
 
     const validCharacters =
       value.match(/[ㄱ-ㅎ|ㅏ-ㅣ|가-힣a-zA-Z0-9\s!"#$%&'()*+,-./:;<=>?@[\\\]^_`{|}~]/g) || [];
 
     if (value.length < 51) {
-      setProfileData({ ...ProfileData, jobIntroduce: validCharacters.join("") }); // 추출된 문자를 다시 합침
+      setProfileData({ ...ProfileData, positionIntroduce: validCharacters.join("") }); // 추출된 문자를 다시 합침
     }
   };
 
@@ -121,8 +121,8 @@ export const ProfileSettingMobile = ({ myData }: { myData: myPageProps | undefin
     setProfileData({
       ...ProfileData,
       nickname: myData?.nickname,
-      job: myData?.job,
-      jobIntroduce: myData?.jobIntroduce,
+      position: myData?.position,
+      positionIntroduce: myData?.positionIntroduce,
       hireDate: format(myData?.hiredate || new Date(), "yyyy-MM-dd"),
       company: myData?.company,
       companyPublic: myData?.companyPublic === 1 ? true : false,
@@ -186,13 +186,13 @@ export const ProfileSettingMobile = ({ myData }: { myData: myPageProps | undefin
                   onClick={() => {}}
                   select={false}
                 >
-                  {myData?.job}
+                  {myData?.position}
                 </KeywordButton>
               </div>
             </div>
             <div className="editField">
               <div className="editTitle">{`직무에 대한\n한 줄 소개`}</div>
-              <div className="editText">{myData?.jobIntroduce}</div>
+              <div className="editText">{myData?.positionIntroduce}</div>
             </div>
           </ChallengeSetting>
         </>
@@ -299,8 +299,8 @@ export const ProfileSettingMobile = ({ myData }: { myData: myPageProps | undefin
                 {JobCategory.map((item, idx) => (
                   <React.Fragment key={idx}>
                     <KeywordButton
-                      onClick={() => setProfileData({ ...ProfileData, job: item })}
-                      select={ProfileData.job === item}
+                      onClick={() => setProfileData({ ...ProfileData, position: item })}
+                      select={ProfileData.position === item}
                     >
                       {item}
                     </KeywordButton>
@@ -313,13 +313,13 @@ export const ProfileSettingMobile = ({ myData }: { myData: myPageProps | undefin
               <EditBox>
                 <textarea
                   ref={textareaRef}
-                  value={ProfileData.jobIntroduce}
-                  onChange={(e) => handleJobIntroduceChange(e)}
+                  value={ProfileData.positionIntroduce}
+                  onChange={(e) => handlePositionIntroduceChange(e)}
                   placeholder="어떤 일을 하나요? 간단하게 소개해주세요. ex) 부트캠프 division의 UX/UI 디자인 시스템 구축 업무 어시스트"
                 />
                 <div className="parityCheck">
                   <div></div>
-                  <div className="numCheck">({ProfileData.jobIntroduce?.length}/50)</div>
+                  <div className="numCheck">({ProfileData.positionIntroduce?.length}/50)</div>
                 </div>
               </EditBox>
             </div>

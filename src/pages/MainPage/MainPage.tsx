@@ -52,7 +52,7 @@ const MainPage = () => {
       ]);
       setChallengeCurrent(result[0]);
       setCalendarData(result[1]);
-      setRetrospectData(result[2].reverse());
+      setRetrospectData(result[2].templateData.reverse());
 
       // 챌린지 마지막 프로세스 모달창 띄우기
 

@@ -106,10 +106,10 @@ export const TooltipProfile = ({
         <div className="line"></div>
         <Middle>
           <div className="userAddInfo">
-            <div className="job">{userProfile?.job}</div>
+            <div className="job">{userProfile?.position}</div>
             <div className="company">{userProfile?.company || "비공개"}</div>
           </div>
-          <div className="oneline">{userProfile?.job_introduce}</div>
+          <div className="oneline">{userProfile?.positionIntroduce}</div>
         </Middle>
         <div className="line"></div>
         <Bottom>

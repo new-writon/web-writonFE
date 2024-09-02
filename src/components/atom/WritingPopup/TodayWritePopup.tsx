@@ -145,14 +145,14 @@ export const TodayWriteAgoraPopup = () => {
         );
         setAgoraData([
           {
-            agoraId: 0,
+            smallTalkId: 0,
             question: text,
             participateCount: 0,
             nickname: "",
             createdDate: format(new Date(), "yyyy-MM-dd"),
             createdTime: format(new Date(), "HH:mm"),
             profile: "",
-            myAgoraSign: "1",
+            mySmallTalkSign: "1",
           },
           ...agoraData,
         ]);

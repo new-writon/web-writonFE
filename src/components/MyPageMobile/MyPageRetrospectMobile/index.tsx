@@ -24,9 +24,9 @@ export const MyPageRetrospectMobile = () => {
     try {
       const data = await getMyPageRetrospectItem(item.organization, item.challengeId.toString());
       if (viewState === "new") {
-        setRetrospectData(data.reverse());
+        setRetrospectData(data.templateData.reverse());
       } else if (viewState === "old") {
-        setRetrospectData(data);
+        setRetrospectData(data.templateData);
       }
       setSelectChallenge(`${item.organization} ${item.challenge} 챌린지`);
       setListOn(false);
@@ -60,7 +60,7 @@ export const MyPageRetrospectMobile = () => {
             activeList[0].organization,
             activeList[0].challengeId.toString()
           );
-          setRetrospectData(data.reverse());
+          setRetrospectData(data.templateData.reverse());
         } catch {
           new Error("shit");
         }

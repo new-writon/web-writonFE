@@ -40,7 +40,7 @@ export const WritingPage = () => {
         setGetSpecialQuestionData(result[2]);
         setpostWritingData(
           result[1].map((item) => ({
-            question_id: item.question_id,
+            questionId: item.questionId,
             content: "",
             visibility: true,
           }))

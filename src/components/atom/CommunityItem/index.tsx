@@ -55,7 +55,7 @@ export const CommunityItem = ({ data }: { data: communityContentProps[] }) => {
         <UserInfo
           data={{
             name: data[0]?.nickname,
-            job: data[0]?.job,
+            position: data[0]?.position,
             company: data[0]?.company,
             profile: data[0]?.profile,
             date: data[0]?.createdAt,

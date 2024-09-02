@@ -7,7 +7,7 @@ import { Container } from "./style";
 interface userInfoDetailProps {
   profile: string;
   nickname: string;
-  job: string;
+  position: string;
   company: string | null;
   createdAt: string;
 }
@@ -26,7 +26,7 @@ export const UserInfoDetail = ({ data }: { data: userInfoDetailProps }) => {
           <div className="name">{data?.nickname}</div>
         </div>
         <div className="bottom">
-          <div className="job">{data?.job}</div>
+          <div className="position">{data?.position}</div>
           <div className={`company ${data?.company === null && "none"}`}>{data?.company}</div>
           <div className="date">{format(data?.createdAt, "M월 d일")}</div>
           {/* 해당 날짜 데이터 받아서 formating 시키기 */}

@@ -61,13 +61,13 @@ export const getCommunityContentData = async (
 
 // 날짜에 따른 아고라 조회 (배열)
 export const getAgoraData = async (challengeId: string, date: string) => {
-  const response = await getData<agoraDataType[]>(`/agora/${challengeId}/${date}`);
+  const response = await getData<agoraDataType[]>(`/small-talk/${challengeId}/${date}`);
   return response.data;
 };
 
 // 해당 아고라 댓글들
-export const getAgoraChat = async (agoraId: number) => {
-  const response = await getData<agoraCommentType[]>(`agora/comment/read/${agoraId}`);
+export const getAgoraChat = async (smallTalkId: number) => {
+  const response = await getData<agoraCommentType[]>(`small-talk/comment/read/${smallTalkId}`);
   return response.data;
 };
 
@@ -75,13 +75,13 @@ export const getAgoraChat = async (agoraId: number) => {
 export const postAgoraTopic = async (
   organization: string,
   challengeId: number,
-  agoraQuestion: string
+  smallTalkQuestion: string
 ) => {
   try {
-    const response = await postData(`/agora`, {
+    const response = await postData(`/small-talk`, {
       organization,
       challengeId,
-      agoraQuestion,
+      smallTalkQuestion,
     });
     return response.data;
   } catch (error) {
@@ -93,13 +93,13 @@ export const postAgoraTopic = async (
 // 아고라 댓글달기
 export const postAgoraComment = async (
   organization: string,
-  agoraId: number,
-  agoraComment: string
+  smallTalkId: number,
+  smallTalkComment: string
 ) => {
-  const response = await postData(`/agora/comment/write`, {
+  const response = await postData(`/small-talk/comment/write`, {
     organization: organization,
-    agoraId: agoraId,
-    agoraComment: agoraComment,
+    smallTalkId: smallTalkId,
+    smallTalkComment: smallTalkComment,
   });
   return response.data;
 };

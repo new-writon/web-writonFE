@@ -16,12 +16,12 @@ export const AddSpecialQuestion = () => {
   const [uniqueCategory, setUniqueCategory] = useState<string[]>([]);
   const [categoryIdx, setCategoryIdx] = useState<string>("");
   const filteredQuestionsData = getSpecialQuestionData.filter(
-    (question) => question.category === categoryIdx
+    (question) => question.keyword === categoryIdx
   ); //카테고리 필터
 
   useEffect(() => {
     const uniqueCategories = [
-      ...new Set(getSpecialQuestionData.map((question) => question.category)),
+      ...new Set(getSpecialQuestionData.map((question) => question.keyword)),
     ]; //카테고리 추출
     setUniqueCategory(uniqueCategories);
     setCategoryIdx(uniqueCategories[0]);

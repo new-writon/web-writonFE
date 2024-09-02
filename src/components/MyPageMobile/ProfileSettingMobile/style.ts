@@ -118,7 +118,7 @@ export const ChallengeSetting = styled.div`
       gap: 8px;
     }
   }
-  .jobIntroduceField {
+  .positionIntroduceField {
     align-items: flex-start;
   }
   textarea {
