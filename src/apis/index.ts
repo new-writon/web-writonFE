@@ -40,7 +40,7 @@ async function errorHandler(error: { config?: any; response?: any }) {
     },
   } = error;
 
-  if (status === 444) {
+  if (status === 401) {
     // 만약 리프레시 중이 아니라면
     if (!isRefreshing) {
       isRefreshing = true; // 리프레시 중으로 플래그 설정
@@ -70,7 +70,7 @@ async function errorHandler(error: { config?: any; response?: any }) {
         failedRequestsQueue.push(async () => resolve(WRITON(config)));
       });
     }
-  } else if (status === 401) {
+  } else if (status === 403) {
     // 로그인이 필요한 경우
     notifyError(message.message || message);
     // 로그인 페이지로 리다이렉트
