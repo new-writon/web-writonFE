@@ -99,16 +99,15 @@ export const RenderCell = React.memo(
     const monthEnd = endOfMonth(today); // 1월 31일이 나옴.(그 달의 끝)
 
     const startDate =
-      getDay(today) === 0 && differenceInCalendarWeeks(today, monthStart) === 0
-        ? startOfWeek(addDays(today, -1)) // 9월 1일이 일요일이면 8월 31일이 나오게 됨.
+      getDay(startOfWeek(monthStart)) === 0
+        ? startOfWeek(addDays(startOfWeek(monthStart), -1)) // 9월 1일이 일요일이면 8월 31일이 나오게 됨.
         : startOfWeek(monthStart); // 해당 날짜의 해당 주의 시작 날짜
+
     const endDate = endOfWeek(monthEnd); // 해당 날짜의 해당 주의 끝 날짜
     const weekNumber =
       getDay(today) === 0
-        ? differenceInCalendarWeeks(today, monthStart) === 0
-          ? differenceInCalendarWeeks(today, monthStart)
-          : differenceInCalendarWeeks(today, monthStart) - 1
-        : differenceInCalendarWeeks(today, monthStart); // 몇주차인지
+        ? differenceInCalendarWeeks(today, monthStart)
+        : differenceInCalendarWeeks(today, monthStart) + 1;
 
     const pageWeekNumber =
       getDay(pageDay || today) === 0
@@ -194,6 +193,7 @@ export const RenderCell = React.memo(
     const rows = [];
     let days = [];
     let day = addDays(startDate, 1); // 월요일부터 보이게 하기 위해서 (원래 일요일부터 보임)
+
     while (day <= endDate) {
       for (let i = 0; i < 7; i++) {
         const formattedDate = !isSameMonth(day, monthStart) ? format(day, "M.d") : format(day, "d"); //formattedDate랑 같은 값만 서버값이랑 비교해서 처리하면 된다.

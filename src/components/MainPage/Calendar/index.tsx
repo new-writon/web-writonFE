@@ -35,12 +35,11 @@ export const Calendar = ({ CalendarData }: { CalendarData: CalendarRecordCurrent
 
   const [fold, setFold] = useState<boolean>(false);
   const [tooltipOn, setTooltopOn] = useState<boolean>(false);
+
   const weekNumber =
     getDay(today) === 0
-      ? differenceInCalendarWeeks(today, monthStart) === 0
-        ? differenceInCalendarWeeks(today, monthStart)
-        : differenceInCalendarWeeks(today, monthStart) - 1
-      : differenceInCalendarWeeks(today, monthStart); // 몇주차인지
+      ? differenceInCalendarWeeks(today, monthStart) + 1
+      : differenceInCalendarWeeks(today, monthStart) + 2;
 
   const finishDay = getMonth(CalendarData[CalendarData.length - 1].date) === getMonth(new Date());
   return (
