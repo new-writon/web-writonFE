@@ -28,7 +28,7 @@ export const MyPageNotification = () => {
 
   const ChangeChallenge = async (item: challengeListProps) => {
     try {
-      const data = await getNotificationData(item.organization, item.challenge_id.toString());
+      const data = await getNotificationData(item.organization, item.challengeId.toString());
       if (viewState === "new") {
         setNotificationData(data.reverse());
       } else if (viewState === "old") {
@@ -58,13 +58,13 @@ export const MyPageNotification = () => {
           list.filter((item) => item.organization === localStorage.getItem("organization"))
         );
         const activeList = list.filter(
-          (item) => item.challenge_id.toString() === localStorage.getItem("challengeId")
+          (item) => item.challengeId.toString() === localStorage.getItem("challengeId")
         );
         setSelectChallenge(`${activeList[0].organization} ${activeList[0].challenge} 챌린지`);
         try {
           const data = await getNotificationData(
             activeList[0].organization,
-            activeList[0].challenge_id.toString()
+            activeList[0].challengeId.toString()
           );
           setNotificationData(data);
           try {

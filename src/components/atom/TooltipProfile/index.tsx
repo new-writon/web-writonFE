@@ -118,8 +118,8 @@ export const TooltipProfile = ({
               <div className="currentChallengeTitle">참여중인 챌린지</div>
               {ChallengeList?.filter((data) => data.challengeFinishSign === "0").map((item) => (
                 <CurrrentChallengeButton
-                  challengeId={item.challenge_id.toString()}
-                  onClick={() => ChangeChallenge(item.challenge_id.toString())}
+                  challengeId={item.challengeId.toString()}
+                  onClick={() => ChangeChallenge(item.challengeId.toString())}
                 >
                   {item?.organization} {item?.challenge} 챌린지
                 </CurrrentChallengeButton>
@@ -131,8 +131,8 @@ export const TooltipProfile = ({
               <div className="pastChallengeTitle">지난 챌린지</div>
               {ChallengeList?.filter((data) => data.challengeFinishSign === "1").map((item) => (
                 <CurrrentChallengeButton
-                  challengeId={item.challenge_id.toString()}
-                  onClick={() => ChangeChallenge(item.challenge_id.toString())}
+                  challengeId={item.challengeId.toString()}
+                  onClick={() => ChangeChallenge(item.challengeId.toString())}
                 >
                   {item?.organization} {item?.challenge} 챌린지
                 </CurrrentChallengeButton>

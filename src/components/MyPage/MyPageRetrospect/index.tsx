@@ -24,7 +24,7 @@ export const MyPageRetrospect = () => {
 
   const ChangeChallenge = async (item: challengeListProps) => {
     try {
-      const data = await getMyPageRetrospectItem(item.organization, item.challenge_id.toString());
+      const data = await getMyPageRetrospectItem(item.organization, item.challengeId.toString());
       if (viewState === "new") {
         setRetrospectData(data.reverse());
       } else if (viewState === "old") {
@@ -54,13 +54,13 @@ export const MyPageRetrospect = () => {
           list.filter((item) => item.organization === localStorage.getItem("organization"))
         );
         const activeList = list.filter(
-          (item) => item.challenge_id.toString() === localStorage.getItem("challengeId")
+          (item) => item.challengeId.toString() === localStorage.getItem("challengeId")
         );
         setSelectChallenge(`${activeList[0].organization} ${activeList[0].challenge} 챌린지`);
         try {
           const data = await getMyPageRetrospectItem(
             activeList[0].organization,
-            activeList[0].challenge_id.toString()
+            activeList[0].challengeId.toString()
           );
           setRetrospectData(data.reverse());
         } catch {

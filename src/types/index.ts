@@ -207,9 +207,11 @@ export interface finishModalType {
 
 export interface challengeListProps {
   organization: string;
-  challenge_id: number;
+  challengeId: number;
   challenge: string;
   challengeFinishSign: string;
+  themeColor: string;
+  logo: string;
 }
 
 export interface myPageProps {
