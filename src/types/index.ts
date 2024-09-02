@@ -214,6 +214,8 @@ export interface challengeListProps {
   challengeId: number;
   challenge: string;
   challengeFinishSign: string;
+  themeColor: string;
+  logo: string;
 }
 
 export interface myPageProps {

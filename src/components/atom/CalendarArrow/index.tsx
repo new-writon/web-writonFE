@@ -1,15 +1,16 @@
 import { addMonths, getMonth } from "date-fns";
+import styled from "styled-components";
 
 import arrow from "@/assets/communityPage/storyArrow.svg";
 
-import { Container } from "./style";
-
 export const CalendarArrow = ({
-  defaultToday,
+  firstDay,
+  lastDay,
   calendarToday,
   setCalendarToday,
 }: {
-  defaultToday: string | Date;
+  firstDay: string | Date;
+  lastDay: string | Date;
   calendarToday: Date;
   setCalendarToday: (calendarToday: Date) => void;
 }) => {
@@ -19,11 +20,15 @@ export const CalendarArrow = ({
         className="previous"
         src={arrow}
         alt="<"
-        onClick={() => setCalendarToday(addMonths(calendarToday, -1))}
+        onClick={
+          getMonth(firstDay) !== getMonth(calendarToday)
+            ? () => setCalendarToday(addMonths(calendarToday, -1))
+            : () => {}
+        }
       />
       <div
         className="today"
-        onClick={() => setCalendarToday(new Date(defaultToday))}
+        onClick={() => setCalendarToday(new Date(lastDay))}
       >
         오늘
       </div>
@@ -32,7 +37,7 @@ export const CalendarArrow = ({
         src={arrow}
         alt="<"
         onClick={
-          getMonth(defaultToday) !== getMonth(calendarToday)
+          getMonth(lastDay) !== getMonth(calendarToday)
             ? () => setCalendarToday(addMonths(calendarToday, 1))
             : () => {}
         }
@@ -40,3 +45,33 @@ export const CalendarArrow = ({
     </Container>
   );
 };
+
+const Container = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
+  .today {
+    color: var(--Gray-70, #73777e);
+    text-align: center;
+    font-size: 0.875rem;
+    font-style: normal;
+    font-weight: 600;
+    line-height: 140%; /* 19.6px */
+    padding: 4px;
+    box-sizing: border-box;
+    cursor: pointer;
+  }
+  .today:hover {
+    background: var(--Gray-10, #fcfcfc);
+  }
+  img {
+    width: 24px;
+    height: 24px;
+    cursor: pointer;
+  }
+
+  .next {
+    transform: rotate(180deg);
+  }
+`;

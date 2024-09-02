@@ -142,77 +142,13 @@ export const CommunityHeader = styled.div`
     transform: rotate(180deg);
   }
 
-  //캘린더 css 적용
-  .react-calendar {
+  .react-calendar-container {
     z-index: 9;
     position: absolute;
     top: 35px;
     right: 0;
-    min-width: 290px;
-    height: auto;
-    max-width: 100%;
-    box-shadow: 0px 16px 50px 0px rgba(33, 33, 33, 0.25);
-    border-radius: 16px;
-    background: var(--White, #fff);
-    font-family: "Pretendard Variable", sans-serif;
-    line-height: 1rem;
-    border: none;
-    padding: 15px;
-  }
-  .react-calendar__navigation {
-    display: flex;
-    height: auto;
-    margin: 10px 0;
-  }
-  .react-calendar__navigation button:disabled {
-    background-color: var(--White, #fff);
-  }
-  .react-calendar abbr {
-    text-decoration-line: blink;
-  }
-  .react-calendar__tile--now {
-    background: var(--White, #fff);
-  }
-  .react-calendar__tile:disabled {
-    background-color: var(--White, #fff);
-    color: var(--Gray-50, #b1b4bc);
-  }
-  .react-calendar__tile:disabled abbr {
-    color: var(--Gray-50, #b1b4bc);
-  }
-  .react-calendar button:enabled {
     width: fit-content;
-    height: inherit;
-    border-radius: 100%;
-  }
-  .react-calendar__tile--active {
-    background-color: #000;
-    color: var(--White, #fff);
-  }
-  .react-calendar__tile--active abbr {
-    color: var(--White, #fff);
-  }
-  .react-calendar__tile:enabled:hover {
-    background-color: var(--Gray-10, #fcfcfc);
-  }
-  .react-calendar__tile:enabled:focus {
-    background-color: var(--Gray-30, #edeef1);
-  }
-  .react-calendar__tile--active:enabled:hover,
-  .react-calendar__tile--active:enabled:focus {
-    background-color: #000;
-    color: var(--White, #fff);
-  }
-
-  .react-calendar__navigation__label {
-    flex-grow: inherit !important;
-    padding-left: 10px;
-    color: #000;
-    font-size: 1rem;
-    font-weight: 700;
-  }
-  .react-calendar__navigation .react-calendar__navigation__arrow {
-    display: none;
+    height: fit-content;
   }
 `;
 

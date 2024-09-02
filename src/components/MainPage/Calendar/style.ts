@@ -37,25 +37,6 @@ export const Container = styled.div`
     gap: 16px;
   }
 
-  .topBar .topBarRight {
-    display: flex;
-    color: var(--Gray-70, #73777e);
-    font-size: 0.875rem;
-    font-weight: 500;
-    padding: 14px 16px 12px;
-    border-radius: 10px;
-    border: 1px solid var(--Gray-40, #d2d5db);
-    cursor: pointer;
-    img {
-      margin-left: 9px;
-    }
-    img.topArrow {
-      margin-bottom: 2px;
-    }
-  }
-  .topBar .topBarRight .calendarOpenBtnResponsive {
-    display: none;
-  }
   @media (min-width: 530px) {
     &:hover {
       will-change: filter;
@@ -102,20 +83,6 @@ export const Container = styled.div`
     .topBar .calendar-operation {
       display: flex;
       gap: 8px;
-    }
-
-    // 달력 버튼
-    .topBar .topBarRight {
-      border: none;
-      padding: 0;
-      padding-right: 10px;
-      align-items: center;
-    }
-    .topBar .topBarRight .calendarOpenBtn {
-      display: none;
-    }
-    .topBar .topBarRight .calendarOpenBtnResponsive {
-      display: block;
     }
   }
 
