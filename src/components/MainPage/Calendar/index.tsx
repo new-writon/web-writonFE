@@ -2,10 +2,8 @@ import { useEffect, useState } from "react";
 
 import { differenceInCalendarWeeks, format, getDay, getMonth, startOfMonth } from "date-fns";
 
-import downArrow from "@/assets/mainPage/downArrow.svg";
-import clalendarIcon from "@/assets/mainPage/icon-calendar.svg";
-import topArrow from "@/assets/mainPage/topArrow.svg";
 import { CalendarArrow } from "@/components/atom/CalendarArrow";
+import { CalendarToggle } from "@/components/atom/CalendarToggle";
 import { MainSemiTitle } from "@/components/atom/MainSemiTitle";
 import { MonthChip } from "@/components/atom/MonthChip";
 import { TooltipButton } from "@/components/atom/TooltipButton";
@@ -39,8 +37,11 @@ export const Calendar = ({ CalendarData }: { CalendarData: CalendarRecordCurrent
   const [tooltipOn, setTooltopOn] = useState<boolean>(false);
   const weekNumber =
     getDay(today) === 0
-      ? differenceInCalendarWeeks(today, monthStart)
-      : differenceInCalendarWeeks(today, monthStart) + 1;
+      ? differenceInCalendarWeeks(today, monthStart) === 0
+        ? differenceInCalendarWeeks(today, monthStart)
+        : differenceInCalendarWeeks(today, monthStart) - 1
+      : differenceInCalendarWeeks(today, monthStart); // 몇주차인지
+
   const finishDay = getMonth(CalendarData[CalendarData.length - 1].date) === getMonth(new Date());
   return (
     <Inner>
@@ -67,23 +68,10 @@ export const Calendar = ({ CalendarData }: { CalendarData: CalendarRecordCurrent
               calendarToday={calendarToday}
               setCalendarToday={setCalendarToday}
             />
-            <div
-              className="topBarRight"
+            <CalendarToggle
+              toggle={fold}
               onClick={() => setFold(!fold)}
-            >
-              <div className="calendarOpenBtn">{fold ? "달력 접기" : "달력 펼치기"}</div>
-              <div className="calendarOpenBtnResponsive">
-                <img
-                  src={clalendarIcon}
-                  alt="달력"
-                />
-              </div>
-              <img
-                className={`${fold ? "topArrow" : "downArrow"}`}
-                src={fold ? topArrow : downArrow}
-                alt="V"
-              />
-            </div>
+            />
           </div>
         </div>
         {tooltipOn && (
