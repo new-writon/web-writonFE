@@ -40,7 +40,11 @@ export const dateCheck = async (navigate: (arg0: string) => void, today: string)
   }
 };
 
-export const deleteLogout = async () => {
-  const response = await deleteData("/auth/logout");
+export const deleteLogout = async (refreshToken: string) => {
+  const response = await deleteData("/auth/logout", {
+    headers: {
+      refresh: refreshToken,
+    },
+  });
   return response.data;
 };
