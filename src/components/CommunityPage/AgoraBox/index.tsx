@@ -76,14 +76,12 @@ export const AgoraBox = ({
         const dateArray = response.map((item) => format(item, "yyyy-MM-dd"));
         setDateActive(dateArray);
         setDateLength(dateArray.length - 1);
-        try {
+        if (dateArray.length > 0) {
           const result = await getAgoraData(
             localStorage.getItem("challengeId") || "1",
             dateArray[dateArray.length - 1]
           );
           setAgoraData(result);
-        } catch {
-          throw new Error("shit");
         }
       } catch {
         throw new Error("shit");
@@ -95,8 +93,11 @@ export const AgoraBox = ({
   }, []);
 
   useEffect(() => {
-    ChangeDate();
-  }, [dateLength]);
+    if (dateActive[dateLength]) {
+      // dateActive 배열이 준비된 후 ChangeDate 함수 호출
+      ChangeDate();
+    }
+  }, [dateLength, dateActive]);
 
   const handleResize = () => {
     //뷰크기 강제로 강져오기

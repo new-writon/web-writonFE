@@ -119,17 +119,23 @@ export const CommunityBox = () => {
       try {
         const response = await getCommunityDate(localStorage.getItem("challengeId") || "1");
         const dateArray = response.map((item) => format(item, "yyyy-MM-dd"));
+
+        // 상태 업데이트
         setDateActive(dateArray);
         setDateLength(dateArray.length - 1);
         setDateLastLength(dateArray.length - 1);
         localStorage.setItem("dateLastLength", (dateArray.length - 1).toString());
         localStorage.setItem("date", dateArray[dateArray.length - 1]);
-        try {
+
+        // dateArray가 비어있지 않은 경우에만 API 호출
+        if (dateArray.length > 0) {
+          const lastDate = dateArray[dateArray.length - 1];
           const result = await getCommunityContentData(
             localStorage.getItem("organization") || "",
             localStorage.getItem("challengeId") || "1",
-            dateArray[dateArray.length - 1]
+            lastDate
           );
+
           setCommunitySecondData(result);
           const templateData = Array.from(result.templateData || []).reverse();
 
@@ -142,11 +148,9 @@ export const CommunityBox = () => {
             ); // 선택한 카테고리에 해당하는 데이터를 필터링합니다.
             setFilteredData(filtered);
           }
-        } catch {
-          throw new Error("shit");
         }
-      } catch {
-        throw new Error("shit");
+      } catch (error) {
+        console.error("Error fetching community data:", error);
       }
     });
   };
@@ -222,8 +226,10 @@ export const CommunityBox = () => {
   }, []);
 
   useEffect(() => {
-    ChangeDate();
-    localStorage.setItem("date", dateActive[dateLength]);
+    if (community && dateActive.length > 0 && dateLength >= 0) {
+      ChangeDate();
+      localStorage.setItem("date", dateActive[dateLength]);
+    }
   }, [dateLength]);
 
   if (!dateActive || dateLength === -1) {
