@@ -204,6 +204,7 @@ export const CurrrentChallengeBtn = styled.div`
   color: var(--Gray-100, #1b1d1f);
   font-size: 0.875rem;
   line-height: 160%; /* 22.4px */
+  gap: 10px;
 
   .currentPage {
     color: var(--Gray-60, #94989f);
