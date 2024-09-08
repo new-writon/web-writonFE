@@ -125,7 +125,6 @@ time, mark, audio, video {
 	border: 0;
 	font-size: 100%;
 	vertical-align: baseline;
-  white-space: nowrap;
   	position: relative;
 		@media (max-width: 530px) {
     font-size: 15px;
