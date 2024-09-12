@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 
 import { commentProps } from "@/types";
 
@@ -16,13 +16,11 @@ export const CommentItem = ({
 }) => {
   const [replyWriteOn, setReplyWriteOn] = useState<boolean>(false);
   const [replyReadOn, setReplyReadOn] = useState<boolean>(false);
-  const [replyArray, setReplyArray] = useState<commentProps[]>(data?.reply); // 초기값으로 들어온 Reply data 넣기
+  // const [replyArray, setReplyArray] = useState<commentProps[]>(data?.reply); // 초기값으로 들어온 Reply data 넣기
   //reply 배열 들어오면 useState로 관리하고 있다.
   // CommentPost 딴에서 commentGroup이 null값이 아닌 string이 들어오면 setState 배열 보내서 없데이트하기
   // 그리고 여기 딴에서 state로 배열 뿌려주기 하니까 자동 없데이트
-  useEffect(() => {
-    setReplyArray(data?.reply);
-  }, [data?.reply]);
+
   return (
     <Container>
       <UserInfoDetail
@@ -44,13 +42,13 @@ export const CommentItem = ({
             답글 달기
           </div>
           <div
-            className={replyArray.length > 0 ? "replyRead" : ""}
+            className={data?.reply.length > 0 ? "replyRead" : ""}
             onClick={() => setReplyReadOn(!replyReadOn)}
           >
-            {replyArray.length > 0
+            {data?.reply.length > 0
               ? replyReadOn
                 ? "답글 숨기기"
-                : `답글 ${replyArray.length} 개`
+                : `답글 ${data?.reply.length} 개`
               : ""}
           </div>
         </div>
@@ -58,15 +56,13 @@ export const CommentItem = ({
           <CommentPost
             userTemplateId={userTemplateId}
             commentGroup={Number(data?.commentId)} //commnet_id
-            replyArray={replyArray}
-            setReplyArray={setReplyArray}
             type="reply"
             setReplyReadOn={setReplyReadOn}
           />
         )}
-        {replyReadOn && replyArray.length > 0 ? (
+        {replyReadOn && data?.reply.length > 0 ? (
           <div className="replylist">
-            {replyArray?.map((item, idx) => (
+            {data?.reply?.map((item, idx) => (
               <React.Fragment key={idx}>
                 <div>
                   <UserInfoDetail

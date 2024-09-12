@@ -1,32 +1,17 @@
 import React, { KeyboardEvent, useEffect, useRef, useState } from "react";
-import { Dispatch, SetStateAction } from "react";
-
-import { format } from "date-fns";
-import { useRecoilState } from "recoil";
-
-import { getMyCommunityStory } from "@/apis/CommunityPage";
-import { postCommentWrite } from "@/apis/DetailPage";
 import profile from "@/assets/communityPage/profile.png";
-import useAsyncWithLoading from "@/hooks/useAsyncWithLoading";
-import { CommentState } from "@/recoil/atoms";
-import { commentProps } from "@/types";
-
 import { Container } from "./style";
-import { useGetMyInfo } from "@/hooks/reactQueryHooks/useMainHooks";
+import { useGetMyInfo, usePostComment } from "@/hooks/reactQueryHooks/useMainHooks";
 import useWindowWidth from "@/hooks/useWindowWidth";
 
 export const CommentPost = ({
   userTemplateId,
   commentGroup,
-  replyArray,
-  setReplyArray,
   type,
   setReplyReadOn,
 }: {
   userTemplateId: number;
   commentGroup: number;
-  replyArray?: commentProps[];
-  setReplyArray?: Dispatch<SetStateAction<commentProps[]>>;
   type?: string;
   setReplyReadOn: (replyReadOn: boolean) => void;
 }) => {
@@ -36,8 +21,6 @@ export const CommentPost = ({
   const [text, setText] = useState<string>("");
   const [registerBtn, setRegisterBtn] = useState<boolean>(true);
   const [profileImage, setProfileImage] = useState<string>(profile);
-  const [commentList, setCommentList] = useRecoilState(CommentState);
-  const executeAsyncTask = useAsyncWithLoading();
 
   const onChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     setText(e.currentTarget.value);
@@ -58,7 +41,7 @@ export const CommentPost = ({
     if (e.key === "Enter" && !e.nativeEvent.isComposing) {
       if (!e.shiftKey) {
         e.preventDefault();
-        commentRegister();
+        submitComment();
         if (textareaRef && textareaRef.current) {
           textareaRef.current.style.height = "38px";
         }
@@ -74,35 +57,20 @@ export const CommentPost = ({
     }
   }, [myInfo]);
 
-  const commentRegister = async () => {
-    executeAsyncTask(async () => {
-      try {
-        const response = await postCommentWrite(
-          userTemplateId,
-          localStorage.getItem("organization") as string,
-          text,
-          commentGroup
-        );
-        try {
-          const myData = await getMyCommunityStory(localStorage.getItem("challengeId") || "1");
+  const { mutate: postCommentMutate } = usePostComment();
+
+  const submitComment = () => {
+    postCommentMutate(
+      {
+        userTemplateId,
+        organization: localStorage.getItem("organization") as string,
+        content: text,
+        commentGroup,
+      },
+      {
+        onSuccess: () => {
+          setText("");
           if (commentGroup === -1) {
-            setCommentList([
-              ...commentList,
-              {
-                position: myData.position,
-                company: myData.company,
-                companyPublic: myData.companyPublic,
-                profile: myData.profile,
-                commentId: response?.commentId.toString(),
-                nickname: myData.nickname,
-                userTemplateId: userTemplateId,
-                content: text,
-                createdAt: format(new Date(), "yyyy-MM-dd"),
-                myCommentSign: 1,
-                commentGroup: commentGroup.toString(),
-                reply: [],
-              },
-            ]);
             if (width <= 530) {
               window.scrollTo({ top: document.body.scrollHeight + 100, behavior: "smooth" });
             } else {
@@ -112,36 +80,85 @@ export const CommentPost = ({
               }
             }
           } else {
-            if (replyArray && setReplyArray) {
-              setReplyArray([
-                ...replyArray,
-                {
-                  position: myData.position,
-                  company: myData.company,
-                  companyPublic: myData.companyPublic,
-                  profile: myData.profile,
-                  commentId: response?.commentId.toString(),
-                  nickname: myData.nickname,
-                  userTemplateId: userTemplateId,
-                  content: text,
-                  createdAt: format(new Date(), "yyyy-MM-dd"),
-                  myCommentSign: 1,
-                  commentGroup: commentGroup.toString(),
-                  reply: [],
-                },
-              ]);
-              setReplyReadOn(true);
-            }
+            setReplyReadOn(true);
           }
-        } catch {
-          new Error("shit");
-        }
-      } catch {
-        new Error("shit");
+        },
+        onError: (error) => {
+          console.log("Error posting Agora topic:", error);
+          // 에러 처리 로직 추가 (예: 사용자에게 에러 메시지 표시)
+        },
       }
-      setText("");
-    });
+    );
   };
+
+  // const commentRegister = async () => {
+  //   executeAsyncTask(async () => {
+  //     try {
+  //       const response = await postCommentWrite(
+  //         userTemplateId,
+  //         localStorage.getItem("organization") as string,
+  //         text,
+  //         commentGroup
+  //       );
+  //       try {
+  //         const myData = await getMyCommunityStory(localStorage.getItem("challengeId") || "1");
+  //         if (commentGroup === -1) {
+  //           setCommentList([
+  //             ...commentList,
+  //             {
+  //               position: myData.position,
+  //               company: myData.company,
+  //               companyPublic: myData.companyPublic,
+  //               profile: myData.profile,
+  //               commentId: response?.commentId.toString(),
+  //               nickname: myData.nickname,
+  //               userTemplateId: userTemplateId,
+  //               content: text,
+  //               createdAt: format(new Date(), "yyyy-MM-dd"),
+  //               myCommentSign: 1,
+  //               commentGroup: commentGroup.toString(),
+  //               reply: [],
+  //             },
+  //           ]);
+  //           if (width <= 530) {
+  //             window.scrollTo({ top: document.body.scrollHeight + 100, behavior: "smooth" });
+  //           } else {
+  //             const DetailBox = document.getElementById("DetailBox");
+  //             if (DetailBox) {
+  //               DetailBox.scrollTop = DetailBox.scrollHeight;
+  //             }
+  //           }
+  //         } else {
+  //           if (replyArray && setReplyArray) {
+  //             setReplyArray([
+  //               ...replyArray,
+  //               {
+  //                 position: myData.position,
+  //                 company: myData.company,
+  //                 companyPublic: myData.companyPublic,
+  //                 profile: myData.profile,
+  //                 commentId: response?.commentId.toString(),
+  //                 nickname: myData.nickname,
+  //                 userTemplateId: userTemplateId,
+  //                 content: text,
+  //                 createdAt: format(new Date(), "yyyy-MM-dd"),
+  //                 myCommentSign: 1,
+  //                 commentGroup: commentGroup.toString(),
+  //                 reply: [],
+  //               },
+  //             ]);
+  //             setReplyReadOn(true);
+  //           }
+  //         }
+  //       } catch {
+  //         new Error("shit");
+  //       }
+  //     } catch {
+  //       new Error("shit");
+  //     }
+  //     setText("");
+  //   });
+  // };
 
   return (
     <Container $type={type}>
@@ -159,7 +176,7 @@ export const CommentPost = ({
         onKeyDown={handleOnKeyPress}
       />
       <button
-        onClick={commentRegister}
+        onClick={submitComment}
         disabled={registerBtn}
         className={registerBtn ? "" : "abled"}
       >
