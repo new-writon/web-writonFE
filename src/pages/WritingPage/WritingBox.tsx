@@ -4,14 +4,12 @@ import { useNavigate, useParams } from "react-router-dom";
 import { useRecoilState, useRecoilValue, useSetRecoilState } from "recoil";
 import styled from "styled-components";
 
-import { postwritingSubmit } from "@/apis/WritingPage";
 import { AddSpecialQuestion } from "@/components/WritingPage/AddSpecialQuestion";
 import AddSpecialQuestionResponsive from "@/components/WritingPage/AddSpecialQuestion/AddSpecialQuestionResponsive";
 import { BasicQuestion } from "@/components/WritingPage/BasicQuestion";
 import { SpecialQuestion } from "@/components/WritingPage/SpecialQuestion";
 import { CompletePopup } from "@/components/atom/WritingPopup/CompletePopup";
 import { WritingSubmitButton } from "@/components/atom/button";
-import useAsyncWithLoading from "@/hooks/useAsyncWithLoading";
 import {
   DateResponsiveState,
   addSpecialQuestionArrayState,
@@ -19,6 +17,7 @@ import {
   postWritingDataState,
 } from "@/recoil/atoms";
 import { Inner } from "@/style/global";
+import { useSubmitWrite } from "@/hooks/reactQueryHooks/useMainHooks";
 
 export const WritingBox = () => {
   const { date } = useParams();
@@ -28,7 +27,6 @@ export const WritingBox = () => {
   const setDateResponsive = useSetRecoilState(DateResponsiveState);
   const addSpecialQuestionData = useRecoilValue(addSpecialQuestionArrayState);
   const postWritingData = useRecoilValue(postWritingDataState);
-  const executeAsyncTask = useAsyncWithLoading();
 
   const completeBtn = (type: string) => {
     if (postWritingData?.every((item) => item.content.trim() !== "")) {
@@ -43,22 +41,20 @@ export const WritingBox = () => {
 
   useEffect(() => {
     setDateResponsive(date);
-  }, [date, postWritingData, setDateResponsive]);
-  const submitWrite = async () => {
-    executeAsyncTask(async () => {
-      try {
-        await postwritingSubmit(
-          localStorage.getItem("organization") || "",
-          localStorage.getItem("challengeId") || "1",
-          date || "",
-          postWritingData
-        );
-        navigate("/");
-      } catch {
-        new Error("shit");
-      }
+  }, [date, postWritingData, setDateResponsive, addSpecialQuestionData]);
+
+  const { mutate: submitWrite } = useSubmitWrite();
+
+  const handleSubmit = () => {
+    submitWrite({
+      organization: localStorage.getItem("organization") as string,
+      challengeId: localStorage.getItem("challengeId") as string,
+      date: date || "",
+      postWritingData,
     });
+    navigate("/");
   };
+
   return (
     <Inner>
       <Container>
@@ -91,7 +87,7 @@ export const WritingBox = () => {
           </WritingSubmitButton>
           {popUpOn && (
             <CompletePopup
-              onClick={submitWrite}
+              onClick={handleSubmit}
               setpopUpOn={setpopUpOn}
             />
           )}

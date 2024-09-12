@@ -6,10 +6,10 @@ const Loading = () => {
     <LoadingWrapper>
       <LoadingBox>
         <ClipLoader
-          color="#fffff"
+          color="#6272ff"
           size={100}
         />
-        <p>잠시만 기다려주세요.</p>
+        {/* <p>잠시만 기다려주세요.</p> */}
       </LoadingBox>
     </LoadingWrapper>
   );
@@ -42,4 +42,7 @@ const LoadingBox = styled.div`
   z-index: 9;
   color: var(--White, #fff);
   //background: rgba(21, 21, 21, 0.7);
+  span {
+    border-width: 12px !important;
+  }
 `;

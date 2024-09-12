@@ -1,19 +1,13 @@
 import { KeyboardEvent, useRef, useState } from "react";
 
-import { format } from "date-fns";
 import { useRecoilState, useSetRecoilState } from "recoil";
 
-import { postAgoraTopic, postMyCommunityStoryComment } from "@/apis/CommunityPage";
+import { postMyCommunityStoryComment } from "@/apis/CommunityPage";
 import useAsyncWithLoading from "@/hooks/useAsyncWithLoading";
-import {
-  PreTodayWriteState,
-  agoraBoxDataState,
-  modalBackgroundState,
-  snackBarState,
-} from "@/recoil/atoms";
-import { ErrorData } from "@/types/axios";
+import { PreTodayWriteState, modalBackgroundState, snackBarState } from "@/recoil/atoms";
 
 import { AgoraContainer, ContainerResponsive } from "./style";
+import { usePostAgoraTopic } from "@/hooks/reactQueryHooks/useMainHooks";
 
 export const TodayWritePopup = () => {
   const [modal, setModal] = useRecoilState(modalBackgroundState);
@@ -101,13 +95,16 @@ export const TodayWritePopup = () => {
 };
 
 export const TodayWriteAgoraPopup = () => {
+  const organizationChallengeData = {
+    organization: localStorage.getItem("organization") || "",
+    challengeId: localStorage.getItem("challengeId") || "1",
+  };
+
   const [modal, setModal] = useRecoilState(modalBackgroundState);
   const [snackBar, setSnackBar] = useRecoilState(snackBarState);
 
   const textareaRef = useRef<HTMLTextAreaElement | null>(null);
   const [text, setText] = useState<string>("");
-  const executeAsyncTask = useAsyncWithLoading();
-  const [agoraData, setAgoraData] = useRecoilState(agoraBoxDataState);
 
   const onChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     const validCharacters =
@@ -135,46 +132,71 @@ export const TodayWriteAgoraPopup = () => {
       }
     }
   };
+
+  const { mutate: postAgoraTopicMutate } = usePostAgoraTopic();
+
   const completeTodayAgoraWrite = () => {
-    executeAsyncTask(async () => {
-      try {
-        await postAgoraTopic(
-          localStorage.getItem("organization") || "",
-          Number(localStorage.getItem("challengeId") || "1"),
-          text
-        );
-        setAgoraData([
-          {
-            smallTalkId: 0,
-            question: text,
-            participateCount: 0,
-            nickname: "",
-            createdDate: format(new Date(), "yyyy-MM-dd"),
-            createdTime: format(new Date(), "HH:mm"),
-            profile: "",
-            mySmallTalkSign: "1",
-          },
-          ...agoraData,
-        ]);
-        setSnackBar({ ...snackBar, agoraSnackBar: true });
-        setTimeout(() => {
-          setSnackBar({ ...snackBar, agoraSnackBar: false });
-        }, 2000);
-        setModal({ ...modal, agoraWriteModal: false });
-        document.body.style.overflowY = "auto";
-      } catch (error) {
-        const err = error as ErrorData;
-        if (err.code === 417) {
-          alert(err.message);
+    postAgoraTopicMutate(
+      {
+        organization: organizationChallengeData.organization,
+        challengeId: Number(organizationChallengeData.challengeId),
+        text,
+      },
+      {
+        onSuccess: () => {
+          setSnackBar({ ...snackBar, agoraSnackBar: true });
+          setTimeout(() => {
+            setSnackBar({ ...snackBar, agoraSnackBar: false });
+          }, 2000);
           setModal({ ...modal, agoraWriteModal: false });
           document.body.style.overflowY = "auto";
-        } else if (err.code === 400) {
-          alert("아고라를 작성해주세요!");
-        } else {
-          console.error(error);
-        }
+        },
+        onError: (error) => {
+          console.log("Error posting Agora topic:", error);
+          // 에러 처리 로직 추가 (예: 사용자에게 에러 메시지 표시)
+        },
       }
-    });
+    );
+
+    // executeAsyncTask(async () => {
+    //   try {
+    //     await postAgoraTopic(
+    //       localStorage.getItem("organization") || "",
+    //       Number(localStorage.getItem("challengeId") || "1"),
+    //       text
+    //     );
+    //     setAgoraData([
+    //       {
+    //         smallTalkId: 0,
+    //         question: text,
+    //         participateCount: 0,
+    //         nickname: "",
+    //         createdDate: format(new Date(), "yyyy-MM-dd"),
+    //         createdTime: format(new Date(), "HH:mm"),
+    //         profile: "",
+    //         mySmallTalkSign: "1",
+    //       },
+    //       ...agoraData,
+    //     ]);
+    //     setSnackBar({ ...snackBar, agoraSnackBar: true });
+    //     setTimeout(() => {
+    //       setSnackBar({ ...snackBar, agoraSnackBar: false });
+    //     }, 2000);
+    //     setModal({ ...modal, agoraWriteModal: false });
+    //     document.body.style.overflowY = "auto";
+    //   } catch (error) {
+    //     const err = error as ErrorData;
+    // if (err.code === 417) {
+    //   alert(err.message);
+    //   setModal({ ...modal, agoraWriteModal: false });
+    //   document.body.style.overflowY = "auto";
+    //     } else if (err.code === 400) {
+    //       alert("아고라를 작성해주세요!");
+    //     } else {
+    //       console.error(error);
+    //     }
+    //   }
+    // });
   };
 
   return (

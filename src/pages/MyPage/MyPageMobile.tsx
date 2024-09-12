@@ -14,7 +14,7 @@ import { SecuritySettingMobile } from "@/components/MyPageMobile/SecuritySetting
 import useAsyncWithLoading from "@/hooks/useAsyncWithLoading";
 import { myPageProps } from "@/types";
 
-export const MyPageMobile = () => {
+const MyPageMobile = () => {
   const [myData, setMyData] = useState<myPageProps>();
   const [activeCategory, setActiveCategory] = useState<string | null>("");
   const executeAsyncTask = useAsyncWithLoading();
@@ -71,6 +71,8 @@ export const MyPageMobile = () => {
     </Container>
   );
 };
+
+export default MyPageMobile;
 
 const Container = styled.div`
   background-color: var(--White, #fff);

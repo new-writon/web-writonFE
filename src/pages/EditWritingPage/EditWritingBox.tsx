@@ -1,18 +1,15 @@
-/* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect, useState } from "react";
 
 import { useNavigate, useParams } from "react-router-dom";
 import { useRecoilState, useRecoilValue, useSetRecoilState } from "recoil";
 import styled from "styled-components";
 
-import { patchEditWritingSubmit } from "@/apis/EditWritingPage";
 import { AddSpecialQuestion } from "@/components/WritingPage/AddSpecialQuestion";
 import AddSpecialQuestionResponsive from "@/components/WritingPage/AddSpecialQuestion/AddSpecialQuestionResponsive";
 import { BasicEditQuestion } from "@/components/WritingPage/BasicEditQuestion";
 import { SpecialEditQuestion } from "@/components/WritingPage/SpecialEditQuestion";
 import { CompletePopup } from "@/components/atom/WritingPopup/CompletePopup";
 import { WritingSubmitButton } from "@/components/atom/button";
-import useAsyncWithLoading from "@/hooks/useAsyncWithLoading";
 import {
   DateResponsiveState,
   DetailDataState,
@@ -20,6 +17,7 @@ import {
   postEditWritingDataState,
 } from "@/recoil/atoms";
 import { Inner } from "@/style/global";
+import { useSubmitEditWrite } from "@/hooks/reactQueryHooks/useMainHooks";
 
 export const EditWritingBox = () => {
   const { date } = useParams();
@@ -29,8 +27,6 @@ export const EditWritingBox = () => {
   const setDateResponsive = useSetRecoilState(DateResponsiveState);
   const postEditWritingData = useRecoilValue(postEditWritingDataState);
   const detailData = useRecoilValue(DetailDataState);
-
-  const executeAsyncTask = useAsyncWithLoading();
 
   const completeBtn = (type: string) => {
     if (postEditWritingData?.every((item) => item.content.trim() !== "")) {
@@ -46,20 +42,16 @@ export const EditWritingBox = () => {
   useEffect(() => {
     setDateResponsive(date);
   }, [date, detailData, postEditWritingData, setDateResponsive]);
-  const submitEditWrite = async () => {
-    executeAsyncTask(async () => {
-      const postSubmitArray = postEditWritingData.map(
-        // eslint-disable-next-line @typescript-eslint/no-unused-vars
-        ({ question, category, userTemplateId, ...rest }) => rest
-      );
 
-      try {
-        await patchEditWritingSubmit(postEditWritingData[0].userTemplateId, postSubmitArray);
-        navigate("/");
-      } catch {
-        new Error("shit");
-      }
+  const { mutate: submitEditWrite } = useSubmitEditWrite();
+
+  const handleSubmit = () => {
+    submitEditWrite({
+      organization: localStorage.getItem("organization") as string,
+      challengeId: localStorage.getItem("challengeId") as string,
+      postEditWritingData: postEditWritingData,
     });
+    navigate("/");
   };
   return (
     <Inner>
@@ -95,7 +87,7 @@ export const EditWritingBox = () => {
           </WritingSubmitButton>
           {popUpOn && (
             <CompletePopup
-              onClick={submitEditWrite}
+              onClick={handleSubmit}
               setpopUpOn={setpopUpOn}
             />
           )}

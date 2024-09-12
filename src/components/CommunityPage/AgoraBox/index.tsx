@@ -1,10 +1,9 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect, useState } from "react";
 
-import { format, isSameDay } from "date-fns";
+import { isSameDay } from "date-fns";
 import { useRecoilState } from "recoil";
 
-import { getAgoraData, getCommunityDate } from "@/apis/CommunityPage";
 import noSmallTalk from "@/assets/AgoraPage/noSmallTalk.svg";
 import smallTalkArrow from "@/assets/AgoraPage/smallTalkArrow.svg";
 import arrow from "@/assets/communityPage/storyArrow.svg";
@@ -12,26 +11,49 @@ import { AgoraItem, AgoraThrowingTopicItem } from "@/components/atom/AgoraItem";
 import { MainSemiTitle } from "@/components/atom/MainSemiTitle";
 import { SmallTalkTitle } from "@/components/atom/SmallTalkTitle";
 import { TitleSideBox } from "@/components/atom/TitleSideBox";
-import useAsyncWithLoading from "@/hooks/useAsyncWithLoading";
-import { agoraBoxDataState, dateAgoraActiveState, dateAgoraLengthState } from "@/recoil/atoms";
+import { agoraBoxDataState, dateAgoraLengthState } from "@/recoil/atoms";
 import { Inner } from "@/style/global";
 import { ChallengeCurrentType, communityFirstComponentType } from "@/types";
 
 import { AgoraItemView, Container, NoAgoraView, TodayNoAgoraView } from "./style";
+import { useCommunityDates, useGetAgoraData } from "@/hooks/reactQueryHooks/useMainHooks";
+import Loading from "@/components/Common/Loading";
 
 export const AgoraBox = ({
   ChallengeCurrent,
-  CommunityFirstData,
+  CommunityStats,
 }: {
   ChallengeCurrent: ChallengeCurrentType | undefined;
-  CommunityFirstData: communityFirstComponentType | undefined;
+  CommunityStats: communityFirstComponentType | undefined;
 }) => {
-  const [width, setWidth] = useState<number>(window.innerWidth);
+  const organizationChallengeData = {
+    organization: localStorage.getItem("organization") as string,
+    challengeId: localStorage.getItem("challengeId") as string,
+  };
 
-  const [dateActive, setDateActive] = useRecoilState(dateAgoraActiveState);
   const [dateLength, setDateLength] = useRecoilState(dateAgoraLengthState);
   const [agoraData, setAgoraData] = useRecoilState(agoraBoxDataState);
-  const executeAsyncTask = useAsyncWithLoading();
+
+  const [selectedDate, setSelectedDate] = useState<string | Date>("");
+
+  const { data: communityDates = [] } = useCommunityDates(organizationChallengeData.challengeId);
+
+  const { data: fetchAgoraData, isLoading } = useGetAgoraData({
+    challengeId: organizationChallengeData.challengeId,
+    selectedDate: selectedDate,
+  });
+
+  useEffect(() => {
+    setAgoraData(fetchAgoraData || []);
+  }, [fetchAgoraData]);
+
+  // communityDates가 로드된 후, 마지막 요소를 selectedDate로 설정
+  useEffect(() => {
+    if (communityDates && communityDates.length > 0) {
+      setDateLength(communityDates.length - 1);
+      setSelectedDate(communityDates[communityDates.length - 1]);
+    }
+  }, [communityDates]); // communityDates가 변경될 때마다 실행
 
   const CommunitySpaceDate = async (type: string) => {
     if (dateLength > 0) {
@@ -41,7 +63,7 @@ export const AgoraBox = ({
           break;
       }
     }
-    if (dateLength < dateActive.length - 1) {
+    if (dateLength < communityDates.length - 1) {
       switch (type) {
         case "next":
           setDateLength(dateLength + 1);
@@ -50,63 +72,17 @@ export const AgoraBox = ({
     }
     switch (type) {
       case "today":
-        setDateLength(dateActive.length - 1);
+        setDateLength(communityDates.length - 1);
         break;
     }
+    window.scrollTo({ top: 0, behavior: "smooth" });
   };
-
-  const ChangeDate = async () => {
-    executeAsyncTask(async () => {
-      try {
-        const result = await getAgoraData(
-          localStorage.getItem("challengeId") || "1",
-          dateActive[dateLength]
-        );
-        setAgoraData(result);
-      } catch {
-        throw new Error("shit");
-      }
-    });
-  };
-
-  const CommunitAgoraRendering = async () => {
-    executeAsyncTask(async () => {
-      try {
-        const response = await getCommunityDate(localStorage.getItem("challengeId") || "1");
-        const dateArray = response.map((item) => format(item, "yyyy-MM-dd"));
-        setDateActive(dateArray);
-        setDateLength(dateArray.length - 1);
-        if (dateArray.length > 0) {
-          const result = await getAgoraData(
-            localStorage.getItem("challengeId") || "1",
-            dateArray[dateArray.length - 1]
-          );
-          setAgoraData(result);
-        }
-      } catch {
-        throw new Error("shit");
-      }
-    });
-  };
-  useEffect(() => {
-    CommunitAgoraRendering();
-  }, []);
 
   useEffect(() => {
-    if (dateActive[dateLength]) {
-      // dateActive 배열이 준비된 후 ChangeDate 함수 호출
-      ChangeDate();
+    if (communityDates && communityDates.length > 0) {
+      setSelectedDate(communityDates[dateLength]);
     }
-  }, [dateLength, dateActive]);
-
-  const handleResize = () => {
-    //뷰크기 강제로 강져오기
-    setWidth(window.innerWidth);
-  };
-  useEffect(() => {
-    window.addEventListener("resize", handleResize);
-    return () => window.removeEventListener("resize", handleResize); //clean
-  }, [width]);
+  }, [dateLength]);
 
   return (
     <Inner>
@@ -114,7 +90,7 @@ export const AgoraBox = ({
         <div className="title first agora">
           <MainSemiTitle font={1.25}>
             <span>
-              지금 <div className="number">{CommunityFirstData?.challengeParticipantCount}</div>명이
+              지금 <div className="number">{CommunityStats?.challengeParticipantCount}</div>명이
               함께&nbsp;
             </span>
             {ChallengeCurrent?.organization} {ChallengeCurrent?.challenge} 챌린지 도전중!
@@ -128,7 +104,7 @@ export const AgoraBox = ({
         </div>
         <div className="title-and-date">
           <SmallTalkTitle
-            date={dateActive[dateLength] || new Date().toDateString()}
+            date={communityDates[dateLength] || new Date().toDateString()}
             number={agoraData.length}
           />
           <div className="change-date">
@@ -154,10 +130,10 @@ export const AgoraBox = ({
           </div>
         </div>
         <AgoraItemView>
-          {isSameDay(dateActive[dateLength], new Date()) && (
+          {isSameDay(communityDates[dateLength], new Date()) && (
             <AgoraThrowingTopicItem type={agoraData?.length === 3 ? "full" : "empty"} />
           )}
-          {agoraData?.length === 0 && isSameDay(dateActive[dateLength], new Date()) && (
+          {agoraData?.length === 0 && isSameDay(communityDates[dateLength], new Date()) && (
             <TodayNoAgoraView>
               <span>
                 아직 등록된 스몰톡이 없네요.
@@ -169,7 +145,9 @@ export const AgoraBox = ({
               />
             </TodayNoAgoraView>
           )}
-          {agoraData?.length === 0 && !isSameDay(dateActive[dateLength], new Date()) ? (
+          {isLoading ? (
+            <Loading />
+          ) : agoraData?.length === 0 && !isSameDay(communityDates[dateLength], new Date()) ? (
             <NoAgoraView>
               <img
                 src={noSmallTalk}

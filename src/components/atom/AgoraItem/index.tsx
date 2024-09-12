@@ -1,5 +1,3 @@
-import { useEffect, useState } from "react";
-
 import { isSameDay } from "date-fns";
 import { useRecoilState, useSetRecoilState } from "recoil";
 
@@ -13,12 +11,13 @@ import {
 import { agoraDataType } from "@/types";
 
 import { Container, ThrowingContainer } from "./style";
+import useWindowWidth from "@/hooks/useWindowWidth";
 
 export const AgoraItem = ({ data }: { data: agoraDataType }) => {
   const setAgoraData = useSetRecoilState(agoraDataState);
   const setAgoraModal = useSetRecoilState(agoraModalState);
   const setAgoraModalBox = useSetRecoilState(agoraModalBoxState);
-  const [width, setWidth] = useState<number>(window.innerWidth);
+  const width = useWindowWidth();
 
   const spaceAgoraBox = () => {
     setAgoraData(data);
@@ -34,14 +33,6 @@ export const AgoraItem = ({ data }: { data: agoraDataType }) => {
     }
   };
 
-  const handleResize = () => {
-    //뷰크기 강제로 강져오기
-    setWidth(window.innerWidth);
-  };
-  useEffect(() => {
-    window.addEventListener("resize", handleResize);
-    return () => window.removeEventListener("resize", handleResize); //clean
-  }, [width]);
   return (
     <Container
       onClick={spaceAgoraBox}
@@ -78,21 +69,12 @@ export const AgoraItem = ({ data }: { data: agoraDataType }) => {
 
 export const AgoraThrowingTopicItem = ({ type }: { type: string }) => {
   const [modal, setModal] = useRecoilState(modalBackgroundState);
-  const [width, setWidth] = useState<number>(window.innerWidth);
+  const width = useWindowWidth();
 
   const TodayAgoraWrite = () => {
     document.body.style.overflowY = "hidden";
     setModal({ ...modal, agoraWriteModal: true });
   };
-
-  const handleResize = () => {
-    //뷰크기 강제로 강져오기
-    setWidth(window.innerWidth);
-  };
-  useEffect(() => {
-    window.addEventListener("resize", handleResize);
-    return () => window.removeEventListener("resize", handleResize); //clean
-  }, [width]);
 
   return (
     <ThrowingContainer $type={type}>

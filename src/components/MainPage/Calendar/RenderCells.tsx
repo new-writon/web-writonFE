@@ -111,8 +111,8 @@ export const RenderCell = React.memo(
 
     const pageWeekNumber =
       getDay(pageDay || today) === 0
-        ? differenceInCalendarWeeks(pageDay || today, monthStart) - 1
-        : differenceInCalendarWeeks(pageDay || today, monthStart);
+        ? differenceInCalendarWeeks(pageDay || today, monthStart)
+        : differenceInCalendarWeeks(pageDay || today, monthStart) + 1;
 
     // addDays(startDate, 1);
 

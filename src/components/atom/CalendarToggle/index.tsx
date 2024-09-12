@@ -4,9 +4,20 @@ import downArrow from "@/assets/mainPage/downArrow.svg";
 import clalendarIcon from "@/assets/mainPage/icon-calendar.svg";
 import topArrow from "@/assets/mainPage/topArrow.svg";
 
-export const CalendarToggle = ({ toggle, onClick }: { toggle: boolean; onClick: () => void }) => {
+export const CalendarToggle = ({
+  toggle,
+  onClick,
+  page,
+}: {
+  toggle: boolean;
+  onClick: () => void;
+  page?: string;
+}) => {
   return (
-    <Container onClick={onClick}>
+    <Container
+      onClick={onClick}
+      className={page ? page : ""}
+    >
       <div className="calendarOpenBtn">{toggle ? "달력 접기" : "달력 펼치기"}</div>
       <div className="calendarOpenBtnResponsive">
         <img
@@ -57,5 +68,29 @@ const Container = styled.div<{ onClick: () => void }>`
     .calendarOpenBtnResponsive {
       display: block;
     }
+  }
+
+  // 달력 버튼
+  &.community {
+    border-radius: 6px;
+    border: 1px solid var(--Gray-40, #d2d5db);
+    padding: 3px 8px 3px 6px;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    cursor: pointer;
+  }
+  &.community img {
+    margin-left: 0;
+  }
+  &.community .calendarOpenBtn {
+    display: none;
+  }
+  &.community .calendarOpenBtnResponsive {
+    display: block;
+  }
+
+  &.community:hover {
+    background: var(--Gray-30, #edeef1);
   }
 `;

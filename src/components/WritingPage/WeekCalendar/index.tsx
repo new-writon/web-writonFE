@@ -3,9 +3,6 @@ import { useState } from "react";
 import { format, getMonth } from "date-fns";
 import { useParams } from "react-router-dom";
 
-import downArrow from "@/assets/mainPage/downArrow.svg";
-import clalendarIcon from "@/assets/mainPage/icon-calendar.svg";
-import topArrow from "@/assets/mainPage/topArrow.svg";
 import { RenderCell } from "@/components/MainPage/Calendar/RenderCells";
 import { RenderDays } from "@/components/MainPage/Calendar/RenderDays";
 import { MainSemiTitle } from "@/components/atom/MainSemiTitle";
@@ -15,6 +12,7 @@ import { Inner } from "@/style/global";
 import { CalendarRecordCurrentType } from "@/types";
 
 import { Container } from "./style";
+import { CalendarToggle } from "@/components/atom/CalendarToggle";
 
 export const WeekCalendar = ({ CalendarData }: { CalendarData: CalendarRecordCurrentType[] }) => {
   const { date } = useParams();
@@ -36,23 +34,10 @@ export const WeekCalendar = ({ CalendarData }: { CalendarData: CalendarRecordCur
               챌린지 방법
             </TooltipButton>
           </div>
-          <div
-            className="topBarRight"
+          <CalendarToggle
+            toggle={weekFold}
             onClick={() => setWeekFold(!weekFold)}
-          >
-            <div className="calendarOpenBtn">{weekFold ? "달력 접기" : "날짜 선택"}</div>
-            <div className="calendarOpenBtnResponsive">
-              <img
-                src={clalendarIcon}
-                alt="달력"
-              />
-            </div>
-            <img
-              className={`${weekFold ? "topArrow" : "downArrow"}`}
-              src={weekFold ? topArrow : downArrow}
-              alt="V"
-            />
-          </div>
+          />
         </div>
         {tooltipOn && (
           <div className="tooltipBox">

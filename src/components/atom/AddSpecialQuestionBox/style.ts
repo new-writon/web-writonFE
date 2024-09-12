@@ -63,12 +63,12 @@ export const BottomBox = styled.div<{ $fold: boolean; $isClick: boolean }>`
   .etcBox .addBtn {
     display: ${(props) => (props.$isClick ? "flex" : "none")};
     align-items: center;
-    p {
+    span {
       color: ${(props) => (props.$isClick ? "var(--Gray-60, #94989f)" : "var(--Main-50, #6272ff)")};
       font-size: 0.875rem;
       font-weight: 600;
-      line-height: 120%; /* 16.8px */
-      padding-top: 4px;
+      line-height: 24px; /* 16.8px */
+      /* padding-top: 4px; */
     }
   }
 

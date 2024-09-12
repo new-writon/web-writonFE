@@ -49,7 +49,7 @@ export const getCommunityDate = async (challengeId: string) => {
 export const getCommunityContentData = async (
   organization: string,
   challengeId: string,
-  date: string
+  date: string | Date
 ) => {
   const response = await getData<communitySecondCoponentType>(
     `/template/root/${organization}/${challengeId}/date/${date}`
@@ -60,7 +60,7 @@ export const getCommunityContentData = async (
 // 아고라
 
 // 날짜에 따른 아고라 조회 (배열)
-export const getAgoraData = async (challengeId: string, date: string) => {
+export const getAgoraData = async (challengeId: string, date: string | Date) => {
   const response = await getData<agoraDataType[]>(`/small-talk/${challengeId}/${date}`);
   return response.data;
 };

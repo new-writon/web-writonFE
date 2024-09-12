@@ -1,17 +1,14 @@
-/* eslint-disable react-hooks/exhaustive-deps */
-import { useEffect, useState } from "react";
+import { useState } from "react";
 
 import { useSetRecoilState } from "recoil";
 
-import { getCommunityContentData } from "@/apis/CommunityPage";
-import { postLike, postLikeDelete } from "@/apis/DetailPage";
 import comment from "@/assets/DetailPage/comment.svg";
 import fireOff from "@/assets/DetailPage/fireOff.svg";
 import fireOn from "@/assets/DetailPage/fireOn.svg";
-import { CommunitySecondDataState, LikeState } from "@/recoil/atoms";
-import { communitySecondCoponentType } from "@/types";
+import { LikeState } from "@/recoil/atoms";
 
 import { Container } from "./style";
+import { useLikeMutation, useUnlikeMutation } from "@/hooks/reactQueryHooks/useMainHooks";
 
 export const CommnetAndLikeFloating = ({
   userTemplateId,
@@ -24,55 +21,40 @@ export const CommnetAndLikeFloating = ({
   commentCount: string;
   likeCount: string;
 }) => {
-  const [IsHover, setIsHover] = useState<boolean>(false);
-  const [IsClick, setIsCick] = useState<boolean>(false);
-  const setLikeCount = useSetRecoilState(LikeState);
-  const setCommunitySecondData =
-    useSetRecoilState<communitySecondCoponentType>(CommunitySecondDataState);
+  const [isHover, setIsHover] = useState<boolean>(false);
+  const [isClick, setIsClick] = useState<boolean>(myLikeSign === "1");
+  const setLikeCount = useSetRecoilState(LikeState); // 프론트에서 좋아요 수를 바로 업데이트하기 위해 사용
 
-  const LikeFunc = async () => {
-    if (!IsClick) {
-      // 클릭 아직 안했을 때 좋아요수 변경 +1
-      await postLike(userTemplateId, localStorage.getItem("organization") as string);
+  const { mutate: likeMutate } = useLikeMutation();
+  const { mutate: unlikeMutate } = useUnlikeMutation();
+
+  const handleLikeClick = () => {
+    if (!isClick) {
+      // 좋아요 추가
+      likeMutate({ userTemplateId, organization: localStorage.getItem("organization") as string });
       setLikeCount((Number(likeCount) + 1).toString());
-      setIsCick(true);
-      setIsHover(true);
     } else {
-      await postLikeDelete(userTemplateId, localStorage.getItem("organization") as string);
+      // 좋아요 취소
+      unlikeMutate({
+        userTemplateId,
+        organization: localStorage.getItem("organization") as string,
+      });
       setLikeCount((Number(likeCount) - 1).toString());
-      setIsCick(false);
-      setIsHover(false);
     }
-    try {
-      const result = await getCommunityContentData(
-        localStorage.getItem("organization") || "",
-        localStorage.getItem("challengeId") || "1",
-        localStorage.getItem("date") || ""
-      );
-      setCommunitySecondData(result); // 밖에 커뮤니티 데이터 수정
-    } catch {
-      new Error("shit");
-    }
+    setIsClick(!isClick);
   };
 
-  useEffect(() => {
-    if (myLikeSign === "1") {
-      setIsCick(true);
-    } else if (myLikeSign === "0") {
-      setIsCick(false);
-    }
-  }, [myLikeSign, setIsCick]);
   return (
     <Container>
       <div className="Box">
         <div
-          className={`likeBox round ${IsHover && "hover"}  ${IsClick && "click"}`}
+          className={`likeBox round ${isHover && "hover"}  ${isClick && "click"}`}
           onMouseOver={() => setIsHover(true)}
           onMouseOut={() => setIsHover(false)}
-          onClick={LikeFunc}
+          onClick={handleLikeClick}
         >
           <img
-            src={IsClick ? fireOn : IsHover ? fireOn : fireOff}
+            src={isClick ? fireOn : isHover ? fireOn : fireOff}
             alt="fire"
           />
           <div className="num">{likeCount}</div>

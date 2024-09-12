@@ -4,7 +4,6 @@ import { useRecoilState, useRecoilValue } from "recoil";
 import styled from "styled-components";
 
 import { AgoraPage } from "@/pages/AgoraPage/AgoraPage";
-import { DetailPage } from "@/pages/DetailPage/DetailPage";
 import {
   DetailModalState,
   finishModalState,
@@ -27,6 +26,7 @@ import { DeletePopupResponsive } from "../atom/WritingPopup/DeletePopup";
 import { TodayWriteAgoraPopup, TodayWritePopup } from "../atom/WritingPopup/TodayWritePopup";
 
 import Loading from "./Loading";
+import DetailPage from "@/pages/DetailPage/DetailPage";
 
 export const ModalProvider = () => {
   const modal = useRecoilValue(modalBackgroundState);

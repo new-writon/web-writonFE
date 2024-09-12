@@ -1,45 +1,23 @@
-/* eslint-disable react-hooks/exhaustive-deps */
-import { useEffect, useState } from "react";
-
 import styled from "styled-components";
 
-import { getCommunityFirstComponent, getMyCommunityStory } from "@/apis/CommunityPage";
-import { getChallengeCurrent } from "@/apis/mainPage";
 import { AgoraBox } from "@/components/CommunityPage/AgoraBox";
 import { CommunityBox } from "@/components/CommunityPage/CommunityBox";
-// import { StoryBox } from "@/components/CommunityPage/StoryBox";
-import useAsyncWithLoading from "@/hooks/useAsyncWithLoading";
-import { ChallengeCurrentType, communityFirstComponentType } from "@/types";
 
-export const CommunityPage = () => {
-  const [ChallengeCurrent, setChallengeCurrent] = useState<ChallengeCurrentType>();
-  const [CommunityFirstData, setCommunityFirstData] = useState<communityFirstComponentType>();
-  // const [myCommunityStoryData, setMyCommunityStoryData] = useState<communityStoryProps>();
-  const executeAsyncTask = useAsyncWithLoading();
+import {
+  useGetChallengeCurrent,
+  useGetCommunityChallengeStats,
+} from "@/hooks/reactQueryHooks/useMainHooks";
 
-  const CommunityPageRendering = async () => {
-    executeAsyncTask(async () => {
-      try {
-        const result = await Promise.all([
-          getChallengeCurrent(
-            localStorage.getItem("organization") || "",
-            localStorage.getItem("challengeId") || "1"
-          ),
-          getCommunityFirstComponent(localStorage.getItem("challengeId") || "1"),
-          getMyCommunityStory(localStorage.getItem("challengeId") || "1"),
-        ]);
-        setChallengeCurrent(result[0]);
-        setCommunityFirstData(result[1]);
-        // setMyCommunityStoryData(result[2]);
-      } catch {
-        throw new Error("shit");
-      }
-    });
+const CommunityPage = () => {
+  const organizationChallengeData = {
+    organization: localStorage.getItem("organization") as string,
+    challengeId: localStorage.getItem("challengeId") as string,
   };
 
-  useEffect(() => {
-    CommunityPageRendering();
-  }, []);
+  const { data: ChallengeCurrent } = useGetChallengeCurrent(organizationChallengeData);
+  const { data: CommunityStats } = useGetCommunityChallengeStats(
+    localStorage.getItem("challengeId") as string
+  );
 
   return (
     <Container>
@@ -50,12 +28,15 @@ export const CommunityPage = () => {
       /> */}
       <AgoraBox
         ChallengeCurrent={ChallengeCurrent}
-        CommunityFirstData={CommunityFirstData}
+        CommunityStats={CommunityStats}
       />
       <CommunityBox />
     </Container>
   );
 };
+
+export default CommunityPage;
+
 const Container = styled.div`
   background: var(--Gray-20, #f8f8fa);
   padding-top: 23px;

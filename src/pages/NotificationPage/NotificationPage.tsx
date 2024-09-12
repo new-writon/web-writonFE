@@ -8,7 +8,7 @@ import Loading from "@/components/Common/Loading";
 import { TooltipNotification } from "@/components/atom/TooltipNotification";
 import { notificationDataType } from "@/types";
 
-export const NotificationPage = () => {
+const NotificationPage = () => {
   const [notificationData, setNotificationData] = useState<notificationDataType[] | null>(null);
 
   const notificationRendering = async () => {
@@ -49,6 +49,8 @@ export const NotificationPage = () => {
     </>
   );
 };
+
+export default NotificationPage;
 
 const Container = styled.div`
   width: 100%;
