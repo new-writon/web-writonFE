@@ -1,7 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import axios, { AxiosRequestConfig, InternalAxiosRequestConfig, isAxiosError } from "axios";
-
-import { ErrorData } from "@/types/axios";
+import axios, { AxiosRequestConfig, InternalAxiosRequestConfig } from "axios";
 
 import { postRefreshToken } from "./login";
 
@@ -78,6 +76,8 @@ async function errorHandler(error: { config?: any; response?: any }) {
   } else if (status === 429) {
     // 요청이 너무 많은 경우
     notifyError(message.message || message);
+  } else if (status === 422) {
+    alert("내용을 적어주세요");
   } else if (
     status === 700 ||
     status === 701 ||
@@ -124,12 +124,7 @@ export const getData = async <T>(
     const response = await WRITON.get(url, config);
     return response;
   } catch (error) {
-    if (isAxiosError(error) && error.response) {
-      throw error.response.data as ErrorData;
-    } else {
-      // 서버 응답이 없는 경우 등의 에러 처리
-      throw new Error("서버 응답이 없습니다.");
-    }
+    throw new Error("서버 응답이 없습니다.");
   }
 };
 
@@ -143,12 +138,7 @@ export const postData = async <T>(
     const response = await WRITON.post(url, data, config);
     return response;
   } catch (error) {
-    if (isAxiosError(error) && error.response) {
-      throw error.response.data as ErrorData;
-    } else {
-      // 서버 응답이 없는 경우 등의 에러 처리
-      throw new Error("서버 응답이 없습니다.");
-    }
+    throw new Error("서버 응답이 없습니다.");
   }
 };
 
@@ -162,12 +152,7 @@ export const putData = async <T>(
     const response = await WRITON.put(url, data, config);
     return response;
   } catch (error) {
-    if (isAxiosError(error) && error.response) {
-      throw error.response.data as ErrorData;
-    } else {
-      // 서버 응답이 없는 경우 등의 에러 처리
-      throw new Error("서버 응답이 없습니다.");
-    }
+    throw new Error("서버 응답이 없습니다.");
   }
 };
 
@@ -181,12 +166,7 @@ export const patchData = async <T>(
     const response = await WRITON.patch(url, data, config);
     return response;
   } catch (error) {
-    if (isAxiosError(error) && error.response) {
-      throw error.response.data as ErrorData;
-    } else {
-      // 서버 응답이 없는 경우 등의 에러 처리
-      throw new Error("서버 응답이 없습니다.");
-    }
+    throw new Error("서버 응답이 없습니다.");
   }
 };
 
@@ -199,11 +179,6 @@ export const deleteData = async <T>(
     const response = await WRITON.delete(url, config);
     return response;
   } catch (error) {
-    if (isAxiosError(error) && error.response) {
-      throw error.response.data as ErrorData;
-    } else {
-      // 서버 응답이 없는 경우 등의 에러 처리
-      throw new Error("서버 응답이 없습니다.");
-    }
+    throw new Error("서버 응답이 없습니다.");
   }
 };

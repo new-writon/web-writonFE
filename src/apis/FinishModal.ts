@@ -1,9 +1,13 @@
 import { finishModalType, satisfactionQuestionType } from "@/types";
+import { organizationChallengeDataType } from "@/types/axios";
 
 import { getData, patchData, postData, putData } from ".";
 
 //마지막 프로세스 했는지 조회
-export const getFinishModal = async (organization: string, challengeId: string) => {
+export const getFinishModal = async ({
+  organization,
+  challengeId,
+}: organizationChallengeDataType) => {
   const response = await getData<{ review: number }>(
     `/satisfaction/${organization}/${challengeId}`
   );
