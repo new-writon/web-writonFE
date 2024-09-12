@@ -1,12 +1,10 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 
 import { format } from "date-fns";
 import { useRecoilState } from "recoil";
 
-import { getCommunityContentData, getCommunityDate } from "@/apis/CommunityPage";
 import downArrowActive from "@/assets/communityPage/downArrowActive.svg";
-import calendarIMG from "@/assets/communityPage/icon-calendar.svg";
 import arrow from "@/assets/communityPage/storyArrow.svg";
 import topArrowActive from "@/assets/communityPage/topArrowActive.svg";
 import downArrow from "@/assets/mainPage/downArrow.svg";
@@ -17,36 +15,40 @@ import { MainSemiTitle } from "@/components/atom/MainSemiTitle";
 import { SubCalendar } from "@/components/atom/SubCalendar";
 import { TitleSideBox } from "@/components/atom/TitleSideBox";
 import { KeywordButton } from "@/components/atom/button";
-import useAsyncWithLoading from "@/hooks/useAsyncWithLoading";
-import {
-  CommunitySecondDataState,
-  communityState,
-  dateActiveState,
-  dateLengthState,
-} from "@/recoil/atoms";
+import { communityState, dateLengthState } from "@/recoil/atoms";
 import { Inner } from "@/style/global";
-import { communityContentProps, communitySecondCoponentType } from "@/types";
+import { communityContentProps } from "@/types";
 
 import { CommunityHeader, CommunityItemBox, Container } from "./style";
+import { CalendarToggle } from "@/components/atom/CalendarToggle";
+import { useCommunityContentData, useCommunityDates } from "@/hooks/reactQueryHooks/useMainHooks";
+import useOnclickOutside from "@/hooks/useOnclickOutside";
+import useWindowWidth from "@/hooks/useWindowWidth";
 
 const JobCategory = ["기획", "운영", "개발", "마케팅", "홍보", "디자인"];
 
 export const CommunityBox = () => {
+  const organizationChallengeData = {
+    organization: localStorage.getItem("organization") as string,
+    challengeId: localStorage.getItem("challengeId") as string,
+  };
+  const width = useWindowWidth();
+
   // const today = new Date();
   const [community, setCommunity] = useRecoilState(communityState);
-  const [width, setWidth] = useState<number>(window.innerWidth);
-  const [dateActive, setDateActive] = useRecoilState(dateActiveState);
-  const [dateLength, setDateLength] = useRecoilState(dateLengthState);
-  const [dateLastLength, setDateLastLength] = useState<number>(0);
-  const [CommunitySecondData, setCommunitySecondData] =
-    useRecoilState<communitySecondCoponentType>(CommunitySecondDataState);
+
   const [filteredData, setFilteredData] = useState<communityContentProps[][]>([]);
   const [calendarOn, setCalendarOn] = useState<boolean>(false);
   const [categoriesOn, setCategoriesOn] = useState<boolean>(false);
   const [mobileCategoriesActive, setMobileCategoriesActive] = useState<boolean>(false);
 
-  const executeAsyncTask = useAsyncWithLoading();
   const [categoriesArray, setCategoriesArray] = useState(["전체"]);
+  const [selectedDate, setSelectedDate] = useState<string | Date>("");
+  const [dateLength, setDateLength] = useRecoilState(dateLengthState);
+
+  const subCalendarRef = useRef<HTMLDivElement>(null);
+  const subCalendarOnRef = useRef<HTMLDivElement>(null);
+  useOnclickOutside([subCalendarRef, subCalendarOnRef], () => setCalendarOn(false));
 
   const ChangeCategories = (item: string) => {
     if (item !== "전체") {
@@ -74,111 +76,38 @@ export const CommunityBox = () => {
     }
   };
 
+  const clickDay = (value: Date) => {
+    setSelectedDate(communityDates[communityDates.indexOf(format(value, "yyyy-MM-dd"))]);
+    setDateLength(communityDates.indexOf(format(value, "yyyy-MM-dd")));
+    setCalendarOn(false);
+  };
+
+  const { data: communityDates = [] } = useCommunityDates(organizationChallengeData.challengeId);
+  const { data: { challengeCompleteCount, templateData: communityContentData } = {}, isLoading } =
+    useCommunityContentData({
+      organization: organizationChallengeData.organization,
+      challengeId: organizationChallengeData.challengeId,
+      selectedDate: selectedDate,
+    });
+
+  // communityDates가 로드된 후, 마지막 요소를 selectedDate로 설정
+  useEffect(() => {
+    if (communityDates && communityDates.length > 0) {
+      setDateLength(communityDates.length - 1);
+      setSelectedDate(communityDates[communityDates.length - 1]);
+    }
+  }, [communityDates]); // communityDates가 변경될 때마다 실행
+
+  // 카테고리에 따른 글 필터링
   useEffect(() => {
     if (categoriesArray.includes("전체")) {
-      setFilteredData(Array.from(CommunitySecondData.templateData || []).reverse()); // "전체"를 선택한 경우, 모든 데이터를 보여줍니다.
+      setFilteredData(communityContentData || []);
     } else {
-      const filtered = Array.from(CommunitySecondData.templateData || [])
-        .reverse()
-        .filter((item) => categoriesArray.includes(item[0].position)); // 선택한 카테고리에 해당하는 데이터를 필터링합니다.
-      setFilteredData(filtered);
+      setFilteredData(
+        (communityContentData || []).filter((item) => categoriesArray.includes(item[0].position))
+      );
     }
-  }, [categoriesArray]);
-
-  const clickDay = (value: Date) => {
-    executeAsyncTask(async () => {
-      try {
-        const result = await getCommunityContentData(
-          localStorage.getItem("organization") || "",
-          localStorage.getItem("challengeId") || "1",
-          format(value, "yyyy-MM-dd")
-        );
-        localStorage.setItem("date", format(value, "yyyy-MM-dd"));
-        setDateLength(dateActive.indexOf(format(value, "yyyy-MM-dd")));
-        setCommunitySecondData(result);
-        const templateData = Array.from(result.templateData || []).reverse();
-
-        // 카테고리에 따른 글 필터링
-        if (categoriesArray.includes("전체")) {
-          setFilteredData(templateData); // "전체"를 선택한 경우, 모든 데이터를 보여줍니다.
-        } else {
-          const filtered = templateData.filter((item) =>
-            categoriesArray.includes(item[0].position)
-          ); // 선택한 카테고리에 해당하는 데이터를 필터링합니다.
-          setFilteredData(filtered);
-        }
-        setCalendarOn(false);
-      } catch {
-        throw new Error("shit");
-      }
-    });
-  };
-
-  const CommunitySecondRendering = async () => {
-    executeAsyncTask(async () => {
-      try {
-        const response = await getCommunityDate(localStorage.getItem("challengeId") || "1");
-        const dateArray = response.map((item) => format(item, "yyyy-MM-dd"));
-
-        // 상태 업데이트
-        setDateActive(dateArray);
-        setDateLength(dateArray.length - 1);
-        setDateLastLength(dateArray.length - 1);
-        localStorage.setItem("dateLastLength", (dateArray.length - 1).toString());
-        localStorage.setItem("date", dateArray[dateArray.length - 1]);
-
-        // dateArray가 비어있지 않은 경우에만 API 호출
-        if (dateArray.length > 0) {
-          const lastDate = dateArray[dateArray.length - 1];
-          const result = await getCommunityContentData(
-            localStorage.getItem("organization") || "",
-            localStorage.getItem("challengeId") || "1",
-            lastDate
-          );
-
-          setCommunitySecondData(result);
-          const templateData = Array.from(result.templateData || []).reverse();
-
-          // 카테고리에 따른 글 필터링
-          if (categoriesArray.includes("전체")) {
-            setFilteredData(templateData); // "전체"를 선택한 경우, 모든 데이터를 보여줍니다.
-          } else {
-            const filtered = templateData.filter((item) =>
-              categoriesArray.includes(item[0].position)
-            ); // 선택한 카테고리에 해당하는 데이터를 필터링합니다.
-            setFilteredData(filtered);
-          }
-        }
-      } catch (error) {
-        console.error("Error fetching community data:", error);
-      }
-    });
-  };
-
-  const ChangeDate = async () => {
-    executeAsyncTask(async () => {
-      try {
-        const result = await getCommunityContentData(
-          localStorage.getItem("organization") || "",
-          localStorage.getItem("challengeId") || "1",
-          dateActive[dateLength]
-        );
-        setCommunitySecondData(result);
-        const templateData = Array.from(result.templateData || []).reverse();
-        // 카테고리에 따른 글 필터링
-        if (categoriesArray.includes("전체")) {
-          setFilteredData(templateData); // "전체"를 선택한 경우, 모든 데이터를 보여줍니다.
-        } else {
-          const filtered = templateData.filter((item) =>
-            categoriesArray.includes(item[0].position)
-          ); // 선택한 카테고리에 해당하는 데이터를 필터링합니다.
-          setFilteredData(filtered);
-        }
-      } catch {
-        throw new Error("shit");
-      }
-    });
-  };
+  }, [categoriesArray, communityContentData]);
 
   const CommunitySpaceDate = async (type: string) => {
     if (dateLength > 0) {
@@ -188,7 +117,7 @@ export const CommunityBox = () => {
           break;
       }
     }
-    if (dateLength < dateActive.length - 1) {
+    if (dateLength < communityDates.length - 1) {
       switch (type) {
         case "next":
           setDateLength(dateLength + 1);
@@ -197,42 +126,31 @@ export const CommunityBox = () => {
     }
     switch (type) {
       case "today":
-        setDateLength(dateActive.length - 1);
+        setDateLength(communityDates.length - 1);
         break;
     }
     window.scrollTo({ top: 0, behavior: "smooth" });
-    localStorage.setItem("date", dateActive[dateLength]);
   };
 
-  const handleResize = () => {
-    //뷰크기 강제로 강져오기
-    setWidth(window.innerWidth);
-  };
+  useEffect(() => {
+    if (communityDates && communityDates.length > 0) {
+      setSelectedDate(communityDates[dateLength]);
+    }
+  }, [dateLength]);
 
   useEffect(() => {
     if (width >= 690) {
       setCategoriesOn(false);
     }
-    window.addEventListener("resize", handleResize);
-    return () => window.removeEventListener("resize", handleResize); //clean
-  }, [width]);
+  }, []);
 
   useEffect(() => {
     if (!community) {
-      //처음 커뮤니티 접근했을 때만 렌더링
-      CommunitySecondRendering();
       setCommunity(true);
     }
   }, []);
 
-  useEffect(() => {
-    if (community && dateActive.length > 0 && dateLength >= 0) {
-      ChangeDate();
-      localStorage.setItem("date", dateActive[dateLength]);
-    }
-  }, [dateLength]);
-
-  if (!dateActive || dateLength === -1) {
+  if (!selectedDate && dateLength === 0) {
     return (
       <Inner>
         <Container>
@@ -243,6 +161,7 @@ export const CommunityBox = () => {
       </Inner>
     );
   }
+  if (isLoading) return <div></div>; // 스켈레톤 쓰기
 
   return (
     <Inner>
@@ -252,20 +171,23 @@ export const CommunityBox = () => {
             {width > 625 ? (
               <>
                 <MainSemiTitle font={1.25}>
-                  {format(localStorage.getItem("date") || dateActive[dateLength], "M")}월{" "}
-                  {format(localStorage.getItem("date") || dateActive[dateLength], "d")}일,
-                  <div className="number">{CommunitySecondData?.challengeCompleteCount}</div>
+                  {format(selectedDate ? selectedDate : new Date(), "M")}월{" "}
+                  {format(selectedDate ? selectedDate : new Date(), "d")}일,
+                  <div className="number">{challengeCompleteCount}</div>
                   명이 챌린지를 완료했어요.
                 </MainSemiTitle>
-                {dateLastLength === dateLength && <TitleSideBox type="default">오늘</TitleSideBox>}
+
+                {communityDates.length - 1 === dateLength && (
+                  <TitleSideBox type="default">오늘</TitleSideBox>
+                )}
               </>
             ) : (
               <>
                 <MainSemiTitle font={1.25}>
-                  {format(localStorage.getItem("date") || dateActive[dateLength], "M")}월{" "}
-                  {format(localStorage.getItem("date") || dateActive[dateLength], "d")}일,
+                  {format(selectedDate ? selectedDate : new Date(), "M")}월{" "}
+                  {format(selectedDate ? selectedDate : new Date(), "d")}일,
                   <div className="flex">
-                    <div className="number">{CommunitySecondData?.challengeCompleteCount}</div>
+                    <div className="number">{challengeCompleteCount}</div>
                     명이 챌린지를 완료했어요.
                   </div>
                 </MainSemiTitle>
@@ -315,24 +237,22 @@ export const CommunityBox = () => {
             )}
             <div className="changeDate">
               {calendarOn && (
-                <div className="react-calendar-container">
+                <div
+                  className="react-calendar-container"
+                  ref={subCalendarRef}
+                >
                   <SubCalendar
-                    dateActive={dateActive}
+                    dateActive={communityDates}
+                    value={selectedDate}
                     clickDay={clickDay}
                   />
                 </div>
               )}
-              <div
-                className="calendar"
-                onClick={() => setCalendarOn(!calendarOn)}
-              >
-                <img
-                  src={calendarIMG}
-                  alt="달력"
-                />
-                <img
-                  src={calendarOn ? topArrow : downArrow}
-                  alt="v"
+              <div ref={subCalendarOnRef}>
+                <CalendarToggle
+                  toggle={calendarOn}
+                  onClick={() => setCalendarOn(!calendarOn)}
+                  page="community"
                 />
               </div>
               <div
