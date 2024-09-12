@@ -90,6 +90,7 @@ export const TooltipProfile = ({
         </Header>
         <MypageBtn
           onClick={() => {
+            setHeaderTooltip(false);
             if (width >= 530) {
               navigate("/mypage?category=프로필 설정");
             } else {
