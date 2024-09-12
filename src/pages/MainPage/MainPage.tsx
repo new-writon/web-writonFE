@@ -43,7 +43,7 @@ const MainPage = () => {
     }
   }
 
-  if (!ChallengeCurrent) return <div>로딩중...</div>;
+  if (!ChallengeCurrent) return <></>;
 
   return (
     <Container>

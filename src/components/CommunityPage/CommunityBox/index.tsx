@@ -1,4 +1,3 @@
-/* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect, useRef, useState } from "react";
 
 import { format } from "date-fns";
@@ -24,6 +23,7 @@ import { CalendarToggle } from "@/components/atom/CalendarToggle";
 import { useCommunityContentData, useCommunityDates } from "@/hooks/reactQueryHooks/useMainHooks";
 import useOnclickOutside from "@/hooks/useOnclickOutside";
 import useWindowWidth from "@/hooks/useWindowWidth";
+import Loading from "@/components/Common/Loading";
 
 const JobCategory = ["기획", "운영", "개발", "마케팅", "홍보", "디자인"];
 
@@ -89,7 +89,6 @@ export const CommunityBox = () => {
       challengeId: organizationChallengeData.challengeId,
       selectedDate: selectedDate,
     });
-
   // communityDates가 로드된 후, 마지막 요소를 selectedDate로 설정
   useEffect(() => {
     if (communityDates && communityDates.length > 0) {
@@ -161,7 +160,7 @@ export const CommunityBox = () => {
       </Inner>
     );
   }
-  if (isLoading) return <div></div>; // 스켈레톤 쓰기
+  if (isLoading) return <Loading />; // 스켈레톤 쓰기
 
   return (
     <Inner>
@@ -173,7 +172,7 @@ export const CommunityBox = () => {
                 <MainSemiTitle font={1.25}>
                   {format(selectedDate ? selectedDate : new Date(), "M")}월{" "}
                   {format(selectedDate ? selectedDate : new Date(), "d")}일,
-                  <div className="number">{challengeCompleteCount}</div>
+                  <div className="number">{challengeCompleteCount || 0}</div>
                   명이 챌린지를 완료했어요.
                 </MainSemiTitle>
 

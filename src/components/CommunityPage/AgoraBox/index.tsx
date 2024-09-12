@@ -17,6 +17,7 @@ import { ChallengeCurrentType, communityFirstComponentType } from "@/types";
 
 import { AgoraItemView, Container, NoAgoraView, TodayNoAgoraView } from "./style";
 import { useCommunityDates, useGetAgoraData } from "@/hooks/reactQueryHooks/useMainHooks";
+import Loading from "@/components/Common/Loading";
 
 export const AgoraBox = ({
   ChallengeCurrent,
@@ -37,7 +38,7 @@ export const AgoraBox = ({
 
   const { data: communityDates = [] } = useCommunityDates(organizationChallengeData.challengeId);
 
-  const { data: fetchAgoraData } = useGetAgoraData({
+  const { data: fetchAgoraData, isLoading } = useGetAgoraData({
     challengeId: organizationChallengeData.challengeId,
     selectedDate: selectedDate,
   });
@@ -144,7 +145,9 @@ export const AgoraBox = ({
               />
             </TodayNoAgoraView>
           )}
-          {agoraData?.length === 0 && !isSameDay(communityDates[dateLength], new Date()) ? (
+          {isLoading ? (
+            <Loading />
+          ) : agoraData?.length === 0 && !isSameDay(communityDates[dateLength], new Date()) ? (
             <NoAgoraView>
               <img
                 src={noSmallTalk}
