@@ -27,7 +27,6 @@ const notifyError = (message: string) => {
   const event = new CustomEvent("api-error", { detail: message });
   window.dispatchEvent(event);
 };
-
 // 에러 핸들링 함수
 async function errorHandler(error: { config?: any; response?: any }) {
   const {
@@ -39,6 +38,12 @@ async function errorHandler(error: { config?: any; response?: any }) {
   } = error;
 
   if (status === 401) {
+    // 첫 번째 401 에러도 큐에 추가
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    const originalRequest = new Promise((resolve, _reject) => {
+      failedRequestsQueue.push(async () => resolve(WRITON(config)));
+    });
+
     // 만약 리프레시 중이 아니라면
     if (!isRefreshing) {
       isRefreshing = true; // 리프레시 중으로 플래그 설정
@@ -50,24 +55,23 @@ async function errorHandler(error: { config?: any; response?: any }) {
 
         // 실패한 요청을 다시 시도
         failedRequestsQueue.forEach((request) => request());
+
         failedRequestsQueue = [];
         isRefreshing = false; // 리프레시 완료 후 플래그 해제
         // alert("토큰이 갱신되었습니다.");
         return WRITON(config); // 갱신된 토큰을 가지고 다시 요청
       } catch (error) {
-        // 리프레시 토큰 요청이 실패한 경우
-        alert("토큰 갱신에 실패했습니다. 로그인 페이지로 이동합니다.");
-        // 로그인 페이지로 리다이렉트
-        window.location.replace("/login");
         return Promise.reject(error);
       }
     } else {
       // 리프레시 중이면 실패한 요청을 큐에 추가
-      // eslint-disable-next-line @typescript-eslint/no-unused-vars
-      return new Promise((resolve, _reject) => {
-        failedRequestsQueue.push(async () => resolve(WRITON(config)));
-      });
+      return originalRequest;
     }
+  } else if (status === 404) {
+    // 토큰 재발급 api 에러 404는 이미 액세스토큰이 유효하다는 뜫
+    failedRequestsQueue.forEach((request) => request());
+    failedRequestsQueue = [];
+    isRefreshing = false;
   } else if (status === 403) {
     // 로그인이 필요한 경우
     notifyError(message.message || message);
@@ -76,8 +80,6 @@ async function errorHandler(error: { config?: any; response?: any }) {
   } else if (status === 429) {
     // 요청이 너무 많은 경우
     notifyError(message.message || message);
-  } else if (status === 422) {
-    alert("내용을 적어주세요");
   } else if (
     status === 700 ||
     status === 701 ||
@@ -88,6 +90,16 @@ async function errorHandler(error: { config?: any; response?: any }) {
     status === 500
   ) {
     // 안에 데이터가 내부적으로 없는 경우
+    return;
+  } else if (status === 406) {
+    // 이메일 중복
+    alert(message.message || message);
+    throw error;
+  } else if (status === 422) {
+    alert("내용을 적어주세요");
+    throw error;
+  } else if (status === 405) {
+    //아이디 중복
     return;
   } else {
     // 그 외의 경우에는 에러 메시지를 알림창으로 표시
