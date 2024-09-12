@@ -6,13 +6,14 @@ import { useRecoilState } from "recoil";
 
 import { getMyCommunityStory } from "@/apis/CommunityPage";
 import { postCommentWrite } from "@/apis/DetailPage";
-import { getChallengeCurrent } from "@/apis/mainPage";
 import profile from "@/assets/communityPage/profile.png";
 import useAsyncWithLoading from "@/hooks/useAsyncWithLoading";
 import { CommentState } from "@/recoil/atoms";
 import { commentProps } from "@/types";
 
 import { Container } from "./style";
+import { useGetMyInfo } from "@/hooks/reactQueryHooks/useMainHooks";
+import useWindowWidth from "@/hooks/useWindowWidth";
 
 export const CommentPost = ({
   userTemplateId,
@@ -29,10 +30,10 @@ export const CommentPost = ({
   type?: string;
   setReplyReadOn: (replyReadOn: boolean) => void;
 }) => {
-  const textareaRef = useRef<HTMLTextAreaElement | null>(null);
-  const [width, setWidth] = useState<number>(window.innerWidth);
-  const [text, setText] = useState<string>("");
+  const width = useWindowWidth();
 
+  const textareaRef = useRef<HTMLTextAreaElement | null>(null);
+  const [text, setText] = useState<string>("");
   const [registerBtn, setRegisterBtn] = useState<boolean>(true);
   const [profileImage, setProfileImage] = useState<string>(profile);
   const [commentList, setCommentList] = useRecoilState(CommentState);
@@ -65,19 +66,13 @@ export const CommentPost = ({
     }
   };
 
-  const myProfileRendering = async () => {
-    try {
-      const response = await getChallengeCurrent(
-        localStorage.getItem("organization") || "",
-        localStorage.getItem("challengeId") || "1"
-      );
-      if (response.userProfile !== null) {
-        setProfileImage(response.userProfile);
-      }
-    } catch {
-      throw new Error("shit");
+  const { data: myInfo } = useGetMyInfo(localStorage.getItem("organization") as string);
+
+  useEffect(() => {
+    if (myInfo?.userProfile) {
+      setProfileImage(myInfo.userProfile);
     }
-  };
+  }, [myInfo]);
 
   const commentRegister = async () => {
     executeAsyncTask(async () => {
@@ -147,19 +142,6 @@ export const CommentPost = ({
       setText("");
     });
   };
-
-  useEffect(() => {
-    myProfileRendering();
-  }, []);
-
-  const handleResize = () => {
-    //뷰크기 강제로 강져오기
-    setWidth(window.innerWidth);
-  };
-  useEffect(() => {
-    window.addEventListener("resize", handleResize);
-    return () => window.removeEventListener("resize", handleResize); //clean
-  }, [width]);
 
   return (
     <Container $type={type}>

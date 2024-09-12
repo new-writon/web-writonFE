@@ -1,30 +1,32 @@
-/* eslint-disable react-hooks/exhaustive-deps */
 import { MouseEvent, useEffect, useState } from "react";
 
 import { useParams } from "react-router-dom";
 import { useRecoilState, useSetRecoilState } from "recoil";
 import styled, { keyframes } from "styled-components";
 
-import { getComment, getTemplete } from "@/apis/DetailPage";
-import { getMyPageData } from "@/apis/MyPage";
 import { CommentBox } from "@/components/DetailPage/CommentBox";
 import { WriteView } from "@/components/DetailPage/WriteView";
 import { CommentAndLike } from "@/components/atom/CommentAndLike";
 import { CommnetAndLikeFloating } from "@/components/atom/CommentAndLikeFloating";
 import { UserInfoDetail } from "@/components/atom/UserInfoDetail";
-import useAsyncWithLoading from "@/hooks/useAsyncWithLoading";
 import { CommentState, DetailDataState, DetailModalState, LikeState } from "@/recoil/atoms";
 import { Inner } from "@/style/global";
+import {
+  useGetComments,
+  useGetDetailData,
+  useGetMyInfo,
+} from "@/hooks/reactQueryHooks/useMainHooks";
+import useWindowWidth from "@/hooks/useWindowWidth";
 
-export const DetailPage = () => {
-  const { templateId } = useParams();
-  const type = new URL(window.location.href).searchParams.get("type");
-  const [width, setWidth] = useState<number>(window.innerWidth);
+const DetailPage = () => {
+  const { templateId } = useParams<{ templateId: string }>();
+  const type = new URL(window.location.href).searchParams.get("type") || "";
   const [detailData, setDetailData] = useRecoilState(DetailDataState);
   const setDetailModal = useSetRecoilState(DetailModalState);
   const [likeCount, setLikeCount] = useRecoilState(LikeState);
   const [commentList, setCommentList] = useRecoilState(CommentState);
-  const executeAsyncTask = useAsyncWithLoading();
+
+  const width = useWindowWidth();
 
   const [nickName, setNickName] = useState<string>(""); // 내가 쓴 글인지 타인의 글을 누르고 들어간건지 비교하기 위해서
 
@@ -32,54 +34,37 @@ export const DetailPage = () => {
     e.stopPropagation(); // 이벤트 캡쳐링 방지
   };
 
-  const DetailPageRendering = async () => {
-    executeAsyncTask(async () => {
-      if (width <= 530) {
-        window.scrollTo({ top: 0 });
-        try {
-          const data = await Promise.all([
-            getTemplete(
-              localStorage.getItem("organization") || "",
-              Number(templateId),
-              type === "my" ? false : true
-            ),
-            getComment(Number(templateId), localStorage.getItem("organization") || ""),
-            getMyPageData(localStorage.getItem("organization") as string),
-          ]);
-          setDetailData(data[0]);
-          setCommentList(data[1]);
-          setLikeCount(data[0][0]?.likeCount);
-          setNickName(data[2].nickname);
-        } catch {
-          new Error("shit");
-        }
-      } else {
-        try {
-          const data = await Promise.all([
-            getComment(detailData[0]?.userTemplateId, localStorage.getItem("organization") || ""),
-            getMyPageData(localStorage.getItem("organization") as string),
-          ]);
-          setCommentList(data[0]);
-          setNickName(data[1].nickname);
-        } catch {
-          new Error("shit");
-        }
-      }
-    });
-  };
+  // react-query 사용
+  // 모바일 화면일 때만 동작
+  const { data: mobileDetailData = [] } = useGetDetailData({
+    organization: localStorage.getItem("organization") as string,
+    templateId: Number(templateId),
+    type,
+    width, // width가 530보다 작으면 mobileDetailData를 가져옴
+  });
 
-  const handleResize = () => {
-    //뷰크기 강제로 강져오기
-    setWidth(window.innerWidth);
-  };
-  useEffect(() => {
-    window.addEventListener("resize", handleResize);
-    return () => window.removeEventListener("resize", handleResize); //clean
-  }, [width]);
+  // 모바일 + 데스크탑 화면일 때 다른 객체값 가지고 들어가서 요청
+  // detailData의 templateId 또는 params의 templateId를 사용하여 댓글 데이터 가져오기
+  const currentTemplateId = width > 530 ? detailData[0]?.userTemplateId : Number(templateId);
+  const { data: commentsData } = useGetComments({
+    organization: localStorage.getItem("organization") as string,
+    templateId: currentTemplateId,
+  });
 
+  // 모바일 + 데스크탑 관계 없이 데이터 가져옴
+  const { data: myInfo } = useGetMyInfo(localStorage.getItem("organization") as string);
+  // Fetch and update like count and nickname
   useEffect(() => {
-    DetailPageRendering();
-  }, []);
+    if (width <= 530 && mobileDetailData.length > 0) {
+      setDetailData(mobileDetailData);
+    }
+
+    if (detailData && myInfo) {
+      setNickName(myInfo.nickname);
+      setLikeCount(detailData[0]?.likeCount || "0");
+      setCommentList(commentsData || []);
+    }
+  }, [myInfo, commentsData]);
 
   if (detailData.length === 0) {
     return <></>;
@@ -134,6 +119,8 @@ export const DetailPage = () => {
     </Inner>
   );
 };
+
+export default DetailPage;
 
 const fadeIn = keyframes`
 from {
