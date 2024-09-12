@@ -1,24 +1,27 @@
-/* eslint-disable react-hooks/exhaustive-deps */
 import React, { MouseEvent, useEffect, useRef, useState } from "react";
 
 import { useRecoilState, useRecoilValue } from "recoil";
 import styled, { keyframes } from "styled-components";
 
-import { getAgoraChat, getMyCommunityStory } from "@/apis/CommunityPage";
 import topArrow from "@/assets/AgoraPage/top-arrow.svg";
 import { AgoraChatMyItem, AgoraChatOtherItem } from "@/components/atom/AgoraChatItem";
 import { CommentPostAgora } from "@/components/atom/CommentPostAgora";
 import { SmallTalkTitle } from "@/components/atom/SmallTalkTitle";
-import useAsyncWithLoading from "@/hooks/useAsyncWithLoading";
 import {
   agoraDataState,
   agoraModalBoxState,
   agoraModalState,
-  dateAgoraActiveState,
   dateAgoraLengthState,
 } from "@/recoil/atoms";
 import { Inner } from "@/style/global";
 import { agoraCommentType } from "@/types";
+import {
+  useCommunityDates,
+  useGetAgoraChatData,
+  useGetMyInfo,
+} from "@/hooks/reactQueryHooks/useMainHooks";
+import useWindowWidth from "@/hooks/useWindowWidth";
+import ClipLoader from "react-spinners/ClipLoader";
 
 export const AgoraPage = () => {
   const ChattingRef = useRef<HTMLDivElement>(null);
@@ -35,14 +38,10 @@ export const AgoraPage = () => {
     content: agoraData?.question,
     myCommentSign: "0",
   });
-  const [nickname, setNickname] = useState<string>("");
-  const [myProfile, setMyProfile] = useState<string>("");
-  const [chatData, setChatData] = useState<agoraCommentType[]>([]);
-  const dateActive = useRecoilValue(dateAgoraActiveState);
-  const dateLength = useRecoilValue(dateAgoraLengthState);
-  const [width, setWidth] = useState<number>(window.innerWidth);
 
-  const executeAsyncTask = useAsyncWithLoading();
+  const [chatData, setChatData] = useState<agoraCommentType[]>([]);
+  const dateLength = useRecoilValue(dateAgoraLengthState);
+  const width = useWindowWidth();
 
   const defaultClick = (e: MouseEvent<HTMLDivElement>) => {
     e.stopPropagation(); // 이벤트 캡쳐링 방지
@@ -57,21 +56,15 @@ export const AgoraPage = () => {
     }
   };
 
-  const AgoraPageRendering = async () => {
-    executeAsyncTask(async () => {
-      try {
-        const data = await Promise.all([
-          getAgoraChat(agoraData?.smallTalkId),
-          getMyCommunityStory(localStorage.getItem("challengeId") || "1"),
-        ]);
-        setChatData(data[0]);
-        setMyProfile(data[1].profile);
-        setNickname(data[1].nickname);
-      } catch (error) {
-        console.log(error);
-      }
-    });
-  };
+  const { data: communityDates = [] } = useCommunityDates(
+    localStorage.getItem("challengeId") as string
+  );
+  const { data: myInfo } = useGetMyInfo(localStorage.getItem("organization") as string);
+  const { data: fetchChatData, isLoading } = useGetAgoraChatData(agoraData?.smallTalkId);
+
+  useEffect(() => {
+    setChatData(fetchChatData || []);
+  }, [fetchChatData]);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -124,10 +117,6 @@ export const AgoraPage = () => {
   }, [ChattingRef, chatData]);
 
   useEffect(() => {
-    AgoraPageRendering();
-  }, []);
-
-  useEffect(() => {
     if (!agoraModal) {
       const timer = setTimeout(() => {
         setAgoraModalBox(false);
@@ -138,14 +127,6 @@ export const AgoraPage = () => {
     }
   }, [agoraModal]);
 
-  const handleResize = () => {
-    //뷰크기 강제로 강져오기
-    setWidth(window.innerWidth);
-  };
-  useEffect(() => {
-    window.addEventListener("resize", handleResize);
-    return () => window.removeEventListener("resize", handleResize); //clean
-  }, [width]);
   return (
     <Inner>
       <Container
@@ -170,7 +151,7 @@ export const AgoraPage = () => {
         >
           <Top>
             <SmallTalkTitle
-              date={dateActive[dateLength] || new Date().toDateString()}
+              date={communityDates[dateLength] || new Date().toDateString()}
               number={5}
             />
             <div className="small-talk-title">
@@ -183,29 +164,36 @@ export const AgoraPage = () => {
               type="topic"
               data={chatBasicTopicData}
             />
-            {chatData?.map((chatData, idx) => {
-              if (chatData?.myCommentSign === "0") {
-                return (
-                  <React.Fragment key={idx}>
-                    <AgoraChatOtherItem data={chatData} />
-                  </React.Fragment>
-                );
-              } else {
-                return (
-                  <React.Fragment key={idx}>
-                    <AgoraChatMyItem data={chatData} />
-                  </React.Fragment>
-                );
-              }
-            })}
+            {isLoading ? (
+              <ChattingLoading>
+                <ClipLoader
+                  color="#6272ff"
+                  size={100}
+                />
+              </ChattingLoading>
+            ) : (
+              chatData?.map((chatData, idx) => {
+                if (chatData?.myCommentSign === "0") {
+                  return (
+                    <React.Fragment key={idx}>
+                      <AgoraChatOtherItem data={chatData} />
+                    </React.Fragment>
+                  );
+                } else {
+                  return (
+                    <React.Fragment key={idx}>
+                      <AgoraChatMyItem data={chatData} />
+                    </React.Fragment>
+                  );
+                }
+              })
+            )}
           </Chatting>
+
           <Bottom>
             <CommentPostAgora
-              nickname={nickname}
-              myProfile={myProfile}
+              myProfile={myInfo?.userProfile || ""}
               smallTalkId={agoraData?.smallTalkId}
-              chatData={chatData}
-              setChatData={setChatData}
               agoraDate={agoraData?.createdDate}
             />
           </Bottom>
@@ -367,6 +355,13 @@ const Chatting = styled.div`
     min-height: calc(var(--vh, 1vh) * 100 - 330px);
     max-height: 340px;
     padding: 20px 16px;
+  }
+`;
+
+const ChattingLoading = styled.div`
+  margin: auto;
+  span {
+    border-width: 12px !important;
   }
 `;
 
