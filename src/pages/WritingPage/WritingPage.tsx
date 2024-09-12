@@ -1,58 +1,60 @@
-/* eslint-disable react-hooks/exhaustive-deps */
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 
 import { useSetRecoilState } from "recoil";
 import styled from "styled-components";
 
-import { getBasicQuestion, getSpecialQuestion } from "@/apis/WritingPage";
-import { getCalendarRecordCurrent } from "@/apis/mainPage";
 import { WeekCalendar } from "@/components/WritingPage/WeekCalendar";
-import useAsyncWithLoading from "@/hooks/useAsyncWithLoading";
 import {
   getBasicQuestionState,
   getSpecialQuestionState,
   postWritingDataState,
 } from "@/recoil/atoms";
-import { CalendarRecordCurrentType } from "@/types";
 
 import { WritingBox } from "./WritingBox";
+import {
+  useGetBasicQuestion,
+  useGetCalendarRecordCurrent,
+  useGetSpecialQuestion,
+} from "@/hooks/reactQueryHooks/useMainHooks";
 
-export const WritingPage = () => {
-  const [CalendarData, setCalendarData] = useState<CalendarRecordCurrentType[]>([]);
+const WritingPage = () => {
+  const organizationChallengeData = {
+    organization: localStorage.getItem("organization") as string,
+    challengeId: localStorage.getItem("challengeId") as string,
+  };
+
   const setGetBasicQuestionData = useSetRecoilState(getBasicQuestionState);
   const setGetSpecialQuestionData = useSetRecoilState(getSpecialQuestionState);
   const setpostWritingData = useSetRecoilState(postWritingDataState);
-  const executeAsyncTask = useAsyncWithLoading();
 
-  const writingPageRendering = async () => {
-    executeAsyncTask(async () => {
-      try {
-        const result = await Promise.all([
-          getCalendarRecordCurrent(
-            localStorage.getItem("organization") || "",
-            localStorage.getItem("challengeId") || "1"
-          ),
-          getBasicQuestion(localStorage.getItem("challengeId") || "1"),
-          getSpecialQuestion(localStorage.getItem("challengeId") || "1"),
-        ]);
-        setCalendarData(result[0]);
-        setGetBasicQuestionData(result[1]);
-        setGetSpecialQuestionData(result[2]);
-        setpostWritingData(
-          result[1].map((item) => ({
-            questionId: item.questionId,
-            content: "",
-            visibility: true,
-          }))
-        );
-      } catch {
-        throw new Error("shit");
-      }
-    });
-  };
+  const { data: CalendarData = [] } = useGetCalendarRecordCurrent(organizationChallengeData);
+  const { data: getBasicQuestionData = [] } = useGetBasicQuestion(
+    localStorage.getItem("challengeId") as string
+  );
+  const { data: getSpecialQuestionData = [] } = useGetSpecialQuestion(
+    localStorage.getItem("challengeId") as string
+  );
+
   useEffect(() => {
-    writingPageRendering();
-  }, []);
+    if (getBasicQuestionData.length === 0) return;
+
+    setGetBasicQuestionData(getBasicQuestionData);
+    setGetSpecialQuestionData(getSpecialQuestionData);
+    setpostWritingData(
+      getBasicQuestionData.map((item) => ({
+        questionId: item.questionId,
+        content: "",
+        visibility: true,
+      }))
+    );
+  }, [
+    getBasicQuestionData,
+    getSpecialQuestionData,
+    setGetBasicQuestionData,
+    setGetSpecialQuestionData,
+    setpostWritingData,
+  ]);
+
   return (
     <Container>
       <WeekCalendar CalendarData={CalendarData} />
@@ -60,6 +62,8 @@ export const WritingPage = () => {
     </Container>
   );
 };
+
+export default WritingPage;
 
 const Container = styled.div`
   background: var(--Gray-20, #f8f8fa);
