@@ -1,37 +1,29 @@
-import { Dispatch, KeyboardEvent, SetStateAction, useRef, useState } from "react";
+import { KeyboardEvent, useRef, useState } from "react";
 
-import { format, isSameDay } from "date-fns";
-import { useRecoilState } from "recoil";
+import { isSameDay } from "date-fns";
 
-import { postAgoraComment } from "@/apis/CommunityPage";
 import profile from "@/assets/communityPage/profile.png";
-import useAsyncWithLoading from "@/hooks/useAsyncWithLoading";
-import { agoraBoxDataState, agoraDataState } from "@/recoil/atoms";
-import { agoraCommentType, agoraDataType } from "@/types";
 
 import { Container } from "./style";
+import { usePostAgoraComment } from "@/hooks/reactQueryHooks/useMainHooks";
 
 export const CommentPostAgora = ({
-  nickname,
   myProfile,
   smallTalkId,
-  chatData,
-  setChatData,
   agoraDate,
 }: {
-  nickname: string;
   myProfile: string;
   smallTalkId: number;
-  chatData: agoraCommentType[];
-  setChatData: Dispatch<SetStateAction<agoraCommentType[]>>;
   agoraDate: string;
 }) => {
+  const organizationChallengeData = {
+    organization: localStorage.getItem("organization") || "",
+    challengeId: localStorage.getItem("challengeId") || "1",
+  };
+
   const textareaRef = useRef<HTMLTextAreaElement | null>(null);
   const [text, setText] = useState<string>("");
   const [registerBtn, setRegisterBtn] = useState<boolean>(true);
-  const executeAsyncTask = useAsyncWithLoading();
-  const [agoraData] = useRecoilState(agoraDataState);
-  const [agoraDataArray, setAgoraDataArray] = useRecoilState(agoraBoxDataState);
 
   const onChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     setText(e.currentTarget.value);
@@ -50,46 +42,67 @@ export const CommentPostAgora = ({
       }
     }
   };
+  const { mutate: postAgoraCommentMutate } = usePostAgoraComment();
 
-  const submitComment = async () => {
-    executeAsyncTask(async () => {
-      try {
-        await postAgoraComment(localStorage.getItem("organization") as string, smallTalkId, text);
-        setChatData([
-          ...chatData,
-          {
-            smallTalkCommentId: 0,
-            content: text,
-            nickname: nickname,
-            profile: myProfile,
-            createdTime: format(new Date(), "HH:mm"),
-            myCommentSign: "1",
-          },
-        ]);
-        if (agoraData.mySmallTalkSign !== "1") {
-          const updatedAgoraData = agoraDataArray
-            ?.map((item) => {
-              // smallTalkId가 일치하는 경우에만 number를 증가시킴
-              if (item.smallTalkId === smallTalkId) {
-                return {
-                  ...item,
-                  participateCount: item.participateCount + 1,
-                  mySmallTalkSign: "1",
-                };
-              }
-              // smallTalkId가 일치하지 않는 경우 기존 아이템 반환
-              return item;
-            })
-            .filter((item): item is agoraDataType => !!item);
-          setAgoraDataArray(updatedAgoraData);
-        }
-        setText("");
-        setRegisterBtn(true);
-      } catch (error) {
-        console.log(error);
+  const submitComment = () => {
+    postAgoraCommentMutate(
+      {
+        organization: organizationChallengeData.organization,
+        smallTalkId,
+        text,
+      },
+      {
+        onSuccess: () => {
+          setText("");
+          setRegisterBtn(true);
+        },
+        onError: (error) => {
+          console.log("Error posting Agora topic:", error);
+          // 에러 처리 로직 추가 (예: 사용자에게 에러 메시지 표시)
+        },
       }
-    });
+    );
   };
+
+  // const submitComment = async () => {
+  //   executeAsyncTask(async () => {
+  //     try {
+  //       await postAgoraComment(localStorage.getItem("organization") as string, smallTalkId, text);
+  //       setChatData([
+  //         ...chatData,
+  //         {
+  //           smallTalkCommentId: 0,
+  //           content: text,
+  //           nickname: nickname,
+  //           profile: myProfile,
+  //           createdTime: format(new Date(), "HH:mm"),
+  //           myCommentSign: "1",
+  //         },
+  //       ]);
+  //       if (agoraData.mySmallTalkSign !== "1") {
+  //         const updatedAgoraData = agoraDataArray
+  //           ?.map((item) => {
+  //             // smallTalkId가 일치하는 경우에만 number를 증가시킴
+  //             if (item.smallTalkId === smallTalkId) {
+  //               return {
+  //                 ...item,
+  //                 participateCount: item.participateCount + 1,
+  //                 mySmallTalkSign: "1",
+  //               };
+  //             }
+  //             // smallTalkId가 일치하지 않는 경우 기존 아이템 반환
+  //             return item;
+  //           })
+  //           .filter((item): item is agoraDataType => !!item);
+  //         setAgoraDataArray(updatedAgoraData);
+  //       }
+  //       setText("");
+  //       setRegisterBtn(true);
+  //     } catch (error) {
+  //       console.log(error);
+  //     }
+  //   });
+  // };
 
   return (
     <Container $today={isSameDay(agoraDate, new Date())}>
