@@ -1,10 +1,22 @@
 import { useEffect } from "react";
 
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import { RecoilRoot } from "recoil";
 
 import Router from "./router";
 import { GlobalStyle } from "./style/global";
+
 const App = () => {
+  const queryClient = new QueryClient({
+    defaultOptions: {
+      queries: {
+        staleTime: 10 * 1000,
+        gcTime: 30 * 1000,
+      },
+    },
+  });
+
   const initialRenderingColor = async () => {
     if (localStorage.getItem("organization") === "렛츠인턴") {
       document.documentElement.style.setProperty("--Main-0", "#f8f8ff");
@@ -29,10 +41,16 @@ const App = () => {
     document.documentElement.style.setProperty("--vh", `${vh}px`);
   }, []);
   return (
-    <RecoilRoot>
-      <GlobalStyle />
-      <Router />
-    </RecoilRoot>
+    <QueryClientProvider client={queryClient}>
+      <RecoilRoot>
+        <GlobalStyle />
+        <Router />
+      </RecoilRoot>
+      <ReactQueryDevtools
+        initialIsOpen={false}
+        buttonPosition="bottom-right"
+      />
+    </QueryClientProvider>
   );
 };
 
