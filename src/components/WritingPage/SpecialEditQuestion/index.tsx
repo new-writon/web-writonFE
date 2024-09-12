@@ -33,7 +33,6 @@ export const SpecialEditQuestion = ({
 
   const [toggleSwitchOn, setToggleSwitchOn] = useState<boolean>(data.visibility);
   const textareaRef = useRef<HTMLTextAreaElement | null>(null);
-  const [text, setText] = useState<string>(data.content);
   const [popUpOn, setpopUpOn] = useState<boolean>(false);
   const [width, setWidth] = useState<number>(window.innerWidth);
   const [modal, setModal] = useRecoilState(modalBackgroundState);
@@ -49,7 +48,6 @@ export const SpecialEditQuestion = ({
     );
   };
   const onChange = (e: React.ChangeEvent<HTMLTextAreaElement>, questionId: number) => {
-    setText(e.currentTarget.value);
     setpostEditWritingData(
       postEditWritingData.map((item) =>
         item.questionId === questionId ? { ...item, content: e.currentTarget.value } : item
@@ -62,7 +60,6 @@ export const SpecialEditQuestion = ({
     );
     setIsClickArray(isClickArray.filter((id) => id !== questionId));
     setpostEditWritingData(postEditWritingData.filter((item) => item.questionId !== questionId));
-    setText("");
     setpopUpOn(false);
   };
 
@@ -116,7 +113,7 @@ export const SpecialEditQuestion = ({
         </div>
         <textarea
           ref={textareaRef}
-          value={text}
+          value={postEditWritingData?.find((item) => item.questionId === data?.questionId)?.content}
           onChange={(e) => onChange(e, data?.questionId)}
           placeholder="글을 입력해주세요."
         />

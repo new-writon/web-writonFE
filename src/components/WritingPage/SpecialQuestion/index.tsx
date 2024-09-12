@@ -33,7 +33,6 @@ export const SpecialQuestion = ({
 
   const [toggleSwitchOn, setToggleSwitchOn] = useState<boolean>(false);
   const textareaRef = useRef<HTMLTextAreaElement | null>(null);
-  const [text, setText] = useState<string>("");
   const [popUpOn, setpopUpOn] = useState<boolean>(false);
   const [width, setWidth] = useState<number>(window.innerWidth);
   const [modal, setModal] = useRecoilState(modalBackgroundState);
@@ -49,7 +48,6 @@ export const SpecialQuestion = ({
     );
   };
   const onChange = (e: React.ChangeEvent<HTMLTextAreaElement>, questionId: number) => {
-    setText(e.currentTarget.value);
     setpostWritingData(
       postWritingData.map((item) =>
         item.questionId === questionId ? { ...item, content: e.currentTarget.value } : item
@@ -62,10 +60,13 @@ export const SpecialQuestion = ({
     );
     setIsClickArray(isClickArray.filter((id) => id !== questionId));
     setpostWritingData(postWritingData.filter((item) => item.questionId !== questionId));
+
     setpopUpOn(false);
   };
 
   const popUpFunc = (questionId: number) => {
+    console.log(postWritingData);
+
     if (width <= 530) {
       setDeleteQuestionId(questionId);
       setModal({ ...modal, deleteModal: true });
@@ -124,7 +125,7 @@ export const SpecialQuestion = ({
         </div>
         <textarea
           ref={textareaRef}
-          value={text}
+          value={postWritingData?.find((item) => item.questionId === data?.questionId)?.content}
           onChange={(e) => onChange(e, data?.questionId)}
           placeholder="글을 입력해주세요."
         />
