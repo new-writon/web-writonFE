@@ -10,8 +10,6 @@ import notificationIcon from "@/assets/header/icon-notification.svg";
 import pencil_color_blue from "@/assets/header/pencil_color_blue.svg";
 import pencil_color_purple from "@/assets/header/pencil_color_purple.svg";
 import pencil_white from "@/assets/header/pencil_white.svg";
-import chunsik_icon from "@/assets/logo/chunsik-icon.png";
-import letsintern from "@/assets/logo/letsintern.png";
 import writon_icon from "@/assets/logo/logo-writon-roundbox.svg";
 import writon from "@/assets/logo/writon_long.svg";
 import {
@@ -35,15 +33,7 @@ import {
   useNotificationDataAndCount,
   useUpdateNotificationCount,
 } from "@/hooks/reactQueryHooks/useCommonHooks";
-
-const ICON = [
-  localStorage.getItem("organization") === "렛츠인턴"
-    ? letsintern
-    : localStorage.getItem("organization") === "카카오"
-      ? chunsik_icon
-      : writon_icon,
-  writon,
-];
+import useWindowWidth from "@/hooks/useWindowWidth";
 
 const Tabs = ["내 챌린지", "커뮤니티"];
 
@@ -55,8 +45,7 @@ const Header = () => {
   const { data: CalendarData = [] } = useGetCalendarRecordCurrent(organizationChallengeData);
 
   const navigate = useNavigate();
-  const [width, setWidth] = useState<number>(window.innerWidth);
-
+  const width = useWindowWidth();
   const [selectTab, setSelectTab] = useState<string>("내 챌린지");
   const [isHover, setIsHover] = useState<boolean>(false);
   const [profileImage, setProfileImage] = useState<string>(profile);
@@ -163,7 +152,7 @@ const Header = () => {
 
   // 리액트 쿼리를 통해 데이터 가져오기
   const { data: myInformation } = useGetMyInformation(organizationChallengeData.challengeId);
-  const { data: organizationsAndChallenges } = useGetOrganizationsAndChallenges();
+  const { data: organizationsAndChallenges, isLoading } = useGetOrganizationsAndChallenges();
 
   // 데이터가 변경될 때마다 실행
   useEffect(() => {
@@ -181,6 +170,7 @@ const Header = () => {
       const activeList = organizationsAndChallenges.filter(
         (item) => item.organization === organizationChallengeData.organization
       );
+
       setChallengeList(activeList);
 
       // 중복되지 않는 오가니제이션 리스트 구성
@@ -189,6 +179,7 @@ const Header = () => {
           acc.some((item) => item.organization === cur.organization) ? acc : [...acc, cur],
         []
       );
+
       setOrganizationList(uniqueOrganizationList);
     }
   }, [organizationChallengeData.organization, organizationsAndChallenges]);
@@ -199,33 +190,6 @@ const Header = () => {
   const { data: { notificationData = [], notificationNumber = 0 } = {} } =
     useNotificationDataAndCount(organizationChallengeData);
 
-  // const notificationRendering = async () => {
-  //   try {
-  //     const data = await Promise.all([
-  //       getNotificationData(
-  //         localStorage.getItem("organization") as string,
-  //         localStorage.getItem("challengeId") as string
-  //       ),
-  //       getNotificationCount(
-  //         localStorage.getItem("organization") as string,
-  //         localStorage.getItem("challengeId") as string
-  //       ),
-  //     ]);
-  //     setNotificationData(data[0]);
-  //     setNotificationNumber(data[0].length - data[1].checkCount);
-  //   } catch {
-  //     setNotificationData([]);
-  //     setNotificationNumber(0);
-
-  //     // throw new Error("shit");
-  //   }
-  // };
-
-  // useEffect(() => {
-  //   notificationRendering();
-  //   // eslint-disable-next-line react-hooks/exhaustive-deps
-  // }, [notificationTooltip]);
-
   useEffect(() => {
     if (location.pathname === "/community") {
       setSelectTab("커뮤니티");
@@ -234,132 +198,136 @@ const Header = () => {
     } else {
       setSelectTab("");
     }
-    // setHeaderTooltip(false);
-
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [location.pathname]);
-
-  const handleResize = () => {
-    //뷰크기 강제로 강져오기
-    setWidth(window.innerWidth);
-  };
-  useEffect(() => {
-    window.addEventListener("resize", handleResize);
-    return () => window.removeEventListener("resize", handleResize); //clean
-  }, [width]);
 
   return (
     <Inner>
-      <Container>
-        <HeaderLeft>
-          {ICON.map((logo, idx) => (
-            <React.Fragment key={idx}>
-              <img
-                src={logo}
-                alt={`${logo}`}
-                ref={logo !== "writon" ? (organizationOnRef as RefObject<HTMLImageElement>) : null}
-                onClick={() => {
-                  if (logo === writon) {
-                    // Writon 로고 클릭시
-                    navigate("/");
-                    resetState();
-                  } else {
-                    // writon image 로고 클릭시
-                    setOrganizationToggle(!organizationToggle);
-                  }
-                }}
-              />
-            </React.Fragment>
-          ))}
-          {organizationToggle && (
-            <ChangeOrganization
-              ref={organizationRef}
-              organizationList={organizationList}
-            />
-          )}
-        </HeaderLeft>
-        <HeaderMiddle>
-          {Tabs.map((tab, idx) => (
-            <React.Fragment key={idx}>
-              <div
-                className={`tab ${selectTab === tab && "select"}`}
-                onClick={() => SpaceTab(tab)}
-              >
-                {tab}
-              </div>
-            </React.Fragment>
-          ))}
-        </HeaderMiddle>
-        <HeaderRight>
-          <div
-            className="writingBtn"
-            onMouseOver={() => setIsHover(true)}
-            onMouseOut={() => setIsHover(false)}
-            onClick={() => {
-              if (location.pathname.split("/")[1] !== "writing") {
-                SpaceTab("작성하기");
-              }
-            }}
-          >
-            <p>회고 작성하기</p>
-            <p className="responsive">작성</p>
+      {!isLoading && (
+        <Container>
+          <HeaderLeft>
             <img
               src={
-                isHover
-                  ? pencil_white
-                  : localStorage.getItem("organization") === "렛츠인턴"
-                    ? pencil_color_purple
-                    : pencil_color_blue
+                writon_icon
+                // organizationList.length > 0
+                //   ? organizationList.find(
+                //       (organization) =>
+                //         organization.organization === localStorage.getItem("organization")
+                //     )?.logo || writon_icon // 로고가 없으면 기본 이미지 표시
+                //   : writon_icon // organizationList가 비어있을 때 기본 이미지 표시
               }
-              alt="pen"
+              alt="W"
+              ref={organizationOnRef as RefObject<HTMLImageElement>}
+              onClick={() => setOrganizationToggle(!organizationToggle)}
             />
-          </div>
-          {/* 알람 아이콘 */}
-          <div
-            className="notification-cover"
-            onClick={NotificationOn}
-            ref={notificationOnRef}
-          >
             <img
-              src={notificationIcon}
-              alt="A"
+              src={writon}
+              alt="writon"
+              onClick={() => {
+                navigate("/");
+                resetState();
+              }}
             />
-            {notificationNumber > 0 && (
-              <div className={`notification-number ${notificationNumber > 9 && "ten-number"}`}>
-                {notificationNumber}
-              </div>
+            {organizationToggle && (
+              <ChangeOrganization
+                ref={organizationRef}
+                organizationList={organizationList}
+              />
             )}
-          </div>
+          </HeaderLeft>
+          <HeaderMiddle>
+            {Tabs.map((tab, idx) => (
+              <React.Fragment key={idx}>
+                <div
+                  className={`tab ${selectTab === tab && "select"}`}
+                  onClick={() => SpaceTab(tab)}
+                >
+                  {tab}
+                </div>
+              </React.Fragment>
+            ))}
+          </HeaderMiddle>
+          <HeaderRight>
+            <div
+              className="writingBtn"
+              onMouseOver={() => setIsHover(true)}
+              onMouseOut={() => setIsHover(false)}
+              onClick={() => {
+                if (location.pathname.split("/")[1] !== "writing") {
+                  SpaceTab("작성하기");
+                }
+              }}
+            >
+              <p>회고 작성하기</p>
+              <p className="responsive">작성</p>
+              <img
+                src={
+                  isHover
+                    ? pencil_white
+                    : localStorage.getItem("organization") === "렛츠인턴"
+                      ? pencil_color_purple
+                      : pencil_color_blue
+                }
+                alt="pen"
+              />
+            </div>
+            {/* 알람 아이콘 */}
+            <div
+              className="notification-cover"
+              onClick={NotificationOn}
+              ref={notificationOnRef}
+            >
+              <img
+                src={notificationIcon}
+                alt="A"
+              />
+              {notificationNumber > 0 && (
+                <div className={`notification-number ${notificationNumber > 9 && "ten-number"}`}>
+                  {notificationNumber}
+                </div>
+              )}
+            </div>
 
-          <div
-            className="profileImageCover"
-            onClick={ProfileOn}
-            ref={profileOnRef}
-          >
-            <img
-              src={profileImage} //{data?.profile}
-              alt="profile"
-            />
-          </div>
-        </HeaderRight>
-        {notificationTooltip && 531 <= width && (
-          <div
-            ref={notificationRef}
-            style={{ position: "absolute", right: "0" }}
-          >
-            <TooltipNotification
-              data={notificationData}
-              setNotificationTooltip={setNotificationTooltip}
-              type="web"
-            />
-          </div>
-        )}
+            <div
+              className="profileImageCover"
+              onClick={ProfileOn}
+              ref={profileOnRef}
+            >
+              <img
+                src={profileImage} //{data?.profile}
+                alt="profile"
+              />
+            </div>
+          </HeaderRight>
 
-        {headerTooltip && 531 <= width && (
-          <div
-            ref={profileRef}
-            style={{ position: "absolute", right: "0" }}
-          >
+          {notificationTooltip && 531 <= width && (
+            <div
+              ref={notificationRef}
+              style={{ position: "absolute", right: "0" }}
+            >
+              <TooltipNotification
+                data={notificationData}
+                setNotificationTooltip={setNotificationTooltip}
+                type="web"
+              />
+            </div>
+          )}
+
+          {headerTooltip && 531 <= width && (
+            <div
+              ref={profileRef}
+              style={{ position: "absolute", right: "0" }}
+            >
+              <TooltipProfile
+                headerTooltip={headerTooltip}
+                TooltipMobile={TooltipMobile}
+                userProfile={userProfile}
+                setHeaderTooltip={setHeaderTooltip}
+                setTooltipMobile={setTooltipMobile}
+                ChallengeList={ChallengeList}
+              />
+            </div>
+          )}
+          {width <= 530 && (
             <TooltipProfile
               headerTooltip={headerTooltip}
               TooltipMobile={TooltipMobile}
@@ -368,19 +336,9 @@ const Header = () => {
               setTooltipMobile={setTooltipMobile}
               ChallengeList={ChallengeList}
             />
-          </div>
-        )}
-        {width <= 530 && (
-          <TooltipProfile
-            headerTooltip={headerTooltip}
-            TooltipMobile={TooltipMobile}
-            userProfile={userProfile}
-            setHeaderTooltip={setHeaderTooltip}
-            setTooltipMobile={setTooltipMobile}
-            ChallengeList={ChallengeList}
-          />
-        )}
-      </Container>
+          )}
+        </Container>
+      )}
       <HeaderMiddleResponsive>
         {Tabs.map((tab, idx) => (
           <React.Fragment key={idx}>
