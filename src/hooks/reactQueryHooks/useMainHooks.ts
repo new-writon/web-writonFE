@@ -20,7 +20,13 @@ import {
   postAgoraTopic,
 } from "@/apis/CommunityPage";
 import { format } from "date-fns";
-import { getComment, getTemplete, postLike, postLikeDelete } from "@/apis/DetailPage";
+import {
+  getComment,
+  getTemplete,
+  postCommentWrite,
+  postLike,
+  postLikeDelete,
+} from "@/apis/DetailPage";
 import { getMyPageData } from "@/apis/MyPage";
 
 // 현재 내 챌린지 상태 정보 가져오기
@@ -361,6 +367,31 @@ export const usePostAgoraComment = () => {
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["getAgoraData"] });
       queryClient.invalidateQueries({ queryKey: ["getAgoraChatData"] });
+    },
+  });
+};
+
+// 디테일 페이지 댓글 달기
+export const usePostComment = () => {
+  const queryClient = useQueryClient();
+
+  return useMutation({
+    mutationFn: async ({
+      userTemplateId,
+      organization,
+      content,
+      commentGroup,
+    }: {
+      userTemplateId: number;
+      organization: string;
+      content: string;
+      commentGroup: number;
+    }) => {
+      return await postCommentWrite(userTemplateId, organization, content, commentGroup);
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["communityContentData"] });
+      queryClient.invalidateQueries({ queryKey: ["getComments"] });
     },
   });
 };
