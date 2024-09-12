@@ -10,3 +10,8 @@ export class CustomError extends Error {
     this.code = code;
   }
 }
+
+export interface organizationChallengeDataType {
+  organization: string;
+  challengeId: string;
+}
