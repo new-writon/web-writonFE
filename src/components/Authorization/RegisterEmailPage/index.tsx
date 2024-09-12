@@ -89,6 +89,7 @@ const RegisterEmail = () => {
     }
   };
   const DuplicateCheck = async () => {
+    if (userId === "") return alert("아이디를 입력해주세요.");
     try {
       await getDuplicateId(userId);
       setDuplicate(true);
@@ -183,6 +184,7 @@ const RegisterEmail = () => {
           setEmailError(false);
           setLoading(false);
         } catch (err) {
+          setLoading(false);
           console.log(err);
         }
       }
