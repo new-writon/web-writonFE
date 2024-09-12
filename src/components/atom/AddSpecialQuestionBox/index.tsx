@@ -108,10 +108,10 @@ export const AddSpecialQuestionBox = ({ data }: { data: SpecialQuestionType }) =
           <TitleSideBox type="special">{data?.keyword}</TitleSideBox>
           <div className="addBtn">
             {isClickArray.includes(data?.questionId) ? (
-              <p>추가됨</p>
+              <span>추가됨</span>
             ) : (
               <>
-                <p>추가하기</p>
+                <span>추가하기</span>
                 <img
                   src={addBtn}
                   alt="+"
