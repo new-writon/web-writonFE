@@ -17,7 +17,7 @@ import { accountNumberState } from "@/recoil/atoms";
 import { Inner } from "@/style/global";
 import { myPageProps } from "@/types";
 
-export const MyPage = () => {
+const MyPage = () => {
   const [myData, setMyData] = useState<myPageProps>();
   const executeAsyncTask = useAsyncWithLoading();
   const [activeCategory, setActiveCategory] = useState<string | null>("");
@@ -68,6 +68,8 @@ export const MyPage = () => {
     </Inner>
   );
 };
+
+export default MyPage;
 
 const Container = styled.div`
   position: relative;

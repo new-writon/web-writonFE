@@ -3,7 +3,7 @@ import styled from "styled-components";
 import { OnboardingBox } from "@/components/OnboardingPage/OnboardingBox";
 import { OnboardingHeader } from "@/components/OnboardingPage/OnboardingHeader";
 
-export const OnboardingPage = () => {
+const OnboardingPage = () => {
   return (
     <Container>
       <OnboardingHeader />
@@ -11,6 +11,8 @@ export const OnboardingPage = () => {
     </Container>
   );
 };
+
+export default OnboardingPage;
 
 const Container = styled.div`
   background-color: var(--Gray-20, #f8f8fa);

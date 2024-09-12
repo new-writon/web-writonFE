@@ -6,7 +6,7 @@ import { postChallengeStart } from "@/apis/OnboardingPage";
 import { getChallengingList, postKakaoAuth, postKakaoLogin } from "@/apis/login";
 import Loading from "@/components/Common/Loading";
 
-export const KakaoCallback = () => {
+const KakaoCallback = () => {
   const CODE = new URL(window.location.href).searchParams.get("code");
   const navigate = useNavigate();
   // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -75,3 +75,5 @@ export const KakaoCallback = () => {
 
   return <Loading />;
 };
+
+export default KakaoCallback;
