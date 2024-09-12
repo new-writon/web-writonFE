@@ -11,11 +11,7 @@ import { ChallengeCurrentType } from "@/types";
 
 import { Container, CountingLabelContainer } from "./style";
 
-export const ProgressBox = ({
-  ChallengeCurrent,
-}: {
-  ChallengeCurrent: ChallengeCurrentType | undefined;
-}) => {
+export const ProgressBox = ({ ChallengeCurrent }: { ChallengeCurrent: ChallengeCurrentType }) => {
   const [value, setValue] = useState<number>(0);
   const [tooltipOn, setTooltopOn] = useState<boolean>(false);
   const [width, setWidth] = useState<number>(window.innerWidth);
