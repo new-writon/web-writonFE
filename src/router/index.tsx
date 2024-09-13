@@ -7,6 +7,7 @@ import Loading from "@/components/Common/Loading";
 import { ModalProvider } from "@/components/Common/ModalProvider";
 import { ScrollToTop } from "@/components/Common/ScrollToTop";
 import { SnackBarProvider } from "@/components/Common/SnackBarProvider";
+import { useIsFetching } from "@tanstack/react-query";
 
 // 동적 로딩을 위한 React.lazy 사용
 const KakaoCallback = lazy(() => import("@/pages/Authorization/KakaoCallback"));
@@ -23,7 +24,10 @@ const NotificationPage = lazy(() => import("@/pages/NotificationPage/Notificatio
 const OnboardingPage = lazy(() => import("@/pages/OnboardingPage/OnboardingPage"));
 const WritingPage = lazy(() => import("@/pages/WritingPage/WritingPage"));
 
-const router = () => {
+const Router = () => {
+  const isFetching = useIsFetching();
+  const isLoading = isFetching > 0;
+
   const PrivateRoute = () => {
     return localStorage.getItem("accessToken") && localStorage.getItem("organization") ? (
       <MainPage />
@@ -36,6 +40,7 @@ const router = () => {
       <SnackBarProvider />
       <ModalProvider />
       <ScrollToTop />
+      {isLoading && <Loading />}
       <Suspense fallback={<Loading />}>
         <Routes>
           {/* 기본 레이아웃 */}
@@ -127,4 +132,4 @@ const router = () => {
   );
 };
 
-export default router;
+export default Router;
