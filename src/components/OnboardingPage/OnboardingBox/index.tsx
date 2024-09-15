@@ -1,4 +1,4 @@
-import React, { ChangeEvent, useEffect, useRef, useState } from "react";
+import React, { ChangeEvent, RefObject, useEffect, useRef, useState } from "react";
 
 import { useNavigate } from "react-router-dom";
 
@@ -7,15 +7,17 @@ import {
   postChallengeStart,
   postOnboardingComplete,
 } from "@/apis/OnboardingPage";
-import chunsik_icon from "@/assets/logo/chunsik-icon.png";
-import letsintern from "@/assets/logo/letsintern.png";
+
 import writon_icon from "@/assets/logo/logo-writon-roundbox.svg";
 import { DuplicateBtn } from "@/components/Authorization/RegisterEmailPage/style";
 import { KeywordButton, OnboardingButton, PublicButton } from "@/components/atom/button";
 import { Input } from "@/components/atom/input/index";
 import useAsyncWithLoading from "@/hooks/useAsyncWithLoading";
+import clalendarIcon from "@/assets/mainPage/icon-calendar.svg";
 
 import {
+  Calendar,
+  CalendarButton,
   CompanyBox,
   Container,
   JobBox,
@@ -25,6 +27,11 @@ import {
   OnboardBox,
   Title,
 } from "./style";
+import { useGetOrganizationsAndChallenges } from "@/hooks/reactQueryHooks/useCommonHooks";
+import { challengeListProps } from "@/types";
+import { SubCalendar } from "@/components/atom/SubCalendar";
+import { format } from "date-fns";
+import useOnclickOutside from "@/hooks/useOnclickOutside";
 
 const JobCategory = ["기획", "운영", "개발", "마케팅", "디자인", "기타"];
 interface onBoardingDataProps {
@@ -59,6 +66,29 @@ export const OnboardingBox = () => {
   const [duplicateShow, setDuplicateShow] = useState<boolean>(false);
   const [duplicate, setDuplicate] = useState<boolean>(false);
   const [errorIdLine, setErrorIdLine] = useState<boolean>(false);
+  const [organizationList, setOrganizationList] = useState<challengeListProps[]>([]);
+  const [date, setDate] = useState<Date | string>("");
+  const [calendarOn, setCalendarOn] = useState<boolean>(false);
+
+  // 툴팁 관리
+  const calendarRef = useRef<HTMLDivElement>(null);
+  const calendarOnRef = useRef<HTMLDivElement>(null);
+  useOnclickOutside([calendarRef, calendarOnRef], () => setCalendarOn(false));
+
+  const { data: organizationsAndChallenges, isLoading } = useGetOrganizationsAndChallenges();
+
+  useEffect(() => {
+    if (organizationsAndChallenges) {
+      // 중복되지 않는 오가니제이션 리스트 구성
+      const uniqueOrganizationList = organizationsAndChallenges.reduce(
+        (acc: challengeListProps[], cur: challengeListProps) =>
+          acc.some((item) => item.organization === cur.organization) ? acc : [...acc, cur],
+        []
+      );
+
+      setOrganizationList(uniqueOrganizationList);
+    }
+  }, [organizationsAndChallenges]);
 
   const handleNicknameChange = (e: ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
@@ -212,25 +242,32 @@ export const OnboardingBox = () => {
     onBoardingData.nickname,
   ]);
 
+  useEffect(() => {
+    if (!date) return;
+    setOnBoardingData({ ...onBoardingData, hireDate: format(date, "yyyy-MM-dd") });
+    setCalendarOn(false);
+  }, [date]);
+
+  if (isLoading) return <></>;
   return (
     <Container>
       <Title>
         <div className="firstTitle">
           <img
             src={
-              localStorage.getItem("organization") === "렛츠인턴"
-                ? letsintern
-                : localStorage.getItem("organization") === "카카오"
-                  ? chunsik_icon
-                  : writon_icon
+              // writon_icon
+              organizationList.length > 0
+                ? organizationList.find(
+                    (organization) =>
+                      organization.organization === localStorage.getItem("organization")
+                  )?.logo || writon_icon // 로고가 없으면 기본 이미지 표시
+                : writon_icon // organizationList가 비어있을 때 기본 이미지 표시
             }
             alt="letsintern"
           />
           <div className="semiTitle">
-            {localStorage.getItem("organization") !== "렛츠인턴"
-              ? "라이톤의 회고 "
-              : "렛츠인턴 TIL "}
-            챌린지
+            {localStorage.getItem("organization") || "라이톤1"}
+            &nbsp;챌린지
           </div>
         </div>
         <div className="secondTitle">
@@ -350,6 +387,22 @@ export const OnboardingBox = () => {
             onChange={handleHireDateChange}
             placeholder="20240101"
           />
+          <CalendarButton>
+            <img
+              src={clalendarIcon}
+              alt="달력"
+              ref={calendarOnRef as RefObject<HTMLImageElement>}
+              onClick={() => setCalendarOn(!calendarOn)}
+            />
+            {calendarOn && (
+              <Calendar ref={calendarRef}>
+                <SubCalendar
+                  value={date || new Date()}
+                  clickDay={(date) => setDate(date)}
+                />
+              </Calendar>
+            )}
+          </CalendarButton>
         </JoinDateBox>
         <OnboardingButton
           onClick={OnboardingComplete}

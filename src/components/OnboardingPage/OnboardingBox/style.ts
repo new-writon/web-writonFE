@@ -157,3 +157,24 @@ export const JoinDateBox = styled.div`
     margin-bottom: 30px;
   }
 `;
+
+export const CalendarButton = styled.div`
+  position: absolute;
+  top: 27px;
+  bottom: 0;
+  right: 18px;
+  margin: auto 0;
+  display: flex;
+  img {
+    margin: auto 0;
+    cursor: pointer;
+  }
+`;
+
+export const Calendar = styled.div`
+  display: flex;
+  position: absolute;
+  top: 20px;
+  right: 30px;
+  z-index: 1;
+`;
