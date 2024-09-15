@@ -10,7 +10,6 @@ export const Container = styled.div<{ $type: string }>`
   padding: 5px 6px 3px;
   height: fit-content;
   width: fit-content;
-  margin-bottom: ${(props) => props.$type !== "special" && "3px"};
   @media (max-width: 530px) {
     padding: ${(props) => props.$type === "special" && " 2px 3px 0"};
   }
