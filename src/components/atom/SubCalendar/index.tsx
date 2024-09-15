@@ -8,9 +8,9 @@ export const SubCalendar = ({
   value,
   clickDay,
 }: {
-  dateActive: string[]; //활성화할 날짜들 ["2024-08-02","2024-08-03","2024-08-04"]
+  dateActive?: string[]; //활성화할 날짜들 ["2024-08-02","2024-08-03","2024-08-04"]
   value: string | Date;
-  clickDay: (value: Date) => void; //클릭한 날짜로 이벤트
+  clickDay: (value: string | Date) => void; //클릭한 날짜로 이벤트
 }) => {
   return (
     <Container>
@@ -18,20 +18,24 @@ export const SubCalendar = ({
         locale="ko"
         formatDay={(_locale, date) => moment(date).format("D")}
         value={value} //저장된 날짜로 캘린더 시작 (현재 날짜 또는 커뮤니티 활성화 날짜)
-        minDate={new Date(dateActive[0])} //활성화 시작 날짜
-        maxDate={new Date(dateActive[dateActive.length - 1])} //활성화 끝나는 날짜
+        minDate={dateActive ? new Date(dateActive[0]) : undefined} //활성화 시작 날짜
+        maxDate={dateActive ? new Date(dateActive[dateActive.length - 1]) : undefined} //활성화 끝나는 날짜
         minDetail="month" // 상단 네비게이션에서 '월' 단위만 보이게 설정
         maxDetail="month" // 상단 네비게이션에서 '월' 단위만 보이게 설정
         onClickDay={clickDay}
         goToRangeStartOnSelect={true}
-        tileDisabled={({ date }) => {
-          // 비활성화할 날짜들을 포함하는 Set 객체 생성
-          const disabledDates = new Set(
-            dateActive.map((dateString) => new Date(dateString).toDateString())
-          );
-          // 현재 날짜가 비활성화할 날짜 목록에 포함되어 있는지 확인하여 반환
-          return !disabledDates.has(date.toDateString());
-        }}
+        tileDisabled={
+          dateActive
+            ? ({ date }) => {
+                // 비활성화할 날짜들을 포함하는 Set 객체 생성
+                const disabledDates = new Set(
+                  dateActive.map((dateString) => new Date(dateString).toDateString())
+                );
+                // 현재 날짜가 비활성화할 날짜 목록에 포함되어 있는지 확인하여 반환
+                return !disabledDates.has(date.toDateString());
+              }
+            : undefined
+        }
       />
     </Container>
   );
