@@ -76,7 +76,7 @@ export const CommunityBox = () => {
     }
   };
 
-  const clickDay = (value: Date) => {
+  const clickDay = (value: Date | string) => {
     setSelectedDate(communityDates[communityDates.indexOf(format(value, "yyyy-MM-dd"))]);
     setDateLength(communityDates.indexOf(format(value, "yyyy-MM-dd")));
     setCalendarOn(false);
