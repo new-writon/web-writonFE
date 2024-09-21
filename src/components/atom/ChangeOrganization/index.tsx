@@ -1,7 +1,7 @@
 import React, { RefObject, forwardRef } from "react";
 
 import { challengeListProps } from "@/types";
-
+import writon_icon from "@/assets/logo/logo-writon-roundbox.svg";
 import { Container } from "./style";
 interface ChangeOrganizationProps {
   ref: RefObject<HTMLDivElement>;
@@ -30,6 +30,9 @@ export const ChangeOrganization = forwardRef<HTMLDivElement, ChangeOrganizationP
               >
                 <img
                   src={item.logo}
+                  onError={(e) => {
+                    e.currentTarget.src = writon_icon; // 이미지 로딩에 실패하면 기본 이미지로 교체
+                  }}
                   alt="W"
                 />
                 <span>{item.organization} 챌린지</span>

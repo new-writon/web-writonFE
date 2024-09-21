@@ -207,14 +207,16 @@ const Header = () => {
           <HeaderLeft>
             <img
               src={
-                writon_icon
-                // organizationList.length > 0
-                //   ? organizationList.find(
-                //       (organization) =>
-                //         organization.organization === localStorage.getItem("organization")
-                //     )?.logo || writon_icon // 로고가 없으면 기본 이미지 표시
-                //   : writon_icon // organizationList가 비어있을 때 기본 이미지 표시
+                organizationList.length > 0
+                  ? organizationList.find(
+                      (organization) =>
+                        organization.organization === localStorage.getItem("organization")
+                    )?.logo || writon_icon
+                  : writon_icon
               }
+              onError={(e) => {
+                e.currentTarget.src = writon_icon; // 이미지 로딩에 실패하면 기본 이미지로 교체
+              }}
               alt="W"
               ref={organizationOnRef as RefObject<HTMLImageElement>}
               onClick={() => setOrganizationToggle(!organizationToggle)}
@@ -378,6 +380,7 @@ const HeaderLeft = styled.div`
     width: 42px;
     height: 42px;
     cursor: pointer;
+    border-radius: 14px;
   }
   img:nth-of-type(2) {
     width: 90px;

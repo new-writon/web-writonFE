@@ -52,6 +52,7 @@ export const Container = styled.div`
   .organization-item img {
     width: 42px;
     height: 42px;
+    border-radius: 14px;
   }
   .organization-item span {
     color: var(--Gray-100, #212121);
