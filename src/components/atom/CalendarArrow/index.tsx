@@ -28,7 +28,11 @@ export const CalendarArrow = ({
       />
       <div
         className="today"
-        onClick={() => setCalendarToday(new Date(lastDay))}
+        onClick={
+          getMonth(new Date()) !== getMonth(lastDay)
+            ? () => setCalendarToday(new Date(lastDay))
+            : () => setCalendarToday(new Date(new Date()))
+        }
       >
         오늘
       </div>

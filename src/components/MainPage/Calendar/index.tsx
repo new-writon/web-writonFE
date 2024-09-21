@@ -61,12 +61,14 @@ export const Calendar = ({ CalendarData }: { CalendarData: CalendarRecordCurrent
             </TooltipButton>
           </div>
           <div className="calendar-operation">
-            <CalendarArrow
-              firstDay={CalendarData[0].date}
-              lastDay={CalendarData[CalendarData.length - 1].date}
-              calendarToday={calendarToday}
-              setCalendarToday={setCalendarToday}
-            />
+            {fold && (
+              <CalendarArrow
+                firstDay={CalendarData[0].date}
+                lastDay={CalendarData[CalendarData.length - 1].date}
+                calendarToday={calendarToday}
+                setCalendarToday={setCalendarToday}
+              />
+            )}
             <CalendarToggle
               toggle={fold}
               onClick={() => setFold(!fold)}
