@@ -82,7 +82,7 @@ export const WriteView = ({
           <TitleSideBox type="special">스페셜 질문</TitleSideBox>
           <div className="QuestionBox">
             {arr.map((item, idx) => (
-              <div>
+              <div key={idx}>
                 <div className="title">
                   {idx + 1}.{item?.question}
                 </div>
@@ -100,7 +100,7 @@ export const WriteView = ({
           {detailData
             .filter((item) => item.category !== "스페셜 질문")
             .map((item, idx) => (
-              <div>
+              <div key={idx}>
                 <div className="title">
                   {idx + 1}.{item?.question}
                 </div>

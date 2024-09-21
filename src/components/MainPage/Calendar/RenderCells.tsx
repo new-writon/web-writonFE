@@ -200,6 +200,7 @@ export const RenderCell = React.memo(
         const clickDay = day;
         days.push(
           <div
+            key={format(day, "yyyy-MM-dd")} // 고유한 날짜를 key로 사용
             className={`cell ${
               !isSameMonth(day, monthStart) // 1월이면 12월 2월 비활성화
                 ? "disabled"
@@ -322,7 +323,14 @@ export const RenderCell = React.memo(
 
         day = addDays(day, 1);
       }
-      rows.push(<div className="row">{days}</div>);
+      rows.push(
+        <div
+          key={day.getTime()}
+          className="row"
+        >
+          {days}
+        </div>
+      );
       days = [];
     }
     return (
