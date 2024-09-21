@@ -5,7 +5,7 @@ import Header from "@/components/Common/Header";
 const Layout = () => {
   return (
     <>
-      <Header />
+      {localStorage.getItem("accessToken") && localStorage.getItem("organization") && <Header />}
       <Outlet />
     </>
   );
