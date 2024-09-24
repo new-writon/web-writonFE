@@ -11,11 +11,26 @@ export const WRITON = axios.create({
   responseType: "json",
 });
 
+// 중복요청을 추적할 Set (버튼 두번 눌러서 중복된 요청을 방지)
+const pendingRequests = new Set();
 //request interceptor
 WRITON.interceptors.request.use(async (req: InternalAxiosRequestConfig) => {
   const accessToken = localStorage.getItem("accessToken") || sessionStorage.getItem("accessToken");
 
   if (req.headers && accessToken) req.headers.Authorization = `${accessToken}`;
+  // 요청을 식별하는 유니크 키 생성 (method, url, data 포함)
+  const requestKey = `${req.method}-${req.url}`;
+
+  // 동일한 요청이 이미 있는지 확인
+  if (pendingRequests.has(requestKey)) {
+    console.log("Duplicate request blocked");
+    // 중복된 요청이면 요청 취소
+    return Promise.reject("Duplicate request blocked");
+  }
+
+  // 요청을 pendingRequests에 추가
+  pendingRequests.add(requestKey);
+
   return req;
 });
 
@@ -110,9 +125,15 @@ async function errorHandler(error: { config?: any; response?: any }) {
 // 리스폰스 인터셉터
 WRITON.interceptors.response.use(
   (response) => {
+    const requestKey = `${response.config.method}-${response.config.url}`;
+    pendingRequests.delete(requestKey);
     return response.data;
   },
   async (error: any) => {
+    if (error.config) {
+      const requestKey = `${error.config.method}-${error.config.url}`;
+      pendingRequests.delete(requestKey);
+    }
     return errorHandler(error);
   }
 );
