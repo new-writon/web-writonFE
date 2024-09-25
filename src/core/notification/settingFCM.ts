@@ -32,6 +32,7 @@ getToken(messaging, {
     }
   })
   .catch((err) => {
+    alert(err);
     console.log("An error occurred while retrieving token. ", err);
     // ...
   });
