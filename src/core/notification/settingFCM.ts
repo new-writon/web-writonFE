@@ -42,7 +42,7 @@ if (typeof window !== "undefined" && typeof window.navigator !== "undefined") {
         });
     } else {
       console.log("알림 권한이 거부되었습니다.");
-      alert("알림 권한을 허용해야 푸시 알림을 받을 수 있습니다.");
+      alert(`${permission}알림 권한을 허용해야 푸시 알림을 받을 수 있습니다.`);
     }
   });
 
