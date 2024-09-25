@@ -6,6 +6,7 @@ import { RecoilRoot } from "recoil";
 
 import Router from "./router";
 import { GlobalStyle } from "./style/global";
+import "@/core/notification/settingFCM";
 
 const App = () => {
   const queryClient = new QueryClient({
