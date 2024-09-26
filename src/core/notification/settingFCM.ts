@@ -1,5 +1,5 @@
 import { initializeApp } from "firebase/app";
-import { getMessaging, getToken } from "firebase/messaging";
+import { getMessaging } from "firebase/messaging";
 
 const firebaseConfig = {
   apiKey: "AIzaSyAqlANweyIGV7Mwy1iGtgFk7P4SlrcR1Jg",
@@ -15,53 +15,53 @@ const firebaseConfig = {
 export const app = initializeApp(firebaseConfig);
 export const messaging = getMessaging(app);
 
-async function handleAllowNotification() {
-  await Notification.requestPermission();
+// async function handleAllowNotification() {
+//   await Notification.requestPermission();
 
-  registerServiceWorker();
+//   registerServiceWorker();
 
-  try {
-    await getDeviceToken();
-  } catch (error) {
-    console.error(error);
-  }
-}
+//   try {
+//     await getDeviceToken();
+//   } catch (error) {
+//     console.error(error);
+//   }
+// }
 
-async function getDeviceToken() {
-  // 권한이 허용된 후에 토큰을 가져옴
-  await getToken(messaging, {
-    vapidKey:
-      "BEC7zsAOEMKJz2WH-4N7aq8AuFL5009elrTLnAb4nj37aT1w25d6ZY6uHu1i48vfKiEPO7s-u758Kqhs1cCWjMk",
-  })
-    .then((currentToken) => {
-      if (currentToken) {
-        // 토큰을 서버로 전송하거나 UI 업데이트
-        console.log("토큰: ", currentToken);
-        alert("토큰: " + currentToken);
-      } else {
-        console.log("토큰을 가져오지 못했습니다. 권한을 다시 요청하세요.");
-      }
-    })
-    .catch((err) => {
-      alert(err);
-      console.log("토큰을 가져오는 중 에러 발생: ", err);
-    });
-}
+// async function getDeviceToken() {
+//   // 권한이 허용된 후에 토큰을 가져옴
+//   await getToken(messaging, {
+//     vapidKey:
+//       "BEC7zsAOEMKJz2WH-4N7aq8AuFL5009elrTLnAb4nj37aT1w25d6ZY6uHu1i48vfKiEPO7s-u758Kqhs1cCWjMk",
+//   })
+//     .then((currentToken) => {
+//       if (currentToken) {
+//         // 토큰을 서버로 전송하거나 UI 업데이트
+//         console.log("토큰: ", currentToken);
+//         alert("토큰: " + currentToken);
+//       } else {
+//         console.log("토큰을 가져오지 못했습니다. 권한을 다시 요청하세요.");
+//       }
+//     })
+//     .catch((err) => {
+//       alert(err);
+//       console.log("토큰을 가져오는 중 에러 발생: ", err);
+//     });
+// }
 
-function registerServiceWorker() {
-  navigator.serviceWorker
-    .register("firebase-messaging-sw.js")
-    .then(function (registration) {
-      console.log("Service Worker 등록 성공:", registration);
-      alert(`Service Worker 등록 성공:, ${registration}`);
-    })
-    .catch(function (error) {
-      console.log("Service Worker 등록 실패:", error);
-      alert(`Service Worker 등록 실패:, ${error}`);
-    });
-}
+// function registerServiceWorker() {
+//   navigator.serviceWorker
+//     .register("firebase-messaging-sw.js")
+//     .then(function (registration) {
+//       console.log("Service Worker 등록 성공:", registration);
+//       alert(`Service Worker 등록 성공:, ${registration}`);
+//     })
+//     .catch(function (error) {
+//       console.log("Service Worker 등록 실패:", error);
+//       alert(`Service Worker 등록 실패:, ${error}`);
+//     });
+// }
 
-handleAllowNotification();
+// handleAllowNotification();
 
 // if (typeof window !== "undefined" && typeof window.navigator !== "undefined") {
 //   const messaging = getMessaging();

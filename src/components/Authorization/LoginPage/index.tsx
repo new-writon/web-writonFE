@@ -10,6 +10,7 @@ import { Input } from "@/components/atom/input";
 import useAsyncWithLoading from "@/hooks/useAsyncWithLoading";
 
 import { Container, EtcBox, InputBox, OrLine } from "./style";
+import { handleAllowNotification } from "@/core/notification/notificationFunc";
 
 const Login = () => {
   const navigate = useNavigate();
@@ -89,7 +90,7 @@ const Login = () => {
   return (
     <Container>
       <AuthorizationTitle>
-        <p>로그인</p>
+        <p onClick={handleAllowNotification}>로그인</p>
       </AuthorizationTitle>
       <InputBox>
         <Input
