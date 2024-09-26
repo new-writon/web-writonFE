@@ -19,11 +19,11 @@
 // const messaging = firebase.messaging();
 // console.log(messaging);
 
-self.addEventListener("install", function (e) {
+self.addEventListener("install", function () {
   self.skipWaiting();
 });
 
-self.addEventListener("activate", function (e) {
+self.addEventListener("activate", function () {
   console.log("fcm sw activate..");
 });
 self.addEventListener("push", function (e) {

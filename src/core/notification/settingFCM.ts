@@ -16,7 +16,7 @@ export const app = initializeApp(firebaseConfig);
 export const messaging = getMessaging(app);
 
 async function handleAllowNotification() {
-  const permission = await Notification.requestPermission();
+  await Notification.requestPermission();
 
   registerServiceWorker();
 
