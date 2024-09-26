@@ -1,5 +1,5 @@
 import { initializeApp } from "firebase/app";
-import { getMessaging, getToken, onMessage } from "firebase/messaging";
+import { getMessaging, getToken } from "firebase/messaging";
 
 const firebaseConfig = {
   apiKey: "AIzaSyAqlANweyIGV7Mwy1iGtgFk7P4SlrcR1Jg",
@@ -11,44 +11,93 @@ const firebaseConfig = {
   measurementId: "G-YMXFQTCNNR",
 };
 
-// Firebase 초기화
-initializeApp(firebaseConfig);
+// Initialize Firebase
+export const app = initializeApp(firebaseConfig);
+export const messaging = getMessaging(app);
 
-if (typeof window !== "undefined" && typeof window.navigator !== "undefined") {
-  const messaging = getMessaging();
+async function handleAllowNotification() {
+  const permission = await Notification.requestPermission();
 
-  // 알림 권한 요청
-  Notification.requestPermission().then((permission) => {
-    if (permission === "granted") {
-      console.log("알림 권한이 허용되었습니다.");
+  registerServiceWorker();
 
-      // 권한이 허용된 후에 토큰을 가져옴
-      getToken(messaging, {
-        vapidKey:
-          "BEC7zsAOEMKJz2WH-4N7aq8AuFL5009elrTLnAb4nj37aT1w25d6ZY6uHu1i48vfKiEPO7s-u758Kqhs1cCWjMk",
-      })
-        .then((currentToken) => {
-          if (currentToken) {
-            // 토큰을 서버로 전송하거나 UI 업데이트
-            console.log("토큰: ", currentToken);
-            alert("토큰: " + currentToken);
-          } else {
-            console.log("토큰을 가져오지 못했습니다. 권한을 다시 요청하세요.");
-          }
-        })
-        .catch((err) => {
-          alert(err);
-          console.log("토큰을 가져오는 중 에러 발생: ", err);
-        });
-    } else {
-      console.log("알림 권한이 거부되었습니다.");
-      alert(`${permission}알림 권한을 허용해야 푸시 알림을 받을 수 있습니다.`);
-    }
-  });
-
-  // 포그라운드에서 메시지를 수신
-  onMessage(messaging, (payload) => {
-    console.log("메시지를 수신했습니다: ", payload);
-    // 여기서 수신한 메시지를 처리
-  });
+  try {
+    await getDeviceToken();
+  } catch (error) {
+    console.error(error);
+  }
 }
+
+async function getDeviceToken() {
+  // 권한이 허용된 후에 토큰을 가져옴
+  await getToken(messaging, {
+    vapidKey:
+      "BEC7zsAOEMKJz2WH-4N7aq8AuFL5009elrTLnAb4nj37aT1w25d6ZY6uHu1i48vfKiEPO7s-u758Kqhs1cCWjMk",
+  })
+    .then((currentToken) => {
+      if (currentToken) {
+        // 토큰을 서버로 전송하거나 UI 업데이트
+        console.log("토큰: ", currentToken);
+        alert("토큰: " + currentToken);
+      } else {
+        console.log("토큰을 가져오지 못했습니다. 권한을 다시 요청하세요.");
+      }
+    })
+    .catch((err) => {
+      alert(err);
+      console.log("토큰을 가져오는 중 에러 발생: ", err);
+    });
+}
+
+function registerServiceWorker() {
+  navigator.serviceWorker
+    .register("firebase-messaging-sw.js")
+    .then(function (registration) {
+      console.log("Service Worker 등록 성공:", registration);
+      alert(`Service Worker 등록 성공:, ${registration}`);
+    })
+    .catch(function (error) {
+      console.log("Service Worker 등록 실패:", error);
+      alert(`Service Worker 등록 실패:, ${error}`);
+    });
+}
+
+handleAllowNotification();
+
+// if (typeof window !== "undefined" && typeof window.navigator !== "undefined") {
+//   const messaging = getMessaging();
+
+//   // 알림 권한 요청
+//   Notification.requestPermission().then((permission) => {
+//     if (permission === "granted") {
+//       console.log("알림 권한이 허용되었습니다.");
+
+// 권한이 허용된 후에 토큰을 가져옴
+//     getToken(messaging, {
+//       vapidKey:
+//         "BEC7zsAOEMKJz2WH-4N7aq8AuFL5009elrTLnAb4nj37aT1w25d6ZY6uHu1i48vfKiEPO7s-u758Kqhs1cCWjMk",
+//     })
+//       .then((currentToken) => {
+//         if (currentToken) {
+//           // 토큰을 서버로 전송하거나 UI 업데이트
+//           console.log("토큰: ", currentToken);
+//           alert("토큰: " + currentToken);
+//         } else {
+//           console.log("토큰을 가져오지 못했습니다. 권한을 다시 요청하세요.");
+//         }
+//       })
+//       .catch((err) => {
+//         alert(err);
+//         console.log("토큰을 가져오는 중 에러 발생: ", err);
+//       });
+//   } else {
+//     console.log("알림 권한이 거부되었습니다.");
+//     alert(`${permission}알림 권한을 허용해야 푸시 알림을 받을 수 있습니다.`);
+//   }
+// });
+
+//   // 포그라운드에서 메시지를 수신
+//   onMessage(messaging, (payload) => {
+//     console.log("메시지를 수신했습니다: ", payload);
+//     // 여기서 수신한 메시지를 처리
+//   });
+// }
