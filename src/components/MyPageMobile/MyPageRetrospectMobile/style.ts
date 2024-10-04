@@ -52,7 +52,7 @@ export const Top = styled.div`
     color: var(--Gray-80, #464c52);
     font-size: 0.875rem;
     line-height: 120%; /* 16.8px */
-    padding: 11px 0px 9px 16px;
+    padding: 11px 16px 9px 16px;
     background: var(--White, #fff);
     cursor: pointer;
     font-weight: 500;
