@@ -4,7 +4,6 @@ import { useEffect, useState } from "react";
 import { useRecoilValue } from "recoil";
 import styled from "styled-components";
 
-import { getMyPageData } from "@/apis/MyPage";
 import { MyPageComment } from "@/components/MyPage/MyPageComment";
 import { MyPageNotification } from "@/components/MyPage/MyPageNotification";
 import { MyPageRetrospect } from "@/components/MyPage/MyPageRetrospect";
@@ -12,31 +11,16 @@ import { ProfileSetting } from "@/components/MyPage/ProfileSetting";
 import { SecuritySetting } from "@/components/MyPage/SecuritySetting";
 import { SideTab } from "@/components/MyPage/SideTab";
 import { MainSemiTitle } from "@/components/atom/MainSemiTitle";
-import useAsyncWithLoading from "@/hooks/useAsyncWithLoading";
 import { accountNumberState } from "@/recoil/atoms";
 import { Inner } from "@/style/global";
-import { myPageProps } from "@/types";
+import { useGetMyPageData } from "@/hooks/reactQueryHooks/useMainHooks";
 
 const MyPage = () => {
-  const [myData, setMyData] = useState<myPageProps>();
-  const executeAsyncTask = useAsyncWithLoading();
   const [activeCategory, setActiveCategory] = useState<string | null>("");
   const accountNumberModal = useRecoilValue(accountNumberState);
 
-  const MyPageRendering = async () => {
-    executeAsyncTask(async () => {
-      try {
-        const result = await Promise.all([
-          getMyPageData(localStorage.getItem("organization") || ""),
-        ]);
-        setMyData(result[0]);
-      } catch {
-        throw new Error("shit");
-      }
-    });
-  };
+  const { data: myData } = useGetMyPageData(localStorage.getItem("organization") || "");
   useEffect(() => {
-    MyPageRendering();
     const category = new URL(window.location.href).searchParams.get("category");
     setActiveCategory(category);
   }, [accountNumberModal]);
