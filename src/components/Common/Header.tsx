@@ -330,14 +330,19 @@ const Header = () => {
             </div>
           )}
           {width <= 530 && (
-            <TooltipProfile
-              headerTooltip={headerTooltip}
-              TooltipMobile={TooltipMobile}
-              userProfile={userProfile}
-              setHeaderTooltip={setHeaderTooltip}
-              setTooltipMobile={setTooltipMobile}
-              ChallengeList={ChallengeList}
-            />
+            <div
+              ref={profileRef}
+              style={{ position: "absolute", right: "0" }}
+            >
+              <TooltipProfile
+                headerTooltip={headerTooltip}
+                TooltipMobile={TooltipMobile}
+                userProfile={userProfile}
+                setHeaderTooltip={setHeaderTooltip}
+                setTooltipMobile={setTooltipMobile}
+                ChallengeList={ChallengeList}
+              />
+            </div>
           )}
         </Container>
       )}

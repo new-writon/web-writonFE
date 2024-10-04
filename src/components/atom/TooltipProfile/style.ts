@@ -163,7 +163,4 @@ export const MypageBtn = styled.div`
   line-height: 120%; /* 16.8px */
   cursor: pointer;
   margin-bottom: 16px;
-  img {
-    padding-bottom: 2px;
-  }
 `;
