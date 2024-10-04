@@ -1,38 +1,39 @@
-/* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect, useState } from "react";
 
-import { getMyPageCommentItem } from "@/apis/MyPage";
-import { getChallengingList } from "@/apis/login";
 import downArrow from "@/assets/mainPage/downArrow.svg";
 import topArrow from "@/assets/mainPage/topArrow.svg";
 import { NoRetrospect } from "@/components/MainPage/NoRetrospect";
 import { MyPageCommentItemMobile } from "@/components/atom/MyPageCommentItem";
-import useAsyncWithLoading from "@/hooks/useAsyncWithLoading";
 import { challengeListProps, myPageCommentType } from "@/types";
 
 import { CommentList, Container, Top } from "./style";
+import { useGetOrganizationsAndChallenges } from "@/hooks/reactQueryHooks/useCommonHooks";
+import { useGetMyCommentItem } from "@/hooks/reactQueryHooks/useMainHooks";
 
 export const MyPageCommentMobile = () => {
   const [challengeList, setChallengeList] = useState<challengeListProps[]>();
+  const [activeChallengeId, setActiveChallengeId] = useState<string>(
+    localStorage.getItem("challengeId") || ""
+  );
   const [selectChallenge, setSelectChallenge] = useState<string>("");
   const [listOn, setListOn] = useState<boolean>(false);
   const [viewState, setViewState] = useState<string>("new");
   const [CommentData, setCommentData] = useState<myPageCommentType[]>([]);
-  const executeAsyncTask = useAsyncWithLoading();
 
+  const { data: organizationChallenges } = useGetOrganizationsAndChallenges();
+  const { data: commentCurrent = [] } = useGetMyCommentItem({
+    organization: localStorage.getItem("organization") || "",
+    challengeId: activeChallengeId,
+  });
+
+  // 챌린지를 변경하는 함수
   const ChangeChallenge = async (item: challengeListProps) => {
-    try {
-      const data = await getMyPageCommentItem(item.organization, item.challengeId.toString());
-      if (viewState === "new") {
-        setCommentData(data.reverse());
-      } else if (viewState === "old") {
-        setCommentData(data);
-      }
-      setSelectChallenge(`${item.organization} ${item.challenge} 챌린지`);
-      setListOn(false);
-    } catch {
-      new Error("shit");
-    }
+    // 같은 챌린지를 두 번 클릭하는 경우에 상태를 업데이트하지 않도록 처리
+    if (item.challengeId.toString() === activeChallengeId) return;
+
+    setActiveChallengeId(item.challengeId.toString());
+    setSelectChallenge(`${item.organization} ${item.challenge} 챌린지`);
+    setListOn(false);
   };
 
   const ChangeViewState = (state: string) => {
@@ -44,35 +45,32 @@ export const MyPageCommentMobile = () => {
     }
   };
 
-  const CommentRendering = async () => {
-    executeAsyncTask(async () => {
-      try {
-        const list = await getChallengingList();
-        setChallengeList(
-          list.filter((item) => item.organization === localStorage.getItem("organization"))
-        );
-        const activeList = list.filter(
-          (item) => item.challengeId.toString() === localStorage.getItem("challengeId")
-        );
-        setSelectChallenge(`${activeList[0].organization} ${activeList[0].challenge} 챌린지`);
-        try {
-          const data = await getMyPageCommentItem(
-            activeList[0].organization,
-            activeList[0].challengeId.toString()
-          );
-          setCommentData(data);
-        } catch {
-          new Error("shit");
-        }
-      } catch {
-        new Error("shit");
+  // 의존성 배열에서 불필요한 렌더링 방지
+  useEffect(() => {
+    // challengeId가 변경될 때만 상태를 업데이트
+    if (commentCurrent) {
+      if (viewState === "new") {
+        setCommentData(commentCurrent); // 최신순일 때 데이터 그대로
+      } else if (viewState === "old") {
+        setCommentData(commentCurrent.reverse()); // 오래된순일 때 역순으로 설정
       }
-    });
-  };
+    }
+  }, [commentCurrent]); // activeChallengeId를 의존성으로 추가
 
   useEffect(() => {
-    CommentRendering();
-  }, []);
+    if (organizationChallenges) {
+      const selectedChallenge = organizationChallenges?.filter(
+        (item) => item.organization === localStorage.getItem("organization")
+      );
+      setChallengeList(selectedChallenge);
+
+      const activeChallenge = selectedChallenge.find(
+        (item) => item.challengeId.toString() === localStorage.getItem("challengeId")
+      );
+      setActiveChallengeId(activeChallenge?.challengeId.toString() || "");
+      setSelectChallenge(`${activeChallenge?.organization} ${activeChallenge?.challenge} 챌린지`);
+    }
+  }, [organizationChallenges]);
 
   return (
     <Container>
