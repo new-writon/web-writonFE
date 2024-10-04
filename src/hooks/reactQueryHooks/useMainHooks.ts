@@ -7,7 +7,12 @@ import {
 } from "@/apis/mainPage";
 import { organizationChallengeDataType } from "@/types/axios";
 import { getBasicQuestion, getSpecialQuestion, postwritingSubmit } from "@/apis/WritingPage";
-import { postEditWritingDataType, postWritingDataType } from "@/types";
+import {
+  myProfileEditProps,
+  onBoardingDataProps,
+  postEditWritingDataType,
+  postWritingDataType,
+} from "@/types";
 import { patchEditWritingSubmit } from "@/apis/EditWritingPage";
 import {
   getAgoraChat,
@@ -27,7 +32,13 @@ import {
   postLike,
   postLikeDelete,
 } from "@/apis/DetailPage";
-import { getMyPageData } from "@/apis/MyPage";
+import { getMyPageCommentItem, getMyPageData, putMyPageData } from "@/apis/MyPage";
+import {
+  getOrganizationPosition,
+  postChallengeStart,
+  postOnboardingComplete,
+} from "@/apis/OnboardingPage";
+import { getNotificationData } from "@/apis/notification";
 
 // 현재 내 챌린지 상태 정보 가져오기
 export const useGetChallengeCurrent = ({
@@ -61,7 +72,7 @@ export const useGetRetrospectCurrent = ({
   return useQuery({
     queryKey: ["getRetrospectCurrent", organization, challengeId],
     queryFn: () => getRetrospectCurrent({ organization, challengeId }),
-    select: (data) => data.data.templateData.reverse(),
+    select: (data) => Array.from(data.data.templateData).reverse(),
   });
 };
 
@@ -393,5 +404,74 @@ export const usePostComment = () => {
       queryClient.invalidateQueries({ queryKey: ["communityContentData"] });
       queryClient.invalidateQueries({ queryKey: ["getComments"] });
     },
+  });
+};
+
+// 온보딩 페이지 온보딩 가입
+export const usePostOnboarding = () => {
+  return useMutation({
+    mutationFn: async (onBoardingData: onBoardingDataProps) => {
+      return await postOnboardingComplete(onBoardingData);
+    },
+  });
+};
+
+export const usePostChallengeStart = () => {
+  return useMutation({
+    mutationFn: async ({ organization, challengeId }: organizationChallengeDataType) => {
+      return await postChallengeStart(organization, challengeId);
+    },
+  });
+};
+
+// 조직 position 가져오기
+export const useGetOrganizationPosition = (organization: string) => {
+  return useQuery({
+    queryKey: ["getOrganizationPosition", organization],
+    queryFn: () => getOrganizationPosition(organization),
+    select: (data) => data.positionNames,
+  });
+};
+
+// mypageData
+export const useGetMyPageData = (organization: string) => {
+  return useQuery({
+    queryKey: ["getMyPageData ", organization],
+    queryFn: () => getMyPageData(organization),
+  });
+};
+
+// myPage setting 정보 수정
+export const usePutMyPageData = () => {
+  return useMutation({
+    mutationFn: async ({
+      organization,
+      editData,
+    }: {
+      organization: string;
+      editData: myProfileEditProps;
+    }) => {
+      return await putMyPageData(organization, editData);
+    },
+  });
+};
+
+export const useGetMyCommentItem = ({
+  organization,
+  challengeId,
+}: organizationChallengeDataType) => {
+  return useQuery({
+    queryKey: ["getMyPageCommentItem", organization, challengeId],
+    queryFn: () => getMyPageCommentItem(organization, challengeId),
+  });
+};
+
+export const useGetNotificationItem = ({
+  organization,
+  challengeId,
+}: organizationChallengeDataType) => {
+  return useQuery({
+    queryKey: ["getNotificationItem", organization, challengeId],
+    queryFn: () => getNotificationData(organization, challengeId),
   });
 };
