@@ -24,3 +24,8 @@ export const postChallengeStart = async (organization: string, challengeId: stri
   const response = await postData("/user/challenge/start", { organization, challengeId });
   return response.data;
 };
+
+export const getOrganizationPosition = async (organization: string) => {
+  const response = await getData<{ positionNames: string[] }>(`/organization/${organization}`);
+  return response.data;
+};
