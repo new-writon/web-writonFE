@@ -109,33 +109,3 @@ export const CommentList = styled.div`
   margin-top: 24px;
   margin-bottom: 20px;
 `;
-
-export const CommentPagination = styled.div`
-  position: absolute;
-  bottom: 50px;
-  right: 0;
-  left: 0;
-  margin: 0 auto;
-  width: 100%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: 2px;
-  .page {
-    padding: 7px 6px;
-    color: var(--Gray-80, #464c52);
-    font-size: 0.875rem;
-    font-weight: 500;
-    line-height: 120%; /* 16.8px */
-    cursor: pointer;
-  }
-  .notactive {
-  }
-  .page:hover {
-    border-radius: 6px;
-    background: var(--Gray-20, #f8f8fa);
-  }
-  .page.active {
-    color: var(--Main-50, #6272ff);
-  }
-`;

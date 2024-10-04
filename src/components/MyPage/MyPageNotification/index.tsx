@@ -1,44 +1,48 @@
-/* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect, useState } from "react";
 
 import { useSetRecoilState } from "recoil";
 
-import { getChallengingList } from "@/apis/login";
-import { getNotificationData, patchNotificationCount } from "@/apis/notification";
 import downArrow from "@/assets/mainPage/downArrow.svg";
 import topArrow from "@/assets/mainPage/topArrow.svg";
 import { NoRetrospect } from "@/components/MainPage/NoRetrospect";
 import { MyPageNotificationItem } from "@/components/atom/MyPageNotificationItem";
-import useAsyncWithLoading from "@/hooks/useAsyncWithLoading";
 import { notficationNumberState } from "@/recoil/atoms";
 import { challengeListProps, notificationDataType } from "@/types";
 
-import { CommentList, CommentPagination, Container, Top } from "./style";
+import { CommentList, Container, Top } from "./style";
+import { Pagination } from "@/components/atom/Pagination";
+import { useGetOrganizationsAndChallenges } from "@/hooks/reactQueryHooks/useCommonHooks";
+import { useGetNotificationItem } from "@/hooks/reactQueryHooks/useMainHooks";
+import { patchNotificationCount } from "@/apis/notification";
 
 export const MyPageNotification = () => {
   const [challengeList, setChallengeList] = useState<challengeListProps[]>();
+  const [activeChallengeId, setActiveChallengeId] = useState<string>(
+    localStorage.getItem("challengeId") || ""
+  );
   const [selectChallenge, setSelectChallenge] = useState<string>("");
   const [listOn, setListOn] = useState<boolean>(false);
   const [viewState, setViewState] = useState<string>("new");
   const [NotificationData, setNotificationData] = useState<notificationDataType[]>([]);
   const [activePage, setActivePage] = useState<number>(1); // 나중에 쿼리스트링으로 바꿔여함.
-  const executeAsyncTask = useAsyncWithLoading();
+  const [isInitialNotificationLoad, setIsInitialNotificationLoad] = useState(true);
 
   const setNotificationNumber = useSetRecoilState(notficationNumberState);
 
+  const { data: organizationChallenges } = useGetOrganizationsAndChallenges();
+  const { data: notificationCurrent = [] } = useGetNotificationItem({
+    organization: localStorage.getItem("organization") || "",
+    challengeId: activeChallengeId,
+  });
+
+  // 챌린지를 변경하는 함수
   const ChangeChallenge = async (item: challengeListProps) => {
-    try {
-      const data = await getNotificationData(item.organization, item.challengeId.toString());
-      if (viewState === "new") {
-        setNotificationData(data.reverse());
-      } else if (viewState === "old") {
-        setNotificationData(data);
-      }
-      setSelectChallenge(`${item.organization} ${item.challenge} 챌린지`);
-      setListOn(false);
-    } catch {
-      new Error("shit");
-    }
+    // 같은 챌린지를 두 번 클릭하는 경우에 상태를 업데이트하지 않도록 처리
+    if (item.challengeId.toString() === activeChallengeId) return;
+
+    setActiveChallengeId(item.challengeId.toString());
+    setSelectChallenge(`${item.organization} ${item.challenge} 챌린지`);
+    setListOn(false);
   };
 
   const ChangeViewState = (state: string) => {
@@ -50,72 +54,50 @@ export const MyPageNotification = () => {
     }
   };
 
-  const NotificationRendering = async () => {
-    executeAsyncTask(async () => {
-      try {
-        const list = await getChallengingList();
-        setChallengeList(
-          list.filter((item) => item.organization === localStorage.getItem("organization"))
-        );
-        const activeList = list.filter(
-          (item) => item.challengeId.toString() === localStorage.getItem("challengeId")
-        );
-        setSelectChallenge(`${activeList[0].organization} ${activeList[0].challenge} 챌린지`);
-        try {
-          const data = await getNotificationData(
-            activeList[0].organization,
-            activeList[0].challengeId.toString()
-          );
-          setNotificationData(data);
-          try {
-            await patchNotificationCount(
-              localStorage.getItem("organization") as string,
-              localStorage.getItem("challengeId") as string,
-              data.length
-            );
-            setNotificationNumber(0);
-          } catch {
-            new Error("shit");
-          }
-        } catch {
-          new Error("shit");
-        }
-      } catch {
-        new Error("shit");
-      }
-    });
+  const updateNotificationCount = async () => {
+    try {
+      await patchNotificationCount(
+        localStorage.getItem("organization") as string,
+        localStorage.getItem("challengeId") as string,
+        notificationCurrent.length
+      );
+      setNotificationNumber(0);
+      setIsInitialNotificationLoad(false);
+    } catch {
+      new Error("shit");
+    }
   };
 
+  // 의존성 배열에서 불필요한 렌더링 방지
   useEffect(() => {
-    NotificationRendering();
-  }, []);
-
-  //pagination 로직
-  const pages = [];
-  let pageCount;
-  if (NotificationData.length % 10 === 0) {
-    pageCount = Math.floor(NotificationData.length / 10);
-  } else {
-    if (Math.floor(NotificationData.length / 10) === 0) {
-      pageCount = 1;
-    } else {
-      pageCount = Math.floor(NotificationData.length / 10) + 1;
+    // challengeId가 변경될 때만 상태를 업데이트
+    if (notificationCurrent) {
+      if (viewState === "new") {
+        setNotificationData(notificationCurrent); // 최신순일 때 데이터 그대로
+      } else if (viewState === "old") {
+        setNotificationData(notificationCurrent.reverse()); // 오래된순일 때 역순으로 설정
+      }
     }
-  }
-  for (let i = 0; i < pageCount; i++) {
-    pages.push(
-      <div
-        className={`${activePage === i + 1 ? "active" : "notactive"} page`}
-        onClick={() => {
-          setActivePage(i + 1);
-          window.scrollTo({ top: 0 });
-        }}
-        key={i}
-      >
-        {i + 1}
-      </div>
-    );
-  }
+    if (isInitialNotificationLoad) {
+      // 처음 호출시에만 동작하게 하기 위한 조건문
+      updateNotificationCount();
+    }
+  }, [notificationCurrent]);
+
+  useEffect(() => {
+    if (organizationChallenges) {
+      const selectedChallenge = organizationChallenges?.filter(
+        (item) => item.organization === localStorage.getItem("organization")
+      );
+      setChallengeList(selectedChallenge);
+
+      const activeChallenge = selectedChallenge.find(
+        (item) => item.challengeId.toString() === localStorage.getItem("challengeId")
+      );
+      setActiveChallengeId(activeChallenge?.challengeId.toString() || "");
+      setSelectChallenge(`${activeChallenge?.organization} ${activeChallenge?.challenge} 챌린지`);
+    }
+  }, [organizationChallenges]);
 
   return (
     <Container>
@@ -175,7 +157,11 @@ export const MyPageNotification = () => {
           <NoRetrospect type="notification" />
         )}
       </CommentList>
-      <CommentPagination>{pages}</CommentPagination>
+      <Pagination
+        page={activePage}
+        setPage={setActivePage}
+        pageLength={NotificationData.length}
+      />
     </Container>
   );
 };
