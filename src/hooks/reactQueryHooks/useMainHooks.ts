@@ -72,7 +72,15 @@ export const useGetRetrospectCurrent = ({
   return useQuery({
     queryKey: ["getRetrospectCurrent", organization, challengeId],
     queryFn: () => getRetrospectCurrent({ organization, challengeId }),
-    select: (data) => Array.from(data.data.templateData).reverse(),
+    select: (data) => {
+      // 데이터가 없으면 빈 배열을 반환
+      if (!data || !data.data || !Array.isArray(data.data.templateData)) {
+        return [];
+      }
+
+      // 데이터가 있는 경우 reverse 처리
+      return Array.from(data.data.templateData).reverse();
+    },
   });
 };
 
