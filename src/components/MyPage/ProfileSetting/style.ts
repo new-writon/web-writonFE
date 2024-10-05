@@ -16,7 +16,6 @@ export const Container = styled.div`
     display: flex;
     padding: 15px 0;
     max-width: 443px;
-    justify-content: space-between;
     align-items: center;
   }
   .editTitle {
@@ -24,6 +23,7 @@ export const Container = styled.div`
     font-size: 0.875rem;
     font-weight: 600;
     line-height: 160%; /* 22.4px */
+    min-width: 137px;
   }
   .editText {
     width: 300px;

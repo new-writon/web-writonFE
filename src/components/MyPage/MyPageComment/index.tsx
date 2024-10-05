@@ -1,39 +1,41 @@
-/* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect, useState } from "react";
 
-import { getMyPageCommentItem } from "@/apis/MyPage";
-import { getChallengingList } from "@/apis/login";
 import downArrow from "@/assets/mainPage/downArrow.svg";
 import topArrow from "@/assets/mainPage/topArrow.svg";
 import { NoRetrospect } from "@/components/MainPage/NoRetrospect";
 import { MyPageCommentItem } from "@/components/atom/MyPageCommentItem";
-import useAsyncWithLoading from "@/hooks/useAsyncWithLoading";
 import { challengeListProps, myPageCommentType } from "@/types";
 
-import { CommentList, CommentPagination, Container, Top } from "./style";
+import { CommentList, Container, Top } from "./style";
+import { Pagination } from "@/components/atom/Pagination";
+import { useGetOrganizationsAndChallenges } from "@/hooks/reactQueryHooks/useCommonHooks";
+import { useGetMyCommentItem } from "@/hooks/reactQueryHooks/useMainHooks";
 
 export const MyPageComment = () => {
   const [challengeList, setChallengeList] = useState<challengeListProps[]>();
+  const [activeChallengeId, setActiveChallengeId] = useState<string>(
+    localStorage.getItem("challengeId") || ""
+  );
   const [selectChallenge, setSelectChallenge] = useState<string>("");
   const [listOn, setListOn] = useState<boolean>(false);
   const [viewState, setViewState] = useState<string>("new");
   const [CommentData, setCommentData] = useState<myPageCommentType[]>([]);
   const [activePage, setActivePage] = useState<number>(1); // 나중에 쿼리스트링으로 바꿔여함.
-  const executeAsyncTask = useAsyncWithLoading();
 
+  const { data: organizationChallenges } = useGetOrganizationsAndChallenges();
+  const { data: commentCurrent = [] } = useGetMyCommentItem({
+    organization: localStorage.getItem("organization") || "",
+    challengeId: activeChallengeId,
+  });
+
+  // 챌린지를 변경하는 함수
   const ChangeChallenge = async (item: challengeListProps) => {
-    try {
-      const data = await getMyPageCommentItem(item.organization, item.challengeId.toString());
-      if (viewState === "new") {
-        setCommentData(data.reverse());
-      } else if (viewState === "old") {
-        setCommentData(data);
-      }
-      setSelectChallenge(`${item.organization} ${item.challenge} 챌린지`);
-      setListOn(false);
-    } catch {
-      new Error("shit");
-    }
+    // 같은 챌린지를 두 번 클릭하는 경우에 상태를 업데이트하지 않도록 처리
+    if (item.challengeId.toString() === activeChallengeId) return;
+
+    setActiveChallengeId(item.challengeId.toString());
+    setSelectChallenge(`${item.organization} ${item.challenge} 챌린지`);
+    setListOn(false);
   };
 
   const ChangeViewState = (state: string) => {
@@ -45,62 +47,32 @@ export const MyPageComment = () => {
     }
   };
 
-  const CommentRendering = async () => {
-    executeAsyncTask(async () => {
-      try {
-        const list = await getChallengingList();
-        setChallengeList(
-          list.filter((item) => item.organization === localStorage.getItem("organization"))
-        );
-        const activeList = list.filter(
-          (item) => item.challengeId.toString() === localStorage.getItem("challengeId")
-        );
-        setSelectChallenge(`${activeList[0].organization} ${activeList[0].challenge} 챌린지`);
-        try {
-          const data = await getMyPageCommentItem(
-            activeList[0].organization,
-            activeList[0].challengeId.toString()
-          );
-          setCommentData(data);
-        } catch {
-          new Error("shit");
-        }
-      } catch {
-        new Error("shit");
+  // 의존성 배열에서 불필요한 렌더링 방지
+  useEffect(() => {
+    // challengeId가 변경될 때만 상태를 업데이트
+    if (commentCurrent) {
+      if (viewState === "new") {
+        setCommentData(commentCurrent); // 최신순일 때 데이터 그대로
+      } else if (viewState === "old") {
+        setCommentData(commentCurrent.reverse()); // 오래된순일 때 역순으로 설정
       }
-    });
-  };
+    }
+  }, [commentCurrent]);
 
   useEffect(() => {
-    CommentRendering();
-  }, []);
+    if (organizationChallenges) {
+      const selectedChallenge = organizationChallenges?.filter(
+        (item) => item.organization === localStorage.getItem("organization")
+      );
+      setChallengeList(selectedChallenge);
 
-  //pagination 로직
-  const pages = [];
-  let pageCount;
-  if (CommentData.length % 10 === 0) {
-    pageCount = Math.floor(CommentData.length / 10);
-  } else {
-    if (Math.floor(CommentData.length / 10) === 0) {
-      pageCount = 1;
-    } else {
-      pageCount = Math.floor(CommentData.length / 10) + 1;
+      const activeChallenge = selectedChallenge.find(
+        (item) => item.challengeId.toString() === localStorage.getItem("challengeId")
+      );
+      setActiveChallengeId(activeChallenge?.challengeId.toString() || "");
+      setSelectChallenge(`${activeChallenge?.organization} ${activeChallenge?.challenge} 챌린지`);
     }
-  }
-  for (let i = 0; i < pageCount; i++) {
-    pages.push(
-      <div
-        className={`${activePage === i + 1 ? "active" : "notactive"} page`}
-        onClick={() => {
-          setActivePage(i + 1);
-          window.scrollTo({ top: 0 });
-        }}
-        key={i}
-      >
-        {i + 1}
-      </div>
-    );
-  }
+  }, [organizationChallenges]);
 
   return (
     <Container>
@@ -162,7 +134,11 @@ export const MyPageComment = () => {
           <NoRetrospect type="comment" />
         )}
       </CommentList>
-      <CommentPagination>{pages}</CommentPagination>
+      <Pagination
+        page={activePage}
+        setPage={setActivePage}
+        pageLength={CommentData.length}
+      />
     </Container>
   );
 };

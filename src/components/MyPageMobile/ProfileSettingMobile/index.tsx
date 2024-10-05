@@ -4,7 +4,6 @@ import React, { ChangeEvent, useEffect, useRef, useState } from "react";
 import { format } from "date-fns";
 import { useSetRecoilState } from "recoil";
 
-import { putMyPageData } from "@/apis/MyPage";
 import { getDuplicateNickname } from "@/apis/OnboardingPage";
 import { KeywordButton, PublicButton } from "@/components/atom/button";
 import { MyPageInput } from "@/components/atom/input/style";
@@ -20,6 +19,7 @@ import {
   EditBox,
   EditButton,
 } from "./style";
+import { useGetOrganizationPosition, usePutMyPageData } from "@/hooks/reactQueryHooks/useMainHooks";
 const JobCategory = ["기획", "운영", "개발", "마케팅", "홍보", "디자인"];
 
 export const ProfileSettingMobile = ({ myData }: { myData: myPageProps | undefined }) => {
@@ -37,6 +37,11 @@ export const ProfileSettingMobile = ({ myData }: { myData: myPageProps | undefin
   const [errorIdLine, setErrorIdLine] = useState<boolean>(false);
   const textareaRef = useRef<HTMLTextAreaElement | null>(null);
   const setAccountNumberModal = useSetRecoilState(accountNumberState);
+
+  const { data: positionNames } = useGetOrganizationPosition(
+    localStorage.getItem("organization") as string
+  );
+  const { mutate: putMyPageData } = usePutMyPageData();
 
   const handleNicknameChange = (e: ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
@@ -107,14 +112,16 @@ export const ProfileSettingMobile = ({ myData }: { myData: myPageProps | undefin
 
   const EditComplete = async () => {
     // 수정 api 발송 ProfileData
-    try {
-      await putMyPageData(localStorage.getItem("organization") || "", ProfileData);
-      setEditActive(false);
-      window.location.reload();
-      window.scrollTo({ top: 0 });
-    } catch {
-      new Error("siht");
-    }
+    putMyPageData(
+      { organization: localStorage.getItem("organization") || "", editData: ProfileData },
+      {
+        onSuccess: () => {
+          setEditActive(false);
+          window.location.reload();
+          window.scrollTo({ top: 0 });
+        },
+      }
+    );
   };
 
   useEffect(() => {
@@ -296,7 +303,7 @@ export const ProfileSettingMobile = ({ myData }: { myData: myPageProps | undefin
             <div className="editField">
               <div className="editTitle">직무</div>
               <div className="editJob">
-                {JobCategory.map((item, idx) => (
+                {(positionNames?.length ? positionNames : JobCategory)?.map((item, idx) => (
                   <React.Fragment key={idx}>
                     <KeywordButton
                       onClick={() => setProfileData({ ...ProfileData, position: item })}

@@ -294,3 +294,13 @@ export interface satisfactionQuestionType {
   score?: number;
   hoverItem?: number;
 }
+
+export interface onBoardingDataProps {
+  nickname: string;
+  position: string;
+  positionIntroduce: string;
+  hireDate: string;
+  company: string;
+  companyPublic: boolean;
+  organization: string;
+}

@@ -1,4 +1,4 @@
-import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { useMutation, useQuery } from "@tanstack/react-query";
 
 import { getFinishModal } from "@/apis/FinishModal";
 import { organizationChallengeDataType } from "@/types/axios";
@@ -58,7 +58,7 @@ export const useNotificationDataAndCount = ({
     },
     select: (data) => ({
       notificationData: data.notificationData,
-      notificationNumber: data.notificationNumber,
+      notificationNum: data.notificationNumber,
     }),
   });
 };
@@ -68,21 +68,28 @@ interface UpdateNotificationParams extends organizationChallengeDataType {
 }
 
 export const useUpdateNotificationCount = () => {
-  const queryClient = useQueryClient();
-
-  const { mutate } = useMutation({
+  return useMutation({
     mutationFn: async ({ organization, challengeId, count }: UpdateNotificationParams) => {
-      await patchNotificationCount(organization, challengeId, count);
+      const response = await patchNotificationCount(organization, challengeId, count);
+      // 성공 여부를 명시적으로 검증
+      if (response && Object.keys(response).length === 0) {
+        // 빈 객체도 성공으로 간주
+        return { success: true };
+      } else {
+        // 응답 데이터를 추가적으로 검증
+        return response;
+      }
     },
-    onSuccess: (_, { organization, challengeId }) => {
-      queryClient.invalidateQueries({
-        queryKey: ["getNotificationDataAndCount", organization, challengeId],
-      });
+    onSuccess: (data) => {
+      console.log("업데이트 성공", data);
     },
     onError: (error) => {
-      console.error("Error updating notification count:", error);
+      console.log("업데이트 실패:", error);
     },
   });
-
-  return { mutate };
+  // return useMutation({
+  //   mutationFn: async ({ organization, challengeId, count }: UpdateNotificationParams) => {
+  //     return await patchNotificationCount(organization, challengeId, count);
+  //   },
+  // });
 };

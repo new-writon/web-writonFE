@@ -2,7 +2,7 @@ import React, { RefObject, useEffect, useRef, useState } from "react";
 
 import { format } from "date-fns";
 import { useNavigate } from "react-router-dom";
-import { useRecoilCallback, useSetRecoilState } from "recoil";
+import { useRecoilCallback, useRecoilState, useSetRecoilState } from "recoil";
 import styled from "styled-components";
 
 import profile from "@/assets/communityPage/profile.png";
@@ -16,6 +16,7 @@ import {
   addSpecialQuestionArrayState,
   addSpecialQuestionState,
   communityState,
+  notficationNumberState,
   postWritingDataState,
 } from "@/recoil/atoms";
 import { Inner } from "@/style/global";
@@ -31,9 +32,9 @@ import {
   useGetMyInformation,
   useGetOrganizationsAndChallenges,
   useNotificationDataAndCount,
-  useUpdateNotificationCount,
 } from "@/hooks/reactQueryHooks/useCommonHooks";
 import useWindowWidth from "@/hooks/useWindowWidth";
+import { patchNotificationCount } from "@/apis/notification";
 
 const Tabs = ["내 챌린지", "커뮤니티"];
 
@@ -58,7 +59,7 @@ const Header = () => {
   // const [notificationData, setNotificationData] = useState<notificationDataType[]>([]);
 
   const [notificationTooltip, setNotificationTooltip] = useState<boolean>(false);
-  // const [notificationNumber, setNotificationNumber] = useRecoilState(notficationNumberState);
+  const [notificationNumber, setNotificationNumber] = useRecoilState(notficationNumberState);
   const [organizationToggle, setOrganizationToggle] = useState<boolean>(false);
   const [organizationList, setOrganizationList] = useState<challengeListProps[]>([]);
 
@@ -105,8 +106,6 @@ const Header = () => {
     }
   };
 
-  const { mutate: updateNotificationCount } = useUpdateNotificationCount();
-
   const NotificationOn = () => {
     if (width < 531) {
       navigate("/notificationMobile");
@@ -117,25 +116,21 @@ const Header = () => {
       setNotificationTooltip(!notificationTooltip);
     }
     // 알림 툴팁 딱 열었을 때
-    updateNotificationCount({
-      organization: organizationChallengeData.organization,
-      challengeId: organizationChallengeData.challengeId,
-      count: notificationData.length,
-    });
+    updateNotificationCount();
   };
 
-  // const updateNotificationCount = async () => {
-  //   try {
-  //     await patchNotificationCount(
-  //       localStorage.getItem("organization") as string,
-  //       localStorage.getItem("challengeId") as string,
-  //       notificationData.length
-  //     );
-  //     setNotificationNumber(0);
-  //   } catch {
-  //     new Error("shit");
-  //   }
-  // };
+  const updateNotificationCount = async () => {
+    try {
+      await patchNotificationCount(
+        localStorage.getItem("organization") as string,
+        localStorage.getItem("challengeId") as string,
+        notificationData.length
+      );
+      setNotificationNumber(0);
+    } catch {
+      new Error("shit");
+    }
+  };
 
   // 툴팁 및 알림 영역 관리
   const profileRef = useRef<HTMLDivElement>(null);
@@ -187,8 +182,12 @@ const Header = () => {
   ///////////////////////////////////
 
   // 리액트 쿼리를 통해 알림 데이터 가져오기
-  const { data: { notificationData = [], notificationNumber = 0 } = {} } =
+  const { data: { notificationData = [], notificationNum = 0 } = {} } =
     useNotificationDataAndCount(organizationChallengeData);
+
+  useEffect(() => {
+    setNotificationNumber(notificationNum);
+  }, [notificationNum]);
 
   useEffect(() => {
     if (location.pathname === "/community") {

@@ -20,7 +20,7 @@ export const patchNotificationCount = async (
   const response = await patchData(`/user/challenge/${organization}/${challengeId}/check-count`, {
     checkCount: checkCount,
   });
-  return response.data;
+  return response;
 };
 
 // 내가 본 알림 중 좋아요 봤다는거 표시

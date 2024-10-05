@@ -2,17 +2,12 @@ import React, { ChangeEvent, RefObject, useEffect, useRef, useState } from "reac
 
 import { useNavigate } from "react-router-dom";
 
-import {
-  getDuplicateNickname,
-  postChallengeStart,
-  postOnboardingComplete,
-} from "@/apis/OnboardingPage";
+import { getDuplicateNickname } from "@/apis/OnboardingPage";
 
 import writon_icon from "@/assets/logo/logo-writon-roundbox.svg";
 import { DuplicateBtn } from "@/components/Authorization/RegisterEmailPage/style";
 import { KeywordButton, OnboardingButton, PublicButton } from "@/components/atom/button";
 import { Input } from "@/components/atom/input/index";
-import useAsyncWithLoading from "@/hooks/useAsyncWithLoading";
 import clalendarIcon from "@/assets/mainPage/icon-calendar.svg";
 
 import {
@@ -28,25 +23,20 @@ import {
   Title,
 } from "./style";
 import { useGetOrganizationsAndChallenges } from "@/hooks/reactQueryHooks/useCommonHooks";
-import { challengeListProps } from "@/types";
+import { challengeListProps, onBoardingDataProps } from "@/types";
 import { SubCalendar } from "@/components/atom/SubCalendar";
 import { format } from "date-fns";
 import useOnclickOutside from "@/hooks/useOnclickOutside";
+import {
+  useGetOrganizationPosition,
+  usePostChallengeStart,
+  usePostOnboarding,
+} from "@/hooks/reactQueryHooks/useMainHooks";
 
 const JobCategory = ["기획", "운영", "개발", "마케팅", "디자인", "기타"];
-interface onBoardingDataProps {
-  nickname: string;
-  position: string;
-  positionIntroduce: string;
-  hireDate: string;
-  company: string;
-  companyPublic: boolean;
-  organization: string;
-}
 
 export const OnboardingBox = () => {
   const navigate = useNavigate();
-  const executeAsyncTask = useAsyncWithLoading();
   const [onBoardingData, setOnBoardingData] = useState<onBoardingDataProps>({
     nickname: "",
     position: "",
@@ -76,6 +66,11 @@ export const OnboardingBox = () => {
   useOnclickOutside([calendarRef, calendarOnRef], () => setCalendarOn(false));
 
   const { data: organizationsAndChallenges, isLoading } = useGetOrganizationsAndChallenges();
+  const { data: positionNames } = useGetOrganizationPosition(
+    localStorage.getItem("organization") as string
+  );
+  const { mutate: postOnboardingMutate } = usePostOnboarding();
+  const { mutate: postChallengeStartMutate } = usePostChallengeStart();
 
   useEffect(() => {
     if (organizationsAndChallenges) {
@@ -200,25 +195,30 @@ export const OnboardingBox = () => {
       alert("닉네임 중복확인을 체크해주세요!");
       return;
     }
-    executeAsyncTask(async () => {
-      if (ButtonOn) {
-        try {
-          await postOnboardingComplete(onBoardingData);
-          try {
-            await postChallengeStart(
-              localStorage.getItem("organization") as string,
-              localStorage.getItem("challengeId") as string
-            );
-            localStorage.setItem("accessToken", sessionStorage.getItem("accessToken") || "");
-            localStorage.setItem("refreshToken", sessionStorage.getItem("refreshToken") || "");
-            navigate("/");
-          } catch {
-            new Error("shit");
+    // 온보딩 완료 후 챌린지 시작
+    postOnboardingMutate(onBoardingData, {
+      onSuccess: () => {
+        postChallengeStartMutate(
+          {
+            organization: localStorage.getItem("organization") as string,
+            challengeId: localStorage.getItem("challengeId") as string,
+          },
+          {
+            onSuccess: () => {
+              // 토큰 저장
+              localStorage.setItem("accessToken", sessionStorage.getItem("accessToken") || "");
+              localStorage.setItem("refreshToken", sessionStorage.getItem("refreshToken") || "");
+              navigate("/"); // 홈으로 이동
+            },
+            onError: () => {
+              alert("챌린지 시작에 실패했습니다.");
+            },
           }
-        } catch {
-          new Error("shit");
-        }
-      }
+        );
+      },
+      onError: () => {
+        alert("온보딩에 실패했습니다.");
+      },
     });
   };
 
@@ -263,10 +263,13 @@ export const OnboardingBox = () => {
                   )?.logo || writon_icon // 로고가 없으면 기본 이미지 표시
                 : writon_icon // organizationList가 비어있을 때 기본 이미지 표시
             }
-            alt="letsintern"
+            onError={(e) => {
+              e.currentTarget.src = writon_icon; // 이미지 로딩에 실패하면 기본 이미지로 교체
+            }}
+            alt="W"
           />
           <div className="semiTitle">
-            {localStorage.getItem("organization") || "라이톤1"}
+            {localStorage.getItem("organization") || "라이톤"}
             &nbsp;챌린지
           </div>
         </div>
@@ -320,7 +323,7 @@ export const OnboardingBox = () => {
             선택해주세요.
           </p>
           <div className="jobCategory">
-            {JobCategory.map((item, idx) => (
+            {(positionNames?.length ? positionNames : JobCategory)?.map((item, idx) => (
               <React.Fragment key={idx}>
                 <KeywordButton
                   onClick={() => setOnBoardingData({ ...onBoardingData, position: item })}

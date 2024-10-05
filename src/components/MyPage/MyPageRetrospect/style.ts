@@ -65,7 +65,7 @@ export const Top = styled.div`
     color: var(--Gray-80, #464c52);
     font-size: 0.875rem;
     line-height: 120%; /* 16.8px */
-    padding: 11px 0px 9px 16px;
+    padding: 11px 16px 9px 16px;
     background: var(--White, #fff);
     cursor: pointer;
     font-weight: 500;
@@ -106,35 +106,5 @@ export const Top = styled.div`
 `;
 
 export const RetroSpectList = styled.div`
-  margin-top: 24px;
-`;
-
-export const RetrospectPagination = styled.div`
-  position: absolute;
-  bottom: 50px;
-  right: 0;
-  left: 0;
-  margin: 0 auto;
-  width: 100%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: 2px;
-  .page {
-    padding: 7px 6px;
-    color: var(--Gray-80, #464c52);
-    font-size: 0.875rem;
-    font-weight: 500;
-    line-height: 120%; /* 16.8px */
-    cursor: pointer;
-  }
-  .notactive {
-  }
-  .page:hover {
-    border-radius: 6px;
-    background: var(--Gray-20, #f8f8fa);
-  }
-  .page.active {
-    color: var(--Main-50, #6272ff);
-  }
+  margin: 24px 0;
 `;
