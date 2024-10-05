@@ -23,7 +23,6 @@ WRITON.interceptors.request.use(async (req: InternalAxiosRequestConfig) => {
 
   // 동일한 요청이 이미 있는지 확인
   if (pendingRequests.has(requestKey)) {
-    console.log("Duplicate request blocked");
     // 중복된 요청이면 요청 취소
     return Promise.reject("Duplicate request blocked");
   }
