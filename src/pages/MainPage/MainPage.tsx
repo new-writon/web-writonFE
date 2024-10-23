@@ -58,10 +58,12 @@ const MainPage = () => {
   function isPWA() {
     return window.matchMedia("(display-mode: standalone)").matches;
   }
+  //모바일일때만 푸시알림 허용 창 띄우기
+  const isTouchDevice = "ontouchstart" in window;
 
   // 푸시알림 허용 창 띄우기 로직
   useEffect(() => {
-    if (isPWA()) {
+    if (isPWA() && isTouchDevice) {
       setNotificationPermission(notificationPermission);
       if (notificationPermission === null && ChallengeCurrent) {
         setModal((modal) => ({ ...modal, notificationPermissionModal: true }));
