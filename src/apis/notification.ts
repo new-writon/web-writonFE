@@ -1,7 +1,7 @@
 // 알람 로직
 import { notificationDataType } from "@/types";
 
-import { getData, patchData } from ".";
+import { getData, patchData, postData } from ".";
 
 //내가 지금까지 확인한 알림 갯수
 export const getNotificationCount = async (organization: string, challengeId: string) => {
@@ -41,4 +41,33 @@ export const getNotificationData = async (organization: string, challengeId: str
     `/template/root/${organization}/${challengeId}/notify`
   );
   return response.data;
+};
+
+// 푸시알림 유저 상태 조회
+export const getNotificationPermission = async () => {
+  const response = await getData<{ content: string | null }>("/user/alarm");
+  return response.data.content;
+};
+
+// 푸시알림 유저 상태 변경 granted, denied
+export const patchNotificationPermission = async (content: string) => {
+  console.log(content);
+  const response = await patchData("/user/alarm", {
+    content: content,
+  });
+  return response.data;
+};
+
+// 푸시알림 디바이스토큰 보내기
+export const postDeviceToken = async (deviceToken: string) => {
+  const response = await postData(
+    "/user/firebase-token",
+    {},
+    {
+      headers: {
+        engine: deviceToken,
+      },
+    }
+  );
+  return response;
 };
