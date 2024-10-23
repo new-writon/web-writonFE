@@ -536,7 +536,6 @@ const HeaderRight = styled.div`
 
   .notification-cover .notification-number.ten-number {
     font-size: 0.65rem;
-    padding-top: 3px;
   }
 
   .profileImageCover {
