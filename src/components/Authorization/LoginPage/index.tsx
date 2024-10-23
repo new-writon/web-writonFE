@@ -10,7 +10,6 @@ import { Input } from "@/components/atom/input";
 import useAsyncWithLoading from "@/hooks/useAsyncWithLoading";
 
 import { Container, EtcBox, InputBox, OrLine } from "./style";
-import { handleAllowNotification } from "@/core/notification/notificationFunc";
 
 const Login = () => {
   const navigate = useNavigate();
@@ -73,8 +72,8 @@ const Login = () => {
           }
         }
       } catch (err) {
-        // alert("아이디 및 비밀번호를 다시 입력해주세요"); // 모달창으로 변경하기
-        // window.location.replace("/login");
+        alert("아이디 및 비밀번호를 다시 입력해주세요"); // 모달창으로 변경하기
+        window.location.replace("/login");
         console.log(err);
       }
     });
@@ -90,7 +89,7 @@ const Login = () => {
   return (
     <Container>
       <AuthorizationTitle>
-        <p onClick={handleAllowNotification}>로그인</p>
+        <p>로그인</p>
       </AuthorizationTitle>
       <InputBox>
         <Input
