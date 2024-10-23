@@ -12,6 +12,7 @@ import {
   accountNumberState,
   agoraModalState,
   errorState,
+  notificationPermissionState,
 } from "@/recoil/atoms";
 
 import { AccountNumberModal } from "../atom/AccountNumberModal";
@@ -27,6 +28,7 @@ import { TodayWriteAgoraPopup, TodayWritePopup } from "../atom/WritingPopup/Toda
 
 import Loading from "./Loading";
 import DetailPage from "@/pages/DetailPage/DetailPage";
+import NotificationPermissionModal from "../atom/NotificationPermissionModal/NotificationPermissionModal";
 
 export const ModalProvider = () => {
   const modal = useRecoilValue(modalBackgroundState);
@@ -35,6 +37,7 @@ export const ModalProvider = () => {
   const finishModal = useRecoilValue(finishModalState);
   const accountNumberModal = useRecoilValue(accountNumberState);
   const agoraModal = useRecoilValue(agoraModalState);
+  const notificationPermission = useRecoilValue(notificationPermissionState);
 
   useEffect(() => {
     const vh = window.innerHeight * 0.01;
@@ -70,6 +73,9 @@ export const ModalProvider = () => {
       {detailModal && <DetailPage />}
       {isLoading && <Loading />}
       {finishModal && <FinishModal />}
+      {modal.notificationPermissionModal && notificationPermission === null && (
+        <NotificationPermissionModal />
+      )}
       {accountNumberModal && <AccountNumberModal />}
       {modal.completeModal && <CompletePopupResponsive />}
       {modal.completeEditModal && <CompleteEditPopupResponsive />}
