@@ -69,6 +69,7 @@ export const modalBackgroundState = atom<{
   completeEditModal: boolean;
   todayWriteModal: boolean;
   agoraWriteModal: boolean;
+  notificationPermissionModal: boolean;
 }>({
   key: "modalBackgroundState",
   default: {
@@ -78,6 +79,7 @@ export const modalBackgroundState = atom<{
     completeEditModal: false,
     todayWriteModal: false,
     agoraWriteModal: false,
+    notificationPermissionModal: false,
   },
 });
 
@@ -174,10 +176,12 @@ export const notficationNumberState = atom<number>({
 //스낵바 관리
 export const snackBarState = atom<{
   agoraSnackBar: boolean;
+  notificationSnackBar: boolean;
 }>({
   key: "snackBarState",
   default: {
     agoraSnackBar: false,
+    notificationSnackBar: false,
   },
 });
 
@@ -222,4 +226,9 @@ export const dateAgoraLengthState = atom<number>({
 export const errorState = atom<string>({
   key: "errorState",
   default: "",
+});
+
+export const notificationPermissionState = atom<string | null | undefined>({
+  key: "notificationPermissionState",
+  default: null,
 });
