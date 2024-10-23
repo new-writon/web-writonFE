@@ -7,6 +7,7 @@ import { getChallengingList } from "@/apis/login";
 import {
   getNotificationCount,
   getNotificationData,
+  getNotificationPermission,
   patchNotificationCount,
 } from "@/apis/notification";
 
@@ -16,6 +17,14 @@ export const useGetFinishModal = ({ organization, challengeId }: organizationCha
     queryKey: ["getFinishModal", organization, challengeId],
     queryFn: () => getFinishModal({ organization, challengeId }),
     select: (data) => data.review,
+  });
+};
+
+// 피니시 모달 여부
+export const useGetNotificationPermission = () => {
+  return useQuery({
+    queryKey: ["getNotificationPermission"],
+    queryFn: () => getNotificationPermission(),
   });
 };
 
