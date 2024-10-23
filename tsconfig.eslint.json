@@ -1,4 +1,11 @@
 {
-	"extends": "./tsconfig.json",
-	"include": ["**/*.ts", ".eslintrc.js", "src", "./src", "**/*.tsx"]
+  "extends": "./tsconfig.json",
+  "include": [
+    "public/firebase-messaging-sw.js",
+    "**/*.ts",
+    ".eslintrc.js",
+    "src",
+    "./src",
+    "**/*.tsx"
+  ]
 }
