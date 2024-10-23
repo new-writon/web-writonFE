@@ -6,7 +6,12 @@ import { snackBarState } from "@/recoil/atoms";
 export const SnackBarProvider = () => {
   const snackBar = useRecoilValue(snackBarState);
 
-  return <>{snackBar.agoraSnackBar && <SnackBar>스몰톡 주제가 등록되었어요.</SnackBar>}</>;
+  return (
+    <>
+      {snackBar.agoraSnackBar && <SnackBar>스몰톡 주제가 등록되었어요.</SnackBar>}
+      {snackBar.notificationSnackBar && <SnackBar>알림 허용이 완료되었어요.</SnackBar>}
+    </>
+  );
 };
 
 const slideIn = keyframes`
