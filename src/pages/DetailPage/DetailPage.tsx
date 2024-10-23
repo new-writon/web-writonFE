@@ -55,16 +55,18 @@ const DetailPage = () => {
   const { data: myInfo } = useGetMyInfo(localStorage.getItem("organization") as string);
   // Fetch and update like count and nickname
   useEffect(() => {
-    if (width <= 530 && mobileDetailData.length > 0) {
-      setDetailData(mobileDetailData);
-    }
-
     if (detailData && myInfo) {
       setNickName(myInfo.nickname);
       setLikeCount(detailData[0]?.likeCount || "0");
       setCommentList(commentsData || []);
     }
   }, [myInfo, commentsData]);
+
+  useEffect(() => {
+    if (width <= 530 && mobileDetailData.length > 0) {
+      setDetailData(mobileDetailData);
+    }
+  }, [mobileDetailData]);
 
   if (detailData.length === 0) {
     return <></>;
