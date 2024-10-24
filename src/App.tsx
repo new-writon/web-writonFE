@@ -14,6 +14,7 @@ const App = () => {
       queries: {
         staleTime: 10 * 1000,
         gcTime: 30 * 1000,
+        refetchOnWindowFocus: false, // 전역적으로 탭 전환시 api 호출 여부
       },
     },
   });
