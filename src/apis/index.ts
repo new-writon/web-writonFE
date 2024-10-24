@@ -133,15 +133,15 @@ WRITON.interceptors.response.use(
       const requestKey = `${error.config.method}-${error.config.url}`;
       pendingRequests.delete(requestKey);
     }
-    // 네트워크 에러인 경우
-    if (!error.response) {
-      // 네트워크 연결 실패 시 처리
-      console.error("네트워크 에러: 서버에 연결할 수 없습니다.");
-      alert("네트워크 에러: 서버에 연결할 수 없습니다.");
-      localStorage.clear();
-      sessionStorage.clear();
-      window.location.replace("/login");
-    }
+    // // 네트워크 에러인 경우
+    // if (!error.response) {
+    //   // 네트워크 연결 실패 시 처리
+    //   console.error("네트워크 에러: 서버에 연결할 수 없습니다.");
+    //   alert("네트워크 에러: 서버에 연결할 수 없습니다.");
+    //   localStorage.clear();
+    //   sessionStorage.clear();
+    //   window.location.replace("/login");
+    // }
     return errorHandler(error);
   }
 );
