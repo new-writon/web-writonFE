@@ -44,7 +44,7 @@ const MainPage = () => {
   const { data: notificationPermission } = useGetNotificationPermission();
 
   // 모달 창 띄우기 로직
-  if (review && ChallengeCurrent) {
+  if (!review && ChallengeCurrent) {
     if (
       (ChallengeCurrent.overlapPeriod === 0 &&
         CalendarData[CalendarData.length - 1].badge === "Gold") ||
