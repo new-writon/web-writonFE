@@ -78,6 +78,10 @@ export const CommunityBox = () => {
 
   const clickDay = (value: Date | string) => {
     setSelectedDate(communityDates[communityDates.indexOf(format(value, "yyyy-MM-dd"))]);
+    localStorage.setItem(
+      "selectedDate",
+      communityDates[communityDates.indexOf(format(value, "yyyy-MM-dd"))]
+    );
     setDateLength(communityDates.indexOf(format(value, "yyyy-MM-dd")));
     setCalendarOn(false);
   };
@@ -87,13 +91,16 @@ export const CommunityBox = () => {
     useCommunityContentData({
       organization: organizationChallengeData.organization,
       challengeId: organizationChallengeData.challengeId,
-      selectedDate: selectedDate,
+      selectedDate: localStorage.getItem("selectedDate") || "",
     });
   // communityDates가 로드된 후, 마지막 요소를 selectedDate로 설정
   useEffect(() => {
-    if (communityDates && communityDates.length > 0) {
+    if (communityDates && communityDates.length > 0 && !community) {
+      // 처음 들어왔을 때만 마지막 날짜 넣어주기
       setDateLength(communityDates.length - 1);
       setSelectedDate(communityDates[communityDates.length - 1]);
+      localStorage.setItem("selectedDate", communityDates[communityDates.length - 1]);
+      setCommunity(true);
     }
   }, [communityDates]); // communityDates가 변경될 때마다 실행
 
@@ -128,24 +135,21 @@ export const CommunityBox = () => {
         setDateLength(communityDates.length - 1);
         break;
     }
-    window.scrollTo({ top: 0, behavior: "smooth" });
+    if (width >= 531) {
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    }
   };
 
   useEffect(() => {
     if (communityDates && communityDates.length > 0) {
       setSelectedDate(communityDates[dateLength]);
+      localStorage.setItem("selectedDate", communityDates[dateLength]);
     }
   }, [dateLength]);
 
   useEffect(() => {
     if (width >= 690) {
       setCategoriesOn(false);
-    }
-  }, []);
-
-  useEffect(() => {
-    if (!community) {
-      setCommunity(true);
     }
   }, []);
 
