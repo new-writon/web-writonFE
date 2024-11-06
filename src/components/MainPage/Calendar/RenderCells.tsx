@@ -99,20 +99,20 @@ export const RenderCell = React.memo(
     const monthEnd = endOfMonth(today); // 1월 31일이 나옴.(그 달의 끝)
 
     const startDate =
-      getDay(startOfWeek(monthStart)) === 0
+      getDay(monthStart) === 0
         ? startOfWeek(addDays(startOfWeek(monthStart), -1)) // 9월 1일이 일요일이면 8월 31일이 나오게 됨.
         : startOfWeek(monthStart); // 해당 날짜의 해당 주의 시작 날짜
 
-    const endDate = endOfWeek(monthEnd); // 해당 날짜의 해당 주의 끝 날짜
+    const endDate = endOfWeek(addDays(monthEnd, -1)); // 해당 날짜의 해당 주의 끝 날짜 -1을 해야지 그 주의 마지막 날이 나옴.
     const weekNumber =
-      getDay(today) === 0
-        ? differenceInCalendarWeeks(today, monthStart)
-        : differenceInCalendarWeeks(today, monthStart) + 1;
+      getDay(today) === 1
+        ? differenceInCalendarWeeks(today, monthStart) + 1
+        : differenceInCalendarWeeks(today, monthStart);
 
     const pageWeekNumber =
-      getDay(pageDay || today) === 0
-        ? differenceInCalendarWeeks(pageDay || today, monthStart)
-        : differenceInCalendarWeeks(pageDay || today, monthStart) + 1;
+      getDay(pageDay || today) === 1
+        ? differenceInCalendarWeeks(pageDay || today, monthStart) + 1
+        : differenceInCalendarWeeks(pageDay || today, monthStart);
 
     // addDays(startDate, 1);
 
@@ -158,7 +158,8 @@ export const RenderCell = React.memo(
         }
       }
     };
-    const SelectBadge = (day: Date) => {
+    const SelectBadge = (day: Date, temporaryFlag: boolean = false) => {
+      let activeValue = "default";
       let BadgeColor = writeButtons.writeNotSpecified;
       //badge 선택 함수
       CalendarData.map((item) => {
@@ -176,9 +177,13 @@ export const RenderCell = React.memo(
             case "Purple":
               BadgeColor = writeButtons.writeActive;
               break;
+            case "temporary":
+              activeValue = "temporary";
+              break;
           }
         }
       });
+      if (temporaryFlag) return activeValue;
       return BadgeColor;
     };
     const handleResize = () => {
@@ -204,12 +209,12 @@ export const RenderCell = React.memo(
             className={`cell ${
               !isSameMonth(day, monthStart) // 1월이면 12월 2월 비활성화
                 ? "disabled"
-                : pageDay === "" && isSameDay(day, today) && finishDay // 오늘 날짜 나올때까지 돌리기 오늘날짜 select!!
+                : pageDay === "" && isSameDay(day, new Date()) && finishDay // 오늘 날짜 나올때까지 돌리기 오늘날짜 select!!
                   ? "selected"
                   : format(today, "M") === format(day, "M") // 해당 달이면 활성화
                     ? "valid"
                     : ""
-            } ${i === 5 || i === 6 ? "weekend" : ""} ${
+            } ${SelectBadge(day, true) === "temporary" ? "weekend" : ""} ${
               pageDay !== "" && isSameDay(day, pageDay || "") ? "selected" : ""
             }`}
           >
@@ -270,53 +275,44 @@ export const RenderCell = React.memo(
                 )}
                 {formattedDate}
               </div>
-              {Number(format(day, "d")) > Number(format(today, "d")) &&
-              isSameMonth(day, monthStart) ? ( // 이미지 안나와여하는것 : 주말, 오늘 이후 날짜들, 다른 달 짜투리들
-                <img
-                  className="virtualImg"
-                  src={silverBadge} //상관없음. 어차피 opacity 0
-                  alt="virtual"
-                />
-              ) : (
-                <img
-                  onMouseOver={() => mouseEvent(isSameDay(clickDay, today), "mouseOver", "")}
-                  onMouseOut={() => mouseEvent(isSameDay(clickDay, today), "mouseOut", "")}
-                  onMouseDown={() => mouseEvent(isSameDay(clickDay, today), "mouseDown", "")}
-                  onClick={() =>
-                    mouseEvent(
-                      SelectBadge(clickDay) === writeButtons.writeActive ||
-                        SelectBadge(clickDay) === writeButtons.writePre
-                        ? true
-                        : false,
-                      "mouseClick",
-                      format(clickDay, "yyyy-MM-dd")
-                    )
-                  }
-                  className={
-                    SelectBadge(day) === writeButtons.writeActive
-                      ? "writeActive"
-                      : SelectBadge(day) === writeButtons.writePre
-                        ? "writePre"
-                        : SelectBadge(day) === writeButtons.writeNotSpecified
-                          ? "writeNotSpecified"
-                          : ""
-                  }
-                  src={
-                    isSameDay(pageDay || "", day) && isSameDay(pageDay || "", today)
-                      ? writeButtons.writeINGtoday
-                      : isSameDay(pageDay || "", day)
-                        ? writeButtons.writeING
-                        : SelectBadge(day) === writeButtons.writeActive
-                          ? mouseClick
-                            ? writeButtons.writeClick
-                            : isHover
-                              ? writeButtons.writeActiveHover
-                              : writeButtons.writeActive
-                          : SelectBadge(day) // 여기서 부터 로직 작성, 오늘이 아닌데, 어떤 값이 false면 그 write사진 writePre로 변경  Status, todayStatus값으로 구분 f,f면 아에 안쓴거(오늘날짜, 아닌날짜 구분까지 플러스하기), t,f면 실버색깔, t,t 금색깔
-                  }
-                  alt="성공"
-                />
-              )}
+              <img
+                onMouseOver={() => mouseEvent(isSameDay(clickDay, today), "mouseOver", "")}
+                onMouseOut={() => mouseEvent(isSameDay(clickDay, today), "mouseOut", "")}
+                onMouseDown={() => mouseEvent(isSameDay(clickDay, today), "mouseDown", "")}
+                onClick={() =>
+                  mouseEvent(
+                    SelectBadge(clickDay) === writeButtons.writeActive ||
+                      SelectBadge(clickDay) === writeButtons.writePre
+                      ? true
+                      : false,
+                    "mouseClick",
+                    format(clickDay, "yyyy-MM-dd")
+                  )
+                }
+                className={
+                  SelectBadge(day) === writeButtons.writeActive
+                    ? "writeActive"
+                    : SelectBadge(day) === writeButtons.writePre
+                      ? "writePre"
+                      : SelectBadge(day) === writeButtons.writeNotSpecified
+                        ? "writeNotSpecified"
+                        : ""
+                }
+                src={
+                  isSameDay(pageDay || "", day) && isSameDay(pageDay || "", today)
+                    ? writeButtons.writeINGtoday
+                    : isSameDay(pageDay || "", day)
+                      ? writeButtons.writeING
+                      : SelectBadge(day) === writeButtons.writeActive
+                        ? mouseClick
+                          ? writeButtons.writeClick
+                          : isHover
+                            ? writeButtons.writeActiveHover
+                            : writeButtons.writeActive
+                        : SelectBadge(day) // 여기서 부터 로직 작성, 오늘이 아닌데, 어떤 값이 false면 그 write사진 writePre로 변경  Status, todayStatus값으로 구분 f,f면 아에 안쓴거(오늘날짜, 아닌날짜 구분까지 플러스하기), t,f면 실버색깔, t,t 금색깔
+                }
+                alt="뱃지"
+              />
             </div>
           </div>
         );

@@ -12,7 +12,7 @@ export const Container = styled.div`
   .cell.valid.weekend,
   .cell.selected.weekend,
   .cell.disabled.weekend {
-    background-color: var(--Gray-10);
+    background-color: var(--Gray-20, #f8f8fa);
   }
   .innerday .text {
     display: flex;
