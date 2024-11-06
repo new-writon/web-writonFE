@@ -99,20 +99,20 @@ export const RenderCell = React.memo(
     const monthEnd = endOfMonth(today); // 1월 31일이 나옴.(그 달의 끝)
 
     const startDate =
-      getDay(startOfWeek(monthStart)) === 0
+      getDay(monthStart) === 0
         ? startOfWeek(addDays(startOfWeek(monthStart), -1)) // 9월 1일이 일요일이면 8월 31일이 나오게 됨.
         : startOfWeek(monthStart); // 해당 날짜의 해당 주의 시작 날짜
 
     const endDate = endOfWeek(monthEnd); // 해당 날짜의 해당 주의 끝 날짜
     const weekNumber =
-      getDay(today) === 0
-        ? differenceInCalendarWeeks(today, monthStart)
-        : differenceInCalendarWeeks(today, monthStart) + 1;
+      getDay(today) === 1
+        ? differenceInCalendarWeeks(today, monthStart) + 1
+        : differenceInCalendarWeeks(today, monthStart);
 
     const pageWeekNumber =
-      getDay(pageDay || today) === 0
-        ? differenceInCalendarWeeks(pageDay || today, monthStart)
-        : differenceInCalendarWeeks(pageDay || today, monthStart) + 1;
+      getDay(pageDay || today) === 1
+        ? differenceInCalendarWeeks(pageDay || today, monthStart) + 1
+        : differenceInCalendarWeeks(pageDay || today, monthStart);
 
     // addDays(startDate, 1);
 
@@ -158,7 +158,8 @@ export const RenderCell = React.memo(
         }
       }
     };
-    const SelectBadge = (day: Date) => {
+    const SelectBadge = (day: Date, temporaryFlag: boolean = false) => {
+      let activeValue = "default";
       let BadgeColor = writeButtons.writeNotSpecified;
       //badge 선택 함수
       CalendarData.map((item) => {
@@ -176,9 +177,13 @@ export const RenderCell = React.memo(
             case "Purple":
               BadgeColor = writeButtons.writeActive;
               break;
+            case "temporary":
+              activeValue = "temporary";
+              break;
           }
         }
       });
+      if (temporaryFlag) return activeValue;
       return BadgeColor;
     };
     const handleResize = () => {
@@ -209,7 +214,7 @@ export const RenderCell = React.memo(
                   : format(today, "M") === format(day, "M") // 해당 달이면 활성화
                     ? "valid"
                     : ""
-            } ${i === 5 || i === 6 ? "weekend" : ""} ${
+            } ${SelectBadge(day, true) === "temporary" ? "weekend" : ""} ${
               pageDay !== "" && isSameDay(day, pageDay || "") ? "selected" : ""
             }`}
           >
