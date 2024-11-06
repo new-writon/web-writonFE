@@ -103,7 +103,7 @@ export const RenderCell = React.memo(
         ? startOfWeek(addDays(startOfWeek(monthStart), -1)) // 9월 1일이 일요일이면 8월 31일이 나오게 됨.
         : startOfWeek(monthStart); // 해당 날짜의 해당 주의 시작 날짜
 
-    const endDate = endOfWeek(monthEnd); // 해당 날짜의 해당 주의 끝 날짜
+    const endDate = endOfWeek(addDays(monthEnd, -1)); // 해당 날짜의 해당 주의 끝 날짜 -1을 해야지 그 주의 마지막 날이 나옴.
     const weekNumber =
       getDay(today) === 1
         ? differenceInCalendarWeeks(today, monthStart) + 1
