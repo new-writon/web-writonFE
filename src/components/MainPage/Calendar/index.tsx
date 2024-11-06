@@ -1,6 +1,13 @@
 import { useEffect, useState } from "react";
 
-import { differenceInCalendarWeeks, format, getDay, getMonth, startOfMonth } from "date-fns";
+import {
+  differenceInCalendarWeeks,
+  format,
+  getDay,
+  getMonth,
+  isSameMonth,
+  startOfMonth,
+} from "date-fns";
 
 import { CalendarArrow } from "@/components/atom/CalendarArrow";
 import { CalendarToggle } from "@/components/atom/CalendarToggle";
@@ -49,7 +56,9 @@ export const Calendar = ({ CalendarData }: { CalendarData: CalendarRecordCurrent
           <div className="topBarLeft">
             <MainSemiTitle font={1.25}>
               {finishDay
-                ? `${format(today, "M")}월 ${weekNumber}주차`
+                ? isSameMonth(new Date(), calendarToday) // 챌린지 하고 있을 때 달력 이동시 현재 달 표시
+                  ? `${format(today, "M")}월 ${weekNumber}주차`
+                  : `${getMonth(calendarToday) + 1}월`
                 : `${getMonth(calendarToday) + 1}월`}
             </MainSemiTitle>
             <MonthChip finishDay={finishDay} />
