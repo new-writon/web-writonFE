@@ -91,6 +91,8 @@ async function errorHandler(error: { config?: any; response?: any }) {
     notifyError(message.message || message);
     // 로그인 페이지로 리다이렉트
     window.location.replace("/login");
+    localStorage.clear();
+    sessionStorage.clear();
   } else if (status === 429) {
     // 요청이 너무 많은 경우
     notifyError(message.message || message);
