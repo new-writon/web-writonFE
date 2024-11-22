@@ -79,7 +79,7 @@ const MainPage = () => {
         notificationPermission();
       }, 0);
     }
-  }, []);
+  }, [ChallengeCurrent]);
 
   if (!ChallengeCurrent) return <></>;
 
