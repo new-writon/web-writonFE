@@ -75,7 +75,9 @@ const MainPage = () => {
   // 푸시알림 허용 창 띄우기 로직
   useEffect(() => {
     if (isPWA() && isTouchDevice) {
-      notificationPermission();
+      setTimeout(() => {
+        notificationPermission();
+      }, 0);
     }
   }, []);
 
