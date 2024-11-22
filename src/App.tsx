@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useMemo } from "react";
 
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
@@ -9,17 +9,19 @@ import { GlobalStyle } from "./style/global";
 import "@/core/notification/settingFCM";
 
 const App = () => {
-  const queryClient = new QueryClient({
-    defaultOptions: {
-      queries: {
-        staleTime: 10 * 1000,
-        gcTime: 30 * 1000,
-        refetchOnWindowFocus: false, // 전역적으로 탭 전환시 api 호출 여부
+  const queryClient = useMemo(() => {
+    return new QueryClient({
+      defaultOptions: {
+        queries: {
+          staleTime: 10 * 1000,
+          gcTime: 30 * 1000,
+          refetchOnWindowFocus: false,
+        },
       },
-    },
-  });
+    });
+  }, []);
 
-  const initialRenderingColor = async () => {
+  const initialRenderingColor = () => {
     if (localStorage.getItem("organization") === "렛츠인턴") {
       document.documentElement.style.setProperty("--Main-0", "#f8f8ff");
       document.documentElement.style.setProperty("--Main-10", "#f0efff");
