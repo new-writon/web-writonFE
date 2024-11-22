@@ -4,24 +4,28 @@ import { messaging } from "./settingFCM";
 import { postDeviceToken } from "@/apis/notification";
 
 export async function handleAllowNotification() {
-  const status = await Notification.requestPermission(); //여기서 에러 처리 해야함.
-  // 나중에 차단되었을 때 다시 허용할 수 있도록 설정해야함 (그건 다시 까는 법밖에 없음))
-  // 에러 처리 유연하게 대체하기 alret창 안뜨게 끔) 종류 3개 - granted, denied, default
-  if (status === "denied") {
-    return "denied";
-  } else if (status === "granted") {
-    try {
-      // 서비스 워커 등록 완료를 기다림
-      await registerServiceWorker();
-      const token = await retryGetDeviceToken(3); // 최대 3번까지 재시도
-      await postDeviceToken(token);
-      return "granted";
-    } catch (error) {
-      console.error(error);
-      throw error;
+  if (Notification.permission === "default") {
+    const status = await Notification.requestPermission(); //여기서 에러 처리 해야함.
+    // 나중에 차단되었을 때 다시 허용할 수 있도록 설정해야함 (그건 다시 까는 법밖에 없음))
+    // 에러 처리 유연하게 대체하기 alret창 안뜨게 끔) 종류 3개 - granted, denied, default
+    if (status === "denied") {
+      return "denied";
+    } else if (status === "granted") {
+      try {
+        // 서비스 워커 등록 완료를 기다림
+        await registerServiceWorker();
+        const token = await retryGetDeviceToken(3); // 최대 3번까지 재시도
+        await postDeviceToken(token);
+        return "granted";
+      } catch (error) {
+        console.error(error);
+        throw error;
+      }
+    } else {
+      return "default";
     }
   } else {
-    return "default";
+    return "exist Notification type";
   }
 }
 

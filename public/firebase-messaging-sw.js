@@ -32,16 +32,22 @@ self.addEventListener("push", function (e) {
   const notificationTitle = resultData.title;
   const notificationOptions = {
     body: resultData.body,
+    data: resultData.data,
   };
-  console.log(resultData.title, {
-    body: resultData.body,
-  });
+
   e.waitUntil(
-    console.log("들어와라들어와라들어와라"),
+    console.log("들어와라들어와라들어와라"), // 여기서 alert 창이 들어가면 안된다!
     self.registration.showNotification(notificationTitle, notificationOptions),
     console.log("들어오냐고")
   );
 });
+
+self.addEventListener("notificationclick", (event) => {
+  event.notification.close();
+  const urlToOpen = event.notification.data;
+  event.waitUntil(self.clients.openWindow(urlToOpen));
+});
+
 // self.addEventListener("notificationclick", function (event) {
 //   console.log("notification click");
 //   const url = "/";
