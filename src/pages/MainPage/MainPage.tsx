@@ -60,25 +60,22 @@ const MainPage = () => {
     try {
       let notificationResult;
 
-      while (Notification.permission === "default") {
+      notificationResult = await handleAllowNotification();
+
+      // denied가 나왔지만 여전히 default인 경우 재요청
+      if (notificationResult === "denied" && Notification.permission === "default") {
         notificationResult = await handleAllowNotification();
+      }
 
-        // granted 상태 처리
-        if (notificationResult === "granted") {
-          setIsLoading(false);
-          document.body.style.overflowY = "scroll";
-          setSnackBar({ ...snackBar, notificationSnackBar: true });
-          setTimeout(() => {
-            setSnackBar({ ...snackBar, notificationSnackBar: false });
-          }, 2000);
-          return;
-        }
-
-        // denied가 나왔지만 여전히 default인 경우 재요청
-        if (notificationResult === "denied" && Notification.permission === "default") continue;
-
-        // denied 상태가 확실하면 종료
-        if (notificationResult === "denied") break;
+      // granted 상태 처리
+      if (notificationResult === "granted") {
+        setIsLoading(false);
+        document.body.style.overflowY = "scroll";
+        setSnackBar({ ...snackBar, notificationSnackBar: true });
+        setTimeout(() => {
+          setSnackBar({ ...snackBar, notificationSnackBar: false });
+        }, 2000);
+        return;
       }
     } finally {
       setIsLoading(false);
