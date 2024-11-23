@@ -1,4 +1,3 @@
-import { patchNotificationPermission } from "@/apis/notification";
 import { handleAllowNotification } from "@/core/notification/notificationFunc";
 import { loadingState, modalBackgroundState, snackBarState } from "@/recoil/atoms";
 import { useEffect } from "react";
@@ -10,37 +9,22 @@ const NotificationPermissionModal = () => {
   const setModal = useSetRecoilState(modalBackgroundState);
   const [snackBar, setSnackBar] = useRecoilState(snackBarState);
 
-  const handleClick = async (type: "granted" | "denied") => {
+  const handleClick = async () => {
     setModal((modal) => ({ ...modal, notificationPermissionModal: false }));
-
-    if (type === "denied") {
-      await patchNotificationPermission("denied");
-      document.body.style.overflowY = "scroll";
-      return;
-    }
-
-    if (type === "granted") {
-      setIsLoading(true);
-      try {
-        const notificationResult = await handleAllowNotification(); // 비동기 함수 실행 후 기다림
-        if (notificationResult !== "default" && notificationResult !== undefined) {
-          await patchNotificationPermission(notificationResult);
-          console.log(`알림 ${notificationResult === "granted" ? "허용 완료" : "허용 거부"}`);
-          if (notificationResult === "granted") {
-            setSnackBar({ ...snackBar, notificationSnackBar: true });
-            setTimeout(() => {
-              setSnackBar({ ...snackBar, notificationSnackBar: false });
-            }, 2000);
-          }
-        } else {
-          alert("알림 선택이 되지 않았습니다.");
-        }
-      } catch (error) {
-        console.error("에러 발생:", error);
-      } finally {
+    setIsLoading(true);
+    try {
+      const notificationResult = await handleAllowNotification();
+      if (notificationResult === "granted") {
         setIsLoading(false);
         document.body.style.overflowY = "scroll"; // granted의 로딩 후에 실행
+        setSnackBar({ ...snackBar, notificationSnackBar: true });
+        setTimeout(() => {
+          setSnackBar({ ...snackBar, notificationSnackBar: false });
+        }, 2000);
       }
+    } finally {
+      setIsLoading(false);
+      document.body.style.overflowY = "scroll";
     }
   };
 
@@ -57,17 +41,10 @@ const NotificationPermissionModal = () => {
         </Text>
         <Buttons>
           <Button
-            $type={false}
-            onClick={() => handleClick("denied")}
-            // 여기서 db에 status 값 바꿔줌. denied
-          >
-            허용 안 함
-          </Button>
-          <Button
             $type={true}
-            onClick={() => handleClick("granted")}
+            onClick={() => handleClick()}
           >
-            허용
+            알림 설정하기
           </Button>
         </Buttons>
       </Container>

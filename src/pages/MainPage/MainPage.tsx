@@ -1,6 +1,6 @@
 import { format } from "date-fns";
 import { useNavigate } from "react-router-dom";
-import { useRecoilState, useSetRecoilState } from "recoil";
+import { useSetRecoilState } from "recoil";
 import styled from "styled-components";
 
 import { Calendar } from "@/components/MainPage/Calendar";
@@ -14,17 +14,15 @@ import {
   useGetChallengeCurrent,
   useGetRetrospectCurrent,
 } from "@/hooks/reactQueryHooks/useMainHooks";
-import { finishModalState, loadingState, snackBarState } from "@/recoil/atoms";
+import { finishModalState, modalBackgroundState } from "@/recoil/atoms";
 import { dateCheck } from "@/hooks/useDateCheck";
 import { useEffect } from "react";
-import { handleAllowNotification } from "@/core/notification/notificationFunc";
 
 const MainPage = () => {
   const navigate = useNavigate();
   const today = format(new Date(), "yyyy-MM-dd");
   const setFinishModal = useSetRecoilState(finishModalState);
-  const [snackBar, setSnackBar] = useRecoilState(snackBarState);
-  const setIsLoading = useSetRecoilState(loadingState);
+  const setModal = useSetRecoilState(modalBackgroundState);
 
   const organizationChallengeData = {
     organization: localStorage.getItem("organization") as string,
@@ -54,32 +52,10 @@ const MainPage = () => {
   //모바일일때만 푸시알림 허용 창 띄우기
   const isTouchDevice = "ontouchstart" in window;
 
-  const notificationPermission = async () => {
-    document.body.style.overflowY = "hidden";
-    setIsLoading(true);
-    try {
-      const notificationResult = await handleAllowNotification();
-      // granted 상태 처리
-      if (notificationResult === "granted") {
-        setIsLoading(false);
-        document.body.style.overflowY = "scroll";
-        setSnackBar({ ...snackBar, notificationSnackBar: true });
-        setTimeout(() => {
-          setSnackBar({ ...snackBar, notificationSnackBar: false });
-        }, 2000);
-        return;
-      }
-    } finally {
-      setIsLoading(false);
-      document.body.style.overflowY = "scroll";
-    }
-  };
   // 푸시알림 허용 창 띄우기 로직
   useEffect(() => {
-    if (isPWA() && isTouchDevice) {
-      setTimeout(() => {
-        notificationPermission();
-      }, 1000);
+    if (Notification.permission === "default" && isPWA() && isTouchDevice) {
+      setModal((modal) => ({ ...modal, notificationPermissionModal: true }));
     }
   }, []);
 

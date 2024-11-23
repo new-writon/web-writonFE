@@ -27,6 +27,7 @@ import { TodayWriteAgoraPopup, TodayWritePopup } from "../atom/WritingPopup/Toda
 
 import Loading from "./Loading";
 import DetailPage from "@/pages/DetailPage/DetailPage";
+import NotificationPermissionModal from "../atom/NotificationPermissionModal/NotificationPermissionModal";
 
 export const ModalProvider = () => {
   const modal = useRecoilValue(modalBackgroundState);
@@ -70,9 +71,7 @@ export const ModalProvider = () => {
       {detailModal && <DetailPage />}
       {isLoading && <Loading />}
       {finishModal && <FinishModal />}
-      {/* {modal.notificationPermissionModal && notificationPermission === null && (
-        <NotificationPermissionModal />
-      )} */}
+      {modal.notificationPermissionModal && <NotificationPermissionModal />}
       {accountNumberModal && <AccountNumberModal />}
       {modal.completeModal && <CompletePopupResponsive />}
       {modal.completeEditModal && <CompleteEditPopupResponsive />}
