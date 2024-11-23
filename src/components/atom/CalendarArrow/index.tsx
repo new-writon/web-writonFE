@@ -8,11 +8,13 @@ export const CalendarArrow = ({
   lastDay,
   calendarToday,
   setCalendarToday,
+  overlapPeriod,
 }: {
   firstDay: string | Date;
   lastDay: string | Date;
   calendarToday: Date;
   setCalendarToday: (calendarToday: Date) => void;
+  overlapPeriod: number;
 }) => {
   return (
     <Container>
@@ -29,9 +31,9 @@ export const CalendarArrow = ({
       <div
         className="today"
         onClick={
-          getMonth(new Date()) !== getMonth(lastDay)
+          overlapPeriod <= -1 && getMonth(new Date()) !== getMonth(lastDay)
             ? () => setCalendarToday(new Date(lastDay))
-            : () => setCalendarToday(new Date(new Date()))
+            : () => setCalendarToday(new Date())
         }
       >
         오늘

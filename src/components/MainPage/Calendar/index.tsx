@@ -21,17 +21,25 @@ import { CalendarRecordCurrentType } from "@/types";
 import { RenderCell } from "./RenderCells";
 import { RenderDays } from "./RenderDays";
 import { Container } from "./style";
-export const Calendar = ({ CalendarData }: { CalendarData: CalendarRecordCurrentType[] }) => {
+export const Calendar = ({
+  CalendarData,
+  overlapPeriod,
+}: {
+  CalendarData: CalendarRecordCurrentType[];
+  overlapPeriod: number;
+}) => {
   const today = new Date();
 
   const [calendarToday, setCalendarToday] = useState<Date>(
-    getMonth(CalendarData[CalendarData.length - 1].date) !== getMonth(new Date())
+    overlapPeriod <= -1 &&
+      getMonth(CalendarData[CalendarData.length - 1].date) !== getMonth(new Date())
       ? new Date(CalendarData[CalendarData.length - 1].date)
       : new Date() // 월이 바뀌면 챌린지 마지막날 유지
   );
+
   useEffect(() => {
     const lastDate = CalendarData[CalendarData.length - 1].date;
-    if (getMonth(lastDate) !== getMonth(new Date())) {
+    if (overlapPeriod <= -1 && getMonth(lastDate) !== getMonth(new Date())) {
       setCalendarToday(new Date(lastDate));
     } else {
       setCalendarToday(new Date());
@@ -76,6 +84,7 @@ export const Calendar = ({ CalendarData }: { CalendarData: CalendarRecordCurrent
                 lastDay={CalendarData[CalendarData.length - 1].date}
                 calendarToday={calendarToday}
                 setCalendarToday={setCalendarToday}
+                overlapPeriod={overlapPeriod}
               />
             )}
             <CalendarToggle

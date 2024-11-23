@@ -84,7 +84,10 @@ const MainPage = () => {
   return (
     <Container>
       <ProgressBox ChallengeCurrent={ChallengeCurrent} />
-      <Calendar CalendarData={CalendarData?.length === 0 ? mainCalendarDummyData : CalendarData} />
+      <Calendar
+        CalendarData={CalendarData?.length === 0 ? mainCalendarDummyData : CalendarData}
+        overlapPeriod={ChallengeCurrent.overlapPeriod}
+      />
       <MyRetrospect RetrospectData={RetrospectData} />
       <FloatingWriteButton onClick={() => dateCheck(navigate, today, CalendarData)}>
         {/*모바일 일 때만 보인다/ */}
