@@ -58,15 +58,7 @@ const MainPage = () => {
     document.body.style.overflowY = "hidden";
     setIsLoading(true);
     try {
-      let notificationResult;
-
-      notificationResult = await handleAllowNotification();
-
-      // denied가 나왔지만 여전히 default인 경우 재요청
-      if (notificationResult === "denied" && Notification.permission === "default") {
-        notificationResult = await handleAllowNotification();
-      }
-
+      const notificationResult = await handleAllowNotification();
       // granted 상태 처리
       if (notificationResult === "granted") {
         setIsLoading(false);
@@ -85,7 +77,9 @@ const MainPage = () => {
   // 푸시알림 허용 창 띄우기 로직
   useEffect(() => {
     if (isPWA() && isTouchDevice) {
-      notificationPermission();
+      setTimeout(() => {
+        notificationPermission();
+      }, 1000);
     }
   }, []);
 
