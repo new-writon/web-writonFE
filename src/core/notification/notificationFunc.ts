@@ -4,7 +4,6 @@ import { messaging } from "./settingFCM";
 import { postDeviceToken } from "@/apis/notification";
 
 export async function handleAllowNotification() {
-  alert(Notification.permission);
   if (Notification.permission === "default") {
     const status = await Notification.requestPermission(); //여기서 에러 처리 해야함.
     // 나중에 차단되었을 때 다시 허용할 수 있도록 설정해야함 (그건 다시 까는 법밖에 없음))
