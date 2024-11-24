@@ -105,14 +105,14 @@ export const RenderCell = React.memo(
 
     const endDate = endOfWeek(addDays(monthEnd, -1)); // 해당 날짜의 해당 주의 끝 날짜 -1을 해야지 그 주의 마지막 날이 나옴.
     const weekNumber =
-      getDay(today) === 1
-        ? differenceInCalendarWeeks(today, monthStart) + 1
+      getDay(today) === 0
+        ? differenceInCalendarWeeks(today, monthStart) - 1
         : differenceInCalendarWeeks(today, monthStart);
 
     const pageWeekNumber =
-      getDay(pageDay || today) === 1
-        ? differenceInCalendarWeeks(pageDay || today, monthStart) + 1
-        : differenceInCalendarWeeks(pageDay || today, monthStart);
+      getDay(pageDay || today) === 0
+        ? differenceInCalendarWeeks(today, monthStart) - 1
+        : differenceInCalendarWeeks(today, monthStart);
 
     // addDays(startDate, 1);
 

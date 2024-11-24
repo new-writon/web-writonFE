@@ -53,23 +53,21 @@ export const Calendar = ({
 
   const weekNumber =
     getDay(today) === 0
-      ? differenceInCalendarWeeks(today, monthStart) + 1
-      : differenceInCalendarWeeks(today, monthStart) + 2;
-
-  const finishDay = getMonth(CalendarData[CalendarData.length - 1].date) === getMonth(new Date());
+      ? differenceInCalendarWeeks(today, monthStart) - 1
+      : differenceInCalendarWeeks(today, monthStart);
   return (
     <Inner>
       <Container>
         <div className="topBar mainCalendar">
           <div className="topBarLeft">
             <MainSemiTitle font={1.25}>
-              {finishDay
+              {overlapPeriod > 0
                 ? isSameMonth(new Date(), calendarToday) // 챌린지 하고 있을 때 달력 이동시 현재 달 표시
                   ? `${format(today, "M")}월 ${weekNumber}주차`
                   : `${getMonth(calendarToday) + 1}월`
                 : `${getMonth(calendarToday) + 1}월`}
             </MainSemiTitle>
-            <MonthChip finishDay={finishDay} />
+            <MonthChip finishDay={overlapPeriod > 0} />
             <TooltipButton
               tooltipOn={tooltipOn}
               onClick={() => setTooltopOn(!tooltipOn)}
