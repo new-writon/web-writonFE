@@ -79,11 +79,13 @@ export const RenderCell = React.memo(
     fold,
     today,
     CalendarData,
+    CalendarWithGrayData,
   }: {
     pageDay: string | undefined;
     fold: boolean;
     today: Date;
     CalendarData: CalendarRecordCurrentType[];
+    CalendarWithGrayData: CalendarRecordCurrentType[];
   }) => {
     const navigate = useNavigate();
     const [isHover, setIsHover] = useState<boolean>(false);
@@ -162,7 +164,7 @@ export const RenderCell = React.memo(
       let activeValue = "default";
       let BadgeColor = writeButtons.writeNotSpecified;
       //badge 선택 함수
-      CalendarData.map((item) => {
+      CalendarWithGrayData.map((item) => {
         if (isSameDay(day, item.date)) {
           switch (item.badge) {
             case "lightPurple":

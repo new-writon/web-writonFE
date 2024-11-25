@@ -23,9 +23,11 @@ import { RenderDays } from "./RenderDays";
 import { Container } from "./style";
 export const Calendar = ({
   CalendarData,
+  CalendarWithGrayData,
   overlapPeriod,
 }: {
   CalendarData: CalendarRecordCurrentType[];
+  CalendarWithGrayData: CalendarRecordCurrentType[];
   overlapPeriod: number;
 }) => {
   const today = new Date();
@@ -55,6 +57,7 @@ export const Calendar = ({
     getDay(today) === 0
       ? differenceInCalendarWeeks(today, monthStart) - 1
       : differenceInCalendarWeeks(today, monthStart);
+  console.log(overlapPeriod);
   return (
     <Inner>
       <Container>
@@ -106,6 +109,7 @@ export const Calendar = ({
           fold={fold}
           today={calendarToday}
           CalendarData={CalendarData}
+          CalendarWithGrayData={CalendarWithGrayData}
         />
       </Container>
     </Inner>
