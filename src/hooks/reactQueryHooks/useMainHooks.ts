@@ -60,7 +60,10 @@ export const useGetCalendarRecordCurrent = ({
   return useQuery({
     queryKey: ["getCalendarRecordCurrent", organization, challengeId],
     queryFn: () => getCalendarRecordCurrent({ organization, challengeId }),
-    select: (data) => data.data.calendarData,
+    select: (data) => ({
+      CalendarData: data?.data?.calendarData || [],
+      CalendarWithGrayData: data?.data?.calendarWithGrayData || [],
+    }),
   });
 };
 
