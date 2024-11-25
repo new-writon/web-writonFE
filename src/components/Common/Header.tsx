@@ -43,7 +43,8 @@ const Header = () => {
     organization: localStorage.getItem("organization") || "",
     challengeId: localStorage.getItem("challengeId") || "1",
   };
-  const { data: CalendarData = [] } = useGetCalendarRecordCurrent(organizationChallengeData);
+  const { data: { CalendarData = [] } = {} } =
+    useGetCalendarRecordCurrent(organizationChallengeData);
 
   const navigate = useNavigate();
   const width = useWindowWidth();

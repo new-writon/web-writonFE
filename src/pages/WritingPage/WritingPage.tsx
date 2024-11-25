@@ -27,7 +27,8 @@ const WritingPage = () => {
   const setGetSpecialQuestionData = useSetRecoilState(getSpecialQuestionState);
   const setpostWritingData = useSetRecoilState(postWritingDataState);
 
-  const { data: CalendarData = [] } = useGetCalendarRecordCurrent(organizationChallengeData);
+  const { data: { CalendarData = [] } = {} } =
+    useGetCalendarRecordCurrent(organizationChallengeData);
   const { data: getBasicQuestionData = [] } = useGetBasicQuestion(
     localStorage.getItem("challengeId") as string
   );

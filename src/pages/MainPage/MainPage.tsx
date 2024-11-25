@@ -30,7 +30,8 @@ const MainPage = () => {
   };
 
   const { data: ChallengeCurrent } = useGetChallengeCurrent(organizationChallengeData);
-  const { data: CalendarData = [] } = useGetCalendarRecordCurrent(organizationChallengeData);
+  const { data: { CalendarData = [], CalendarWithGrayData = [] } = {} } =
+    useGetCalendarRecordCurrent(organizationChallengeData);
   const { data: RetrospectData = [] } = useGetRetrospectCurrent(organizationChallengeData);
   const { data: review } = useGetFinishModal(organizationChallengeData);
 
@@ -67,6 +68,7 @@ const MainPage = () => {
       <Calendar
         CalendarData={CalendarData?.length === 0 ? mainCalendarDummyData : CalendarData}
         overlapPeriod={ChallengeCurrent.overlapPeriod}
+        CalendarWithGrayData={CalendarWithGrayData}
       />
       <MyRetrospect RetrospectData={RetrospectData} />
       <FloatingWriteButton onClick={() => dateCheck(navigate, today, CalendarData)}>
