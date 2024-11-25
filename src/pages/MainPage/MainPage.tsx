@@ -17,6 +17,7 @@ import {
 import { finishModalState, modalBackgroundState } from "@/recoil/atoms";
 import { dateCheck } from "@/hooks/useDateCheck";
 import { useEffect } from "react";
+import { isPWA } from "@/utils/isPWA";
 
 const MainPage = () => {
   const navigate = useNavigate();
@@ -46,10 +47,6 @@ const MainPage = () => {
     }
   }
 
-  // pwa 일때만 푸시알림 허용 창 띄우기
-  const isPWA = () => {
-    return window.matchMedia("(display-mode: standalone)").matches;
-  };
   //모바일일때만 푸시알림 허용 창 띄우기
   const isTouchDevice = "ontouchstart" in window;
 
