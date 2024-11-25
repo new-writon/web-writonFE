@@ -19,9 +19,10 @@ export const getCalendarRecordCurrent = async ({
   organization,
   challengeId,
 }: organizationChallengeDataType) => {
-  const response = await getData<{ calendarData: CalendarRecordCurrentType[] }>(
-    `/user/challenge/calendar/${organization}/${challengeId}`
-  );
+  const response = await getData<{
+    calendarData: CalendarRecordCurrentType[];
+    calendarWithGrayData: CalendarRecordCurrentType[];
+  }>(`/user/challenge/calendar/${organization}/${challengeId}`);
   return response;
 };
 
