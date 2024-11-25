@@ -1,8 +1,10 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 
 import styled from "styled-components";
 
 import Login from "@/components/Authorization/LoginPage";
+import { isPWA } from "@/utils/isPWA";
+import Splash from "../Splash/Splash";
 
 const LoginPage = () => {
   useEffect(() => {
@@ -26,6 +28,22 @@ const LoginPage = () => {
       sessionStorage.removeItem("refreshToken");
     }
   }, []);
+  const [showSplash, setShowSplash] = useState(isPWA()); // PWA 여부에 따라 초기 상태 설정
+
+  useEffect(() => {
+    if (isPWA() && showSplash) {
+      const timer = setTimeout(() => {
+        setShowSplash(false); // 5초 후 스플래시 화면 종료
+      }, 1200);
+
+      return () => clearTimeout(timer); // 컴포넌트 언마운트 시 타이머 정리
+    }
+  }, [showSplash]);
+
+  if (showSplash) {
+    return <Splash />; // 스플래시 화면 렌더링
+  }
+
   return (
     <Container>
       <Login />
