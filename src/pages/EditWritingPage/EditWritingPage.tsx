@@ -27,7 +27,7 @@ export const EditWritingPage = () => {
   const setGetSpecialQuestionData = useSetRecoilState(getSpecialQuestionState);
   const setpostWritingData = useSetRecoilState(postWritingDataState);
 
-  const { data: { CalendarData = [] } = {} } =
+  const { data: { CalendarData = [], CalendarWithGrayData = [] } = {} } =
     useGetCalendarRecordCurrent(organizationChallengeData);
   const { data: getBasicQuestionData = [] } = useGetBasicQuestion(
     localStorage.getItem("challengeId") as string
@@ -57,7 +57,10 @@ export const EditWritingPage = () => {
   ]);
   return (
     <Container>
-      <WeekCalendar CalendarData={CalendarData} />
+      <WeekCalendar
+        CalendarData={CalendarData}
+        CalendarWithGrayData={CalendarWithGrayData}
+      />
       <EditWritingBox />
     </Container>
   );

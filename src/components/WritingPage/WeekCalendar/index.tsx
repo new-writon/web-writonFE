@@ -14,7 +14,13 @@ import { CalendarRecordCurrentType } from "@/types";
 import { Container } from "./style";
 import { CalendarToggle } from "@/components/atom/CalendarToggle";
 
-export const WeekCalendar = ({ CalendarData }: { CalendarData: CalendarRecordCurrentType[] }) => {
+export const WeekCalendar = ({
+  CalendarData,
+  CalendarWithGrayData,
+}: {
+  CalendarData: CalendarRecordCurrentType[];
+  CalendarWithGrayData: CalendarRecordCurrentType[];
+}) => {
   const { date } = useParams();
   const [weekFold, setWeekFold] = useState<boolean>(false);
   const [tooltipOn, setTooltopOn] = useState<boolean>(false);
@@ -59,6 +65,7 @@ export const WeekCalendar = ({ CalendarData }: { CalendarData: CalendarRecordCur
                 : new Date()
             }
             CalendarData={CalendarData}
+            CalendarWithGrayData={CalendarWithGrayData}
           />
         )}
       </Container>
