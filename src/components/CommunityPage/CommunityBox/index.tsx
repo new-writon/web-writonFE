@@ -20,7 +20,11 @@ import { communityContentProps } from "@/types";
 
 import { CommunityHeader, CommunityItemBox, Container } from "./style";
 import { CalendarToggle } from "@/components/atom/CalendarToggle";
-import { useCommunityContentData, useCommunityDates } from "@/hooks/reactQueryHooks/useMainHooks";
+import {
+  useCommunityContentData,
+  useCommunityDates,
+  useGetOrganizationPosition,
+} from "@/hooks/reactQueryHooks/useMainHooks";
 import useOnclickOutside from "@/hooks/useOnclickOutside";
 import useWindowWidth from "@/hooks/useWindowWidth";
 import Loading from "@/components/Common/Loading";
@@ -93,6 +97,10 @@ export const CommunityBox = () => {
       challengeId: organizationChallengeData.challengeId,
       selectedDate: localStorage.getItem("selectedDate") || "",
     });
+
+  const { data: positionNames } = useGetOrganizationPosition(
+    localStorage.getItem("organization") as string
+  );
   // communityDates가 로드된 후, 마지막 요소를 selectedDate로 설정
   useEffect(() => {
     if (communityDates && communityDates.length > 0 && !community) {
@@ -226,7 +234,7 @@ export const CommunityBox = () => {
                   전체
                 </KeywordButton>
                 <div className="line"></div>
-                {JobCategory.map((item, idx) => (
+                {(positionNames?.length ? positionNames : JobCategory).map((item, idx) => (
                   <React.Fragment key={idx}>
                     <KeywordButton
                       onClick={() => ChangeCategories(item)}
@@ -286,7 +294,7 @@ export const CommunityBox = () => {
               >
                 전체
               </KeywordButton>
-              {JobCategory.map((item, idx) => (
+              {(positionNames?.length ? positionNames : JobCategory).map((item, idx) => (
                 <React.Fragment key={idx}>
                   <KeywordButton
                     onClick={() => ChangeCategories(item)}
