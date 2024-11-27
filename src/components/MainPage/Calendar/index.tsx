@@ -57,7 +57,6 @@ export const Calendar = ({
     getDay(today) === 0
       ? differenceInCalendarWeeks(today, monthStart) - 1
       : differenceInCalendarWeeks(today, monthStart);
-  console.log(overlapPeriod);
   return (
     <Inner>
       <Container>
