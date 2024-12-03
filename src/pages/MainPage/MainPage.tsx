@@ -49,10 +49,10 @@ const MainPage = () => {
 
   //모바일일때만 푸시알림 허용 창 띄우기
   const isTouchDevice = "ontouchstart" in window;
-
+  const isNotification = "Notification" in window;
   // 푸시알림 허용 창 띄우기 로직
   useEffect(() => {
-    if (Notification.permission === "default" && isPWA() && isTouchDevice) {
+    if (isNotification && Notification.permission === "default" && isPWA() && isTouchDevice) {
       setModal((modal) => ({ ...modal, notificationPermissionModal: true }));
     }
   }, []);
