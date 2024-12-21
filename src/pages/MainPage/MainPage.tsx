@@ -39,9 +39,9 @@ const MainPage = () => {
   // 모달 창 띄우기 로직
   if (review !== undefined && !review && ChallengeCurrent) {
     if (
-      (ChallengeCurrent.overlapPeriod === 0 &&
+      (Number(ChallengeCurrent.overlapPeriod) === 0 &&
         CalendarData[CalendarData.length - 1].badge === "Gold") ||
-      ChallengeCurrent.overlapPeriod <= -1
+      Number(ChallengeCurrent.overlapPeriod) <= -1
     ) {
       setFinishModal(true);
     }
