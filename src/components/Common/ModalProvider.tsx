@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { Suspense, lazy, useEffect } from "react";
 
 import { useRecoilState, useRecoilValue } from "recoil";
 import styled from "styled-components";
@@ -27,7 +27,9 @@ import { TodayWriteAgoraPopup, TodayWritePopup } from "../atom/WritingPopup/Toda
 
 import Loading from "./Loading";
 import DetailPage from "@/pages/DetailPage/DetailPage";
-import NotificationPermissionModal from "../atom/NotificationPermissionModal/NotificationPermissionModal";
+const NotificationPermissionModal = lazy(
+  () => import("../atom/NotificationPermissionModal/NotificationPermissionModal")
+);
 
 export const ModalProvider = () => {
   const modal = useRecoilValue(modalBackgroundState);
@@ -71,7 +73,11 @@ export const ModalProvider = () => {
       {detailModal && <DetailPage />}
       {isLoading && <Loading />}
       {finishModal && <FinishModal />}
-      {modal.notificationPermissionModal && <NotificationPermissionModal />}
+      {!navigator.userAgent.includes("KAKAOTALK") && modal.notificationPermissionModal && (
+        <Suspense fallback={<Loading />}>
+          <NotificationPermissionModal />
+        </Suspense>
+      )}
       {accountNumberModal && <AccountNumberModal />}
       {modal.completeModal && <CompletePopupResponsive />}
       {modal.completeEditModal && <CompleteEditPopupResponsive />}
