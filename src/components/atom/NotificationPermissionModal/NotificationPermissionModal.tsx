@@ -3,6 +3,7 @@ import { loadingState, modalBackgroundState, snackBarState } from "@/recoil/atom
 import { useEffect } from "react";
 import { useRecoilState, useSetRecoilState } from "recoil";
 import styled from "styled-components";
+import "@/core/notification/settingFCM";
 
 const NotificationPermissionModal = () => {
   const setIsLoading = useSetRecoilState(loadingState);
