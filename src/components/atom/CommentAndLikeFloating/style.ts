@@ -7,6 +7,16 @@ export const Container = styled.div`
   display: flex;
   flex-direction: column;
   gap: 20px;
+
+  .likePeopleListContainer {
+    position: absolute;
+    width: 200%;
+    height: 100%;
+    z-index: 1;
+    transform: translateX(-50%);
+    left: 50%;
+  }
+
   .Box {
     display: flex;
     flex-direction: column;
@@ -27,6 +37,7 @@ export const Container = styled.div`
 
   .likeBox {
     cursor: pointer;
+    z-index: 2;
   }
   .round img {
     height: fit-content;
