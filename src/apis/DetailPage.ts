@@ -34,6 +34,17 @@ export const getLikeCheck = async (userTemplateId: number) => {
   return response.data;
 };
 
+// 좋아요 누른 사람 조희
+export const getLikePeople = async (userTemplateId: number) => {
+  const response = await getData<
+    {
+      nickname: string;
+      userProfileImage: string;
+    }[]
+  >(`/template/like/click/${userTemplateId}`);
+  return response.data;
+};
+
 // 댓글 작성
 export const postCommentWrite = async (
   userTemplateId: number,

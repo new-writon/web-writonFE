@@ -27,6 +27,7 @@ import {
 import { format } from "date-fns";
 import {
   getComment,
+  getLikePeople,
   getTemplete,
   postCommentWrite,
   postLike,
@@ -484,5 +485,13 @@ export const useGetNotificationItem = ({
   return useQuery({
     queryKey: ["getNotificationItem", organization, challengeId],
     queryFn: () => getNotificationData(organization, challengeId),
+  });
+};
+
+// 좋아요 누른 사람 정보 가져오기
+export const useGetLikePeople = (templateId: number) => {
+  return useQuery({
+    queryKey: ["getLikePeople", templateId],
+    queryFn: () => getLikePeople(templateId),
   });
 };
