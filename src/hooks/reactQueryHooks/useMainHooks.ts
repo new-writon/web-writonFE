@@ -240,22 +240,19 @@ export const useCommunityContentData = ({
   });
 };
 
-// 모바일 화면일 떄 디테일 페이지 데이터 가져오기 params로 들어오는 id 값
+// 디테일 페이지 데이터 가져오기 params 또는 recoil 들어오는 id 값
 export const useGetDetailData = ({
   organization,
   templateId,
   type,
-  width,
 }: {
   organization: string;
   templateId: number;
   type: string;
-  width: number;
 }) => {
   return useQuery({
     queryKey: ["getDetailData", organization, templateId, type],
     queryFn: () => getTemplete(organization, templateId, type === "my" ? false : true),
-    enabled: width <= 530, // 모바일일 때만 쿼리를 활성화
   });
 };
 
@@ -294,9 +291,40 @@ export const useLikeMutation = () => {
     }) => {
       return await postLike(userTemplateId, organization);
     },
-    onSuccess: () => {
-      // 성공적으로 좋아요를 추가한 후 필요한 쿼리 재요청
-      queryClient.invalidateQueries({ queryKey: ["communityContentData"] });
+    onSuccess: (_, variables) => {
+      const { userTemplateId } = variables;
+
+      // "getDetailData"와 userTemplateId가 포함된 모든 쿼리를 무효화
+      queryClient.invalidateQueries({
+        predicate: (query) => {
+          const key = query.queryKey;
+          return (
+            Array.isArray(key) && key.includes("getDetailData") && key.includes(userTemplateId)
+          );
+        },
+      });
+
+      // "communityContentData"와 userTemplateId가 포함된 모든 쿼리를 무효화
+      queryClient.invalidateQueries({
+        predicate: (query) => {
+          const key = query.queryKey;
+          return (
+            Array.isArray(key) &&
+            key.includes("communityContentData") &&
+            key.includes(userTemplateId)
+          );
+        },
+      });
+
+      // "getLikePeople"와 userTemplateId가 포함된 모든 쿼리를 무효화
+      queryClient.invalidateQueries({
+        predicate: (query) => {
+          const key = query.queryKey;
+          return (
+            Array.isArray(key) && key.includes("getLikePeople") && key.includes(userTemplateId)
+          );
+        },
+      });
     },
   });
 };
@@ -314,9 +342,41 @@ export const useUnlikeMutation = () => {
     }) => {
       return await postLikeDelete(userTemplateId, organization);
     },
-    onSuccess: () => {
-      // 성공적으로 좋아요를 삭제한 후 필요한 쿼리 재요청
-      queryClient.invalidateQueries({ queryKey: ["communityContentData"] });
+    // 성공적으로 좋아요를 삭제한 후 필요한 쿼리 재요청
+    onSuccess: (_, variables) => {
+      const { userTemplateId } = variables;
+
+      // "getDetailData"와 userTemplateId가 포함된 모든 쿼리를 무효화
+      queryClient.invalidateQueries({
+        predicate: (query) => {
+          const key = query.queryKey;
+          return (
+            Array.isArray(key) && key.includes("getDetailData") && key.includes(userTemplateId)
+          );
+        },
+      });
+
+      // "communityContentData"와 userTemplateId가 포함된 모든 쿼리를 무효화
+      queryClient.invalidateQueries({
+        predicate: (query) => {
+          const key = query.queryKey;
+          return (
+            Array.isArray(key) &&
+            key.includes("communityContentData") &&
+            key.includes(userTemplateId)
+          );
+        },
+      });
+
+      // "getLikePeople"와 userTemplateId가 포함된 모든 쿼리를 무효화
+      queryClient.invalidateQueries({
+        predicate: (query) => {
+          const key = query.queryKey;
+          return (
+            Array.isArray(key) && key.includes("getLikePeople") && key.includes(userTemplateId)
+          );
+        },
+      });
     },
   });
 };
