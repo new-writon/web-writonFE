@@ -1,7 +1,7 @@
 import { MouseEvent, useEffect, useState } from "react";
 
 import { useParams } from "react-router-dom";
-import { useRecoilState, useSetRecoilState } from "recoil";
+import { useRecoilState, useRecoilValue, useSetRecoilState } from "recoil";
 import styled, { keyframes } from "styled-components";
 
 import { CommentBox } from "@/components/DetailPage/CommentBox";
@@ -11,9 +11,10 @@ import { CommnetAndLikeFloating } from "@/components/atom/CommentAndLikeFloating
 import { UserInfoDetail } from "@/components/atom/UserInfoDetail";
 import {
   CommentState,
-  DetailDataState,
+  // DetailDataState,
   DetailModalState,
   LikeState,
+  detailTemplateIdState,
   likePeopleDataState,
   modalBackgroundState,
 } from "@/recoil/atoms";
@@ -26,11 +27,13 @@ import {
 } from "@/hooks/reactQueryHooks/useMainHooks";
 import useWindowWidth from "@/hooks/useWindowWidth";
 import MobileLikePeopleButton from "@/components/atom/MobileLikePeopleButton/MobileLikePeopleButton";
+import { communityContentProps } from "@/types";
 
 const DetailPage = () => {
-  const { templateId } = useParams<{ templateId: string }>();
+  const { paramsTemplateId } = useParams<{ paramsTemplateId: string }>();
+  const recoilTemplateId = useRecoilValue(detailTemplateIdState);
   const type = new URL(window.location.href).searchParams.get("type") || "";
-  const [detailData, setDetailData] = useRecoilState(DetailDataState);
+  const [detailData, setDetailData] = useState<communityContentProps[]>([]);
   const setDetailModal = useSetRecoilState(DetailModalState);
   const [BackgroundModal, setBackgroundModal] = useRecoilState(modalBackgroundState);
   const [likeCount, setLikeCount] = useRecoilState(LikeState);
@@ -45,18 +48,17 @@ const DetailPage = () => {
     e.stopPropagation(); // 이벤트 캡쳐링 방지
   };
 
-  // react-query 사용
-  // 모바일 화면일 때만 동작
-  const { data: mobileDetailData = [] } = useGetDetailData({
-    organization: localStorage.getItem("organization") as string,
-    templateId: Number(templateId),
-    type,
-    width, // width가 530보다 작으면 mobileDetailData를 가져옴
-  });
-
   // 모바일 + 데스크탑 화면일 때 다른 객체값 가지고 들어가서 요청
   // detailData의 templateId 또는 params의 templateId를 사용하여 댓글 데이터 가져오기
-  const currentTemplateId = width > 530 ? detailData[0]?.userTemplateId : Number(templateId);
+  const currentTemplateId = width > 530 ? recoilTemplateId : Number(paramsTemplateId);
+  // react-query 사용
+
+  const { data: temporaryDetailData = [] } = useGetDetailData({
+    organization: localStorage.getItem("organization") as string,
+    templateId: currentTemplateId,
+    type,
+  });
+
   const { data: commentsData } = useGetComments({
     organization: localStorage.getItem("organization") as string,
     templateId: currentTemplateId,
@@ -76,10 +78,10 @@ const DetailPage = () => {
   }, [myInfo, commentsData, detailData]);
 
   useEffect(() => {
-    if (width <= 530 && mobileDetailData.length > 0) {
-      setDetailData(mobileDetailData);
+    if (temporaryDetailData.length > 0) {
+      setDetailData(temporaryDetailData);
     }
-  }, [mobileDetailData]);
+  }, [temporaryDetailData]);
 
   if (detailData.length === 0) {
     return <></>;
