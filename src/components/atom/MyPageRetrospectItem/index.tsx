@@ -3,7 +3,12 @@ import { ko } from "date-fns/locale";
 import { useNavigate } from "react-router-dom";
 import { useSetRecoilState } from "recoil";
 
-import { DetailDataState, DetailModalState, LikeState } from "@/recoil/atoms";
+import {
+  // DetailDataState,
+  DetailModalState,
+  // LikeState,
+  detailTemplateIdState,
+} from "@/recoil/atoms";
 import { communityContentProps } from "@/types";
 
 import { CommentAndLike } from "../CommentAndLike";
@@ -11,13 +16,15 @@ import { CommentAndLike } from "../CommentAndLike";
 import { Container, ContainerMobile } from "./style";
 
 export const MyPageRetrospectItem = ({ data }: { data: communityContentProps[] }) => {
-  const setDetailData = useSetRecoilState(DetailDataState);
+  // const setDetailData = useSetRecoilState(DetailDataState);
   const setDetailModal = useSetRecoilState(DetailModalState);
-  const setLikeCount = useSetRecoilState(LikeState);
+  // const setLikeCount = useSetRecoilState(LikeState);
+  const setDetailTemplateId = useSetRecoilState(detailTemplateIdState);
 
   const spaceToDetail = () => {
-    setDetailData(data);
-    setLikeCount(data[0]?.likeCount);
+    // setDetailData(data);
+    // setLikeCount(data[0]?.likeCount);
+    setDetailTemplateId(data[0].userTemplateId);
     setDetailModal(true);
     document.body.style.overflowY = "hidden";
   };

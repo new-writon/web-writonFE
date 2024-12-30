@@ -3,7 +3,12 @@ import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useSetRecoilState } from "recoil";
 
-import { DetailDataState, DetailModalState, LikeState } from "@/recoil/atoms";
+import {
+  // DetailDataState,
+  DetailModalState,
+  // LikeState,
+  detailTemplateIdState,
+} from "@/recoil/atoms";
 import { communityContentProps } from "@/types";
 
 import { CommentAndLike } from "../CommentAndLike";
@@ -12,9 +17,11 @@ import { UserInfo } from "../UserInfo";
 import { Container, PreviewBody, PreviewInfo } from "./style";
 
 export const CommunityItem = ({ data }: { data: communityContentProps[] }) => {
-  const setDetailData = useSetRecoilState(DetailDataState);
+  // const setDetailData = useSetRecoilState(DetailDataState);
   const setDetailModal = useSetRecoilState(DetailModalState);
-  const setLikeCount = useSetRecoilState(LikeState);
+  // const setLikeCount = useSetRecoilState(LikeState);
+  const setDetailTemplateId = useSetRecoilState(detailTemplateIdState);
+
   const [width, setWidth] = useState<number>(window.innerWidth);
   const navigate = useNavigate();
   const spaceToDetail = () => {
@@ -23,8 +30,10 @@ export const CommunityItem = ({ data }: { data: communityContentProps[] }) => {
       // setDetailData(data);
       // setLikeCount(data[0]?.likeCount);
     } else {
-      setDetailData(data);
-      setLikeCount(data[0]?.likeCount);
+      // setDetailData(data);
+      // setLikeCount(data[0]?.likeCount);
+      setDetailTemplateId(data[0].userTemplateId);
+
       setDetailModal(true);
       document.body.style.overflowY = "hidden";
     }

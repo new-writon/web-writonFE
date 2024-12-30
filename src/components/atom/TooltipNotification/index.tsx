@@ -5,14 +5,19 @@ import { ko } from "date-fns/locale";
 import { useNavigate } from "react-router-dom";
 import { useSetRecoilState } from "recoil";
 
-import { getTemplete } from "@/apis/DetailPage";
+// import { getTemplete } from "@/apis/DetailPage";
 import { patchNotificationComment, patchNotificationLike } from "@/apis/notification";
 import noSmallTalk from "@/assets/AgoraPage/noSmallTalk.svg";
 import commentIcon from "@/assets/DetailPage/comment.svg";
 import fireIcon from "@/assets/DetailPage/fireOff.svg";
 import arrow from "@/assets/header/rightArrow.svg";
 import gradient from "@/assets/notification/background-gradient.svg";
-import { DetailDataState, DetailModalState, LikeState } from "@/recoil/atoms";
+import {
+  // DetailDataState,
+  DetailModalState,
+  // LikeState,
+  detailTemplateIdState,
+} from "@/recoil/atoms";
 import { notificationDataType } from "@/types";
 
 import { Container, ItemContainer, NoNotificationView } from "./style";
@@ -139,9 +144,10 @@ export const TooltipNotificationItem = ({ data }: { data: notificationDataType }
 
   const [click, setClick] = useState<boolean>(false);
 
-  const setDetailData = useSetRecoilState(DetailDataState);
+  // const setDetailData = useSetRecoilState(DetailDataState);
   const setDetailModal = useSetRecoilState(DetailModalState);
-  const setLikeCount = useSetRecoilState(LikeState);
+  // const setLikeCount = useSetRecoilState(LikeState);
+  const setDetailTemplateId = useSetRecoilState(detailTemplateIdState);
 
   const handleResize = () => {
     //뷰크기 강제로 강져오기
@@ -171,13 +177,14 @@ export const TooltipNotificationItem = ({ data }: { data: notificationDataType }
       }
     } else {
       try {
-        const response = await getTemplete(
-          localStorage.getItem("organization") || "",
-          Number(data?.userTemplateId),
-          true
-        );
-        setDetailData(response);
-        setLikeCount(response[0]?.likeCount);
+        // const response = await getTemplete(
+        //   localStorage.getItem("organization") || "",
+        //   Number(data?.userTemplateId),
+        //   true
+        // );
+        // setDetailData(response);
+        setDetailTemplateId(data?.userTemplateId);
+        // setLikeCount(response[0]?.likeCount);
         setDetailModal(true);
         setClick(true);
         document.body.style.overflowY = "hidden";

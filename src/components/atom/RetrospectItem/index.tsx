@@ -5,7 +5,12 @@ import { ko } from "date-fns/locale";
 import { useNavigate } from "react-router-dom";
 import { useSetRecoilState } from "recoil";
 
-import { DetailDataState, DetailModalState, LikeState } from "@/recoil/atoms";
+import {
+  // DetailDataState,
+  DetailModalState,
+  // LikeState,
+  detailTemplateIdState,
+} from "@/recoil/atoms";
 import { communityContentProps } from "@/types";
 
 import { TitleSideBox } from "../TitleSideBox";
@@ -14,9 +19,10 @@ import { Container, PreviewBody, Title } from "./style";
 
 export const RetrospectItem = ({ data }: { data: communityContentProps[] }) => {
   const arr = data?.filter((item) => item.category === "스페셜 질문");
-  const setDetailData = useSetRecoilState(DetailDataState);
+  // const setDetailData = useSetRecoilState(DetailDataState);
+  const setDetailTemplateId = useSetRecoilState(detailTemplateIdState);
   const setDetailModal = useSetRecoilState(DetailModalState);
-  const setLikeCount = useSetRecoilState(LikeState);
+  // const setLikeCount = useSetRecoilState(LikeState);
   const [width, setWidth] = useState<number>(window.innerWidth);
   const navigate = useNavigate();
 
@@ -26,8 +32,9 @@ export const RetrospectItem = ({ data }: { data: communityContentProps[] }) => {
       // setDetailData(data);
       // setLikeCount(data[0]?.likeCount);
     } else {
-      setDetailData(data);
-      setLikeCount(data[0]?.likeCount);
+      // setDetailData(data);
+      setDetailTemplateId(data[0].userTemplateId);
+      // setLikeCount(data[0]?.likeCount);
       setDetailModal(true);
       document.body.style.overflowY = "hidden";
     }
