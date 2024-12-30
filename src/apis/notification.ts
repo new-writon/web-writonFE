@@ -51,7 +51,7 @@ export const getNotificationPermission = async () => {
 
 // 푸시알림 유저 상태 변경 granted, denied
 export const patchNotificationPermission = async (content: string) => {
-  console.log(content);
+  // console.log(content);
   const response = await patchData("/user/alarm", {
     content: content,
   });
