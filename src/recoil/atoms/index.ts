@@ -239,3 +239,8 @@ export const likePeopleDataState = atom<{ nickname: string; userProfileImage: st
   key: "likePeopleDataState",
   default: [],
 });
+
+export const detailTemplateIdState = atom<number>({
+  key: "detailTemplateIdState",
+  default: 0,
+});
