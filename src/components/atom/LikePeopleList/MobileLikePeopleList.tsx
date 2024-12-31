@@ -39,7 +39,6 @@ const Container = styled.div`
   flex-direction: column;
   border-radius: 20px 20px 0px 0px;
   background: #fff;
-  margin-bottom: 30px;
   .line {
     height: 1px;
     flex-shrink: 0;
