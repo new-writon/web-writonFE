@@ -30,7 +30,8 @@ import MobileLikePeopleButton from "@/components/atom/MobileLikePeopleButton/Mob
 import { communityContentProps } from "@/types";
 
 const DetailPage = () => {
-  const { paramsTemplateId } = useParams<{ paramsTemplateId: string }>();
+  const { templateId } = useParams<{ templateId: string }>();
+
   const recoilTemplateId = useRecoilValue(detailTemplateIdState);
   const type = new URL(window.location.href).searchParams.get("type") || "";
   const [detailData, setDetailData] = useState<communityContentProps[]>([]);
@@ -50,7 +51,7 @@ const DetailPage = () => {
 
   // 모바일 + 데스크탑 화면일 때 다른 객체값 가지고 들어가서 요청
   // detailData의 templateId 또는 params의 templateId를 사용하여 댓글 데이터 가져오기
-  const currentTemplateId = width > 530 ? recoilTemplateId : Number(paramsTemplateId);
+  const currentTemplateId = width > 530 ? recoilTemplateId : Number(templateId);
   // react-query 사용
 
   const { data: temporaryDetailData = [] } = useGetDetailData({
