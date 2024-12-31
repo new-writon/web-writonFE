@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 import { useSetRecoilState } from "recoil";
 
@@ -9,19 +9,27 @@ import { LikeState } from "@/recoil/atoms";
 
 import { Container } from "./style";
 import { useLikeMutation, useUnlikeMutation } from "@/hooks/reactQueryHooks/useMainHooks";
+import LikePeopleList from "../LikePeopleList/LikePeopleList";
+import useWindowWidth from "@/hooks/useWindowWidth";
 
 export const CommnetAndLikeFloating = ({
   userTemplateId,
   myLikeSign,
   commentCount,
   likeCount,
+  likePeopleData,
 }: {
   userTemplateId: number;
   myLikeSign: string;
   commentCount: string;
   likeCount: string;
+  likePeopleData: { nickname: string; userProfileImage: string }[];
 }) => {
+  const width = useWindowWidth();
+
   const [isHover, setIsHover] = useState<boolean>(false);
+  const [isHoverLike, setIsHoverLike] = useState<boolean>(false);
+
   const [isClick, setIsClick] = useState<boolean>(myLikeSign === "1");
   const setLikeCount = useSetRecoilState(LikeState); // 프론트에서 좋아요 수를 바로 업데이트하기 위해 사용
 
@@ -44,13 +52,35 @@ export const CommnetAndLikeFloating = ({
     setIsClick(!isClick);
   };
 
+  useEffect(() => {
+    if (!isHoverLike) {
+      setIsHover(false);
+    }
+  }, [isHoverLike]);
+
   return (
     <Container>
+      {width > 530 && isHover && (
+        <div
+          className="likePeopleListContainer"
+          onMouseOver={() => setIsHoverLike(true)}
+          onMouseOut={() => setIsHoverLike(false)}
+        >
+          <LikePeopleList likePeopleData={likePeopleData} />
+        </div>
+      )}
       <div className="Box">
         <div
           className={`likeBox round ${isHover && "hover"}  ${isClick && "click"}`}
-          onMouseOver={() => setIsHover(true)}
-          onMouseOut={() => setIsHover(false)}
+          onMouseOver={() => {
+            if (width > 530) setIsHover(true);
+            setIsHoverLike(true);
+          }}
+          onMouseOut={() => {
+            if (!isHoverLike) {
+              setIsHover(false);
+            }
+          }}
           onClick={handleLikeClick}
         >
           <img

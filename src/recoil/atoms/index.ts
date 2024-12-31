@@ -70,6 +70,7 @@ export const modalBackgroundState = atom<{
   todayWriteModal: boolean;
   agoraWriteModal: boolean;
   notificationPermissionModal: boolean;
+  likePeopleModal: boolean;
 }>({
   key: "modalBackgroundState",
   default: {
@@ -80,6 +81,7 @@ export const modalBackgroundState = atom<{
     todayWriteModal: false,
     agoraWriteModal: false,
     notificationPermissionModal: false,
+    likePeopleModal: false,
   },
 });
 
@@ -231,4 +233,14 @@ export const errorState = atom<string>({
 export const notificationPermissionState = atom<string | null | undefined>({
   key: "notificationPermissionState",
   default: null,
+});
+
+export const likePeopleDataState = atom<{ nickname: string; userProfileImage: string }[]>({
+  key: "likePeopleDataState",
+  default: [],
+});
+
+export const detailTemplateIdState = atom<number>({
+  key: "detailTemplateIdState",
+  default: 0,
 });

@@ -1,7 +1,7 @@
 import { MouseEvent, useEffect, useState } from "react";
 
 import { useParams } from "react-router-dom";
-import { useRecoilState, useSetRecoilState } from "recoil";
+import { useRecoilState, useRecoilValue, useSetRecoilState } from "recoil";
 import styled, { keyframes } from "styled-components";
 
 import { CommentBox } from "@/components/DetailPage/CommentBox";
@@ -9,22 +9,37 @@ import { WriteView } from "@/components/DetailPage/WriteView";
 import { CommentAndLike } from "@/components/atom/CommentAndLike";
 import { CommnetAndLikeFloating } from "@/components/atom/CommentAndLikeFloating";
 import { UserInfoDetail } from "@/components/atom/UserInfoDetail";
-import { CommentState, DetailDataState, DetailModalState, LikeState } from "@/recoil/atoms";
+import {
+  CommentState,
+  // DetailDataState,
+  DetailModalState,
+  LikeState,
+  detailTemplateIdState,
+  likePeopleDataState,
+  modalBackgroundState,
+} from "@/recoil/atoms";
 import { Inner } from "@/style/global";
 import {
   useGetComments,
   useGetDetailData,
+  useGetLikePeople,
   useGetMyInfo,
 } from "@/hooks/reactQueryHooks/useMainHooks";
 import useWindowWidth from "@/hooks/useWindowWidth";
+import MobileLikePeopleButton from "@/components/atom/MobileLikePeopleButton/MobileLikePeopleButton";
+import { communityContentProps } from "@/types";
 
 const DetailPage = () => {
   const { templateId } = useParams<{ templateId: string }>();
+
+  const recoilTemplateId = useRecoilValue(detailTemplateIdState);
   const type = new URL(window.location.href).searchParams.get("type") || "";
-  const [detailData, setDetailData] = useRecoilState(DetailDataState);
+  const [detailData, setDetailData] = useState<communityContentProps[]>([]);
   const setDetailModal = useSetRecoilState(DetailModalState);
+  const [BackgroundModal, setBackgroundModal] = useRecoilState(modalBackgroundState);
   const [likeCount, setLikeCount] = useRecoilState(LikeState);
   const [commentList, setCommentList] = useRecoilState(CommentState);
+  const setLikePeopleData = useSetRecoilState(likePeopleDataState);
 
   const width = useWindowWidth();
 
@@ -34,22 +49,23 @@ const DetailPage = () => {
     e.stopPropagation(); // 이벤트 캡쳐링 방지
   };
 
-  // react-query 사용
-  // 모바일 화면일 때만 동작
-  const { data: mobileDetailData = [] } = useGetDetailData({
-    organization: localStorage.getItem("organization") as string,
-    templateId: Number(templateId),
-    type,
-    width, // width가 530보다 작으면 mobileDetailData를 가져옴
-  });
-
   // 모바일 + 데스크탑 화면일 때 다른 객체값 가지고 들어가서 요청
   // detailData의 templateId 또는 params의 templateId를 사용하여 댓글 데이터 가져오기
-  const currentTemplateId = width > 530 ? detailData[0]?.userTemplateId : Number(templateId);
+  const currentTemplateId = width > 530 ? recoilTemplateId : Number(templateId);
+  // react-query 사용
+
+  const { data: temporaryDetailData = [] } = useGetDetailData({
+    organization: localStorage.getItem("organization") as string,
+    templateId: currentTemplateId,
+    type,
+  });
+
   const { data: commentsData } = useGetComments({
     organization: localStorage.getItem("organization") as string,
     templateId: currentTemplateId,
   });
+
+  const { data: likePeopleData } = useGetLikePeople(currentTemplateId);
 
   // 모바일 + 데스크탑 관계 없이 데이터 가져옴
   const { data: myInfo } = useGetMyInfo(localStorage.getItem("organization") as string);
@@ -60,13 +76,13 @@ const DetailPage = () => {
       setLikeCount(detailData[0]?.likeCount || "0");
       setCommentList(commentsData || []);
     }
-  }, [myInfo, commentsData]);
+  }, [myInfo, commentsData, detailData]);
 
   useEffect(() => {
-    if (width <= 530 && mobileDetailData.length > 0) {
-      setDetailData(mobileDetailData);
+    if (temporaryDetailData.length > 0) {
+      setDetailData(temporaryDetailData);
     }
-  }, [mobileDetailData]);
+  }, [temporaryDetailData]);
 
   if (detailData.length === 0) {
     return <></>;
@@ -100,10 +116,20 @@ const DetailPage = () => {
                 createdAt: detailData[0]?.createdAt,
               }}
             />
-            <CommentAndLike
-              commentCount={detailData[0]?.commentCount}
-              likeCount={likeCount}
-            />
+            {width <= 530 ? (
+              <MobileLikePeopleButton
+                likeCount={likeCount}
+                onPress={() => {
+                  setBackgroundModal({ ...BackgroundModal, likePeopleModal: true });
+                  setLikePeopleData(likePeopleData || []);
+                }}
+              />
+            ) : (
+              <CommentAndLike
+                commentCount={detailData[0]?.commentCount}
+                likeCount={likeCount}
+              />
+            )}
           </div>
           <CommentBox
             commentList={commentList}
@@ -115,6 +141,7 @@ const DetailPage = () => {
             myLikeSign={detailData[0]?.myLikeSign}
             commentCount={detailData[0]?.commentCount}
             likeCount={likeCount}
+            likePeopleData={likePeopleData || []}
           />
         </div>
       </Container>
@@ -173,7 +200,7 @@ const Container = styled.div<{ $width: number }>`
     margin-top: 60px;
     display: flex;
     justify-content: space-between;
-    padding-bottom: 40px;
+    padding-bottom: 20px;
     border-bottom: 1px solid var(--Gray-40, #d2d5db);
   }
 

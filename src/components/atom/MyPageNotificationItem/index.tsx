@@ -5,49 +5,53 @@ import { ko } from "date-fns/locale";
 import { useNavigate } from "react-router-dom";
 import { useSetRecoilState } from "recoil";
 
-import { getTemplete } from "@/apis/DetailPage";
+// import { getTemplete } from "@/apis/DetailPage";
 import { patchNotificationComment, patchNotificationLike } from "@/apis/notification";
 import commentIcon from "@/assets/DetailPage/comment.svg";
 import fireIcon from "@/assets/DetailPage/fireOff.svg";
-import { DetailDataState, DetailModalState, LikeState } from "@/recoil/atoms";
+import {
+  // DetailDataState,
+  DetailModalState,
+  // LikeState,
+  detailTemplateIdState,
+} from "@/recoil/atoms";
 import { notificationDataType } from "@/types";
 
 import { Container, ContainerMobile, First, Second, Third } from "./style";
 
 export const MyPageNotificationItem = ({ data }: { data: notificationDataType }) => {
-  const setDetailData = useSetRecoilState(DetailDataState);
+  // const setDetailData = useSetRecoilState(DetailDataState);
   const setDetailModal = useSetRecoilState(DetailModalState);
-  const setLikeCount = useSetRecoilState(LikeState);
+  // const setLikeCount = useSetRecoilState(LikeState);
+
+  const setDetailTemplateId = useSetRecoilState(detailTemplateIdState);
 
   const [click, setClick] = useState<boolean>(false);
 
   const spaceToDetail = async (type: string, Id: number) => {
-    try {
-      const response = await getTemplete(
-        localStorage.getItem("organization") || "",
-        Number(data?.userTemplateId),
-        true
-      );
-      setDetailData(response);
-      setLikeCount(response[0]?.likeCount);
-      setDetailModal(true);
-      setClick(true);
-      document.body.style.overflowY = "hidden";
-      if (type === "like") {
-        try {
-          await patchNotificationLike(Id);
-        } catch {
-          new Error("shit");
-        }
-      } else if (type === "comment") {
-        try {
-          await patchNotificationComment(Id);
-        } catch {
-          new Error("shit");
-        }
+    // const response = await getTemplete(
+    //   localStorage.getItem("organization") || "",
+    //   Number(data?.userTemplateId),
+    //   true
+    // );
+    // setDetailData(response);
+    // setLikeCount(response[0]?.likeCount);
+    setDetailTemplateId(data?.userTemplateId);
+    setDetailModal(true);
+    setClick(true);
+    document.body.style.overflowY = "hidden";
+    if (type === "like") {
+      try {
+        await patchNotificationLike(Id);
+      } catch {
+        new Error("shit");
       }
-    } catch {
-      new Error("shit");
+    } else if (type === "comment") {
+      try {
+        await patchNotificationComment(Id);
+      } catch {
+        new Error("shit");
+      }
     }
   };
   return (

@@ -1,7 +1,7 @@
-import { Suspense, lazy, useEffect } from "react";
+import { Suspense, lazy, useEffect, useRef } from "react";
 
 import { useRecoilState, useRecoilValue } from "recoil";
-import styled from "styled-components";
+import styled, { keyframes } from "styled-components";
 
 import { AgoraPage } from "@/pages/AgoraPage/AgoraPage";
 import {
@@ -12,6 +12,7 @@ import {
   accountNumberState,
   agoraModalState,
   errorState,
+  likePeopleDataState,
 } from "@/recoil/atoms";
 
 import { AccountNumberModal } from "../atom/AccountNumberModal";
@@ -27,17 +28,23 @@ import { TodayWriteAgoraPopup, TodayWritePopup } from "../atom/WritingPopup/Toda
 
 import Loading from "./Loading";
 import DetailPage from "@/pages/DetailPage/DetailPage";
+import MobileLikePeopleList from "../atom/LikePeopleList/MobileLikePeopleList";
+import useOnclickOutside from "@/hooks/useOnclickOutside";
 const NotificationPermissionModal = lazy(
   () => import("../atom/NotificationPermissionModal/NotificationPermissionModal")
 );
 
 export const ModalProvider = () => {
-  const modal = useRecoilValue(modalBackgroundState);
+  const [modal, setModal] = useRecoilState(modalBackgroundState);
   const detailModal = useRecoilValue(DetailModalState);
   const isLoading = useRecoilValue(loadingState);
   const finishModal = useRecoilValue(finishModalState);
   const accountNumberModal = useRecoilValue(accountNumberState);
   const agoraModal = useRecoilValue(agoraModalState);
+
+  const likePeopleData = useRecoilValue(likePeopleDataState);
+  const likePeopleRef = useRef<HTMLDivElement>(null);
+  useOnclickOutside([likePeopleRef], () => setModal({ ...modal, likePeopleModal: false }));
 
   useEffect(() => {
     const vh = window.innerHeight * 0.01;
@@ -88,6 +95,16 @@ export const ModalProvider = () => {
           <AgoraPage />
         </Container>
       )}
+      {modal.likePeopleModal && (
+        <LikePeopleContainer $likePeopleModal={modal.likePeopleModal}>
+          <div
+            className="wrapper"
+            ref={likePeopleRef}
+          >
+            <MobileLikePeopleList likePeopleData={likePeopleData} />
+          </div>
+        </LikePeopleContainer>
+      )}
     </>
   );
 };
@@ -103,4 +120,46 @@ const Container = styled.div`
   overflow: scroll;
   height: 100vh;
   height: calc(var(--vh, 1vh) * 100);
+`;
+
+const LikePeopleContainer = styled.div<{ $likePeopleModal: boolean }>`
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  background: rgba(0, 0, 0, 0.6);
+  z-index: 9999999;
+  display: flex;
+  justify-content: center;
+  overflow: scroll;
+  height: 100vh;
+  height: calc(var(--vh, 1vh) * 100);
+
+  .wrapper {
+    width: 100%;
+    height: 50vh;
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    animation: ${(props) => (props.$likePeopleModal ? slideIn : slideOut)} 0.6s ease-in-out forwards;
+  }
+`;
+const slideIn = keyframes`
+  from {
+    transform: translate(-50%, 100%); /* NEW */
+  }
+  to {
+    transform: translate(-50%, 0); /* NEW */
+
+  }
+`;
+
+const slideOut = keyframes`
+  from {
+    transform: translate(-50%, 0); /* 변경 */
+  }
+  to {
+    transform: translate(-50%, 100%); /* 변경 */
+  }
 `;

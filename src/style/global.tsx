@@ -178,7 +178,10 @@ a{
   text-decoration: none;
   color: inherit;
 }
-
+span {
+  display: inline;
+  white-space: nowrap; /* 줄바꿈 방지 */
+}
 `;
 
 export const Inner = styled.div`

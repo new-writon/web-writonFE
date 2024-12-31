@@ -3,31 +3,38 @@ import { ko } from "date-fns/locale";
 import { useNavigate } from "react-router-dom";
 import { useSetRecoilState } from "recoil";
 
-import { getTemplete } from "@/apis/DetailPage";
-import { DetailDataState, DetailModalState, LikeState } from "@/recoil/atoms";
+// import { getTemplete } from "@/apis/DetailPage";
+import {
+  // DetailDataState,
+  DetailModalState,
+  // LikeState,
+  detailTemplateIdState,
+} from "@/recoil/atoms";
 import { myPageCommentType } from "@/types";
 
 import { Bottom, Container, ContainerMobile, Top } from "./style";
 
 export const MyPageCommentItem = ({ data }: { data: myPageCommentType }) => {
-  const setDetailData = useSetRecoilState(DetailDataState);
+  // const setDetailData = useSetRecoilState(DetailDataState);
   const setDetailModal = useSetRecoilState(DetailModalState);
-  const setLikeCount = useSetRecoilState(LikeState);
+  // const setLikeCount = useSetRecoilState(LikeState);
+  const setDetailTemplateId = useSetRecoilState(detailTemplateIdState);
 
   const spaceToDetail = async () => {
-    try {
-      const response = await getTemplete(
-        localStorage.getItem("organization") || "",
-        Number(data?.userTemplateId),
-        true
-      );
-      setDetailData(response);
-      setLikeCount(response[0]?.likeCount);
-      setDetailModal(true);
-      document.body.style.overflowY = "hidden";
-    } catch {
-      new Error("shit");
-    }
+    // try {
+    // const response = await getTemplete(
+    //   localStorage.getItem("organization") || "",
+    //   Number(data?.userTemplateId),
+    //   true
+    // );
+    // setDetailData(response);
+    // setLikeCount(response[0]?.likeCount);
+    setDetailTemplateId(data?.userTemplateId);
+    setDetailModal(true);
+    document.body.style.overflowY = "hidden";
+    // } catch {
+    //   new Error("shit");
+    // }
   };
 
   return (
