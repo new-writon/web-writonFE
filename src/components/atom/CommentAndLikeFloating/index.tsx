@@ -10,6 +10,7 @@ import { LikeState } from "@/recoil/atoms";
 import { Container } from "./style";
 import { useLikeMutation, useUnlikeMutation } from "@/hooks/reactQueryHooks/useMainHooks";
 import LikePeopleList from "../LikePeopleList/LikePeopleList";
+import useWindowWidth from "@/hooks/useWindowWidth";
 
 export const CommnetAndLikeFloating = ({
   userTemplateId,
@@ -24,6 +25,8 @@ export const CommnetAndLikeFloating = ({
   likeCount: string;
   likePeopleData: { nickname: string; userProfileImage: string }[];
 }) => {
+  const width = useWindowWidth();
+
   const [isHover, setIsHover] = useState<boolean>(false);
   const [isHoverLike, setIsHoverLike] = useState<boolean>(false);
 
@@ -57,7 +60,7 @@ export const CommnetAndLikeFloating = ({
 
   return (
     <Container>
-      {isHover && (
+      {width > 530 && isHover && (
         <div
           className="likePeopleListContainer"
           onMouseOver={() => setIsHoverLike(true)}
@@ -70,7 +73,7 @@ export const CommnetAndLikeFloating = ({
         <div
           className={`likeBox round ${isHover && "hover"}  ${isClick && "click"}`}
           onMouseOver={() => {
-            setIsHover(true);
+            if (width > 530) setIsHover(true);
             setIsHoverLike(true);
           }}
           onMouseOut={() => {
