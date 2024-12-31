@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import fireOn from "@/assets/DetailPage/fireOff.svg";
-import dots from "@/assets/DetailPage/Dots.svg";
+import dots from "@/assets/DetailPage/dots.svg";
 
 interface MobileLikePeopleButtonProps {
   likeCount: string;
