@@ -1,13 +1,6 @@
 import { useEffect, useState } from "react";
 
-import {
-  differenceInCalendarWeeks,
-  format,
-  getDay,
-  getMonth,
-  isSameMonth,
-  startOfMonth,
-} from "date-fns";
+import { differenceInCalendarWeeks, format, getMonth, isSameMonth, startOfMonth } from "date-fns";
 
 import { CalendarArrow } from "@/components/atom/CalendarArrow";
 import { CalendarToggle } from "@/components/atom/CalendarToggle";
@@ -53,10 +46,10 @@ export const Calendar = ({
   const [fold, setFold] = useState<boolean>(false);
   const [tooltipOn, setTooltopOn] = useState<boolean>(false);
 
-  const weekNumber =
-    getDay(today) === 0
-      ? differenceInCalendarWeeks(today, monthStart) - 1
-      : differenceInCalendarWeeks(today, monthStart);
+  let weekNumber = differenceInCalendarWeeks(today, monthStart, { weekStartsOn: 0 }) + 1;
+  if (weekNumber <= 0) {
+    weekNumber = 0; // 음수 방지
+  }
   return (
     <Inner>
       <Container>
