@@ -106,20 +106,26 @@ export const RenderCell = React.memo(
         : startOfWeek(monthStart); // 해당 날짜의 해당 주의 시작 날짜
 
     const endDate = endOfWeek(addDays(monthEnd, -1)); // 해당 날짜의 해당 주의 끝 날짜 -1을 해야지 그 주의 마지막 날이 나옴.
+
     let weekNumber =
       getDay(today) === 0
         ? differenceInCalendarWeeks(today, monthStart) - 1
         : differenceInCalendarWeeks(today, monthStart);
 
-    if (weekNumber <= 0) weekNumber = 0;
+    // 1일이 일요일일 때만 +1 보정
+    if (getDay(monthStart) === 0) {
+      weekNumber += 1;
+    }
 
     let pageWeekNumber =
       getDay(pageDay || today) === 0
         ? differenceInCalendarWeeks(today, monthStart) - 1
         : differenceInCalendarWeeks(today, monthStart);
 
-    if (pageWeekNumber <= 0) pageWeekNumber = 0;
-    // addDays(startDate, 1);
+    // 1일이 일요일일 때만 +1 보정
+    if (getDay(monthStart) === 0) {
+      pageWeekNumber += 1;
+    }
 
     const mouseEvent = (isTODAY: boolean, type: string, clickDay: string) => {
       // 오늘만 이동 가능 추가로 안쓴 날도 이동가능, 안쓴날은 따로 체크해야할듯

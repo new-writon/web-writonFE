@@ -1,6 +1,13 @@
 import { useEffect, useState } from "react";
 
-import { differenceInCalendarWeeks, format, getMonth, isSameMonth, startOfMonth } from "date-fns";
+import {
+  differenceInCalendarWeeks,
+  format,
+  getDay,
+  getMonth,
+  isSameMonth,
+  startOfMonth,
+} from "date-fns";
 
 import { CalendarArrow } from "@/components/atom/CalendarArrow";
 import { CalendarToggle } from "@/components/atom/CalendarToggle";
@@ -47,8 +54,9 @@ export const Calendar = ({
   const [tooltipOn, setTooltopOn] = useState<boolean>(false);
 
   let weekNumber = differenceInCalendarWeeks(today, monthStart, { weekStartsOn: 0 }) + 1;
-  if (weekNumber <= 0) {
-    weekNumber = 0; // 음수 방지
+  // 1일이 일요일일 때만 +1 보정
+  if (getDay(monthStart) === 0) {
+    weekNumber += 1;
   }
   return (
     <Inner>
