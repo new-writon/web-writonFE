@@ -386,6 +386,7 @@ const HeaderLeft = styled.div`
     height: 42px;
     cursor: pointer;
     border-radius: 14px;
+    object-fit: contain;
   }
   img:nth-of-type(2) {
     width: 90px;
