@@ -118,7 +118,7 @@ export const SpecialEditQuestion = ({
           const [_, indent, marker, content] = listMatch;
           const before = value.substring(0, start);
           const after = value.substring(end);
-          let newValue;
+          let newValue: string;
           if (content.trim() === "") {
             newValue = before + "\n" + after;
           } else {
@@ -310,7 +310,7 @@ export const SpecialEditQuestion = ({
         <PreviewContent
           className="markdown"
           style={{ display: tab === "write" ? "none" : "block" }}
-          dangerouslySetInnerHTML={{ __html: renderedContent }}
+          dangerouslySetInnerHTML={{ __html: renderedContent as string }}
         />
       </div>
     </Container>

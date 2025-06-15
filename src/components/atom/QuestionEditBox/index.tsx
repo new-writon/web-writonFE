@@ -86,7 +86,7 @@ export const QuestionEditBox = ({ data, idx }: { data: postEditWritingDataType; 
           const [_, indent, marker, content] = listMatch;
           const before = value.substring(0, start);
           const after = value.substring(end);
-          let newValue;
+          let newValue: string;
           if (content.trim() === "") {
             newValue = before + "\n" + after;
           } else {
