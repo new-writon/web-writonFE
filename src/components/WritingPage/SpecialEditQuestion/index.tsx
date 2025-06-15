@@ -19,6 +19,7 @@ import { postEditWritingDataType } from "@/types";
 import { Container, PreviewContent } from "./style";
 import { marked } from "marked";
 import { useMarkdown } from "@/hooks/useMarkdown";
+import { handleMarkdownKeyDown } from "@/utils/markdownKeyHandlers";
 
 // 툴바 타입 명확화
 interface ToolbarItem {
@@ -101,38 +102,19 @@ export const SpecialEditQuestion = ({
   // handleKeyDown (자동 리스트)
   const handleKeyDown = useCallback(
     (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
-      if (isComposing) return;
-      if (e.key === "Enter") {
-        const textarea = e.currentTarget;
-        const start = textarea.selectionStart;
-        const end = textarea.selectionEnd;
-        const value = text;
-        let lineStart = start;
-        while (lineStart > 0 && value[lineStart - 1] !== "\n") {
-          lineStart--;
-        }
-        const currentLine = value.substring(lineStart, start);
-        const listMatch = currentLine.match(/^(\s*)([-*+]|\d+\.)\s(.*)$/);
-        if (listMatch) {
-          e.preventDefault();
-          const [_, indent, marker, content] = listMatch;
-          const before = value.substring(0, start);
-          const after = value.substring(end);
-          let newValue: string;
-          if (content.trim() === "") {
-            newValue = before + "\n" + after;
-          } else {
-            const newLine = "\n" + indent + marker + " ";
-            newValue = before + newLine + after;
-          }
-          setText(newValue);
+      handleMarkdownKeyDown({
+        e,
+        isComposing,
+        text,
+        setText,
+        updateRecoil: (newValue) => {
           setpostEditWritingData(
             postEditWritingData.map((item) =>
               item.questionId === data.questionId ? { ...item, content: newValue } : item
             )
           );
-        }
-      }
+        },
+      });
     },
     [isComposing, text, setText, setpostEditWritingData, postEditWritingData, data.questionId]
   );
