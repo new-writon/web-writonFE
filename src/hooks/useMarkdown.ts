@@ -2,9 +2,16 @@ import { useCallback, useMemo } from "react";
 import { marked } from "marked";
 import DOMPurify from "dompurify";
 
+// marked 설정은 전역 1회만 하면 충분
+marked.setOptions({
+  gfm: true, // GitHub Flavored Markdown
+  breaks: true,
+});
+
 export const useMarkdown = (text: string) => {
   const renderMarkdown = useCallback((markdown: string) => {
     if (!markdown) return "";
+
     try {
       const rawHtml = marked.parse(markdown);
       if (typeof rawHtml === "string") {
@@ -36,8 +43,19 @@ export const useMarkdown = (text: string) => {
             "tr",
             "th",
             "td",
+            "input",
           ],
-          ALLOWED_ATTR: ["href", "src", "alt", "title", "class", "target"],
+          ALLOWED_ATTR: [
+            "href",
+            "src",
+            "alt",
+            "title",
+            "class",
+            "target",
+            "type",
+            "checked",
+            "disabled",
+          ],
         });
       }
       return "";
