@@ -23,7 +23,6 @@ const TOOLBAR: ToolbarItem[] = [
   { label: "</>", title: "Code", md: "`코드`", select: [1, 3] },
   { label: "Link", title: "Link", md: "[텍스트](url)", select: [1, 4] },
   { label: "List", title: "List", md: "- 항목" },
-  { label: "Num", title: "Numbered List", md: "1. 항목" },
   { label: "Quote", title: "Quote", md: "> 인용" },
 ];
 
