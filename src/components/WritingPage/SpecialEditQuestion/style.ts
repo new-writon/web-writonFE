@@ -56,3 +56,16 @@ export const Container = styled.div`
     }
   }
 `;
+
+export const PreviewContent = styled.div`
+  width: 100%;
+  min-height: 189px;
+  padding: 20px;
+  border: 1px solid var(--Gray-30, #edeef1);
+  border-radius: 10px;
+  background-color: var(--Gray-20, #f8f8fa);
+  font-size: 1rem;
+  line-height: 24px;
+  overflow-y: auto;
+  color: var(--Gray-100, #1b1d1f);
+`;

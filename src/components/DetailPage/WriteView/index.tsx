@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useMemo } from "react";
 
 import { format } from "date-fns";
 import { useNavigate } from "react-router-dom";
@@ -15,6 +15,52 @@ import {
 import { communityContentProps } from "@/types";
 
 import { Container } from "./style";
+import { marked } from "marked";
+import DOMPurify from "dompurify";
+
+function renderMarkdown(text: string) {
+  if (!text) return "";
+  try {
+    const rawHtml = marked.parse(text);
+    if (typeof rawHtml === "string") {
+      return DOMPurify.sanitize(rawHtml, {
+        ALLOWED_TAGS: [
+          "h1",
+          "h2",
+          "h3",
+          "h4",
+          "h5",
+          "h6",
+          "p",
+          "br",
+          "strong",
+          "em",
+          "del",
+          "hr",
+          "ul",
+          "ol",
+          "li",
+          "blockquote",
+          "code",
+          "pre",
+          "a",
+          "img",
+          "table",
+          "thead",
+          "tbody",
+          "tr",
+          "th",
+          "td",
+        ],
+        ALLOWED_ATTR: ["href", "src", "alt", "title", "class", "target"],
+      });
+    }
+    return "";
+  } catch (error) {
+    console.error("Markdown parsing error:", error);
+    return "";
+  }
+}
 
 export const WriteView = ({
   detailData,
@@ -48,6 +94,17 @@ export const WriteView = ({
     );
     navigate(`/editwriting/${format(detailData[0]?.createdAt, "yyyy-MM-dd")}`);
   };
+
+  // 마크다운 렌더링 결과를 useMemo로 캐싱
+  const specialRendered = useMemo(() => arr.map((item) => renderMarkdown(item?.content)), [arr]);
+  const basicArr = useMemo(
+    () => detailData.filter((item) => item.category !== "스페셜 질문"),
+    [detailData]
+  );
+  const basicRendered = useMemo(
+    () => basicArr.map((item) => renderMarkdown(item?.content)),
+    [basicArr]
+  );
 
   return (
     <Container>
@@ -86,27 +143,29 @@ export const WriteView = ({
                 <div className="title">
                   {idx + 1}.{item?.question}
                 </div>
-                <div className="content">{item?.content}</div>
+                <div
+                  className="content markdown"
+                  dangerouslySetInnerHTML={{ __html: specialRendered[idx] }}
+                />
               </div>
             ))}
           </div>
         </div>
       )}
       <div className="basicQuestion">
-        {detailData.filter((item) => item.category !== "스페셜 질문").length > 0 && (
-          <TitleSideBox type="special">베이직 질문</TitleSideBox>
-        )}
+        {basicArr.length > 0 && <TitleSideBox type="special">베이직 질문</TitleSideBox>}
         <div className="QuestionBox">
-          {detailData
-            .filter((item) => item.category !== "스페셜 질문")
-            .map((item, idx) => (
-              <div key={idx}>
-                <div className="title">
-                  {idx + 1}.{item?.question}
-                </div>
-                <div className="content">{item?.content}</div>
+          {basicArr.map((item, idx) => (
+            <div key={idx}>
+              <div className="title">
+                {idx + 1}.{item?.question}
               </div>
-            ))}
+              <div
+                className="content markdown"
+                dangerouslySetInnerHTML={{ __html: basicRendered[idx] }}
+              />
+            </div>
+          ))}
         </div>
       </div>
     </Container>
