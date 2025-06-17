@@ -1,6 +1,7 @@
 import styled, { createGlobalStyle } from "styled-components";
 import "@/style/font.css";
 import "@/style/color.css";
+import "@/style/markdown.css";
 
 import FontPretendardBlack from "./fonts/Pretendard-Black.woff2";
 import FontPretendardBold from "./fonts/Pretendard-Bold.woff2";

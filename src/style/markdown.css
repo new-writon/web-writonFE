@@ -1,0 +1,150 @@
+.markdown {
+  h1 {
+    font-size: 2em;
+    margin: 0.67em 0;
+    font-weight: 600;
+    color: var(--Gray-100, #1b1d1f);
+    border-bottom: 2px solid var(--Gray-30, #edeef1);
+    padding-bottom: 0.3em;
+  }
+
+  h2 {
+    font-size: 1.5em;
+    margin: 0.83em 0;
+    font-weight: 600;
+    color: var(--Gray-100, #1b1d1f);
+    border-bottom: 1px solid var(--Gray-30, #edeef1);
+    padding-bottom: 0.3em;
+  }
+
+  h3 {
+    font-size: 1.25em;
+    margin: 1em 0;
+    font-weight: 600;
+    color: var(--Gray-100, #1b1d1f);
+  }
+
+  h4 {
+    font-size: 1.1em;
+    margin: 1.33em 0;
+    font-weight: 600;
+    color: var(--Gray-100, #1b1d1f);
+  }
+
+  h5 {
+    font-size: 1em;
+    margin: 1.67em 0;
+    font-weight: 600;
+    color: var(--Gray-100, #1b1d1f);
+  }
+
+  h6 {
+    font-size: 0.9em;
+    margin: 2.33em 0;
+    font-weight: 600;
+    color: var(--Gray-100, #1b1d1f);
+  }
+
+  p {
+    margin-bottom: 1em;
+  }
+
+  ul {
+    list-style-type: disc;
+    padding-left: 1.5em;
+  }
+
+  ol {
+    list-style-type: decimal;
+    padding-left: 1.5em;
+  }
+
+  li {
+    margin: 0.25em 0;
+    line-height: 1.6;
+  }
+
+  li:has(input[type="checkbox"]) {
+    list-style: none;
+  }
+
+  li input[type="checkbox"] {
+    accent-color: #6b4ff2;
+  }
+
+  code {
+    background-color: var(--Gray-30, #edeef1);
+    padding: 0.2em 0.4em;
+    border-radius: 3px;
+    font-family: monospace;
+    color: var(--Main-50, #6272ff);
+  }
+
+  pre {
+    background-color: var(--Gray-30, #edeef1);
+    padding: 1em;
+    border-radius: 4px;
+    overflow-x: auto;
+    margin: 1em 0;
+  }
+
+  blockquote {
+    border-left: 4px solid var(--Gray-40, #d2d5db);
+    padding: 0.5em 1em;
+    margin: 1em 0;
+    color: var(--Gray-60, #94989f);
+    background-color: var(--Gray-20, #f8f8fa);
+  }
+
+  img {
+    max-width: 100%;
+    height: auto;
+    margin: 1em 0;
+  }
+
+  table {
+    border-collapse: collapse;
+    width: 100%;
+    margin: 1em 0;
+  }
+
+  th,
+  td {
+    border: 1px solid var(--Gray-30, #edeef1);
+    padding: 0.5em;
+  }
+
+  th {
+    background-color: var(--Gray-20, #f8f8fa);
+    font-weight: 600;
+  }
+
+  a {
+    color: var(--Main-50, #6272ff);
+    text-decoration: none;
+
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+
+  strong {
+    font-weight: 600;
+  }
+
+  em {
+    font-style: italic;
+  }
+
+  del {
+    text-decoration: line-through;
+  }
+
+  input[type="checkbox"] {
+    margin-right: 8px;
+    accent-color: #6b4ff2;
+    cursor: default;
+    pointer-events: none;
+    vertical-align: middle;
+  }
+}
