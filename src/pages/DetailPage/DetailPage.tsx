@@ -56,6 +56,7 @@ const DetailPage = () => {
 
   const { data: temporaryDetailData = [] } = useGetDetailData({
     organization: localStorage.getItem("organization") as string,
+    challengeId: localStorage.getItem("challengeId") as string,
     templateId: currentTemplateId,
     type,
   });

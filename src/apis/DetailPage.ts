@@ -64,11 +64,12 @@ export const postCommentWrite = async (
 //템플릿 하나 조회
 export const getTemplete = async (
   organization: string,
+  challengeId: string,
   userTemplateId: number,
   visibility: boolean
 ) => {
   const response = await getData<communityContentProps[]>(
-    `/template/root/${organization}/${userTemplateId}/visibility/${visibility}`
+    `/template/root/${organization}/challengeId/${challengeId}/${userTemplateId}/visibility/${visibility}`
   );
   return response.data;
 };

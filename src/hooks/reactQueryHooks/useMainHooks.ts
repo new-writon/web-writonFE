@@ -243,16 +243,18 @@ export const useCommunityContentData = ({
 // 디테일 페이지 데이터 가져오기 params 또는 recoil 들어오는 id 값
 export const useGetDetailData = ({
   organization,
+  challengeId,
   templateId,
   type,
 }: {
   organization: string;
+  challengeId: string;
   templateId: number;
   type: string;
 }) => {
   return useQuery({
-    queryKey: ["getDetailData", organization, templateId, type],
-    queryFn: () => getTemplete(organization, templateId, type === "my" ? false : true),
+    queryKey: ["getDetailData", organization, challengeId, templateId, type],
+    queryFn: () => getTemplete(organization, challengeId, templateId, type === "my" ? false : true),
   });
 };
 
