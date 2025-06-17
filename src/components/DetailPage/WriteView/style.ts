@@ -59,6 +59,6 @@ export const Container = styled.div`
     font-size: 1rem;
     font-weight: 400;
     line-height: 150%; /* 24px */
-    white-space: pre-wrap;
+    /* white-space: pre-wrap; */
   }
 `;
