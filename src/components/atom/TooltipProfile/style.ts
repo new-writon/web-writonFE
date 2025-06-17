@@ -15,7 +15,7 @@ export const BackDrop = styled.div<{ $headerTooltip: boolean }>`
 
 export const Container = styled.div<{ $headerTooltip: boolean; $TooltipMobile: boolean }>`
   min-width: 300px;
-  position: absolute;
+  /* position: absolute; */
   top: 71px;
   right: 0;
   border-radius: 16px;
