@@ -67,7 +67,7 @@ export const OnboardingBox = () => {
 
   const { data: organizationsAndChallenges, isLoading } = useGetOrganizationsAndChallenges();
   const { data: positionNames } = useGetOrganizationPosition(
-    localStorage.getItem("organization") as string
+    localStorage.getItem("organization") || "라이톤"
   );
   const { mutate: postOnboardingMutate } = usePostOnboarding();
   const { mutate: postChallengeStartMutate } = usePostChallengeStart();
@@ -195,6 +195,11 @@ export const OnboardingBox = () => {
       alert("닉네임 중복확인을 체크해주세요!");
       return;
     }
+
+    // 다음 온보딩이 필요한지 확인
+    const nextOrganization = localStorage.getItem("nextOrganization");
+    const nextChallengeId = localStorage.getItem("nextChallengeId");
+
     // 온보딩 완료 후 챌린지 시작
     postOnboardingMutate(onBoardingData, {
       onSuccess: () => {
@@ -208,7 +213,23 @@ export const OnboardingBox = () => {
               // 토큰 저장
               localStorage.setItem("accessToken", sessionStorage.getItem("accessToken") || "");
               localStorage.setItem("refreshToken", sessionStorage.getItem("refreshToken") || "");
-              navigate("/"); // 홈으로 이동
+
+              // 다음 온보딩이 필요한 경우
+              if (nextOrganization && nextChallengeId) {
+                // 다음 온보딩을 위한 설정
+                localStorage.setItem("organization", nextOrganization);
+                localStorage.setItem("challengeId", nextChallengeId);
+                // 임시 저장 데이터 삭제
+                localStorage.removeItem("nextOrganization");
+                localStorage.removeItem("nextChallengeId");
+                // 다음 온보딩으로 이동
+
+                alert("다음 온보딩이 필요합니다.");
+                navigate("/onboarding");
+              } else {
+                // 모든 온보딩 완료
+                navigate("/");
+              }
             },
             onError: () => {
               alert("챌린지 시작에 실패했습니다.");

@@ -3,7 +3,10 @@ export interface UserInfo {
   refreshToken: string;
   affiliatedConfirmation: boolean;
   challengedConfirmation: boolean;
+  writonAffiliatedConfirmation: boolean;
   role: string;
+  organization: string;
+  challengeId: number;
 }
 export interface kakaoType {
   access_token: string;

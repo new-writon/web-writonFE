@@ -1,4 +1,4 @@
-import { ChangeEvent, KeyboardEvent, useState } from "react";
+import { ChangeEvent, KeyboardEvent, useState, useCallback } from "react";
 
 import { useNavigate } from "react-router-dom";
 
@@ -23,7 +23,14 @@ const Login = () => {
     }
   };
 
-  const LocalLogin = async () => {
+  // 토큰 저장 함수
+  const saveTokens = (accessToken: string, refreshToken: string) => {
+    localStorage.setItem("accessToken", accessToken);
+    localStorage.setItem("refreshToken", refreshToken);
+    sessionStorage.setItem("accessToken", accessToken);
+    sessionStorage.setItem("refreshToken", refreshToken);
+  };
+  const LocalLogin = useCallback(async () => {
     executeAsyncTask(async () => {
       try {
         const response = await postLogin(
@@ -32,12 +39,32 @@ const Login = () => {
           localStorage.getItem("organization") || "null",
           Number(localStorage.getItem("challengeId")) || 1
         );
-        sessionStorage.setItem("accessToken", response.accessToken);
-        sessionStorage.setItem("refreshToken", response.refreshToken);
+
+        saveTokens(response.accessToken, response.refreshToken);
+
+        // 라이톤 온보딩이 필요한 경우
+        if (response.writonAffiliatedConfirmation === false) {
+          // 초대장으로 들어온 경우와 일반 진입을 구분
+          const isFromInvitation =
+            localStorage.getItem("organization") !== null &&
+            localStorage.getItem("challengeId") !== null;
+
+          if (isFromInvitation) {
+            // 초대장으로 들어온 경우, 현재 organization 정보 저장
+            localStorage.setItem("nextOrganization", localStorage.getItem("organization") || "");
+            localStorage.setItem("nextChallengeId", localStorage.getItem("challengeId") || "");
+          }
+
+          // 라이톤 온보딩을 위한 설정
+          localStorage.setItem("organization", "라이톤");
+          localStorage.setItem("challengeId", response.challengeId.toString());
+
+          navigate("/onboarding");
+          return;
+        }
+
         if (response.affiliatedConfirmation === true) {
           if (response.challengedConfirmation === true) {
-            localStorage.setItem("accessToken", response.accessToken);
-            localStorage.setItem("refreshToken", response.refreshToken);
             navigate("/");
           } else {
             try {
@@ -45,39 +72,38 @@ const Login = () => {
                 localStorage.getItem("organization") || "null",
                 localStorage.getItem("challengeId") || "1"
               );
-              localStorage.setItem("accessToken", response.accessToken);
-              localStorage.setItem("refreshToken", response.refreshToken);
               navigate("/");
-            } catch {
-              new Error("shit");
+            } catch (err) {
+              console.error("챌린지 시작 실패", err);
+              alert("챌린지 시작 중 문제가 발생했습니다.");
+              window.location.replace("/login");
             }
           }
         } else if (response.affiliatedConfirmation === false) {
-          navigate("/onboarding"); //나중에 온보딩 페이지로
+          navigate("/onboarding");
         } else {
-          // null이 들어오면 listapi 요청 얘가 초대장으로 접속한 후, 재접속인지, 초대장 없이 그냥 라이톤 사이트 접속인지
           try {
-            const data = await getChallengingList(); // 니중에 여기서 워크스페이스 만들어야함.
+            const data = await getChallengingList();
             if (data.length > 0) {
-              localStorage.setItem("accessToken", response.accessToken);
-              localStorage.setItem("refreshToken", response.refreshToken);
               localStorage.setItem("organization", data[0]?.organization);
               localStorage.setItem("challengeId", data[0]?.challengeId.toString());
               navigate("/");
             } else {
-              alert("초대장을 받고 들어와주세요!"); // 모달창으로 변경하기
+              alert("초대장을 받고 들어와주세요!");
             }
-          } catch {
-            new Error("shit");
+          } catch (err) {
+            console.error("챌린지 리스트 조회 실패", err);
+            alert("사용자 정보 확인 중 문제가 발생했습니다.");
+            window.location.replace("/login");
           }
         }
       } catch (err) {
-        alert("아이디 및 비밀번호를 다시 입력해주세요"); // 모달창으로 변경하기
+        alert("아이디와 비밀번호를 확인해주세요.");
+        console.error("로컬 로그인 실패", err);
         window.location.replace("/login");
-        console.log(err);
       }
     });
-  };
+  }, [id, pw, navigate, executeAsyncTask]);
 
   const KakaoLogin = () => {
     const url = `https://kauth.kakao.com/oauth/authorize?response_type=code&client_id=${
