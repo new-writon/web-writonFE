@@ -81,10 +81,8 @@ const Header = () => {
         navigate("/");
         break;
       case "커뮤니티":
-        alert("잠깐 수정중입니다.!");
-        return;
         setCommunity(false);
-        // navigate("/community");
+        navigate("/community");
         break;
       case "작성하기":
         dateCheck(navigate, today, CalendarData);
