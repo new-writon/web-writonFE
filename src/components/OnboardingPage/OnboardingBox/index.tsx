@@ -186,6 +186,27 @@ export const OnboardingBox = () => {
     }
   };
 
+  const resetOnboardingData = () => {
+    setOnBoardingData({
+      nickname: "",
+      position: "",
+      positionIntroduce: "",
+      hireDate: "",
+      company: "",
+      companyPublic: true,
+      organization: localStorage.getItem("organization") as string,
+    });
+    setButtonOn(false);
+    setNicknameNum(0);
+    setPositionIntroduceNum(0);
+    setCompanyNum(0);
+    setDuplicateShow(false);
+    setDuplicate(false);
+    setErrorIdLine(false);
+    setDate("");
+    setCalendarOn(false);
+  };
+
   const OnboardingComplete = async () => {
     if (!isValidDate(onBoardingData.hireDate)) {
       alert("날짜가 정확하지 않습니다!");
@@ -222,10 +243,13 @@ export const OnboardingBox = () => {
                 // 임시 저장 데이터 삭제
                 localStorage.removeItem("nextOrganization");
                 localStorage.removeItem("nextChallengeId");
+                // 입력 필드 초기화
+                resetOnboardingData();
                 // 다음 온보딩으로 이동
 
                 alert("다음 온보딩이 필요합니다.");
                 navigate("/onboarding");
+                window.scrollTo({ top: 0, behavior: "smooth" });
               } else {
                 // 모든 온보딩 완료
                 navigate("/");
