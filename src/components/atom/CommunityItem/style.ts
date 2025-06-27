@@ -24,10 +24,12 @@ export const PreviewBody = styled.div`
   line-height: 160%;
   .question {
     font-weight: 600;
+    word-break: break-word;
   }
   .content {
     font-weight: 400;
     white-space: pre-wrap;
+    word-break: break-word;
   }
 `;
 export const PreviewInfo = styled.div`
