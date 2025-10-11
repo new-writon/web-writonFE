@@ -4,6 +4,7 @@ import { ErrorData } from "@/types/axios";
 import { TokenInfo, UserInfo, kakaoType } from "@/types/user";
 
 import { deleteData, getData, postData } from ".";
+import axios from "axios";
 
 // 로그인
 export const postLogin = async (
@@ -22,25 +23,34 @@ export const postLogin = async (
 };
 
 export const postKakaoAuth = async (CODE: string) => {
-  const response = await postData<kakaoType>(
-    `https://kauth.kakao.com/oauth/token?grant_type=authorization_code&client_id=${
-      import.meta.env.VITE_APP_REST_API_KEY
-    }&redirect_uri=${import.meta.env.VITE_APP_REDIRECT_URI}&code=${CODE}`,
-    {}
-  );
-  return response;
+  const response = await axios.post<kakaoType>("https://kauth.kakao.com/oauth/token", null, {
+    params: {
+      grant_type: "authorization_code",
+      client_id: import.meta.env.VITE_APP_REST_API_KEY,
+      redirect_uri: import.meta.env.VITE_APP_REDIRECT_URI,
+      code: CODE,
+    },
+    headers: {
+      "Content-Type": "application/x-www-form-urlencoded;charset=utf-8",
+    },
+    withCredentials: false, // 👈 추가 안전장치
+  });
+
+  return response.data;
 };
 
 export const postKakaoLogout = async (token: string) => {
-  const response = await postData(
-    `https://kapi.kakao.com/v1/user/logout`,
+  const response = await axios.post(
+    "https://kapi.kakao.com/v1/user/logout",
     {},
     {
       headers: {
         Authorization: `Bearer ${token}`,
       },
+      withCredentials: false, // ✅ 반드시 꺼주기
     }
   );
+
   return response.data;
 };
 

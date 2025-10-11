@@ -84,6 +84,7 @@ const Login = () => {
         } else {
           try {
             const data = await getChallengingList();
+            console.log(data);
             if (data.length > 0) {
               localStorage.setItem("organization", data[0]?.organization);
               localStorage.setItem("challengeId", data[0]?.challengeId.toString());
