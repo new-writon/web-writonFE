@@ -1,7 +1,10 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import axios, { AxiosRequestConfig, InternalAxiosRequestConfig } from "axios";
 
-import { postRefreshToken } from "./login";
+import { deleteCookie, postRefreshToken } from "./login";
+
+// ✅ 모든 요청에서 쿠키 자동 전송 허용
+axios.defaults.withCredentials = true;
 
 export const WRITON = axios.create({
   baseURL: import.meta.env.VITE_APP_SERVER_DOMAIN,
@@ -9,15 +12,17 @@ export const WRITON = axios.create({
     "Content-Type": "application/json;charset=UTF-8",
   },
   responseType: "json",
+  withCredentials: true, // ✅ 추가 (인스턴스 단위)
 });
 
 // 중복요청을 추적할 Set (버튼 두번 눌러서 중복된 요청을 방지)
 const pendingRequests = new Set();
 //request interceptor
 WRITON.interceptors.request.use(async (req: InternalAxiosRequestConfig) => {
-  const accessToken = localStorage.getItem("accessToken") || sessionStorage.getItem("accessToken");
+  // const accessToken = localStorage.getItem("accessToken") || sessionStorage.getItem("accessToken");
 
-  if (req.headers && accessToken) req.headers.Authorization = `${accessToken}`;
+  // if (req.headers && accessToken) req.headers.Authorization = `${accessToken}`;
+
   // 요청을 식별하는 유니크 키 생성 (method, url, data 포함)
   const requestKey = `${req.method}-${req.url}`;
 
@@ -62,10 +67,10 @@ async function errorHandler(error: { config?: any; response?: any }) {
     if (!isRefreshing) {
       isRefreshing = true; // 리프레시 중으로 플래그 설정
       try {
-        const response = await postRefreshToken();
-        localStorage.setItem("accessToken", response.accessToken);
-        localStorage.setItem("refreshToken", response.refreshToken);
-        config.headers.Authentication = `${response.accessToken}`;
+        await postRefreshToken();
+        // localStorage.setItem("accessToken", response.accessToken);
+        // localStorage.setItem("refreshToken", response.refreshToken);
+        // config.headers.Authentication = `${response.accessToken}`;
 
         // 실패한 요청을 다시 시도
         failedRequestsQueue.forEach((request) => request());
@@ -75,6 +80,10 @@ async function errorHandler(error: { config?: any; response?: any }) {
         // alert("토큰이 갱신되었습니다.");
         return WRITON(config); // 갱신된 토큰을 가지고 다시 요청
       } catch (error) {
+        isRefreshing = false;
+
+        await deleteCookie();
+        window.location.replace("/login");
         return Promise.reject(error);
       }
     } else {

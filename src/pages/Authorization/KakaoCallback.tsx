@@ -9,12 +9,12 @@ const KakaoCallback = () => {
   const navigate = useNavigate();
 
   // 토큰 저장 함수
-  const saveTokens = (accessToken: string, refreshToken: string) => {
-    localStorage.setItem("accessToken", accessToken);
-    localStorage.setItem("refreshToken", refreshToken);
-    sessionStorage.setItem("accessToken", accessToken);
-    sessionStorage.setItem("refreshToken", refreshToken);
-  };
+  // const saveTokens = (accessToken: string, refreshToken: string) => {
+  //   localStorage.setItem("accessToken", accessToken);
+  //   localStorage.setItem("refreshToken", refreshToken);
+  //   sessionStorage.setItem("accessToken", accessToken);
+  //   sessionStorage.setItem("refreshToken", refreshToken);
+  // };
 
   const kakaoLogin = useCallback(async () => {
     try {
@@ -29,7 +29,7 @@ const KakaoCallback = () => {
         Number(localStorage.getItem("challengeId")) || 1
       );
 
-      saveTokens(res.accessToken, res.refreshToken);
+      // saveTokens(res.accessToken, res.refreshToken);
 
       // 라이톤 온보딩이 필요한 경우
       if (res.writonAffiliatedConfirmation === false) {

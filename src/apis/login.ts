@@ -3,7 +3,7 @@ import { challengeListProps } from "@/types";
 import { ErrorData } from "@/types/axios";
 import { TokenInfo, UserInfo, kakaoType } from "@/types/user";
 
-import { getData, postData } from ".";
+import { deleteData, getData, postData } from ".";
 
 // 로그인
 export const postLogin = async (
@@ -102,17 +102,24 @@ export const getChallengingList = async () => {
 //토큰 관련
 export const postRefreshToken = async () => {
   try {
-    const response = await postData<TokenInfo>(
-      "/auth/verification/token-reissue",
-      {},
-      {
-        headers: {
-          refresh: localStorage.getItem("refreshToken") || sessionStorage.getItem("refreshToken"),
-        },
-      }
-    );
+    const response = await postData<TokenInfo>("/auth/verification/token-reissue", {});
     return response.data;
   } catch (error) {
     throw error as ErrorData;
   }
+};
+
+//토큰 있냐 없냐
+export const getCookieToken = async () => {
+  try {
+    const response = await getData("/auth/cookie/access-token");
+    return response.data;
+  } catch (error) {
+    throw error as ErrorData;
+  }
+};
+
+export const deleteCookie = async () => {
+  const response = await deleteData("/auth/cookie");
+  return response.data;
 };

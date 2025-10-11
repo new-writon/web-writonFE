@@ -232,8 +232,8 @@ export const OnboardingBox = () => {
           {
             onSuccess: () => {
               // 토큰 저장
-              localStorage.setItem("accessToken", sessionStorage.getItem("accessToken") || "");
-              localStorage.setItem("refreshToken", sessionStorage.getItem("refreshToken") || "");
+              // localStorage.setItem("accessToken", sessionStorage.getItem("accessToken") || "");
+              // localStorage.setItem("refreshToken", sessionStorage.getItem("refreshToken") || "");
 
               // 다음 온보딩이 필요한 경우
               if (nextOrganization && nextChallengeId) {

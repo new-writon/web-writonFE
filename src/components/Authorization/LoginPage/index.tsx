@@ -24,12 +24,12 @@ const Login = () => {
   };
 
   // 토큰 저장 함수
-  const saveTokens = (accessToken: string, refreshToken: string) => {
-    localStorage.setItem("accessToken", accessToken);
-    localStorage.setItem("refreshToken", refreshToken);
-    sessionStorage.setItem("accessToken", accessToken);
-    sessionStorage.setItem("refreshToken", refreshToken);
-  };
+  // const saveTokens = (accessToken: string, refreshToken: string) => {
+  //   localStorage.setItem("accessToken", accessToken);
+  //   localStorage.setItem("refreshToken", refreshToken);
+  //   sessionStorage.setItem("accessToken", accessToken);
+  //   sessionStorage.setItem("refreshToken", refreshToken);
+  // };
   const LocalLogin = useCallback(async () => {
     executeAsyncTask(async () => {
       try {
@@ -40,7 +40,7 @@ const Login = () => {
           Number(localStorage.getItem("challengeId")) || 1
         );
 
-        saveTokens(response.accessToken, response.refreshToken);
+        // saveTokens(response.accessToken, response.refreshToken);
 
         // 라이톤 온보딩이 필요한 경우
         if (response.writonAffiliatedConfirmation === false) {

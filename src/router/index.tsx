@@ -7,6 +7,7 @@ import Loading from "@/components/Common/Loading";
 import { ModalProvider } from "@/components/Common/ModalProvider";
 import { ScrollToTop } from "@/components/Common/ScrollToTop";
 import { SnackBarProvider } from "@/components/Common/SnackBarProvider";
+import { AuthProvider, useAuth } from "@/components/Common/AuthProvider";
 // import { useIsFetching } from "@tanstack/react-query";
 
 // 동적 로딩을 위한 React.lazy 사용
@@ -29,105 +30,107 @@ const Router = () => {
   // const isLoading = isFetching > 0;
 
   const PrivateRoute = () => {
-    return localStorage.getItem("accessToken") && localStorage.getItem("organization") ? (
-      <MainPage />
-    ) : (
-      <Navigate to="/login" />
-    );
+    const { isAuthenticated } = useAuth();
+    if (isAuthenticated === null) return <div>Loading...</div>;
+
+    return isAuthenticated ? <MainPage /> : <Navigate to="/login" />;
   };
+
   return (
     <BrowserRouter>
-      <SnackBarProvider />
-      <ModalProvider />
-      <ScrollToTop />
-      {/* {isLoading && <Loading />} */}
-      <Suspense fallback={<Loading />}>
-        <Routes>
-          {/* 기본 레이아웃 */}
-          <Route
-            path="/"
-            element={<Layout />}
-          >
-            {/* 메인 페이지 */}
+      <AuthProvider>
+        <SnackBarProvider />
+        <ModalProvider />
+        <ScrollToTop />
+        {/* {isLoading && <Loading />} */}
+        <Suspense fallback={<Loading />}>
+          <Routes>
+            {/* 기본 레이아웃 */}
             <Route
-              index
-              element={<PrivateRoute />}
+              path="/"
+              element={<Layout />}
+            >
+              {/* 메인 페이지 */}
+              <Route
+                index
+                element={<PrivateRoute />}
+              />
+
+              {/* Writing 관련 페이지 */}
+              <Route
+                path="writing/:date"
+                element={<WritingPage />}
+              />
+              <Route
+                path="editwriting/:date"
+                element={<EditWritingPage />}
+              />
+
+              {/* 커뮤니티 페이지 */}
+              <Route
+                path="community"
+                element={<CommunityPage />}
+              />
+
+              {/* 상세 페이지 */}
+              <Route
+                path="detail/:templateId"
+                element={<DetailPage />}
+              />
+
+              {/* 마이 페이지 */}
+              <Route
+                path="mypage"
+                element={<MyPage />}
+              />
+            </Route>
+
+            {/* 로그인 및 회원가입 관련 페이지 */}
+            <Route
+              path="login"
+              element={<LoginPage />}
+            />
+            <Route
+              path="register"
+              element={<RegisterPage />}
+            />
+            <Route
+              path="registeremail"
+              element={<RegisterEmailPage />}
+            />
+            <Route
+              path="auth/kakao/callback"
+              element={<KakaoCallback />}
             />
 
-            {/* Writing 관련 페이지 */}
+            {/* 온보딩 페이지 */}
             <Route
-              path="writing/:date"
-              element={<WritingPage />}
-            />
-            <Route
-              path="editwriting/:date"
-              element={<EditWritingPage />}
+              path="onboarding"
+              element={<OnboardingPage />}
             />
 
-            {/* 커뮤니티 페이지 */}
+            {/* 모바일 페이지들 */}
             <Route
-              path="community"
-              element={<CommunityPage />}
+              path="mypageMobile"
+              element={<MyPageMobile />}
             />
-
-            {/* 상세 페이지 */}
             <Route
-              path="detail/:templateId"
+              path="notificationMobile"
+              element={<NotificationPage />}
+            />
+            <Route
+              path="notificationMobile/detail/:templateId"
               element={<DetailPage />}
             />
 
-            {/* 마이 페이지 */}
+            {/* Not Found 페이지 처리 */}
             <Route
-              path="mypage"
-              element={<MyPage />}
+              path="*"
+              element={<div>Not Found</div>}
             />
-          </Route>
-
-          {/* 로그인 및 회원가입 관련 페이지 */}
-          <Route
-            path="login"
-            element={<LoginPage />}
-          />
-          <Route
-            path="register"
-            element={<RegisterPage />}
-          />
-          <Route
-            path="registeremail"
-            element={<RegisterEmailPage />}
-          />
-          <Route
-            path="auth/kakao/callback"
-            element={<KakaoCallback />}
-          />
-
-          {/* 온보딩 페이지 */}
-          <Route
-            path="onboarding"
-            element={<OnboardingPage />}
-          />
-
-          {/* 모바일 페이지들 */}
-          <Route
-            path="mypageMobile"
-            element={<MyPageMobile />}
-          />
-          <Route
-            path="notificationMobile"
-            element={<NotificationPage />}
-          />
-          <Route
-            path="notificationMobile/detail/:templateId"
-            element={<DetailPage />}
-          />
-
-          {/* Not Found 페이지 처리 */}
-          <Route
-            path="*"
-            element={<div>Not Found</div>}
-          />
-        </Routes>
-      </Suspense>
+          </Routes>
+        </Suspense>
+      </AuthProvider>
     </BrowserRouter>
   );
 };

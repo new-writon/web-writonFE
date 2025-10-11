@@ -31,7 +31,7 @@ export const TooltipProfile = ({
 
   const Logout = async () => {
     try {
-      await deleteLogout(localStorage.getItem("refreshToken") || "");
+      await deleteLogout();
       localStorage.clear();
       sessionStorage.clear();
       window.location.replace("/login");
