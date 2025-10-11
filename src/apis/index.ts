@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import axios, { AxiosRequestConfig, InternalAxiosRequestConfig } from "axios";
 
-import { deleteCookie, postRefreshToken } from "./login";
+import { deleteCookie, getCookieToken, postRefreshToken } from "./login";
 
 // ✅ 모든 요청에서 쿠키 자동 전송 허용
 axios.defaults.withCredentials = true;
@@ -71,6 +71,9 @@ async function errorHandler(error: { config?: any; response?: any }) {
         // localStorage.setItem("accessToken", response.accessToken);
         // localStorage.setItem("refreshToken", response.refreshToken);
         // config.headers.Authentication = `${response.accessToken}`;
+
+        // 2️⃣ 브라우저가 새 쿠키 반영하도록 한번 호출
+        await getCookieToken();
 
         // 실패한 요청을 다시 시도
         failedRequestsQueue.forEach((request) => request());
