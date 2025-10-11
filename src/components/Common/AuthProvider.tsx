@@ -9,10 +9,10 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
 
   useEffect(() => {
     const checkAuth = async () => {
-      try {
-        await getCookieToken();
+      const { token } = await getCookieToken();
+      if (token) {
         setIsAuthenticated(true);
-      } catch {
+      } else {
         setIsAuthenticated(false);
       }
     };
