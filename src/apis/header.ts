@@ -1,5 +1,4 @@
 import { deleteData } from ".";
-import { deleteCookie } from "./login";
 
 // //header 버튼 클릭시, 오늘 쓰는 날짜인지 체크
 // export const getCheckDate = async (challengeId: number, date: string) => {
