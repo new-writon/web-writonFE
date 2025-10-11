@@ -43,6 +43,5 @@ import { deleteCookie } from "./login";
 
 export const deleteLogout = async () => {
   const response = await deleteData("/auth/logout");
-  await deleteCookie();
   return response.data;
 };
